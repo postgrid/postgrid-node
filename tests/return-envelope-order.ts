@@ -2,8 +2,8 @@ import { PostGrid } from '../src/index'
 
 (async () => {
   const client = new PostGrid({
-    mail: "test_sk_jRRZRwJPXviW1UszTemxr1",
-    addr: "live_sk_xoTVy7K1WDk8YnuwvWDAs1",
+    mail: process.env.POSTGRID_MAIL_API_KEY,
+    addr: process.env.POSTGRID_ADDR_API_KEY,
   })
   console.log('creating a single Contact...')
   const who = {
