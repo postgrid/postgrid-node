@@ -1,20 +1,22 @@
-import fetch from 'node-fetch'
-import FormData = require('formdata')
-import path from 'path'
-import camelCaseKeys from 'camelcase-keys'
+import fetch from "node-fetch";
+import FormData = require("formdata");
+import path from "path";
+import camelCaseKeys from "camelcase-keys";
 
-import { ContactApi } from './contact'
-import { TemplateApi } from './template'
-import { LetterApi } from './letter'
-import { PostcardApi } from './postcard'
-import { BankAccountApi } from './bank-account'
-import { CheckApi } from './check'
-import { WebhookApi } from './webhook'
-import { AddressApi } from './address'
+import { ContactApi } from "./contact";
+import { TemplateApi } from "./template";
+import { LetterApi } from "./letter";
+import { PostcardApi } from "./postcard";
+import { BankAccountApi } from "./bank-account";
+import { CheckApi } from "./check";
+import { WebhookApi } from "./webhook";
+import { AddressApi } from "./address";
+import { ReturnEnvelopeApi } from "./return-envelope";
+import { ReturnEnvelopeOrderApi } from "./return-envelope-order";
 
-const ClientVersion = require('../package.json').version
-const PROTOCOL = 'https'
-const POSTGRID_HOST = 'api.postgrid.com'
+const ClientVersion = require("../package.json").version;
+const PROTOCOL = "https";
+const POSTGRID_HOST = "api.postgrid.com";
 
 /*
  * PostGrid has two different internal systems that have not - as yet - been
@@ -63,40 +65,44 @@ export interface PostGridError {
  *   import { PostGrid } from "postgrid-node-client"
  */
 export class PostGrid {
-  host: string
-  apiKeys: PostGridApiKeys
-  webhookUrl?: string
-  webhookSecret?: string
-  webhookEvents?: string[]
-  contact: ContactApi
-  template: TemplateApi
-  letter: LetterApi
-  postcard: PostcardApi
-  bankAccount: BankAccountApi
-  check: CheckApi
-  webhook: WebhookApi
-  address: AddressApi
+  host: string;
+  apiKeys: PostGridApiKeys;
+  webhookUrl?: string;
+  webhookSecret?: string;
+  webhookEvents?: string[];
+  contact: ContactApi;
+  template: TemplateApi;
+  letter: LetterApi;
+  postcard: PostcardApi;
+  bankAccount: BankAccountApi;
+  check: CheckApi;
+  webhook: WebhookApi;
+  address: AddressApi;
+  returnEnvelope: ReturnEnvelopeApi;
+  returnEnvelopeOrder: ReturnEnvelopeOrderApi;
 
-  constructor (apiKeys: PostGridApiKeys | string, options?: PostGridOptions) {
-    this.host = options?.host || POSTGRID_HOST
+  constructor(apiKeys: PostGridApiKeys | string, options?: PostGridOptions) {
+    this.host = options?.host || POSTGRID_HOST;
     // see if we support the legacy usage of just the one Print-Mail key
-    if (typeof apiKeys === 'string') {
-      this.apiKeys = { mail: apiKeys }
+    if (typeof apiKeys === "string") {
+      this.apiKeys = { mail: apiKeys };
     } else {
-      this.apiKeys = apiKeys
+      this.apiKeys = apiKeys;
     }
-    this.webhookUrl = options?.webhookUrl
-    this.webhookSecret = options?.webhookSecret
-    this.webhookEvents = options?.webhookEvents
+    this.webhookUrl = options?.webhookUrl;
+    this.webhookSecret = options?.webhookSecret;
+    this.webhookEvents = options?.webhookEvents;
     // now construct all the specific domain objects
-    this.contact = new ContactApi(this, options)
-    this.template = new TemplateApi(this, options)
-    this.letter = new LetterApi(this, options)
-    this.postcard = new PostcardApi(this, options)
-    this.bankAccount = new BankAccountApi(this, options)
-    this.check = new CheckApi(this, options)
-    this.webhook = new WebhookApi(this, options)
-    this.address = new AddressApi(this, options)
+    this.contact = new ContactApi(this, options);
+    this.template = new TemplateApi(this, options);
+    this.letter = new LetterApi(this, options);
+    this.postcard = new PostcardApi(this, options);
+    this.bankAccount = new BankAccountApi(this, options);
+    this.check = new CheckApi(this, options);
+    this.webhook = new WebhookApi(this, options);
+    this.address = new AddressApi(this, options);
+    this.returnEnvelope = new ReturnEnvelopeApi(this, options);
+    this.returnEnvelopeOrder = new ReturnEnvelopeOrderApi(this, options);
 
     // if we have a webhook, then create that now
     if (this.webhookUrl) {
@@ -104,7 +110,7 @@ export class PostGrid {
         url: this.webhookUrl,
         secret: this.webhookSecret,
         enabledEvents: this.webhookEvents!,
-      })
+      });
     }
   }
 
@@ -118,36 +124,48 @@ export class PostGrid {
     method: string,
     uri: string,
     headers?: any,
-    query?: { [index:string] : number | string | boolean },
-    body?: object | object[] | FormData,
-  ): Promise<{ response: any, payload?: any }> {
+    query?: { [index: string]: number | string | boolean },
+    body?: object | object[] | FormData
+  ): Promise<{ response: any; payload?: any }> {
     // build up the complete url from the provided 'uri' and the 'host'
-    let url = new URL(PROTOCOL+'://'+path.join(this.host, uri))
+    let url = new URL(PROTOCOL + "://" + path.join(this.host, uri));
     if (query) {
-      Object.keys(query).forEach(k =>
-        url.searchParams.append(k, query[k].toString()))
+      Object.keys(query).forEach((k) => {
+        Object.keys(query).forEach((k) => {
+          if (query[k]) {
+            url.searchParams.append(k, query[k]!.toString());
+          }
+        });
+      });
     }
-    const isForm = isFormData(body)
+    const isForm = isFormData(body);
     // make the appropriate headers
-    headers = { ...headers,
-      Accept: 'application/json',
-      'X-PostGrid-Client-Ver': ClientVersion,
-    }
+    headers = {
+      ...headers,
+      Accept: "application/json",
+      "X-PostGrid-Client-Ver": ClientVersion,
+    };
     if (!isForm) {
-      headers = { ...headers, 'Content-Type': 'application/json' }
+      headers = { ...headers, "Content-Type": "application/json" };
     }
     // now we can make the call... see if it's a JSON body or a FormData one...
     const response = await fetch(url, {
       method: method,
-      body: isForm ? (body as any) : (body ? JSON.stringify(body) : undefined),
+      body: isForm
+        ? (body as any)
+        : body
+        ? JSON.stringify(body)
+        : undefined,
       headers,
-      redirect: 'follow',
-    })
+      redirect: "follow",
+    });
     try {
-      const payload = camelCaseKeys((await response.json()), {deep: true})
-      return { response, payload }
+      const payload = camelCaseKeys(await response.json(), {
+        deep: true,
+      });
+      return { response, payload };
     } catch (err) {
-      return { response }
+      return { response };
     }
   }
 }
@@ -159,13 +177,14 @@ export class PostGrid {
  * a more traditional JSON object body.
  */
 function isFormData(arg: any): boolean {
-  let ans = false
-  if (arg && typeof arg === 'object') {
-    ans = (typeof arg._boundary === 'string' &&
-           arg._boundary.length > 20 &&
-           Array.isArray(arg._streams))
+  let ans = false;
+  if (arg && typeof arg === "object") {
+    ans =
+      typeof arg._boundary === "string" &&
+      arg._boundary.length > 20 &&
+      Array.isArray(arg._streams);
   }
-  return ans
+  return ans;
 }
 
 /*
@@ -175,9 +194,9 @@ function isFormData(arg: any): boolean {
  */
 export function mkError(message: string): PostGridError {
   return {
-    type: 'client',
+    type: "client",
     message,
-  }
+  };
 }
 
 /*
@@ -188,10 +207,10 @@ export function mkError(message: string): PostGridError {
  */
 export const NO_ADDR_API_KEY = {
   success: false,
-  error: mkError('Missing PostGrid Address API Key!'),
-}
+  error: mkError("Missing PostGrid Address API Key!"),
+};
 
 export const NO_MAIL_API_KEY = {
   success: false,
-  error: mkError('Missing PostGrid Print-Mail API Key!'),
-}
+  error: mkError("Missing PostGrid Print-Mail API Key!"),
+};
