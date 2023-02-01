@@ -12,9 +12,9 @@ import { PostGrid } from '../src/index'
     provinceOrState: 'IN',
     postalOrZip: '46224',
     countryCode: 'US',
-    firstName: 'Jeff',
-    lastName: 'Jeff',
-    email: 'Jeff@Jeff.com',
+    firstName: 'Jeffrrrrrrr',
+    lastName: 'Jeffrrrrrrrrrrrrrrrrrr',
+    email: 'Jeff@Jeffr.com',
     phoneNumber: '317-555-1212',
     companyName: 'Jeff',
     jobTitle: 'Jeff',
@@ -22,8 +22,9 @@ import { PostGrid } from '../src/index'
   const contact = await client.contact.create(who)
   console.log('creating a single return envelope...')
   const returnEnvelope = await client.returnEnvelope.create(contact.contact!.id)
-  console.log('creating a single return envelope order...')
+  console.log('creating 2 return envelope orders...')
   const one = await client.returnEnvelopeOrder.create(returnEnvelope.returnEnvelope!.id, 5000, "test")
+  const one_2 = await client.returnEnvelopeOrder.create(returnEnvelope.returnEnvelope!.id, 5000, "test")
 
   if (one.success) {
     console.log('Success!')
@@ -49,6 +50,24 @@ import { PostGrid } from '../src/index'
     console.log(`Success! The list contained ${tre.returnEnvelopeOrderList!.data!.length} return envelope orders...`)
   } else {
     console.log('Error! Listing the return envelope orders failed, and the output is:')
+    console.log(tre)
+  }
+
+  console.log('Filling first return envelope order...')
+  const four = await client.returnEnvelopeOrder.fill(returnEnvelope.returnEnvelope!.id, one.returnEnvelopeOrder!.id)
+  if (four) {
+    console.log(`Order was filled...`)
+  } else {
+    console.log('Error! Filling the return envelope order failed, and the output is:')
+    console.log(tre)
+  }
+
+  console.log('Cancelling second return envelope order...')
+  const five = await client.returnEnvelopeOrder.cancel(returnEnvelope.returnEnvelope!.id, one_2.returnEnvelopeOrder!.id)
+  if (five.success) {
+    console.log(`Success! The order was cancelled...`)
+  } else {
+    console.log('Error! Cancelling the return envelope order failed, and the output is:')
     console.log(tre)
   }
 
