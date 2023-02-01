@@ -53,7 +53,10 @@ export class ReturnEnvelopeOrderApi {
             path.join(this.baseRoute, "return_envelopes", id, "orders"),
             {
                 "x-api-key": this.client.apiKeys.mail,
-                body: { quantityOrdered, description, metadata },
+            }, 
+            undefined, 
+            { 
+                quantityOrdered, description, metadata 
             }
         );
         if (resp?.response?.status >= 400) {
@@ -124,7 +127,7 @@ export class ReturnEnvelopeOrderApi {
             "GET",
             path.join(this.baseRoute, "return_envelopes", id, "orders"),
             { "x-api-key": this.client.apiKeys.mail },
-            { limit, skip }
+            { limit: limit || 40, skip: skip || 0 }
         );
         if (resp?.response?.status >= 400) {
             return {

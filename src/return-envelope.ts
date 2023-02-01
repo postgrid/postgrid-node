@@ -27,7 +27,7 @@ export class ReturnEnvelopeApi {
   constructor(client: PostGrid, options?: PostGridOptions) {
     // eslint-disable-line no-unused-vars
     this.client = client;
-    this.baseRoute = "print-mail/v1/";
+    this.baseRoute = "v1/";
   }
 
   async create(to: string): Promise<{
@@ -43,7 +43,9 @@ export class ReturnEnvelopeApi {
     const resp = await this.client.fire(
       "POST",
       path.join(this.baseRoute, "return_envelopes"),
-      { "x-api-key": this.client.apiKeys.mail, body: { to } }
+      { "x-api-key": this.client.apiKeys.mail},
+      undefined, 
+      { to }
     );
     if (resp?.response?.status >= 400) {
       return {
@@ -102,7 +104,7 @@ export class ReturnEnvelopeApi {
       "GET",
       path.join(this.baseRoute, "return_envelopes"),
       { "x-api-key": this.client.apiKeys.mail },
-      { skip: skip, limit: limit, search: search }
+      { skip: skip || 0, limit: limit || 40, search: search }
     );
     if (resp?.response?.status >= 400) {
       return {
