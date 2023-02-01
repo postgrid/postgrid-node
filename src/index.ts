@@ -124,7 +124,7 @@ export class PostGrid {
     method: string,
     uri: string,
     headers?: any,
-    query?: { [index: string]: number | string | boolean },
+    query?: { [index: string]: number | string | boolean | undefined },
     body?: object | object[] | FormData
   ): Promise<{ response: any; payload?: any }> {
     // build up the complete url from the provided 'uri' and the 'host'
