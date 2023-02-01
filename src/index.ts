@@ -130,13 +130,11 @@ export class PostGrid {
     // build up the complete url from the provided 'uri' and the 'host'
     let url = new URL(PROTOCOL + "://" + path.join(this.host, uri));
     if (query) {
-      Object.keys(query).forEach((k) => {
         Object.keys(query).forEach((k) => {
           if (query[k]) {
             url.searchParams.append(k, query[k]!.toString());
           }
         });
-      });
     }
     const isForm = isFormData(body);
     // make the appropriate headers
