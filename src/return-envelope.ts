@@ -27,7 +27,7 @@ export class ReturnEnvelopeApi {
   constructor(client: PostGrid, options?: PostGridOptions) {
     // eslint-disable-line no-unused-vars
     this.client = client;
-    this.baseRoute = "v1/";
+    this.baseRoute = "print-mail/v1/";
   }
 
   async create(to: string): Promise<{
