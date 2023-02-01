@@ -23,52 +23,52 @@ import { PostGrid } from '../src/index'
   console.log('creating a single return envelope...')
   const returnEnvelope = await client.returnEnvelope.create(contact.contact!.id)
   console.log('creating 2 return envelope orders...')
-  const one = await client.returnEnvelopeOrder.create(returnEnvelope.returnEnvelope!.id, 5000, "test")
-  const one_2 = await client.returnEnvelopeOrder.create(returnEnvelope.returnEnvelope!.id, 5000, "test")
+  const returnEnvelopeOrder = await client.returnEnvelopeOrder.create(returnEnvelope.returnEnvelope!.id, 5000, "test")
+  const returnEnvelopeOrder2 = await client.returnEnvelopeOrder.create(returnEnvelope.returnEnvelope!.id, 5000, "test")
 
-  if (one.success) {
+  if (returnEnvelopeOrder.success) {
     console.log('Success!')
   } else {
     console.log('Error! Creating the return envelope order failed, and the output is:')
-    console.log(one)
+    console.log(returnEnvelopeOrder)
   }
 
-  if (one.success) {
+  if (returnEnvelopeOrder.success) {
     console.log('fetching a single return envelope order...')
-    const two = await client.returnEnvelopeOrder.get(returnEnvelope.returnEnvelope!.id, one.returnEnvelopeOrder!.id)
-    if (two.success) {
+    const getreturnEnvelopeOrder = await client.returnEnvelopeOrder.get(returnEnvelope.returnEnvelope!.id, returnEnvelopeOrder.returnEnvelopeOrder!.id)
+    if (getreturnEnvelopeOrder.success) {
       console.log('Success!')
     } else {
       console.log('Error! Fetching the return envelope failed, and the output is:')
-      console.log(two)
+      console.log(getreturnEnvelopeOrder)
     }
   }
 
   console.log('listing the first page of 40 return envelopes orders...')
-  const tre = await client.returnEnvelopeOrder.list(returnEnvelope.returnEnvelope!.id)
-  if (tre.success) {
-    console.log(`Success! The list contained ${tre.returnEnvelopeOrderList!.data!.length} return envelope orders...`)
+  const listReturnEnvelopeOrder = await client.returnEnvelopeOrder.list(returnEnvelope.returnEnvelope!.id)
+  if (listReturnEnvelopeOrder.success) {
+    console.log(`Success! The list contained ${listReturnEnvelopeOrder.returnEnvelopeOrderList!.data!.length} return envelope orders...`)
   } else {
     console.log('Error! Listing the return envelope orders failed, and the output is:')
-    console.log(tre)
+    console.log(listReturnEnvelopeOrder)
   }
 
   console.log('Filling first return envelope order...')
-  const four = await client.returnEnvelopeOrder.fill(returnEnvelope.returnEnvelope!.id, one.returnEnvelopeOrder!.id)
-  if (four) {
+  const fillReturnEnvelopeOrder = await client.returnEnvelopeOrder.fill(returnEnvelope.returnEnvelope!.id, returnEnvelopeOrder.returnEnvelopeOrder!.id)
+  if (fillReturnEnvelopeOrder) {
     console.log(`Order was filled...`)
   } else {
     console.log('Error! Filling the return envelope order failed, and the output is:')
-    console.log(tre)
+    console.log(fillReturnEnvelopeOrder)
   }
 
   console.log('Cancelling second return envelope order...')
-  const five = await client.returnEnvelopeOrder.cancel(returnEnvelope.returnEnvelope!.id, one_2.returnEnvelopeOrder!.id)
-  if (five.success) {
+  const deleteReturnEnvelopeOrder = await client.returnEnvelopeOrder.cancel(returnEnvelope.returnEnvelope!.id, returnEnvelopeOrder2.returnEnvelopeOrder!.id)
+  if (deleteReturnEnvelopeOrder.success) {
     console.log(`Success! The order was cancelled...`)
   } else {
     console.log('Error! Cancelling the return envelope order failed, and the output is:')
-    console.log(tre)
+    console.log(deleteReturnEnvelopeOrder)
   }
 
 })()

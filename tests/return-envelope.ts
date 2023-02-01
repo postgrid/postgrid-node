@@ -22,32 +22,32 @@ import { PostGrid } from '../src/index'
   const contact = await client.contact.create(who)
   console.log('creating a single return envelope...')
 
-  const one = await client.returnEnvelope.create(contact.contact!.id)
-  if (one.success) {
+  const returnEnvelope = await client.returnEnvelope.create(contact.contact!.id)
+  if (returnEnvelope.success) {
     console.log('Success!')
   } else {
     console.log('Error! Creating the return envelope failed, and the output is:')
-    console.log(one)
+    console.log(returnEnvelope)
   }
 
-  if (one.success) {
+  if (returnEnvelope.success) {
     console.log('fetching a single return envelope...')
-    const two = await client.returnEnvelope.get(one.returnEnvelope!.id)
-    if (two.success) {
+    const getReturnEnvelope = await client.returnEnvelope.get(returnEnvelope.returnEnvelope!.id)
+    if (getReturnEnvelope.success) {
       console.log('Success!')
     } else {
       console.log('Error! Fetching the return envelope failed, and the output is:')
-      console.log(two)
+      console.log(getReturnEnvelope)
     }
   }
 
   console.log('listing the first page of 40 return envelopes...')
-  const tre = await client.returnEnvelope.list()
-  if (tre.success) {
-    console.log(`Success! The list contained ${tre.returnEnvelopeList!.data!.length} return envelopes...`)
+  const listReturnEnvelope = await client.returnEnvelope.list()
+  if (listReturnEnvelope.success) {
+    console.log(`Success! The list contained ${listReturnEnvelope.returnEnvelopeList!.data!.length} return envelopes...`)
   } else {
     console.log('Error! Listing the return envelopes failed, and the output is:')
-    console.log(tre)
+    console.log(listReturnEnvelope)
   }
 
 })()
