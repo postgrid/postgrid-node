@@ -11,6 +11,8 @@ import { BankAccountApi } from './bank-account'
 import { CheckApi } from './check'
 import { WebhookApi } from './webhook'
 import { AddressApi } from './address'
+import { ReturnEnvelopeApi } from './return-envelope'
+import { ReturnEnvelopeOrderApi } from './return-envelope-order'
 
 const ClientVersion = require('../package.json').version
 const PROTOCOL = 'https'
@@ -76,6 +78,8 @@ export class PostGrid {
   check: CheckApi
   webhook: WebhookApi
   address: AddressApi
+  returnEnvelope: ReturnEnvelopeApi
+  returnEnvelopeOrder: ReturnEnvelopeOrderApi
 
   constructor (apiKeys: PostGridApiKeys | string, options?: PostGridOptions) {
     this.host = options?.host || POSTGRID_HOST
@@ -97,6 +101,8 @@ export class PostGrid {
     this.check = new CheckApi(this, options)
     this.webhook = new WebhookApi(this, options)
     this.address = new AddressApi(this, options)
+    this.returnEnvelope = new ReturnEnvelopeApi(this, options)
+    this.returnEnvelopeOrder = new ReturnEnvelopeOrderApi(this, options)
 
     // if we have a webhook, then create that now
     if (this.webhookUrl) {
