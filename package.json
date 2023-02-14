@@ -1,5 +1,5 @@
 {
-  "name": "postgrid-node-client",
+  "name": "postgrid-node",
   "version": "0.9.0",
   "description": "Node.js Client for PostGrid Business API",
   "keywords": [
@@ -10,14 +10,15 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/flexbase-eng/postgrid-node-client.git"
+    "url": "https://github.com/postgrid/postgrid-node-client"
   },
   "author": {
-    "name": "Flexbase Technologies",
-    "email": "hello@flexbase.app",
-    "url": "https://flexbase.app"
+    "name": "PostGrid",
+    "email": "info@postgrid.com",
+    "url": "https://postgrid.com"
   },
   "contributors": [
+    "PostGrid <info@postgrid.com>",
     "Bob Beaty <bob@flexbase.app>",
     "Patrick Flor <patrick@flexbase.app>"
   ],
@@ -55,6 +56,6 @@
     "ts": "ts-node -r dotenv/config",
     "prepublishOnly": "tsc --declaration",
     "lint": "eslint . --ext .ts --fix",
-    "test": "echo 'This project currently uses manually run end-to-end tests; see https://github.com/flexbase-eng/postgrid-node-client/tree/main#development for setup instructions.'"
+    "test": "echo 'This project currently uses manually run end-to-end tests; see https://github.com/postgrid/postgrid-node-client#readme for setup instructions.'"
   }
 }
