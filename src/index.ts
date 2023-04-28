@@ -11,6 +11,8 @@ import { BankAccountApi } from './bank-account'
 import { CheckApi } from './check'
 import { WebhookApi } from './webhook'
 import { AddressApi } from './address'
+import { ReturnEnvelopeApi } from './return-envelope'
+import { ReturnEnvelopeOrderApi } from './return-envelope-order'
 
 const ClientVersion = require('../package.json').version
 const PROTOCOL = 'https'
@@ -76,6 +78,8 @@ export class PostGrid {
   check: CheckApi
   webhook: WebhookApi
   address: AddressApi
+  returnEnvelope: ReturnEnvelopeApi
+  returnEnvelopeOrder: ReturnEnvelopeOrderApi
 
   constructor (apiKeys: PostGridApiKeys | string, options?: PostGridOptions) {
     this.host = options?.host || POSTGRID_HOST
@@ -97,6 +101,8 @@ export class PostGrid {
     this.check = new CheckApi(this, options)
     this.webhook = new WebhookApi(this, options)
     this.address = new AddressApi(this, options)
+    this.returnEnvelope = new ReturnEnvelopeApi(this, options)
+    this.returnEnvelopeOrder = new ReturnEnvelopeOrderApi(this, options)
 
     // if we have a webhook, then create that now
     if (this.webhookUrl) {
@@ -118,16 +124,19 @@ export class PostGrid {
     method: string,
     uri: string,
     headers?: any,
-    query?: { [index:string] : number | string | boolean },
-    body?: object | object[] | FormData,
-  ): Promise<{ response: any, payload?: any }> {
+    query?: { [index: string]: number | string | boolean | undefined },
+    body?: object | object[] | FormData
+  ): Promise<{ response: any; payload?: any }> {
     // build up the complete url from the provided 'uri' and the 'host'
     let url = new URL(PROTOCOL+'://'+path.join(this.host, uri))
     if (query) {
-      Object.keys(query).forEach(k =>
-        url.searchParams.append(k, query[k].toString()))
+        Object.keys(query).forEach((k) => {
+          if (query[k]) {
+            url.searchParams.append(k, query[k]!.toString());
+          }
+        });
     }
-    const isForm = isFormData(body)
+    const isForm = isFormData(body);
     // make the appropriate headers
     headers = { ...headers,
       Accept: 'application/json',

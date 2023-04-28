@@ -17,6 +17,7 @@ export interface Letter {
   color: boolean;
   doubleSided: boolean;
   url?: string;
+  returnEnvelope?: string;
   pageCount?: number
   mergeVariables?: any;
   metadata?: any;
@@ -122,6 +123,7 @@ export class LetterApi {
     doubleSided?: boolean;
     pdf?: Buffer | string;
     url?: string;
+    returnEnvelope?: string;
     pageCount?: number
     mergeVariables?: any;
     metadata?: any;
