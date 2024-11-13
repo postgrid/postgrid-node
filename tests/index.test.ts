@@ -172,16 +172,29 @@ describe('instantiate client', () => {
 
   test('with environment variable arguments', () => {
     // set options via env var
-    process.env['X_API_KEY'] = 'My API Key';
+    process.env['POSTGRID_API_KEY'] = 'My API Key';
     const client = new PostGrid();
     expect(client.apiKey).toBe('My API Key');
   });
 
   test('with overriden environment variable arguments', () => {
     // set options via env var
-    process.env['X_API_KEY'] = 'another My API Key';
+    process.env['POSTGRID_API_KEY'] = 'another My API Key';
     const client = new PostGrid({ apiKey: 'My API Key' });
     expect(client.apiKey).toBe('My API Key');
+  });
+});
+
+describe('idempotency', () => {
+  test('key can be set per-request', async () => {
+    const client = new PostGrid({
+      baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
+      apiKey: 'My API Key',
+    });
+    await client.contacts.create(
+      { addressLine1: 'addressLine1', countryCode: 'countryCode', firstName: 'firstName' },
+      { idempotencyKey: 'my-idempotency-key' },
+    );
   });
 });
 

@@ -100,7 +100,7 @@ export class PostGrid extends Core.APIClient {
   /**
    * API Client for interfacing with the PostGrid API.
    *
-   * @param {string | undefined} [opts.apiKey=process.env['X_API_KEY'] ?? undefined]
+   * @param {string | undefined} [opts.apiKey=process.env['POSTGRID_API_KEY'] ?? undefined]
    * @param {string} [opts.baseURL=process.env['POSTGRID_BASE_URL'] ?? https://api.postgrid.com/print-mail/v1] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {number} [opts.httpAgent] - An HTTP agent used to manage HTTP(s) connections.
@@ -111,12 +111,12 @@ export class PostGrid extends Core.APIClient {
    */
   constructor({
     baseURL = Core.readEnv('POSTGRID_BASE_URL'),
-    apiKey = Core.readEnv('X_API_KEY'),
+    apiKey = Core.readEnv('POSTGRID_API_KEY'),
     ...opts
   }: ClientOptions = {}) {
     if (apiKey === undefined) {
       throw new Errors.PostGridError(
-        "The X_API_KEY environment variable is missing or empty; either provide it, or instantiate the PostGrid client with an apiKey option, like new PostGrid({ apiKey: 'My API Key' }).",
+        "The POSTGRID_API_KEY environment variable is missing or empty; either provide it, or instantiate the PostGrid client with an apiKey option, like new PostGrid({ apiKey: 'My API Key' }).",
       );
     }
 
@@ -135,6 +135,7 @@ export class PostGrid extends Core.APIClient {
     });
 
     this._options = options;
+    this.idempotencyHeader = 'Idempotency-Key';
 
     this.apiKey = apiKey;
   }
