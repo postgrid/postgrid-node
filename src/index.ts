@@ -90,15 +90,15 @@ export interface ClientOptions {
 }
 
 /**
- * API Client for interfacing with the Postgrid API.
+ * API Client for interfacing with the PostGrid API.
  */
-export class Postgrid extends Core.APIClient {
+export class PostGrid extends Core.APIClient {
   apiKey: string;
 
   private _options: ClientOptions;
 
   /**
-   * API Client for interfacing with the Postgrid API.
+   * API Client for interfacing with the PostGrid API.
    *
    * @param {string | undefined} [opts.apiKey=process.env['X_API_KEY'] ?? undefined]
    * @param {string} [opts.baseURL=process.env['POSTGRID_BASE_URL'] ?? https://api.postgrid.com/print-mail/v1] - Override the default base URL for the API.
@@ -115,8 +115,8 @@ export class Postgrid extends Core.APIClient {
     ...opts
   }: ClientOptions = {}) {
     if (apiKey === undefined) {
-      throw new Errors.PostgridError(
-        "The X_API_KEY environment variable is missing or empty; either provide it, or instantiate the Postgrid client with an apiKey option, like new Postgrid({ apiKey: 'My API Key' }).",
+      throw new Errors.PostGridError(
+        "The X_API_KEY environment variable is missing or empty; either provide it, or instantiate the PostGrid client with an apiKey option, like new PostGrid({ apiKey: 'My API Key' }).",
       );
     }
 
@@ -157,10 +157,10 @@ export class Postgrid extends Core.APIClient {
     return { 'X-API-Key': this.apiKey };
   }
 
-  static Postgrid = this;
+  static PostGrid = this;
   static DEFAULT_TIMEOUT = 60000; // 1 minute
 
-  static PostgridError = Errors.PostgridError;
+  static PostGridError = Errors.PostGridError;
   static APIError = Errors.APIError;
   static APIConnectionError = Errors.APIConnectionError;
   static APIConnectionTimeoutError = Errors.APIConnectionTimeoutError;
@@ -178,11 +178,11 @@ export class Postgrid extends Core.APIClient {
   static fileFromPath = Uploads.fileFromPath;
 }
 
-Postgrid.Contacts = Contacts;
-Postgrid.ContactsList = ContactsList;
-Postgrid.Templates = Templates;
-Postgrid.TemplatesList = TemplatesList;
-export declare namespace Postgrid {
+PostGrid.Contacts = Contacts;
+PostGrid.ContactsList = ContactsList;
+PostGrid.Templates = Templates;
+PostGrid.TemplatesList = TemplatesList;
+export declare namespace PostGrid {
   export type RequestOptions = Core.RequestOptions;
 
   export import List = Pagination.List;
@@ -211,7 +211,7 @@ export declare namespace Postgrid {
 
 export { toFile, fileFromPath } from 'postgrid/uploads';
 export {
-  PostgridError,
+  PostGridError,
   APIError,
   APIConnectionError,
   APIConnectionTimeoutError,
@@ -226,4 +226,4 @@ export {
   UnprocessableEntityError,
 } from 'postgrid/error';
 
-export default Postgrid;
+export default PostGrid;

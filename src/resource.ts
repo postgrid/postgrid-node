@@ -1,11 +1,11 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import type { Postgrid } from './index';
+import type { PostGrid } from './index';
 
 export class APIResource {
-  protected _client: Postgrid;
+  protected _client: PostGrid;
 
-  constructor(client: Postgrid) {
+  constructor(client: PostGrid) {
     this._client = client;
   }
 }

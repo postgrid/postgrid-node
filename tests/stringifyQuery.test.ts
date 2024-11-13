@@ -1,8 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { Postgrid } from 'postgrid';
+import { PostGrid } from 'postgrid';
 
-const { stringifyQuery } = Postgrid.prototype as any;
+const { stringifyQuery } = PostGrid.prototype as any;
 
 describe(stringifyQuery, () => {
   for (const [input, expected] of [

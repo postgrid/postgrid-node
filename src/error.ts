@@ -2,9 +2,9 @@
 
 import { castToError, Headers } from './core';
 
-export class PostgridError extends Error {}
+export class PostGridError extends Error {}
 
-export class APIError extends PostgridError {
+export class APIError extends PostGridError {
   readonly status: number | undefined;
   readonly headers: Headers | undefined;
   readonly error: Object | undefined;
