@@ -210,7 +210,7 @@ export declare namespace PostGrid {
   };
 }
 
-export { toFile, fileFromPath } from 'postgrid/uploads';
+export { toFile, fileFromPath } from './uploads';
 export {
   PostGridError,
   APIError,
@@ -225,6 +225,6 @@ export {
   InternalServerError,
   PermissionDeniedError,
   UnprocessableEntityError,
-} from 'postgrid/error';
+} from './error';
 
 export default PostGrid;
