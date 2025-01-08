@@ -109,7 +109,7 @@ export type ContactCreateParams =
   | ContactCreateParams.ContactCreateWithFirstName
   | ContactCreateParams.ContactCreateWithCompanyName;
 
-export namespace ContactCreateParams {
+export declare namespace ContactCreateParams {
   export interface ContactCreateWithFirstName {
     /**
      * The first line of the contact's address.
