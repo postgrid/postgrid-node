@@ -70,6 +70,11 @@ export interface Template {
   live: boolean;
 
   /**
+   * Always `template`.
+   */
+  object: 'template';
+
+  /**
    * The UTC time at which this resource was last updated.
    */
   updatedAt: string;
@@ -79,6 +84,11 @@ export interface Template {
    * dashboard.
    */
   description?: string;
+
+  /**
+   * The HTML content of this template.
+   */
+  html?: string;
 
   /**
    * See the section on Metadata.
