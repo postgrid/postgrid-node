@@ -8,6 +8,15 @@ import { type ListParams, ListResponse } from './pagination';
 import * as Uploads from './uploads';
 import * as API from './resources/index';
 import {
+  BankAccount,
+  BankAccountCreateParams,
+  BankAccountDeleteResponse,
+  BankAccountList,
+  BankAccountListParams,
+  BankAccounts,
+  BankAccountsList,
+} from './resources/bank-accounts';
+import {
   Contact,
   ContactCreateParams,
   ContactDeleteResponse,
@@ -15,6 +24,24 @@ import {
   Contacts,
   ContactsList,
 } from './resources/contacts';
+import {
+  Letter,
+  LetterCreateParams,
+  LetterList,
+  LetterListParams,
+  LetterURLResponse,
+  Letters,
+  LettersList,
+} from './resources/letters';
+import {
+  Postcard,
+  PostcardCreateParams,
+  PostcardList,
+  PostcardListParams,
+  PostcardURLResponse,
+  Postcards,
+  PostcardsList,
+} from './resources/postcards';
 import {
   Template,
   TemplateCreateParams,
@@ -25,6 +52,14 @@ import {
   Templates,
   TemplatesList,
 } from './resources/templates';
+import {
+  Cheque,
+  ChequeCreateParams,
+  ChequeList,
+  ChequeListParams,
+  Cheques,
+  ChequesList,
+} from './resources/cheques/cheques';
 
 export interface ClientOptions {
   /**
@@ -142,6 +177,10 @@ export class PostGrid extends Core.APIClient {
 
   contacts: API.Contacts = new API.Contacts(this);
   templates: API.Templates = new API.Templates(this);
+  bankAccounts: API.BankAccounts = new API.BankAccounts(this);
+  cheques: API.Cheques = new API.Cheques(this);
+  letters: API.Letters = new API.Letters(this);
+  postcards: API.Postcards = new API.Postcards(this);
 
   protected override defaultQuery(): Core.DefaultQuery | undefined {
     return this._options.defaultQuery;
@@ -183,6 +222,14 @@ PostGrid.Contacts = Contacts;
 PostGrid.ContactsList = ContactsList;
 PostGrid.Templates = Templates;
 PostGrid.TemplatesList = TemplatesList;
+PostGrid.BankAccounts = BankAccounts;
+PostGrid.BankAccountsList = BankAccountsList;
+PostGrid.Cheques = Cheques;
+PostGrid.ChequesList = ChequesList;
+PostGrid.Letters = Letters;
+PostGrid.LettersList = LettersList;
+PostGrid.Postcards = Postcards;
+PostGrid.PostcardsList = PostcardsList;
 export declare namespace PostGrid {
   export type RequestOptions = Core.RequestOptions;
 
@@ -207,6 +254,45 @@ export declare namespace PostGrid {
     type TemplateCreateParams as TemplateCreateParams,
     type TemplateUpdateParams as TemplateUpdateParams,
     type TemplateListParams as TemplateListParams,
+  };
+
+  export {
+    BankAccounts as BankAccounts,
+    type BankAccount as BankAccount,
+    type BankAccountList as BankAccountList,
+    type BankAccountDeleteResponse as BankAccountDeleteResponse,
+    BankAccountsList as BankAccountsList,
+    type BankAccountCreateParams as BankAccountCreateParams,
+    type BankAccountListParams as BankAccountListParams,
+  };
+
+  export {
+    Cheques as Cheques,
+    type Cheque as Cheque,
+    type ChequeList as ChequeList,
+    ChequesList as ChequesList,
+    type ChequeCreateParams as ChequeCreateParams,
+    type ChequeListParams as ChequeListParams,
+  };
+
+  export {
+    Letters as Letters,
+    type Letter as Letter,
+    type LetterList as LetterList,
+    type LetterURLResponse as LetterURLResponse,
+    LettersList as LettersList,
+    type LetterCreateParams as LetterCreateParams,
+    type LetterListParams as LetterListParams,
+  };
+
+  export {
+    Postcards as Postcards,
+    type Postcard as Postcard,
+    type PostcardList as PostcardList,
+    type PostcardURLResponse as PostcardURLResponse,
+    PostcardsList as PostcardsList,
+    type PostcardCreateParams as PostcardCreateParams,
+    type PostcardListParams as PostcardListParams,
   };
 }
 
