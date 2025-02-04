@@ -427,8 +427,8 @@ export declare namespace LetterCreateParams {
      * here just like you can for the `to`.
      */
     from:
-      | LetterCreateParams.LetterCreateWithHTML.ContactCreateWithFirstName
-      | LetterCreateParams.LetterCreateWithHTML.ContactCreateWithCompanyName
+      | LetterCreateWithHTML.ContactCreateWithFirstName
+      | LetterCreateWithHTML.ContactCreateWithCompanyName
       | string;
 
     /**
@@ -444,8 +444,8 @@ export declare namespace LetterCreateParams {
      * the contact creation endpoint.
      */
     to:
-      | LetterCreateParams.LetterCreateWithHTML.ContactCreateWithFirstName
-      | LetterCreateParams.LetterCreateWithHTML.ContactCreateWithCompanyName
+      | LetterCreateWithHTML.ContactCreateWithFirstName
+      | LetterCreateWithHTML.ContactCreateWithCompanyName
       | string;
 
     /**
@@ -456,7 +456,7 @@ export declare namespace LetterCreateParams {
     /**
      * Model representing an attached PDF.
      */
-    attachedPDF?: LetterCreateParams.LetterCreateWithHTML.AttachedPdf;
+    attachedPDF?: LetterCreateWithHTML.AttachedPdf;
 
     /**
      * Indicates if the letter is in color.
@@ -534,7 +534,7 @@ export declare namespace LetterCreateParams {
     /**
      * Model representing a plastic card.
      */
-    plasticCard?: LetterCreateParams.LetterCreateWithHTML.PlasticCard;
+    plasticCard?: LetterCreateWithHTML.PlasticCard;
 
     /**
      * The return envelope (ID) sent out with the letter, if any.
@@ -987,8 +987,8 @@ export declare namespace LetterCreateParams {
      * here just like you can for the `to`.
      */
     from:
-      | LetterCreateParams.LetterCreateWithPdf.ContactCreateWithFirstName
-      | LetterCreateParams.LetterCreateWithPdf.ContactCreateWithCompanyName
+      | LetterCreateWithPdf.ContactCreateWithFirstName
+      | LetterCreateWithPdf.ContactCreateWithCompanyName
       | string;
 
     /**
@@ -1003,8 +1003,8 @@ export declare namespace LetterCreateParams {
      * the contact creation endpoint.
      */
     to:
-      | LetterCreateParams.LetterCreateWithPdf.ContactCreateWithFirstName
-      | LetterCreateParams.LetterCreateWithPdf.ContactCreateWithCompanyName
+      | LetterCreateWithPdf.ContactCreateWithFirstName
+      | LetterCreateWithPdf.ContactCreateWithCompanyName
       | string;
 
     /**
@@ -1015,7 +1015,7 @@ export declare namespace LetterCreateParams {
     /**
      * Model representing an attached PDF.
      */
-    attachedPDF?: LetterCreateParams.LetterCreateWithPdf.AttachedPdf;
+    attachedPDF?: LetterCreateWithPdf.AttachedPdf;
 
     /**
      * Indicates if the letter is in color.
@@ -1093,7 +1093,7 @@ export declare namespace LetterCreateParams {
     /**
      * Model representing a plastic card.
      */
-    plasticCard?: LetterCreateParams.LetterCreateWithPdf.PlasticCard;
+    plasticCard?: LetterCreateWithPdf.PlasticCard;
 
     /**
      * The return envelope (ID) sent out with the letter, if any.

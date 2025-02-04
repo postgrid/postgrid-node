@@ -294,8 +294,8 @@ export declare namespace PostcardCreateParams {
      * the contact creation endpoint.
      */
     to:
-      | PostcardCreateParams.PostcardCreateWithHTML.ContactCreateWithFirstName
-      | PostcardCreateParams.PostcardCreateWithHTML.ContactCreateWithCompanyName
+      | PostcardCreateWithHTML.ContactCreateWithFirstName
+      | PostcardCreateWithHTML.ContactCreateWithCompanyName
       | string;
 
     /**
@@ -310,8 +310,8 @@ export declare namespace PostcardCreateParams {
      * address is optional for postcards.
      */
     from?:
-      | PostcardCreateParams.PostcardCreateWithHTML.ContactCreateWithFirstName
-      | PostcardCreateParams.PostcardCreateWithHTML.ContactCreateWithCompanyName
+      | PostcardCreateWithHTML.ContactCreateWithFirstName
+      | PostcardCreateWithHTML.ContactCreateWithCompanyName
       | string;
 
     /**
@@ -729,8 +729,8 @@ export declare namespace PostcardCreateParams {
      * the contact creation endpoint.
      */
     to:
-      | PostcardCreateParams.PostcardCreateWithPdfurl.ContactCreateWithFirstName
-      | PostcardCreateParams.PostcardCreateWithPdfurl.ContactCreateWithCompanyName
+      | PostcardCreateWithPdfurl.ContactCreateWithFirstName
+      | PostcardCreateWithPdfurl.ContactCreateWithCompanyName
       | string;
 
     /**
@@ -745,8 +745,8 @@ export declare namespace PostcardCreateParams {
      * address is optional for postcards.
      */
     from?:
-      | PostcardCreateParams.PostcardCreateWithPdfurl.ContactCreateWithFirstName
-      | PostcardCreateParams.PostcardCreateWithPdfurl.ContactCreateWithCompanyName
+      | PostcardCreateWithPdfurl.ContactCreateWithFirstName
+      | PostcardCreateWithPdfurl.ContactCreateWithCompanyName
       | string;
 
     /**
@@ -1150,8 +1150,8 @@ export declare namespace PostcardCreateParams {
      * the contact creation endpoint.
      */
     to:
-      | PostcardCreateParams.PostcardCreateWithPdfFile.ContactCreateWithFirstName
-      | PostcardCreateParams.PostcardCreateWithPdfFile.ContactCreateWithCompanyName
+      | PostcardCreateWithPdfFile.ContactCreateWithFirstName
+      | PostcardCreateWithPdfFile.ContactCreateWithCompanyName
       | string;
 
     /**
@@ -1166,8 +1166,8 @@ export declare namespace PostcardCreateParams {
      * address is optional for postcards.
      */
     from?:
-      | PostcardCreateParams.PostcardCreateWithPdfFile.ContactCreateWithFirstName
-      | PostcardCreateParams.PostcardCreateWithPdfFile.ContactCreateWithCompanyName
+      | PostcardCreateWithPdfFile.ContactCreateWithFirstName
+      | PostcardCreateWithPdfFile.ContactCreateWithCompanyName
       | string;
 
     /**
