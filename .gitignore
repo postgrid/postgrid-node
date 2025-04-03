@@ -100,4 +100,4 @@ dist
 .dynamodb/
 # TernJS port file
 .tern-port
-.speakeasy
+temp
