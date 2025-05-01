@@ -6,21 +6,9 @@
 import { SelfMailerCreateWithPDFFile } from "postgrid-node/models/components";
 
 let value: SelfMailerCreateWithPDFFile = {
-  to: {
-    addressLine1: "32570 Wehner Fall",
-    countryCode: "NR",
-    skipVerification: false,
-    forceVerifiedStatus: false,
-    companyName: "Altenwerth Inc",
-  },
-  size: "9.5x16_trifold",
-  from: {
-    addressLine1: "1295 Eduardo Land",
-    countryCode: "AL",
-    skipVerification: false,
-    forceVerifiedStatus: false,
-    companyName: "Kuhn Group",
-  },
+  to: "<value>",
+  size: "8.5x11_bifold",
+  from: "<value>",
   pdf: "<value>",
 };
 ```

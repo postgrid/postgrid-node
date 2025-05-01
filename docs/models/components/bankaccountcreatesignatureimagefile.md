@@ -7,7 +7,7 @@ import { BankAccountCreateSignatureImageFile } from "postgrid-node/models/compon
 
 let value: BankAccountCreateSignatureImageFile = {
   bankName: "<value>",
-  bankCountryCode: "US",
+  bankCountryCode: "CA",
   accountNumber: "<value>",
   signatureImage: "<value>",
 };

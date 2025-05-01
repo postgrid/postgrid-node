@@ -9,11 +9,11 @@ The recipient of this order. You can either supply the contact information inlin
 
 ```typescript
 const value: components.ContactCreate = {
-  addressLine1: "38481 Hansen Gardens",
-  countryCode: "JM",
+  addressLine1: "476 Greenholt Gateway",
+  countryCode: "VI",
   skipVerification: false,
   forceVerifiedStatus: false,
-  companyName: "Herzog and Sons",
+  firstName: "Jayden",
 };
 ```
 

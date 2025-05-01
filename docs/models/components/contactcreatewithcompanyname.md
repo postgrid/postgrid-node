@@ -6,9 +6,9 @@
 import { ContactCreateWithCompanyName } from "postgrid-node/models/components";
 
 let value: ContactCreateWithCompanyName = {
-  addressLine1: "45868 Pierre Divide",
-  countryCode: "VE",
-  companyName: "Emard, White and Renner",
+  addressLine1: "1291 Hall Street",
+  countryCode: "FO",
+  companyName: "Tromp, Tillman and Johnston",
 };
 ```
 

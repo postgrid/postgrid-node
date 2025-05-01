@@ -8,13 +8,13 @@
 ```typescript
 const value: components.SelfMailerCreateWithHTML = {
   to: {
-    addressLine1: "540 Bergnaum Estates",
-    countryCode: "US",
+    addressLine1: "9687 Lawrence Street",
+    countryCode: "CG",
     skipVerification: false,
     forceVerifiedStatus: false,
-    firstName: "Cruz",
+    companyName: "Hegmann, Kub and Pfannerstill",
   },
-  size: "9.5x16_trifold",
+  size: "8.5x11_trifold",
   from: "<value>",
   insideHTML: "<value>",
   outsideHTML: "<value>",
@@ -34,16 +34,10 @@ const value: components.SelfMailerCreateWithTemplate = {
 
 ```typescript
 const value: components.SelfMailerCreateWithPDFURL = {
-  to: {
-    addressLine1: "76849 Elda Rapids",
-    countryCode: "IN",
-    skipVerification: false,
-    forceVerifiedStatus: false,
-    companyName: "Breitenberg - Schumm",
-  },
-  size: "8.5x11_trifold",
+  to: "<value>",
+  size: "8.5x11_bifold",
   from: "<value>",
-  pdf: "https://incomparable-gazebo.name",
+  pdf: "https://fine-eyeliner.net/",
 };
 ```
 
@@ -51,14 +45,20 @@ const value: components.SelfMailerCreateWithPDFURL = {
 
 ```typescript
 const value: components.SelfMailerCreateWithPDFFile = {
-  to: "<value>",
-  size: "9.5x16_trifold",
-  from: {
-    addressLine1: "714 Florine View",
-    countryCode: "UA",
+  to: {
+    addressLine1: "89182 Spencer Creek",
+    countryCode: "KG",
     skipVerification: false,
     forceVerifiedStatus: false,
-    companyName: "Hayes - Miller",
+    companyName: "Wunsch, Larkin and Hirthe",
+  },
+  size: "8.5x11_trifold",
+  from: {
+    addressLine1: "994 Mulberry Street",
+    countryCode: "MC",
+    skipVerification: false,
+    forceVerifiedStatus: false,
+    companyName: "McClure, Thiel and Runolfsson",
   },
   pdf: "<value>",
 };

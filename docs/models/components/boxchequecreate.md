@@ -10,16 +10,16 @@ import { BoxChequeCreate } from "postgrid-node/models/components";
 
 let value: BoxChequeCreate = {
   bankAccount: "<value>",
-  amount: 729991,
-  number: 171629,
-  from: "<value>",
-  to: {
-    addressLine1: "82397 Casimer Passage",
-    countryCode: "MK",
+  amount: 35793,
+  number: 211017,
+  from: {
+    addressLine1: "39114 Hillside Avenue",
+    countryCode: "EE",
     skipVerification: false,
     forceVerifiedStatus: false,
-    firstName: "David",
+    companyName: "Zulauf, Graham and Spencer",
   },
+  to: "<value>",
 };
 ```
 

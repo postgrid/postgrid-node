@@ -7,7 +7,7 @@ One of `verified`, `corrected`, or `failed`.
 ```typescript
 import { AddressStatus } from "postgrid-node/models/components";
 
-let value: AddressStatus = "failed";
+let value: AddressStatus = "corrected";
 ```
 
 ## Values

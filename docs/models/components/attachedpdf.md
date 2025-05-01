@@ -8,8 +8,8 @@ Model representing an attached PDF.
 import { AttachedPDF } from "postgrid-node/models/components";
 
 let value: AttachedPDF = {
-  file: "https://minor-hippodrome.name",
-  placement: "before_template",
+  file: "https://strict-cellar.com/",
+  placement: "after_template",
 };
 ```
 

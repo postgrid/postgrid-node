@@ -10,7 +10,7 @@ import { LettersGetURLResponseBody } from "postgrid-node/models/operations";
 let value: LettersGetURLResponseBody = {
   id: "<id>",
   object: "<value>",
-  url: "https://favorable-waist.name/",
+  url: "https://quarrelsome-jogging.org",
 };
 ```
 

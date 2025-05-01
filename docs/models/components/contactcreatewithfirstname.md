@@ -6,9 +6,9 @@
 import { ContactCreateWithFirstName } from "postgrid-node/models/components";
 
 let value: ContactCreateWithFirstName = {
-  addressLine1: "74589 Makenzie Ford",
-  countryCode: "AL",
-  firstName: "Nils",
+  addressLine1: "4125 Cordell Hollow",
+  countryCode: "MA",
+  firstName: "Elva",
 };
 ```
 

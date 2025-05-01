@@ -10,7 +10,7 @@ import { SelfMailersGetURLResponseBody } from "postgrid-node/models/operations";
 let value: SelfMailersGetURLResponseBody = {
   id: "<id>",
   object: "<value>",
-  url: "https://total-ocelot.com",
+  url: "https://snarling-wilderness.biz/",
 };
 ```
 

@@ -7,14 +7,14 @@ import { ChequeCreate } from "postgrid-node/models/components";
 
 let value: ChequeCreate = {
   to: {
-    addressLine1: "5621 Will Divide",
-    countryCode: "TT",
+    addressLine1: "891 Makenzie Route",
+    countryCode: "PK",
     skipVerification: false,
     forceVerifiedStatus: false,
-    firstName: "Karine",
+    companyName: "McGlynn - Schiller",
   },
   bankAccount: "<value>",
-  amount: 456911,
+  amount: 796818,
   from: "<value>",
 };
 ```
