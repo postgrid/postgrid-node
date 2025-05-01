@@ -1,0 +1,836 @@
+lockVersion: 2.0.0
+id: 9f4aaa8f-29bf-480f-a075-3d787451c5ef
+management:
+  docChecksum: 61388a618916598a95221f11f8b497e5
+  docVersion: 0.0.0
+  speakeasyVersion: 1.541.2
+  generationVersion: 2.595.4
+  releaseVersion: 0.1.2
+  configChecksum: f5d0ef7bad3a707a387abf885c18ef34
+  repoURL: https://github.com/postgrid/postgrid-node.git
+  installationURL: https://github.com/postgrid/postgrid-node
+features:
+  typescript:
+    additionalDependencies: 0.1.0
+    constsAndDefaults: 0.1.11
+    core: 3.21.7
+    defaultEnabledRetries: 0.1.0
+    devContainers: 2.90.0
+    enumUnions: 0.1.0
+    envVarSecurityUsage: 0.1.2
+    errorUnions: 0.1.1
+    globalSecurity: 2.82.13
+    globalSecurityCallbacks: 0.1.0
+    globalSecurityFlattening: 0.1.0
+    globalServerURLs: 2.82.4
+    groups: 2.81.2
+    mcpServer: 0.9.2
+    nameOverrides: 2.81.2
+    responseFormat: 0.2.3
+    retries: 2.83.0
+    sdkHooks: 0.2.0
+    unions: 2.85.8
+generatedFiles:
+  - .devcontainer/README.md
+  - .devcontainer/devcontainer.json
+  - .devcontainer/setup.sh
+  - .gitattributes
+  - .npmignore
+  - FUNCTIONS.md
+  - RUNTIMES.md
+  - USAGE.md
+  - docs/lib/utils/retryconfig.md
+  - docs/models/components/addressplacement.md
+  - docs/models/components/addressstatus.md
+  - docs/models/components/attachedpdf.md
+  - docs/models/components/attachedpdfplacement.md
+  - docs/models/components/bankaccount.md
+  - docs/models/components/bankaccountcountrycode.md
+  - docs/models/components/bankaccountcreate.md
+  - docs/models/components/bankaccountcreatesignatureimagefile.md
+  - docs/models/components/bankaccountcreatesignatureimageurl.md
+  - docs/models/components/bankaccountcreatesignaturetext.md
+  - docs/models/components/bankaccountlist.md
+  - docs/models/components/bankaccountlistobject.md
+  - docs/models/components/box.md
+  - docs/models/components/boxcheque.md
+  - docs/models/components/boxchequecreate.md
+  - docs/models/components/boxchequecreatefrom.md
+  - docs/models/components/boxchequecreateto.md
+  - docs/models/components/boxcreate.md
+  - docs/models/components/boxlist.md
+  - docs/models/components/boxlistobject.md
+  - docs/models/components/boxobject.md
+  - docs/models/components/cancellation.md
+  - docs/models/components/cheque.md
+  - docs/models/components/chequecreate.md
+  - docs/models/components/chequecreatefrom.md
+  - docs/models/components/chequecreateto.md
+  - docs/models/components/chequecurrencycode.md
+  - docs/models/components/chequecurrencycode1.md
+  - docs/models/components/chequeenvelope.md
+  - docs/models/components/chequelist.md
+  - docs/models/components/chequelistobject.md
+  - docs/models/components/chequeobject.md
+  - docs/models/components/chequesize.md
+  - docs/models/components/contact.md
+  - docs/models/components/contactcreate.md
+  - docs/models/components/contactcreatewithcompanyname.md
+  - docs/models/components/contactcreatewithfirstname.md
+  - docs/models/components/contactobject.md
+  - docs/models/components/currencycode.md
+  - docs/models/components/currencycode1.md
+  - docs/models/components/currencycode2.md
+  - docs/models/components/digitalonly.md
+  - docs/models/components/envelope.md
+  - docs/models/components/envelope1.md
+  - docs/models/components/from.md
+  - docs/models/components/letter.md
+  - docs/models/components/lettercreate.md
+  - docs/models/components/lettercreatewithhtml.md
+  - docs/models/components/lettercreatewithhtmladdressplacement.md
+  - docs/models/components/lettercreatewithhtmlfrom.md
+  - docs/models/components/lettercreatewithhtmlsize.md
+  - docs/models/components/lettercreatewithhtmlto.md
+  - docs/models/components/lettercreatewithpdf.md
+  - docs/models/components/lettercreatewithpdfaddressplacement.md
+  - docs/models/components/lettercreatewithpdffrom.md
+  - docs/models/components/lettercreatewithpdfsize.md
+  - docs/models/components/lettercreatewithpdfto.md
+  - docs/models/components/lettercreatewithtemplate.md
+  - docs/models/components/letterlist.md
+  - docs/models/components/letterlistobject.md
+  - docs/models/components/letterobject.md
+  - docs/models/components/lettersize.md
+  - docs/models/components/objectt.md
+  - docs/models/components/one.md
+  - docs/models/components/orderimbstatus.md
+  - docs/models/components/ordermailingclass.md
+  - docs/models/components/orderstatus.md
+  - docs/models/components/plasticcard.md
+  - docs/models/components/plasticcarddoublesided.md
+  - docs/models/components/plasticcardsinglesided.md
+  - docs/models/components/plasticcardsize.md
+  - docs/models/components/postcard.md
+  - docs/models/components/postcardcreate.md
+  - docs/models/components/postcardcreatewithhtml.md
+  - docs/models/components/postcardcreatewithhtmlfrom.md
+  - docs/models/components/postcardcreatewithhtmlto.md
+  - docs/models/components/postcardcreatewithpdffile.md
+  - docs/models/components/postcardcreatewithpdffilefrom.md
+  - docs/models/components/postcardcreatewithpdffileto.md
+  - docs/models/components/postcardcreatewithpdfurl.md
+  - docs/models/components/postcardcreatewithpdfurlfrom.md
+  - docs/models/components/postcardcreatewithpdfurlto.md
+  - docs/models/components/postcardcreatewithtemplate.md
+  - docs/models/components/postcardlist.md
+  - docs/models/components/postcardlistobject.md
+  - docs/models/components/postcardobject.md
+  - docs/models/components/postcardsize.md
+  - docs/models/components/reason.md
+  - docs/models/components/redirectto.md
+  - docs/models/components/security.md
+  - docs/models/components/selfmailer.md
+  - docs/models/components/selfmailercreate.md
+  - docs/models/components/selfmailercreatewithhtml.md
+  - docs/models/components/selfmailercreatewithhtmlfrom.md
+  - docs/models/components/selfmailercreatewithhtmlto.md
+  - docs/models/components/selfmailercreatewithpdffile.md
+  - docs/models/components/selfmailercreatewithpdffilefrom.md
+  - docs/models/components/selfmailercreatewithpdffileto.md
+  - docs/models/components/selfmailercreatewithpdfurl.md
+  - docs/models/components/selfmailercreatewithpdfurlfrom.md
+  - docs/models/components/selfmailercreatewithpdfurlto.md
+  - docs/models/components/selfmailercreatewithtemplate.md
+  - docs/models/components/selfmailerlist.md
+  - docs/models/components/selfmailerlistobject.md
+  - docs/models/components/selfmailerobject.md
+  - docs/models/components/selfmailersize.md
+  - docs/models/components/size.md
+  - docs/models/components/template.md
+  - docs/models/components/templatecreate.md
+  - docs/models/components/templatelist.md
+  - docs/models/components/templatelistobject.md
+  - docs/models/components/templateobject.md
+  - docs/models/components/templateupdate.md
+  - docs/models/components/to.md
+  - docs/models/components/two.md
+  - docs/models/errors/bankaccountsgetresponsebody.md
+  - docs/models/errors/boxesgetresponsebody.md
+  - docs/models/errors/chequesgetdepositreadypdfchequesresponsebody.md
+  - docs/models/errors/chequesgetdepositreadypdferror.md
+  - docs/models/errors/chequesgetdepositreadypdfobject.md
+  - docs/models/errors/chequesgetdepositreadypdfresponsebody.md
+  - docs/models/errors/chequesgetdepositreadypdftype.md
+  - docs/models/errors/chequesgetresponsebody.md
+  - docs/models/errors/chequesgeturlresponsebody.md
+  - docs/models/errors/contactsgetresponsebody.md
+  - docs/models/errors/errort.md
+  - docs/models/errors/lettersgetresponsebody.md
+  - docs/models/errors/lettersgeturlresponsebody.md
+  - docs/models/errors/message.md
+  - docs/models/errors/notfounderror.md
+  - docs/models/errors/notfounderrorerror.md
+  - docs/models/errors/notfounderrorobject.md
+  - docs/models/errors/notfounderrortype.md
+  - docs/models/errors/objectt.md
+  - docs/models/errors/permissionmissingerror.md
+  - docs/models/errors/permissionmissingerrorerror.md
+  - docs/models/errors/permissionmissingerrorobject.md
+  - docs/models/errors/permissionmissingerrortype.md
+  - docs/models/errors/postcardsgetresponsebody.md
+  - docs/models/errors/postcardsgeturlresponsebody.md
+  - docs/models/errors/ratelimitexceedederror.md
+  - docs/models/errors/ratelimitexceedederrorerror.md
+  - docs/models/errors/ratelimitexceedederrorobject.md
+  - docs/models/errors/ratelimitexceedederrortype.md
+  - docs/models/errors/selfmailersgetresponsebody.md
+  - docs/models/errors/selfmailersgeturlresponsebody.md
+  - docs/models/errors/templatesgetresponsebody.md
+  - docs/models/errors/type.md
+  - docs/models/errors/unauthorizederror.md
+  - docs/models/errors/unauthorizederrorerror.md
+  - docs/models/errors/unauthorizederrorobject.md
+  - docs/models/errors/unauthorizederrortype.md
+  - docs/models/errors/unprocessableerror.md
+  - docs/models/errors/unprocessableerrorerror.md
+  - docs/models/errors/unprocessableerrorobject.md
+  - docs/models/errors/validationerror.md
+  - docs/models/operations/bankaccountsdeleterequest.md
+  - docs/models/operations/bankaccountsdeleteresponsebody.md
+  - docs/models/operations/bankaccountsgetrequest.md
+  - docs/models/operations/bankaccountslistrequest.md
+  - docs/models/operations/boxesdeleterequest.md
+  - docs/models/operations/boxesgetrequest.md
+  - docs/models/operations/boxeslistrequest.md
+  - docs/models/operations/chequesdeleterequest.md
+  - docs/models/operations/chequesgetdepositreadypdfrequest.md
+  - docs/models/operations/chequesgetrequest.md
+  - docs/models/operations/chequesgeturlrequest.md
+  - docs/models/operations/chequesgeturlresponsebody.md
+  - docs/models/operations/chequeslistrequest.md
+  - docs/models/operations/contactsdeleteobject.md
+  - docs/models/operations/contactsdeleterequest.md
+  - docs/models/operations/contactsdeleteresponsebody.md
+  - docs/models/operations/contactsgetrequest.md
+  - docs/models/operations/contactslistobject.md
+  - docs/models/operations/contactslistrequest.md
+  - docs/models/operations/contactslistresponsebody.md
+  - docs/models/operations/lettersdeleterequest.md
+  - docs/models/operations/lettersgetrequest.md
+  - docs/models/operations/lettersgeturlrequest.md
+  - docs/models/operations/lettersgeturlresponsebody.md
+  - docs/models/operations/letterslistrequest.md
+  - docs/models/operations/objectt.md
+  - docs/models/operations/postcardsdeleterequest.md
+  - docs/models/operations/postcardsgetrequest.md
+  - docs/models/operations/postcardsgeturlrequest.md
+  - docs/models/operations/postcardsgeturlresponsebody.md
+  - docs/models/operations/postcardslistrequest.md
+  - docs/models/operations/selfmailersdeleterequest.md
+  - docs/models/operations/selfmailersgetrequest.md
+  - docs/models/operations/selfmailersgeturlrequest.md
+  - docs/models/operations/selfmailersgeturlresponsebody.md
+  - docs/models/operations/selfmailerslistrequest.md
+  - docs/models/operations/templatesdeleteobject.md
+  - docs/models/operations/templatesdeleterequest.md
+  - docs/models/operations/templatesdeleteresponsebody.md
+  - docs/models/operations/templatesgetrequest.md
+  - docs/models/operations/templateslistrequest.md
+  - docs/models/operations/templatesupdaterequest.md
+  - docs/sdks/bankaccounts/README.md
+  - docs/sdks/boxes/README.md
+  - docs/sdks/cheques/README.md
+  - docs/sdks/contacts/README.md
+  - docs/sdks/letters/README.md
+  - docs/sdks/postcards/README.md
+  - docs/sdks/postgrid/README.md
+  - docs/sdks/selfmailers/README.md
+  - docs/sdks/templates/README.md
+  - eslint.config.mjs
+  - jsr.json
+  - package.json
+  - src/core.ts
+  - src/funcs/bankAccountsCreate.ts
+  - src/funcs/bankAccountsDelete.ts
+  - src/funcs/bankAccountsGet.ts
+  - src/funcs/bankAccountsList.ts
+  - src/funcs/boxesCreate.ts
+  - src/funcs/boxesDelete.ts
+  - src/funcs/boxesGet.ts
+  - src/funcs/boxesList.ts
+  - src/funcs/chequesCreate.ts
+  - src/funcs/chequesDelete.ts
+  - src/funcs/chequesGet.ts
+  - src/funcs/chequesGetDepositReadyPdf.ts
+  - src/funcs/chequesGetUrl.ts
+  - src/funcs/chequesList.ts
+  - src/funcs/contactsCreate.ts
+  - src/funcs/contactsDelete.ts
+  - src/funcs/contactsGet.ts
+  - src/funcs/contactsList.ts
+  - src/funcs/lettersCreate.ts
+  - src/funcs/lettersDelete.ts
+  - src/funcs/lettersGet.ts
+  - src/funcs/lettersGetUrl.ts
+  - src/funcs/lettersList.ts
+  - src/funcs/postcardsCreate.ts
+  - src/funcs/postcardsDelete.ts
+  - src/funcs/postcardsGet.ts
+  - src/funcs/postcardsGetUrl.ts
+  - src/funcs/postcardsList.ts
+  - src/funcs/selfMailersCreate.ts
+  - src/funcs/selfMailersDelete.ts
+  - src/funcs/selfMailersGet.ts
+  - src/funcs/selfMailersGetUrl.ts
+  - src/funcs/selfMailersList.ts
+  - src/funcs/templatesCreate.ts
+  - src/funcs/templatesDelete.ts
+  - src/funcs/templatesGet.ts
+  - src/funcs/templatesList.ts
+  - src/funcs/templatesUpdate.ts
+  - src/hooks/hooks.ts
+  - src/hooks/index.ts
+  - src/hooks/types.ts
+  - src/index.ts
+  - src/lib/base64.ts
+  - src/lib/config.ts
+  - src/lib/dlv.ts
+  - src/lib/encodings.ts
+  - src/lib/env.ts
+  - src/lib/files.ts
+  - src/lib/http.ts
+  - src/lib/is-plain-object.ts
+  - src/lib/logger.ts
+  - src/lib/matchers.ts
+  - src/lib/primitives.ts
+  - src/lib/retries.ts
+  - src/lib/schemas.ts
+  - src/lib/sdks.ts
+  - src/lib/security.ts
+  - src/lib/url.ts
+  - src/mcp-server/build.mts
+  - src/mcp-server/cli.ts
+  - src/mcp-server/cli/start/command.ts
+  - src/mcp-server/cli/start/impl.ts
+  - src/mcp-server/console-logger.ts
+  - src/mcp-server/extensions.ts
+  - src/mcp-server/mcp-server.ts
+  - src/mcp-server/prompts.ts
+  - src/mcp-server/resources.ts
+  - src/mcp-server/scopes.ts
+  - src/mcp-server/server.ts
+  - src/mcp-server/shared.ts
+  - src/mcp-server/tools.ts
+  - src/mcp-server/tools/bankAccountsCreate.ts
+  - src/mcp-server/tools/bankAccountsDelete.ts
+  - src/mcp-server/tools/bankAccountsGet.ts
+  - src/mcp-server/tools/bankAccountsList.ts
+  - src/mcp-server/tools/boxesCreate.ts
+  - src/mcp-server/tools/boxesDelete.ts
+  - src/mcp-server/tools/boxesGet.ts
+  - src/mcp-server/tools/boxesList.ts
+  - src/mcp-server/tools/chequesCreate.ts
+  - src/mcp-server/tools/chequesDelete.ts
+  - src/mcp-server/tools/chequesGet.ts
+  - src/mcp-server/tools/chequesGetDepositReadyPdf.ts
+  - src/mcp-server/tools/chequesGetUrl.ts
+  - src/mcp-server/tools/chequesList.ts
+  - src/mcp-server/tools/contactsCreate.ts
+  - src/mcp-server/tools/contactsDelete.ts
+  - src/mcp-server/tools/contactsGet.ts
+  - src/mcp-server/tools/contactsList.ts
+  - src/mcp-server/tools/lettersCreate.ts
+  - src/mcp-server/tools/lettersDelete.ts
+  - src/mcp-server/tools/lettersGet.ts
+  - src/mcp-server/tools/lettersGetUrl.ts
+  - src/mcp-server/tools/lettersList.ts
+  - src/mcp-server/tools/postcardsCreate.ts
+  - src/mcp-server/tools/postcardsDelete.ts
+  - src/mcp-server/tools/postcardsGet.ts
+  - src/mcp-server/tools/postcardsGetUrl.ts
+  - src/mcp-server/tools/postcardsList.ts
+  - src/mcp-server/tools/selfMailersCreate.ts
+  - src/mcp-server/tools/selfMailersDelete.ts
+  - src/mcp-server/tools/selfMailersGet.ts
+  - src/mcp-server/tools/selfMailersGetUrl.ts
+  - src/mcp-server/tools/selfMailersList.ts
+  - src/mcp-server/tools/templatesCreate.ts
+  - src/mcp-server/tools/templatesDelete.ts
+  - src/mcp-server/tools/templatesGet.ts
+  - src/mcp-server/tools/templatesList.ts
+  - src/mcp-server/tools/templatesUpdate.ts
+  - src/models/components/addressplacement.ts
+  - src/models/components/attachedpdf.ts
+  - src/models/components/attachedpdfplacement.ts
+  - src/models/components/bankaccount.ts
+  - src/models/components/bankaccountcountrycode.ts
+  - src/models/components/bankaccountcreate.ts
+  - src/models/components/bankaccountcreatesignatureimagefile.ts
+  - src/models/components/bankaccountcreatesignatureimageurl.ts
+  - src/models/components/bankaccountcreatesignaturetext.ts
+  - src/models/components/bankaccountlist.ts
+  - src/models/components/box.ts
+  - src/models/components/boxcheque.ts
+  - src/models/components/boxchequecreate.ts
+  - src/models/components/boxcreate.ts
+  - src/models/components/boxlist.ts
+  - src/models/components/cancellation.ts
+  - src/models/components/cheque.ts
+  - src/models/components/chequecreate.ts
+  - src/models/components/chequelist.ts
+  - src/models/components/chequesize.ts
+  - src/models/components/contact.ts
+  - src/models/components/contactcreate.ts
+  - src/models/components/contactcreatewithcompanyname.ts
+  - src/models/components/contactcreatewithfirstname.ts
+  - src/models/components/digitalonly.ts
+  - src/models/components/index.ts
+  - src/models/components/letter.ts
+  - src/models/components/lettercreate.ts
+  - src/models/components/lettercreatewithhtml.ts
+  - src/models/components/lettercreatewithpdf.ts
+  - src/models/components/lettercreatewithtemplate.ts
+  - src/models/components/letterlist.ts
+  - src/models/components/lettersize.ts
+  - src/models/components/orderimbstatus.ts
+  - src/models/components/ordermailingclass.ts
+  - src/models/components/orderstatus.ts
+  - src/models/components/plasticcard.ts
+  - src/models/components/plasticcarddoublesided.ts
+  - src/models/components/plasticcardsinglesided.ts
+  - src/models/components/plasticcardsize.ts
+  - src/models/components/postcard.ts
+  - src/models/components/postcardcreate.ts
+  - src/models/components/postcardcreatewithhtml.ts
+  - src/models/components/postcardcreatewithpdffile.ts
+  - src/models/components/postcardcreatewithpdfurl.ts
+  - src/models/components/postcardcreatewithtemplate.ts
+  - src/models/components/postcardlist.ts
+  - src/models/components/postcardsize.ts
+  - src/models/components/security.ts
+  - src/models/components/selfmailer.ts
+  - src/models/components/selfmailercreate.ts
+  - src/models/components/selfmailercreatewithhtml.ts
+  - src/models/components/selfmailercreatewithpdffile.ts
+  - src/models/components/selfmailercreatewithpdfurl.ts
+  - src/models/components/selfmailercreatewithtemplate.ts
+  - src/models/components/selfmailerlist.ts
+  - src/models/components/selfmailersize.ts
+  - src/models/components/template.ts
+  - src/models/components/templatecreate.ts
+  - src/models/components/templatelist.ts
+  - src/models/components/templateupdate.ts
+  - src/models/errors/apierror.ts
+  - src/models/errors/bankaccountsget.ts
+  - src/models/errors/boxesget.ts
+  - src/models/errors/chequesget.ts
+  - src/models/errors/chequesgetdepositreadypdf.ts
+  - src/models/errors/chequesgeturl.ts
+  - src/models/errors/contactsget.ts
+  - src/models/errors/httpclienterrors.ts
+  - src/models/errors/index.ts
+  - src/models/errors/lettersget.ts
+  - src/models/errors/lettersgeturl.ts
+  - src/models/errors/notfounderror.ts
+  - src/models/errors/permissionmissingerror.ts
+  - src/models/errors/postcardsget.ts
+  - src/models/errors/postcardsgeturl.ts
+  - src/models/errors/ratelimitexceedederror.ts
+  - src/models/errors/sdkvalidationerror.ts
+  - src/models/errors/selfmailersget.ts
+  - src/models/errors/selfmailersgeturl.ts
+  - src/models/errors/templatesget.ts
+  - src/models/errors/unauthorizederror.ts
+  - src/models/errors/unprocessableerror.ts
+  - src/models/errors/validationerror.ts
+  - src/models/operations/bankaccountsdelete.ts
+  - src/models/operations/bankaccountsget.ts
+  - src/models/operations/bankaccountslist.ts
+  - src/models/operations/boxesdelete.ts
+  - src/models/operations/boxesget.ts
+  - src/models/operations/boxeslist.ts
+  - src/models/operations/chequesdelete.ts
+  - src/models/operations/chequesget.ts
+  - src/models/operations/chequesgetdepositreadypdf.ts
+  - src/models/operations/chequesgeturl.ts
+  - src/models/operations/chequeslist.ts
+  - src/models/operations/contactsdelete.ts
+  - src/models/operations/contactsget.ts
+  - src/models/operations/contactslist.ts
+  - src/models/operations/index.ts
+  - src/models/operations/lettersdelete.ts
+  - src/models/operations/lettersget.ts
+  - src/models/operations/lettersgeturl.ts
+  - src/models/operations/letterslist.ts
+  - src/models/operations/postcardsdelete.ts
+  - src/models/operations/postcardsget.ts
+  - src/models/operations/postcardsgeturl.ts
+  - src/models/operations/postcardslist.ts
+  - src/models/operations/selfmailersdelete.ts
+  - src/models/operations/selfmailersget.ts
+  - src/models/operations/selfmailersgeturl.ts
+  - src/models/operations/selfmailerslist.ts
+  - src/models/operations/templatesdelete.ts
+  - src/models/operations/templatesget.ts
+  - src/models/operations/templateslist.ts
+  - src/models/operations/templatesupdate.ts
+  - src/sdk/bankaccounts.ts
+  - src/sdk/boxes.ts
+  - src/sdk/cheques.ts
+  - src/sdk/contacts.ts
+  - src/sdk/index.ts
+  - src/sdk/letters.ts
+  - src/sdk/postcards.ts
+  - src/sdk/sdk.ts
+  - src/sdk/selfmailers.ts
+  - src/sdk/templates.ts
+  - src/types/async.ts
+  - src/types/blobs.ts
+  - src/types/constdatetime.ts
+  - src/types/enums.ts
+  - src/types/fp.ts
+  - src/types/index.ts
+  - src/types/operations.ts
+  - src/types/rfcdate.ts
+  - src/types/streams.ts
+  - tsconfig.json
+examples:
+  BankAccounts_create:
+    "":
+      requestBody:
+        application/json: {"bankName": "Test Bank", "bankPrimaryLine": "145 mulberry st", "bankSecondaryLine": "new york ny 10013", "bankCountryCode": "US", "accountNumber": "1234567", "routingNumber": "123456789", "signatureText": "Example"}
+      responses:
+        "201":
+          application/json: {"object": "bank_account", "bankName": "Test Bank", "bankPrimaryLine": "145 mulberry st", "bankSecondaryLine": "new york ny 10013", "bankCountryCode": "US", "accountNumber": "1234567", "routingNumber": "123456789", "id": "bank_account_12345", "live": false, "createdAt": "2020-11-12T23:23:47.974Z", "updatedAt": "2020-11-12T23:23:47.974Z", "signatureText": "Signature"}
+  BankAccounts_list:
+    "":
+      parameters:
+        query:
+          skip: 0
+          limit: 10
+      responses:
+        "200":
+          application/json: {"object": "list", "totalCount": 1, "skip": 0, "limit": 10, "data": [{"object": "bank_account", "bankName": "Test Bank", "bankPrimaryLine": "145 mulberry st", "bankSecondaryLine": "new york ny 10013", "bankCountryCode": "US", "accountNumber": "1234567", "routingNumber": "123456789", "id": "bank_account_12345", "live": false, "createdAt": "2020-11-12T23:23:47.974Z", "updatedAt": "2020-11-12T23:23:47.974Z", "signatureText": "Signature"}]}
+  BankAccounts_get:
+    "":
+      parameters:
+        path:
+          id: "<id>"
+      responses:
+        "200":
+          application/json: {"object": "bank_account", "bankName": "Test Bank", "bankPrimaryLine": "145 mulberry st", "bankSecondaryLine": "new york ny 10013", "bankCountryCode": "US", "accountNumber": "1234567", "routingNumber": "123456789", "id": "bank_account_12345", "live": false, "createdAt": "2020-11-12T23:23:47.974Z", "updatedAt": "2020-11-12T23:23:47.974Z", "signatureText": "Signature"}
+  BankAccounts_delete:
+    speakeasy-default-bank-accounts-delete:
+      parameters:
+        path:
+          id: "<id>"
+      responses:
+        "200":
+          application/json: {"object": "bank_account", "id": "<id>", "deleted": false}
+        "401":
+          application/json: {"object": "error", "error": {"type": "missing_auth_error", "message": "<value>"}}
+        "404":
+          application/json: {"object": "error", "error": {"type": "not_found_error", "message": "<value>"}}
+        "422":
+          application/json: {"object": "error", "error": {"type": "<value>", "message": "<value>"}}
+        "429":
+          application/json: {"object": "error", "error": {"type": "rate_limit_exceeded_error", "message": "<value>"}}
+  Boxes_create:
+    "":
+      requestBody:
+        application/json: {"to": "contact_123", "from": "contact_456", "cheques": [{"bankAccount": "bank_abc", "amount": 5000, "number": 1042, "from": "contact_456", "to": "contact_123"}]}
+      responses:
+        "201":
+          application/json: {"status": "ready", "id": "box_123456", "description": "A sample box of cheques", "live": false, "createdAt": "2025-01-01T12:00:00Z", "updatedAt": "2025-01-02T12:00:00Z", "sendDate": "2020-11-12T23:23:47.974Z", "mailingClass": "first_class", "to": {"id": "contact_pxd7wnnD1xY6H6etKNvjb4", "live": false, "createdAt": "2022-02-16T15:08:41.052Z", "updatedAt": "2022-02-16T15:08:41.052Z", "object": "contact", "addressLine1": "90 CANAL ST STE 600", "city": "BOSTON", "provinceOrState": "MA", "postalOrZip": "90210-1234", "countryCode": "US", "addressStatus": "verified", "skipVerification": false, "forceVerifiedStatus": false}, "object": "box", "from": {"id": "contact_pxd7wnnD1xY6H6etKNvjb4", "live": false, "createdAt": "2022-02-16T15:08:41.052Z", "updatedAt": "2022-02-16T15:08:41.052Z", "object": "contact", "addressLine1": "90 CANAL ST STE 600", "city": "BOSTON", "provinceOrState": "MA", "postalOrZip": "90210-1234", "countryCode": "US", "addressStatus": "verified", "skipVerification": false, "forceVerifiedStatus": false}, "cheques": [{"bankAccount": "bank_123", "amount": 12345, "memo": "Test Memo", "logoURL": "https://example.com/logo.png", "messageTemplate": "Thank you!", "number": 1001, "mergeVariables": {"customKey": "customValue"}, "from": {"id": "contact_pxd7wnnD1xY6H6etKNvjb4", "live": false, "createdAt": "2022-02-16T15:08:41.052Z", "updatedAt": "2022-02-16T15:08:41.052Z", "object": "contact", "addressLine1": "90 CANAL ST STE 600", "city": "BOSTON", "provinceOrState": "MA", "postalOrZip": "90210-1234", "countryCode": "US", "addressStatus": "verified", "skipVerification": false, "forceVerifiedStatus": false}, "to": {"id": "contact_pxd7wnnD1xY6H6etKNvjb4", "live": false, "createdAt": "2022-02-16T15:08:41.052Z", "updatedAt": "2022-02-16T15:08:41.052Z", "object": "contact", "addressLine1": "90 CANAL ST STE 600", "city": "BOSTON", "provinceOrState": "MA", "postalOrZip": "90210-1234", "countryCode": "US", "addressStatus": "verified", "skipVerification": false, "forceVerifiedStatus": false}}]}
+  Boxes_list:
+    "":
+      parameters:
+        query:
+          skip: 0
+          limit: 10
+      responses:
+        "200":
+          application/json: {"object": "list", "totalCount": 1, "skip": 0, "limit": 10, "data": [{"status": "ready", "id": "box_123456", "description": "A sample box of cheques", "live": false, "createdAt": "2025-01-01T12:00:00Z", "updatedAt": "2025-01-02T12:00:00Z", "sendDate": "2020-11-12T23:23:47.974Z", "mailingClass": "first_class", "to": {"id": "contact_pxd7wnnD1xY6H6etKNvjb4", "live": false, "createdAt": "2022-02-16T15:08:41.052Z", "updatedAt": "2022-02-16T15:08:41.052Z", "object": "contact", "addressLine1": "90 CANAL ST STE 600", "city": "BOSTON", "provinceOrState": "MA", "postalOrZip": "90210-1234", "countryCode": "US", "addressStatus": "verified", "skipVerification": false, "forceVerifiedStatus": false}, "object": "box", "from": {"id": "contact_pxd7wnnD1xY6H6etKNvjb4", "live": false, "createdAt": "2022-02-16T15:08:41.052Z", "updatedAt": "2022-02-16T15:08:41.052Z", "object": "contact", "addressLine1": "90 CANAL ST STE 600", "city": "BOSTON", "provinceOrState": "MA", "postalOrZip": "90210-1234", "countryCode": "US", "addressStatus": "verified", "skipVerification": false, "forceVerifiedStatus": false}, "cheques": [{"bankAccount": "bank_123", "amount": 12345, "memo": "Test Memo", "logoURL": "https://example.com/logo.png", "messageTemplate": "Thank you!", "number": 1001, "mergeVariables": {"customKey": "customValue"}, "from": {"id": "contact_pxd7wnnD1xY6H6etKNvjb4", "live": false, "createdAt": "2022-02-16T15:08:41.052Z", "updatedAt": "2022-02-16T15:08:41.052Z", "object": "contact", "addressLine1": "90 CANAL ST STE 600", "city": "BOSTON", "provinceOrState": "MA", "postalOrZip": "90210-1234", "countryCode": "US", "addressStatus": "verified", "skipVerification": false, "forceVerifiedStatus": false}, "to": {"id": "contact_pxd7wnnD1xY6H6etKNvjb4", "live": false, "createdAt": "2022-02-16T15:08:41.052Z", "updatedAt": "2022-02-16T15:08:41.052Z", "object": "contact", "addressLine1": "90 CANAL ST STE 600", "city": "BOSTON", "provinceOrState": "MA", "postalOrZip": "90210-1234", "countryCode": "US", "addressStatus": "verified", "skipVerification": false, "forceVerifiedStatus": false}}]}]}
+  Boxes_get:
+    "":
+      parameters:
+        path:
+          id: "<id>"
+      responses:
+        "200":
+          application/json: {"status": "ready", "id": "box_123456", "description": "A sample box of cheques", "live": false, "createdAt": "2025-01-01T12:00:00Z", "updatedAt": "2025-01-02T12:00:00Z", "sendDate": "2020-11-12T23:23:47.974Z", "mailingClass": "first_class", "to": {"id": "contact_pxd7wnnD1xY6H6etKNvjb4", "live": false, "createdAt": "2022-02-16T15:08:41.052Z", "updatedAt": "2022-02-16T15:08:41.052Z", "object": "contact", "addressLine1": "90 CANAL ST STE 600", "city": "BOSTON", "provinceOrState": "MA", "postalOrZip": "90210-1234", "countryCode": "US", "addressStatus": "verified", "skipVerification": false, "forceVerifiedStatus": false}, "object": "box", "from": {"id": "contact_pxd7wnnD1xY6H6etKNvjb4", "live": false, "createdAt": "2022-02-16T15:08:41.052Z", "updatedAt": "2022-02-16T15:08:41.052Z", "object": "contact", "addressLine1": "90 CANAL ST STE 600", "city": "BOSTON", "provinceOrState": "MA", "postalOrZip": "90210-1234", "countryCode": "US", "addressStatus": "verified", "skipVerification": false, "forceVerifiedStatus": false}, "cheques": [{"bankAccount": "bank_123", "amount": 12345, "memo": "Test Memo", "logoURL": "https://example.com/logo.png", "messageTemplate": "Thank you!", "number": 1001, "mergeVariables": {"customKey": "customValue"}, "from": {"id": "contact_pxd7wnnD1xY6H6etKNvjb4", "live": false, "createdAt": "2022-02-16T15:08:41.052Z", "updatedAt": "2022-02-16T15:08:41.052Z", "object": "contact", "addressLine1": "90 CANAL ST STE 600", "city": "BOSTON", "provinceOrState": "MA", "postalOrZip": "90210-1234", "countryCode": "US", "addressStatus": "verified", "skipVerification": false, "forceVerifiedStatus": false}, "to": {"id": "contact_pxd7wnnD1xY6H6etKNvjb4", "live": false, "createdAt": "2022-02-16T15:08:41.052Z", "updatedAt": "2022-02-16T15:08:41.052Z", "object": "contact", "addressLine1": "90 CANAL ST STE 600", "city": "BOSTON", "provinceOrState": "MA", "postalOrZip": "90210-1234", "countryCode": "US", "addressStatus": "verified", "skipVerification": false, "forceVerifiedStatus": false}}]}
+  Boxes_delete:
+    "":
+      parameters:
+        path:
+          id: "<id>"
+      responses:
+        "200":
+          application/json: {"status": "cancelled", "id": "box_123456", "description": "A sample box of cheques", "live": false, "createdAt": "2025-01-01T12:00:00Z", "updatedAt": "2025-01-02T12:00:00Z", "sendDate": "2020-11-12T23:23:47.974Z", "mailingClass": "first_class", "to": {"id": "contact_pxd7wnnD1xY6H6etKNvjb4", "live": false, "createdAt": "2022-02-16T15:08:41.052Z", "updatedAt": "2022-02-16T15:08:41.052Z", "object": "contact", "addressLine1": "90 CANAL ST STE 600", "city": "BOSTON", "provinceOrState": "MA", "postalOrZip": "90210-1234", "countryCode": "US", "addressStatus": "verified", "skipVerification": false, "forceVerifiedStatus": false}, "object": "box", "from": {"id": "contact_pxd7wnnD1xY6H6etKNvjb4", "live": false, "createdAt": "2022-02-16T15:08:41.052Z", "updatedAt": "2022-02-16T15:08:41.052Z", "object": "contact", "addressLine1": "90 CANAL ST STE 600", "city": "BOSTON", "provinceOrState": "MA", "postalOrZip": "90210-1234", "countryCode": "US", "addressStatus": "verified", "skipVerification": false, "forceVerifiedStatus": false}, "cheques": [{"bankAccount": "bank_123", "amount": 12345, "memo": "Test Memo", "logoURL": "https://example.com/logo.png", "messageTemplate": "Thank you!", "number": 1001, "mergeVariables": {"customKey": "customValue"}, "from": {"id": "contact_pxd7wnnD1xY6H6etKNvjb4", "live": false, "createdAt": "2022-02-16T15:08:41.052Z", "updatedAt": "2022-02-16T15:08:41.052Z", "object": "contact", "addressLine1": "90 CANAL ST STE 600", "city": "BOSTON", "provinceOrState": "MA", "postalOrZip": "90210-1234", "countryCode": "US", "addressStatus": "verified", "skipVerification": false, "forceVerifiedStatus": false}, "to": {"id": "contact_pxd7wnnD1xY6H6etKNvjb4", "live": false, "createdAt": "2022-02-16T15:08:41.052Z", "updatedAt": "2022-02-16T15:08:41.052Z", "object": "contact", "addressLine1": "90 CANAL ST STE 600", "city": "BOSTON", "provinceOrState": "MA", "postalOrZip": "90210-1234", "countryCode": "US", "addressStatus": "verified", "skipVerification": false, "forceVerifiedStatus": false}}]}
+  Cheques_create:
+    "":
+      requestBody:
+        application/json: {"to": "contact_123", "bankAccount": "bank_123", "amount": 1000, "number": 123456, "from": "contact_123", "size": "us_letter", "currencyCode": "USD"}
+      responses:
+        "201":
+          application/json: {"status": "ready", "id": "cheque_123456", "live": false, "createdAt": "2020-11-12T23:23:47.974Z", "updatedAt": "2020-11-12T23:23:47.974Z", "sendDate": "2020-11-12T23:23:47.974Z", "mailingClass": "first_class", "to": {"id": "contact_pxd7wnnD1xY6H6etKNvjb4", "live": false, "createdAt": "2022-02-16T15:08:41.052Z", "updatedAt": "2022-02-16T15:08:41.052Z", "object": "contact", "addressLine1": "90 CANAL ST STE 600", "city": "BOSTON", "provinceOrState": "MA", "postalOrZip": "90210-1234", "countryCode": "US", "addressStatus": "verified", "skipVerification": false, "forceVerifiedStatus": false}, "object": "cheque", "bankAccount": "bank_123", "amount": 1000, "number": 123456, "from": {"id": "contact_pxd7wnnD1xY6H6etKNvjb4", "live": false, "createdAt": "2022-02-16T15:08:41.052Z", "updatedAt": "2022-02-16T15:08:41.052Z", "object": "contact", "addressLine1": "90 CANAL ST STE 600", "city": "BOSTON", "provinceOrState": "MA", "postalOrZip": "90210-1234", "countryCode": "US", "addressStatus": "verified", "skipVerification": false, "forceVerifiedStatus": false}, "size": "us_letter", "currencyCode": "USD"}
+  Cheques_list:
+    "":
+      parameters:
+        query:
+          skip: 0
+          limit: 10
+      responses:
+        "200":
+          application/json: {"object": "list", "totalCount": 1, "skip": 0, "limit": 10, "data": [{"status": "ready", "id": "cheque_123456", "live": false, "createdAt": "2020-11-12T23:23:47.974Z", "updatedAt": "2020-11-12T23:23:47.974Z", "sendDate": "2020-11-12T23:23:47.974Z", "mailingClass": "first_class", "to": {"id": "contact_pxd7wnnD1xY6H6etKNvjb4", "live": false, "createdAt": "2022-02-16T15:08:41.052Z", "updatedAt": "2022-02-16T15:08:41.052Z", "object": "contact", "addressLine1": "90 CANAL ST STE 600", "city": "BOSTON", "provinceOrState": "MA", "postalOrZip": "90210-1234", "countryCode": "US", "addressStatus": "verified", "skipVerification": false, "forceVerifiedStatus": false}, "object": "cheque", "bankAccount": "bank_123", "amount": 1000, "number": 123456, "from": {"id": "contact_pxd7wnnD1xY6H6etKNvjb4", "live": false, "createdAt": "2022-02-16T15:08:41.052Z", "updatedAt": "2022-02-16T15:08:41.052Z", "object": "contact", "addressLine1": "90 CANAL ST STE 600", "city": "BOSTON", "provinceOrState": "MA", "postalOrZip": "90210-1234", "countryCode": "US", "addressStatus": "verified", "skipVerification": false, "forceVerifiedStatus": false}, "size": "us_letter", "currencyCode": "USD"}]}
+  Cheques_get:
+    "":
+      parameters:
+        path:
+          id: "<id>"
+      responses:
+        "200":
+          application/json: {"status": "ready", "id": "cheque_123456", "live": false, "createdAt": "2020-11-12T23:23:47.974Z", "updatedAt": "2020-11-12T23:23:47.974Z", "sendDate": "2020-11-12T23:23:47.974Z", "mailingClass": "first_class", "to": {"id": "contact_pxd7wnnD1xY6H6etKNvjb4", "live": false, "createdAt": "2022-02-16T15:08:41.052Z", "updatedAt": "2022-02-16T15:08:41.052Z", "object": "contact", "addressLine1": "90 CANAL ST STE 600", "city": "BOSTON", "provinceOrState": "MA", "postalOrZip": "90210-1234", "countryCode": "US", "addressStatus": "verified", "skipVerification": false, "forceVerifiedStatus": false}, "object": "cheque", "bankAccount": "bank_123", "amount": 1000, "number": 123456, "from": {"id": "contact_pxd7wnnD1xY6H6etKNvjb4", "live": false, "createdAt": "2022-02-16T15:08:41.052Z", "updatedAt": "2022-02-16T15:08:41.052Z", "object": "contact", "addressLine1": "90 CANAL ST STE 600", "city": "BOSTON", "provinceOrState": "MA", "postalOrZip": "90210-1234", "countryCode": "US", "addressStatus": "verified", "skipVerification": false, "forceVerifiedStatus": false}, "size": "us_letter", "currencyCode": "USD"}
+  Cheques_delete:
+    "":
+      parameters:
+        path:
+          id: "<id>"
+      responses:
+        "200":
+          application/json: {"status": "cancelled", "id": "cheque_123456", "live": false, "createdAt": "2020-11-12T23:23:47.974Z", "updatedAt": "2020-11-12T23:23:47.974Z", "sendDate": "2020-11-12T23:23:47.974Z", "mailingClass": "first_class", "to": {"id": "contact_pxd7wnnD1xY6H6etKNvjb4", "live": false, "createdAt": "2022-02-16T15:08:41.052Z", "updatedAt": "2022-02-16T15:08:41.052Z", "object": "contact", "addressLine1": "90 CANAL ST STE 600", "city": "BOSTON", "provinceOrState": "MA", "postalOrZip": "90210-1234", "countryCode": "US", "addressStatus": "verified", "skipVerification": false, "forceVerifiedStatus": false}, "object": "cheque", "bankAccount": "bank_123", "amount": 1000, "number": 123456, "from": {"id": "contact_pxd7wnnD1xY6H6etKNvjb4", "live": false, "createdAt": "2022-02-16T15:08:41.052Z", "updatedAt": "2022-02-16T15:08:41.052Z", "object": "contact", "addressLine1": "90 CANAL ST STE 600", "city": "BOSTON", "provinceOrState": "MA", "postalOrZip": "90210-1234", "countryCode": "US", "addressStatus": "verified", "skipVerification": false, "forceVerifiedStatus": false}, "size": "us_letter", "currencyCode": "USD"}
+  Cheques_getURL:
+    "":
+      parameters:
+        path:
+          id: "<id>"
+      responses:
+        "200":
+          application/json: {"id": "cheque_123456", "object": "cheque_url", "url": "https://pg-prod-bucket-1.s3.amazonaws.com/test/cheque_uzTtdAPiBVC25hjEYDvyLk?AWSAccessKeyId=AKIA5GFUILSULWTWCR64&Expires=1736192587&Signature=GS6kJK3fgWWy49jq1Yb%2FRn%2BQjD4%3D"}
+  Cheques_getDepositReadyPDF:
+    "":
+      parameters:
+        path:
+          id: "<id>"
+      responses:
+        "200":
+          application/json: {"status": "ready", "id": "cheque_123456", "live": false, "createdAt": "2020-11-12T23:23:47.974Z", "updatedAt": "2020-11-12T23:23:47.974Z", "sendDate": "2020-11-12T23:23:47.974Z", "mailingClass": "first_class", "to": {"id": "contact_pxd7wnnD1xY6H6etKNvjb4", "live": false, "createdAt": "2022-02-16T15:08:41.052Z", "updatedAt": "2022-02-16T15:08:41.052Z", "object": "contact", "addressLine1": "90 CANAL ST STE 600", "city": "BOSTON", "provinceOrState": "MA", "postalOrZip": "90210-1234", "countryCode": "US", "addressStatus": "verified", "skipVerification": false, "forceVerifiedStatus": false}, "object": "cheque", "bankAccount": "bank_123", "amount": 1000, "number": 123456, "digitalOnly": {"watermark": "TEST"}, "from": {"id": "contact_pxd7wnnD1xY6H6etKNvjb4", "live": false, "createdAt": "2022-02-16T15:08:41.052Z", "updatedAt": "2022-02-16T15:08:41.052Z", "object": "contact", "addressLine1": "90 CANAL ST STE 600", "city": "BOSTON", "provinceOrState": "MA", "postalOrZip": "90210-1234", "countryCode": "US", "addressStatus": "verified", "skipVerification": false, "forceVerifiedStatus": false}, "size": "us_letter", "currencyCode": "USD", "depositReadyPDFURL": "https://example.s3.amazonaws.com/deposit_ready.pdf"}
+  Contacts_create:
+    Create Contact with Single Line:
+      requestBody:
+        application/json: {"addressLine1": "90 Canal St Suite 600, Boston MA 90210", "countryCode": "US", "companyName": "PostGrid", "skipVerification": false, "forceVerifiedStatus": false, "firstName": "Kevin"}
+      responses:
+        "201":
+          application/json: {"id": "contact_pxd7wnnD1xY6H6etKNvjb4", "live": false, "createdAt": "2022-02-16T15:08:41.052Z", "updatedAt": "2022-02-16T15:08:41.052Z", "object": "contact", "addressLine1": "90 CANAL ST STE 600", "city": "BOSTON", "provinceOrState": "MA", "postalOrZip": "90210-1234", "countryCode": "US", "addressStatus": "verified", "skipVerification": false, "forceVerifiedStatus": false}
+    Create Contact with Structured Address:
+      requestBody:
+        application/json: {"addressLine1": "90 Canal St", "addressLine2": "Suite 600", "city": "Boston", "provinceOrState": "MA", "countryCode": "US", "companyName": "PostGrid", "skipVerification": false, "forceVerifiedStatus": false, "firstName": "Kevin"}
+      responses:
+        "201":
+          application/json: {"id": "contact_pxd7wnnD1xY6H6etKNvjb4", "live": false, "createdAt": "2022-02-16T15:08:41.052Z", "updatedAt": "2022-02-16T15:08:41.052Z", "object": "contact", "addressLine1": "90 CANAL ST STE 600", "city": "BOSTON", "provinceOrState": "MA", "postalOrZip": "90210-1234", "countryCode": "US", "addressStatus": "verified", "skipVerification": false, "forceVerifiedStatus": false}
+  Contacts_list:
+    "":
+      parameters:
+        query:
+          skip: 0
+          limit: 10
+      responses:
+        "200":
+          application/json: {"object": "list", "totalCount": 1, "skip": 0, "limit": 10, "data": [{"id": "contact_pxd7wnnD1xY6H6etKNvjb4", "live": false, "createdAt": "2022-02-16T15:08:41.052Z", "updatedAt": "2022-02-16T15:08:41.052Z", "object": "contact", "addressLine1": "90 CANAL ST STE 600", "city": "BOSTON", "provinceOrState": "MA", "postalOrZip": "90210-1234", "countryCode": "US", "addressStatus": "verified", "skipVerification": false, "forceVerifiedStatus": false}]}
+  Contacts_get:
+    "":
+      parameters:
+        path:
+          id: "<id>"
+      responses:
+        "200":
+          application/json: {"id": "contact_pxd7wnnD1xY6H6etKNvjb4", "live": false, "createdAt": "2022-02-16T15:08:41.052Z", "updatedAt": "2022-02-16T15:08:41.052Z", "object": "contact", "addressLine1": "90 CANAL ST STE 600", "city": "BOSTON", "provinceOrState": "MA", "postalOrZip": "90210-1234", "countryCode": "US", "addressStatus": "verified", "skipVerification": false, "forceVerifiedStatus": false}
+  Contacts_delete:
+    speakeasy-default-contacts-delete:
+      parameters:
+        path:
+          id: "<id>"
+      responses:
+        "200":
+          application/json: {"object": "contact", "id": "<id>", "deleted": false}
+        "401":
+          application/json: {"object": "error", "error": {"type": "missing_auth_error", "message": "<value>"}}
+        "404":
+          application/json: {"object": "error", "error": {"type": "not_found_error", "message": "<value>"}}
+        "422":
+          application/json: {"object": "error", "error": {"type": "<value>", "message": "<value>"}}
+        "429":
+          application/json: {"object": "error", "error": {"type": "rate_limit_exceeded_error", "message": "<value>"}}
+  Letters_create:
+    "":
+      requestBody:
+        application/json: {"to": "contact_123", "doubleSided": false, "color": false, "from": "contact_123", "size": "us_letter", "addressPlacement": "top_first_page", "envelope": "standard", "html": "<html>Content</html>"}
+      responses:
+        "201":
+          application/json: {"status": "ready", "id": "letter_123456", "live": false, "createdAt": "2020-11-12T23:23:47.974Z", "updatedAt": "2020-11-12T23:23:47.974Z", "sendDate": "2020-11-12T23:23:47.974Z", "mailingClass": "first_class", "to": {"id": "contact_pxd7wnnD1xY6H6etKNvjb4", "live": false, "createdAt": "2022-02-16T15:08:41.052Z", "updatedAt": "2022-02-16T15:08:41.052Z", "object": "contact", "addressLine1": "90 CANAL ST STE 600", "city": "BOSTON", "provinceOrState": "MA", "postalOrZip": "90210-1234", "countryCode": "US", "addressStatus": "verified", "skipVerification": false, "forceVerifiedStatus": false}, "object": "letter", "from": {"id": "contact_pxd7wnnD1xY6H6etKNvjb4", "live": false, "createdAt": "2022-02-16T15:08:41.052Z", "updatedAt": "2022-02-16T15:08:41.052Z", "object": "contact", "addressLine1": "90 CANAL ST STE 600", "city": "BOSTON", "provinceOrState": "MA", "postalOrZip": "90210-1234", "countryCode": "US", "addressStatus": "verified", "skipVerification": false, "forceVerifiedStatus": false}, "doubleSided": true, "color": false, "size": "us_letter", "addressPlacement": "top_first_page", "envelope": "standard", "html": "<html>Content</html>"}
+  Letters_list:
+    "":
+      parameters:
+        query:
+          skip: 0
+          limit: 10
+      responses:
+        "200":
+          application/json: {"object": "list", "totalCount": 1, "skip": 0, "limit": 10, "data": [{"status": "ready", "id": "letter_123456", "live": false, "createdAt": "2020-11-12T23:23:47.974Z", "updatedAt": "2020-11-12T23:23:47.974Z", "sendDate": "2020-11-12T23:23:47.974Z", "mailingClass": "first_class", "to": {"id": "contact_pxd7wnnD1xY6H6etKNvjb4", "live": false, "createdAt": "2022-02-16T15:08:41.052Z", "updatedAt": "2022-02-16T15:08:41.052Z", "object": "contact", "addressLine1": "90 CANAL ST STE 600", "city": "BOSTON", "provinceOrState": "MA", "postalOrZip": "90210-1234", "countryCode": "US", "addressStatus": "verified", "skipVerification": false, "forceVerifiedStatus": false}, "object": "letter", "from": {"id": "contact_pxd7wnnD1xY6H6etKNvjb4", "live": false, "createdAt": "2022-02-16T15:08:41.052Z", "updatedAt": "2022-02-16T15:08:41.052Z", "object": "contact", "addressLine1": "90 CANAL ST STE 600", "city": "BOSTON", "provinceOrState": "MA", "postalOrZip": "90210-1234", "countryCode": "US", "addressStatus": "verified", "skipVerification": false, "forceVerifiedStatus": false}, "doubleSided": true, "color": false, "size": "us_letter", "addressPlacement": "top_first_page", "envelope": "standard", "html": "<html>Content</html>"}]}
+  Letters_get:
+    "":
+      parameters:
+        path:
+          id: "<id>"
+      responses:
+        "200":
+          application/json: {"status": "ready", "id": "letter_123456", "live": false, "createdAt": "2020-11-12T23:23:47.974Z", "updatedAt": "2020-11-12T23:23:47.974Z", "sendDate": "2020-11-12T23:23:47.974Z", "mailingClass": "first_class", "to": {"id": "contact_pxd7wnnD1xY6H6etKNvjb4", "live": false, "createdAt": "2022-02-16T15:08:41.052Z", "updatedAt": "2022-02-16T15:08:41.052Z", "object": "contact", "addressLine1": "90 CANAL ST STE 600", "city": "BOSTON", "provinceOrState": "MA", "postalOrZip": "90210-1234", "countryCode": "US", "addressStatus": "verified", "skipVerification": false, "forceVerifiedStatus": false}, "object": "letter", "from": {"id": "contact_pxd7wnnD1xY6H6etKNvjb4", "live": false, "createdAt": "2022-02-16T15:08:41.052Z", "updatedAt": "2022-02-16T15:08:41.052Z", "object": "contact", "addressLine1": "90 CANAL ST STE 600", "city": "BOSTON", "provinceOrState": "MA", "postalOrZip": "90210-1234", "countryCode": "US", "addressStatus": "verified", "skipVerification": false, "forceVerifiedStatus": false}, "doubleSided": true, "color": false, "size": "us_letter", "addressPlacement": "top_first_page", "envelope": "standard", "html": "<html>Content</html>"}
+  Letters_delete:
+    "":
+      parameters:
+        path:
+          id: "<id>"
+      responses:
+        "200":
+          application/json: {"status": "cancelled", "id": "letter_123456", "live": false, "createdAt": "2020-11-12T23:23:47.974Z", "updatedAt": "2020-11-12T23:23:47.974Z", "sendDate": "2020-11-12T23:23:47.974Z", "mailingClass": "first_class", "to": {"id": "contact_pxd7wnnD1xY6H6etKNvjb4", "live": false, "createdAt": "2022-02-16T15:08:41.052Z", "updatedAt": "2022-02-16T15:08:41.052Z", "object": "contact", "addressLine1": "90 CANAL ST STE 600", "city": "BOSTON", "provinceOrState": "MA", "postalOrZip": "90210-1234", "countryCode": "US", "addressStatus": "verified", "skipVerification": false, "forceVerifiedStatus": false}, "object": "letter", "from": {"id": "contact_pxd7wnnD1xY6H6etKNvjb4", "live": false, "createdAt": "2022-02-16T15:08:41.052Z", "updatedAt": "2022-02-16T15:08:41.052Z", "object": "contact", "addressLine1": "90 CANAL ST STE 600", "city": "BOSTON", "provinceOrState": "MA", "postalOrZip": "90210-1234", "countryCode": "US", "addressStatus": "verified", "skipVerification": false, "forceVerifiedStatus": false}, "doubleSided": true, "color": false, "size": "us_letter", "addressPlacement": "top_first_page", "envelope": "standard", "html": "<html>Content</html>"}
+  Letters_getURL:
+    "":
+      parameters:
+        path:
+          id: "<id>"
+      responses:
+        "200":
+          application/json: {"id": "letter_123456", "object": "letter_url", "url": "https://pg-prod-bucket-1.s3.amazonaws.com/test/letter_uzTtdAPiBVC25hjEYDvyLk?AWSAccessKeyId=AKIA5GFUILSULWTWCR64&Expires=1736192587&Signature=GS6kJK3fgWWy49jq1Yb%2FRn%2BQjD4%3D"}
+  Postcards_create:
+    "":
+      requestBody:
+        application/json: {"to": "contact_456", "size": "6x4", "from": "contact_123", "frontHTML": "<html>Front</html>", "backHTML": "<html>Back</html>"}
+      responses:
+        "201":
+          application/json: {"status": "ready", "id": "postcard_123456", "live": false, "createdAt": "2020-11-12T23:23:47.974Z", "updatedAt": "2020-11-12T23:23:47.974Z", "sendDate": "2020-11-12T23:23:47.974Z", "mailingClass": "first_class", "to": {"id": "contact_pxd7wnnD1xY6H6etKNvjb4", "live": false, "createdAt": "2022-02-16T15:08:41.052Z", "updatedAt": "2022-02-16T15:08:41.052Z", "object": "contact", "addressLine1": "90 CANAL ST STE 600", "city": "BOSTON", "provinceOrState": "MA", "postalOrZip": "90210-1234", "countryCode": "US", "addressStatus": "verified", "skipVerification": false, "forceVerifiedStatus": false}, "object": "postcard", "size": "6x4", "from": {"id": "contact_pxd7wnnD1xY6H6etKNvjb4", "live": false, "createdAt": "2022-02-16T15:08:41.052Z", "updatedAt": "2022-02-16T15:08:41.052Z", "object": "contact", "addressLine1": "90 CANAL ST STE 600", "city": "BOSTON", "provinceOrState": "MA", "postalOrZip": "90210-1234", "countryCode": "US", "addressStatus": "verified", "skipVerification": false, "forceVerifiedStatus": false}}
+  Postcards_list:
+    "":
+      parameters:
+        query:
+          skip: 0
+          limit: 10
+      responses:
+        "200":
+          application/json: {"object": "list", "totalCount": 1, "skip": 0, "limit": 10, "data": [{"status": "ready", "id": "postcard_123456", "live": false, "createdAt": "2020-11-12T23:23:47.974Z", "updatedAt": "2020-11-12T23:23:47.974Z", "sendDate": "2020-11-12T23:23:47.974Z", "mailingClass": "first_class", "to": {"id": "contact_pxd7wnnD1xY6H6etKNvjb4", "live": false, "createdAt": "2022-02-16T15:08:41.052Z", "updatedAt": "2022-02-16T15:08:41.052Z", "object": "contact", "addressLine1": "90 CANAL ST STE 600", "city": "BOSTON", "provinceOrState": "MA", "postalOrZip": "90210-1234", "countryCode": "US", "addressStatus": "verified", "skipVerification": false, "forceVerifiedStatus": false}, "object": "postcard", "size": "6x4", "from": {"id": "contact_pxd7wnnD1xY6H6etKNvjb4", "live": false, "createdAt": "2022-02-16T15:08:41.052Z", "updatedAt": "2022-02-16T15:08:41.052Z", "object": "contact", "addressLine1": "90 CANAL ST STE 600", "city": "BOSTON", "provinceOrState": "MA", "postalOrZip": "90210-1234", "countryCode": "US", "addressStatus": "verified", "skipVerification": false, "forceVerifiedStatus": false}}]}
+  Postcards_get:
+    "":
+      parameters:
+        path:
+          id: "<id>"
+      responses:
+        "200":
+          application/json: {"status": "ready", "id": "postcard_123456", "live": false, "createdAt": "2020-11-12T23:23:47.974Z", "updatedAt": "2020-11-12T23:23:47.974Z", "sendDate": "2020-11-12T23:23:47.974Z", "mailingClass": "first_class", "to": {"id": "contact_pxd7wnnD1xY6H6etKNvjb4", "live": false, "createdAt": "2022-02-16T15:08:41.052Z", "updatedAt": "2022-02-16T15:08:41.052Z", "object": "contact", "addressLine1": "90 CANAL ST STE 600", "city": "BOSTON", "provinceOrState": "MA", "postalOrZip": "90210-1234", "countryCode": "US", "addressStatus": "verified", "skipVerification": false, "forceVerifiedStatus": false}, "object": "postcard", "size": "6x4", "from": {"id": "contact_pxd7wnnD1xY6H6etKNvjb4", "live": false, "createdAt": "2022-02-16T15:08:41.052Z", "updatedAt": "2022-02-16T15:08:41.052Z", "object": "contact", "addressLine1": "90 CANAL ST STE 600", "city": "BOSTON", "provinceOrState": "MA", "postalOrZip": "90210-1234", "countryCode": "US", "addressStatus": "verified", "skipVerification": false, "forceVerifiedStatus": false}}
+  Postcards_delete:
+    "":
+      parameters:
+        path:
+          id: "<id>"
+      responses:
+        "200":
+          application/json: {"status": "cancelled", "id": "postcard_123456", "live": false, "createdAt": "2020-11-12T23:23:47.974Z", "updatedAt": "2020-11-12T23:23:47.974Z", "sendDate": "2020-11-12T23:23:47.974Z", "mailingClass": "first_class", "to": {"id": "contact_pxd7wnnD1xY6H6etKNvjb4", "live": false, "createdAt": "2022-02-16T15:08:41.052Z", "updatedAt": "2022-02-16T15:08:41.052Z", "object": "contact", "addressLine1": "90 CANAL ST STE 600", "city": "BOSTON", "provinceOrState": "MA", "postalOrZip": "90210-1234", "countryCode": "US", "addressStatus": "verified", "skipVerification": false, "forceVerifiedStatus": false}, "object": "postcard", "size": "6x4", "from": {"id": "contact_pxd7wnnD1xY6H6etKNvjb4", "live": false, "createdAt": "2022-02-16T15:08:41.052Z", "updatedAt": "2022-02-16T15:08:41.052Z", "object": "contact", "addressLine1": "90 CANAL ST STE 600", "city": "BOSTON", "provinceOrState": "MA", "postalOrZip": "90210-1234", "countryCode": "US", "addressStatus": "verified", "skipVerification": false, "forceVerifiedStatus": false}}
+  Postcards_getURL:
+    "":
+      parameters:
+        path:
+          id: "<id>"
+      responses:
+        "200":
+          application/json: {"id": "postcard_123456", "object": "postcard_url", "url": "https://pg-prod-bucket-1.s3.amazonaws.com/test/postcard_uzTtdAPiBVC25hjEYDvyLk?AWSAccessKeyId=AKIA5GFUILSULWTWCR64&Expires=1736192587&Signature=GS6kJK3fgWWy49jq1Yb%2FRn%2BQjD4%3D"}
+  SelfMailers_create:
+    "":
+      requestBody:
+        application/json: {"to": "contact_456", "size": "8.5x11_bifold", "from": "contact_123", "insideHTML": "<html>Inside</html>", "outsideHTML": "<html>Outside</html>"}
+      responses:
+        "201":
+          application/json: {"status": "ready", "id": "self_mailer_123456", "live": false, "createdAt": "2020-11-12T23:23:47.974Z", "updatedAt": "2020-11-12T23:23:47.974Z", "sendDate": "2020-11-12T23:23:47.974Z", "mailingClass": "first_class", "to": {"id": "contact_pxd7wnnD1xY6H6etKNvjb4", "live": false, "createdAt": "2022-02-16T15:08:41.052Z", "updatedAt": "2022-02-16T15:08:41.052Z", "object": "contact", "addressLine1": "90 CANAL ST STE 600", "city": "BOSTON", "provinceOrState": "MA", "postalOrZip": "90210-1234", "countryCode": "US", "addressStatus": "verified", "skipVerification": false, "forceVerifiedStatus": false}, "object": "self_mailer", "size": "8.5x11_bifold", "from": {"id": "contact_pxd7wnnD1xY6H6etKNvjb4", "live": false, "createdAt": "2022-02-16T15:08:41.052Z", "updatedAt": "2022-02-16T15:08:41.052Z", "object": "contact", "addressLine1": "90 CANAL ST STE 600", "city": "BOSTON", "provinceOrState": "MA", "postalOrZip": "90210-1234", "countryCode": "US", "addressStatus": "verified", "skipVerification": false, "forceVerifiedStatus": false}}
+  SelfMailers_list:
+    "":
+      parameters:
+        query:
+          skip: 0
+          limit: 10
+      responses:
+        "200":
+          application/json: {"object": "list", "totalCount": 1, "skip": 0, "limit": 10, "data": [{"status": "ready", "id": "self_mailer_123456", "live": false, "createdAt": "2020-11-12T23:23:47.974Z", "updatedAt": "2020-11-12T23:23:47.974Z", "sendDate": "2020-11-12T23:23:47.974Z", "mailingClass": "first_class", "to": {"id": "contact_pxd7wnnD1xY6H6etKNvjb4", "live": false, "createdAt": "2022-02-16T15:08:41.052Z", "updatedAt": "2022-02-16T15:08:41.052Z", "object": "contact", "addressLine1": "90 CANAL ST STE 600", "city": "BOSTON", "provinceOrState": "MA", "postalOrZip": "90210-1234", "countryCode": "US", "addressStatus": "verified", "skipVerification": false, "forceVerifiedStatus": false}, "object": "self_mailer", "size": "8.5x11_bifold", "from": {"id": "contact_pxd7wnnD1xY6H6etKNvjb4", "live": false, "createdAt": "2022-02-16T15:08:41.052Z", "updatedAt": "2022-02-16T15:08:41.052Z", "object": "contact", "addressLine1": "90 CANAL ST STE 600", "city": "BOSTON", "provinceOrState": "MA", "postalOrZip": "90210-1234", "countryCode": "US", "addressStatus": "verified", "skipVerification": false, "forceVerifiedStatus": false}}]}
+  SelfMailers_get:
+    "":
+      parameters:
+        path:
+          id: "<id>"
+      responses:
+        "200":
+          application/json: {"status": "ready", "id": "self_mailer_123456", "live": false, "createdAt": "2020-11-12T23:23:47.974Z", "updatedAt": "2020-11-12T23:23:47.974Z", "sendDate": "2020-11-12T23:23:47.974Z", "mailingClass": "first_class", "to": {"id": "contact_pxd7wnnD1xY6H6etKNvjb4", "live": false, "createdAt": "2022-02-16T15:08:41.052Z", "updatedAt": "2022-02-16T15:08:41.052Z", "object": "contact", "addressLine1": "90 CANAL ST STE 600", "city": "BOSTON", "provinceOrState": "MA", "postalOrZip": "90210-1234", "countryCode": "US", "addressStatus": "verified", "skipVerification": false, "forceVerifiedStatus": false}, "object": "self_mailer", "size": "8.5x11_bifold", "from": {"id": "contact_pxd7wnnD1xY6H6etKNvjb4", "live": false, "createdAt": "2022-02-16T15:08:41.052Z", "updatedAt": "2022-02-16T15:08:41.052Z", "object": "contact", "addressLine1": "90 CANAL ST STE 600", "city": "BOSTON", "provinceOrState": "MA", "postalOrZip": "90210-1234", "countryCode": "US", "addressStatus": "verified", "skipVerification": false, "forceVerifiedStatus": false}}
+  SelfMailers_delete:
+    "":
+      parameters:
+        path:
+          id: "<id>"
+      responses:
+        "200":
+          application/json: {"status": "cancelled", "id": "self_mailer_123456", "live": false, "createdAt": "2020-11-12T23:23:47.974Z", "updatedAt": "2020-11-12T23:23:47.974Z", "sendDate": "2020-11-12T23:23:47.974Z", "mailingClass": "first_class", "to": {"id": "contact_pxd7wnnD1xY6H6etKNvjb4", "live": false, "createdAt": "2022-02-16T15:08:41.052Z", "updatedAt": "2022-02-16T15:08:41.052Z", "object": "contact", "addressLine1": "90 CANAL ST STE 600", "city": "BOSTON", "provinceOrState": "MA", "postalOrZip": "90210-1234", "countryCode": "US", "addressStatus": "verified", "skipVerification": false, "forceVerifiedStatus": false}, "object": "self_mailer", "size": "8.5x11_bifold", "from": {"id": "contact_pxd7wnnD1xY6H6etKNvjb4", "live": false, "createdAt": "2022-02-16T15:08:41.052Z", "updatedAt": "2022-02-16T15:08:41.052Z", "object": "contact", "addressLine1": "90 CANAL ST STE 600", "city": "BOSTON", "provinceOrState": "MA", "postalOrZip": "90210-1234", "countryCode": "US", "addressStatus": "verified", "skipVerification": false, "forceVerifiedStatus": false}}
+  SelfMailers_getURL:
+    "":
+      parameters:
+        path:
+          id: "<id>"
+      responses:
+        "200":
+          application/json: {"id": "self_mailer_123456", "object": "self_mailer_url", "url": "https://pg-prod-bucket-1.s3.amazonaws.com/test/self_mailer_uzTtdAPiBVC25hjEYDvyLk?AWSAccessKeyId=AKIA5GFUILSULWTWCR64&Expires=1736192587&Signature=GS6kJK3fgWWy49jq1Yb%2FRn%2BQjD4%3D"}
+  Templates_create:
+    "":
+      requestBody:
+        application/json: {"html": "<b>Hello</b> {{to.firstName}}", "description": "Test"}
+      responses:
+        "201":
+          application/json: {"id": "template_tBnVEzz878mXLbHQaz86j8", "description": "Test", "live": false, "createdAt": "2020-11-12T23:23:47.974Z", "updatedAt": "2020-11-12T23:23:47.974Z", "object": "template", "html": "<b>Hello</b> {{to.firstName}}!"}
+  Templates_list:
+    "":
+      parameters:
+        query:
+          skip: 0
+          limit: 10
+      responses:
+        "200":
+          application/json: {"object": "list", "totalCount": 1, "skip": 0, "limit": 10, "data": [{"id": "template_tBnVEzz878mXLbHQaz86j8", "description": "Test", "live": false, "createdAt": "2020-11-12T23:23:47.974Z", "updatedAt": "2020-11-12T23:23:47.974Z", "object": "template", "html": "<b>Hello</b> {{to.firstName}}!"}]}
+  Templates_get:
+    "":
+      parameters:
+        path:
+          id: "<id>"
+      responses:
+        "200":
+          application/json: {"id": "template_tBnVEzz878mXLbHQaz86j8", "description": "Test", "live": false, "createdAt": "2020-11-12T23:23:47.974Z", "updatedAt": "2020-11-12T23:23:47.974Z", "object": "template", "html": "<b>Hello</b> {{to.firstName}}!"}
+  Templates_update:
+    "":
+      parameters:
+        path:
+          id: "<id>"
+      requestBody:
+        application/json: {"html": "<b>Hello</b> {{to.firstName}}!", "description": "Test"}
+      responses:
+        "200":
+          application/json: {"id": "template_tBnVEzz878mXLbHQaz86j8", "description": "Test", "live": false, "createdAt": "2020-11-12T23:23:47.974Z", "updatedAt": "2020-11-12T23:23:47.974Z", "object": "template", "html": "<b>Hello</b> {{to.firstName}}!"}
+  Templates_delete:
+    speakeasy-default-templates-delete:
+      parameters:
+        path:
+          id: "<id>"
+      responses:
+        "200":
+          application/json: {"object": "template", "id": "<id>", "deleted": false}
+        "401":
+          application/json: {"object": "error", "error": {"type": "missing_auth_error", "message": "<value>"}}
+        "404":
+          application/json: {"object": "error", "error": {"type": "not_found_error", "message": "<value>"}}
+        "422":
+          application/json: {"object": "error", "error": {"type": "<value>", "message": "<value>"}}
+        "429":
+          application/json: {"object": "error", "error": {"type": "rate_limit_exceeded_error", "message": "<value>"}}
+examplesVersion: 1.0.1
+generatedTests: {}

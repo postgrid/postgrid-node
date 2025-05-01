@@ -1,0 +1,361 @@
+overlay: 1.0.0
+x-speakeasy-jsonpath: rfc9535
+info:
+  title: Speakeasy Modifications
+  version: 0.0.2
+  x-speakeasy-metadata:
+    after: ""
+    before: ""
+    type: speakeasy-modifications
+actions:
+  - target: $["paths"]["/templates/{id}"]["delete"]
+    update:
+      x-speakeasy-name-override: delete
+    x-speakeasy-metadata:
+      after: sdk.templates.delete()
+      before: sdk.Templates.Templates_delete()
+      created_at: 1743705137728
+      reviewed_at: 1743705148357
+      type: method-name
+  - target: $["paths"]["/bank_accounts/{id}"]["delete"]
+    update:
+      x-speakeasy-group: bankAccounts
+      x-speakeasy-name-override: delete
+    x-speakeasy-metadata:
+      after: sdk.bankAccounts.delete()
+      before: sdk.Bank Accounts.BankAccounts_delete()
+      created_at: 1743705137728
+      reviewed_at: 1743705148357
+      type: method-name
+  - target: $["paths"]["/contacts"]["get"]
+    update:
+      x-speakeasy-name-override: list
+    x-speakeasy-metadata:
+      after: sdk.contacts.list()
+      before: sdk.Contacts.Contacts_list()
+      created_at: 1743705137728
+      reviewed_at: 1743705148357
+      type: method-name
+  - target: $["paths"]["/boxes/{id}"]["delete"]
+    update:
+      x-speakeasy-name-override: delete
+    x-speakeasy-metadata:
+      after: sdk.boxes.delete()
+      before: sdk.Boxes.Boxes_delete()
+      created_at: 1743705137728
+      reviewed_at: 1743705148357
+      type: method-name
+  - target: $["paths"]["/templates"]["post"]
+    update:
+      x-speakeasy-name-override: create
+    x-speakeasy-metadata:
+      after: sdk.templates.create()
+      before: sdk.Templates.Templates_create()
+      created_at: 1743705137728
+      reviewed_at: 1743705148357
+      type: method-name
+  - target: $["paths"]["/postcards/{id}"]["delete"]
+    update:
+      x-speakeasy-name-override: delete
+    x-speakeasy-metadata:
+      after: sdk.postcards.delete()
+      before: sdk.Postcards.Postcards_delete()
+      created_at: 1743705137728
+      reviewed_at: 1743705148357
+      type: method-name
+  - target: $["paths"]["/templates/{id}"]["get"]
+    update:
+      x-speakeasy-name-override: get
+    x-speakeasy-metadata:
+      after: sdk.templates.get()
+      before: sdk.Templates.Templates_get()
+      created_at: 1743705137728
+      reviewed_at: 1743705148357
+      type: method-name
+  - target: $["paths"]["/self-mailers/{id}"]["get"]
+    update:
+      x-speakeasy-group: selfMailers
+      x-speakeasy-name-override: get
+    x-speakeasy-metadata:
+      after: sdk.selfMailers.get()
+      before: sdk.Self Mailers.SelfMailers_get()
+      created_at: 1743705137728
+      reviewed_at: 1743705148357
+      type: method-name
+  - target: $["paths"]["/letters"]["get"]
+    update:
+      x-speakeasy-name-override: list
+    x-speakeasy-metadata:
+      after: sdk.letters.list()
+      before: sdk.Letters.Letters_list()
+      created_at: 1743705137728
+      reviewed_at: 1743705148357
+      type: method-name
+  - target: $["paths"]["/bank_accounts"]["get"]
+    update:
+      x-speakeasy-group: bankAccounts
+      x-speakeasy-name-override: list
+    x-speakeasy-metadata:
+      after: sdk.bankAccounts.list()
+      before: sdk.Bank Accounts.BankAccounts_list()
+      created_at: 1743705137728
+      reviewed_at: 1743705148357
+      type: method-name
+  - target: $["paths"]["/self-mailers"]["post"]
+    update:
+      x-speakeasy-group: selfMailers
+      x-speakeasy-name-override: create
+    x-speakeasy-metadata:
+      after: sdk.selfMailers.create()
+      before: sdk.Self Mailers.SelfMailers_create()
+      created_at: 1743705137728
+      reviewed_at: 1743705148357
+      type: method-name
+  - target: $["paths"]["/postcards/{id}"]["get"]
+    update:
+      x-speakeasy-name-override: get
+    x-speakeasy-metadata:
+      after: sdk.postcards.get()
+      before: sdk.Postcards.Postcards_get()
+      created_at: 1743705137728
+      reviewed_at: 1743705148357
+      type: method-name
+  - target: $["paths"]["/postcards/{id}/url"]["get"]
+    update:
+      x-speakeasy-name-override: getUrl
+    x-speakeasy-metadata:
+      after: sdk.postcards.getUrl()
+      before: sdk.Postcards.Postcards_getURL()
+      created_at: 1743705137728
+      reviewed_at: 1743705148357
+      type: method-name
+  - target: $["paths"]["/letters/{id}"]["delete"]
+    update:
+      x-speakeasy-name-override: delete
+    x-speakeasy-metadata:
+      after: sdk.letters.delete()
+      before: sdk.Letters.Letters_delete()
+      created_at: 1743705137728
+      reviewed_at: 1743705148357
+      type: method-name
+  - target: $["paths"]["/self-mailers"]["get"]
+    update:
+      x-speakeasy-group: selfMailers
+      x-speakeasy-name-override: list
+    x-speakeasy-metadata:
+      after: sdk.selfMailers.list()
+      before: sdk.Self Mailers.SelfMailers_list()
+      created_at: 1743705137728
+      reviewed_at: 1743705148357
+      type: method-name
+  - target: $["paths"]["/cheques/{id}"]["delete"]
+    update:
+      x-speakeasy-name-override: delete
+    x-speakeasy-metadata:
+      after: sdk.cheques.delete()
+      before: sdk.Cheques.Cheques_delete()
+      created_at: 1743705137728
+      reviewed_at: 1743705148357
+      type: method-name
+  - target: $["paths"]["/contacts/{id}"]["delete"]
+    update:
+      x-speakeasy-name-override: delete
+    x-speakeasy-metadata:
+      after: sdk.contacts.delete()
+      before: sdk.Contacts.Contacts_delete()
+      created_at: 1743705137728
+      reviewed_at: 1743705148357
+      type: method-name
+  - target: $["paths"]["/contacts"]["post"]
+    update:
+      x-speakeasy-name-override: create
+    x-speakeasy-metadata:
+      after: sdk.contacts.create()
+      before: sdk.Contacts.Contacts_create()
+      created_at: 1743705137728
+      reviewed_at: 1743705148357
+      type: method-name
+  - target: $["paths"]["/cheques/{id}"]["get"]
+    update:
+      x-speakeasy-name-override: get
+    x-speakeasy-metadata:
+      after: sdk.cheques.get()
+      before: sdk.Cheques.Cheques_get()
+      created_at: 1743705137729
+      reviewed_at: 1743705148357
+      type: method-name
+  - target: $["paths"]["/contacts/{id}"]["get"]
+    update:
+      x-speakeasy-name-override: get
+    x-speakeasy-metadata:
+      after: sdk.contacts.get()
+      before: sdk.Contacts.Contacts_get()
+      created_at: 1743705137729
+      reviewed_at: 1743705148357
+      type: method-name
+  - target: $["paths"]["/self-mailers/{id}/url"]["get"]
+    update:
+      x-speakeasy-group: selfMailers
+      x-speakeasy-name-override: getUrl
+    x-speakeasy-metadata:
+      after: sdk.selfMailers.getUrl()
+      before: sdk.Self Mailers.SelfMailers_getURL()
+      created_at: 1743705137729
+      reviewed_at: 1743705148357
+      type: method-name
+  - target: $["paths"]["/postcards"]["get"]
+    update:
+      x-speakeasy-name-override: list
+    x-speakeasy-metadata:
+      after: sdk.postcards.list()
+      before: sdk.Postcards.Postcards_list()
+      created_at: 1743705137729
+      reviewed_at: 1743705148357
+      type: method-name
+  - target: $["paths"]["/cheques"]["get"]
+    update:
+      x-speakeasy-name-override: list
+    x-speakeasy-metadata:
+      after: sdk.cheques.list()
+      before: sdk.Cheques.Cheques_list()
+      created_at: 1743705137729
+      reviewed_at: 1743705148357
+      type: method-name
+  - target: $["paths"]["/boxes/{id}"]["get"]
+    update:
+      x-speakeasy-name-override: get
+    x-speakeasy-metadata:
+      after: sdk.boxes.get()
+      before: sdk.Boxes.Boxes_get()
+      created_at: 1743705137729
+      reviewed_at: 1743705148357
+      type: method-name
+  - target: $["paths"]["/cheques/{id}/with_deposit_ready_pdf"]["get"]
+    update:
+      x-speakeasy-name-override: getDepositReadyPdf
+    x-speakeasy-metadata:
+      after: sdk.cheques.getDepositReadyPdf()
+      before: sdk.Cheques.Cheques_getDepositReadyPDF()
+      created_at: 1743705137729
+      reviewed_at: 1743705148357
+      type: method-name
+  - target: $["paths"]["/letters/{id}"]["get"]
+    update:
+      x-speakeasy-name-override: get
+    x-speakeasy-metadata:
+      after: sdk.letters.get()
+      before: sdk.Letters.Letters_get()
+      created_at: 1743705137729
+      reviewed_at: 1743705148357
+      type: method-name
+  - target: $["paths"]["/boxes"]["post"]
+    update:
+      x-speakeasy-name-override: create
+    x-speakeasy-metadata:
+      after: sdk.boxes.create()
+      before: sdk.Boxes.Boxes_create()
+      created_at: 1743705137729
+      reviewed_at: 1743705148357
+      type: method-name
+  - target: $["paths"]["/templates/{id}"]["post"]
+    update:
+      x-speakeasy-name-override: update
+    x-speakeasy-metadata:
+      after: sdk.templates.update()
+      before: sdk.Templates.Templates_update()
+      created_at: 1743705137729
+      reviewed_at: 1743705148357
+      type: method-name
+  - target: $["paths"]["/bank_accounts/{id}"]["get"]
+    update:
+      x-speakeasy-group: bankAccounts
+      x-speakeasy-name-override: get
+    x-speakeasy-metadata:
+      after: sdk.bankAccounts.get()
+      before: sdk.Bank Accounts.BankAccounts_get()
+      created_at: 1743705137729
+      reviewed_at: 1743705148357
+      type: method-name
+  - target: $["paths"]["/postcards"]["post"]
+    update:
+      x-speakeasy-name-override: create
+    x-speakeasy-metadata:
+      after: sdk.postcards.create()
+      before: sdk.Postcards.Postcards_create()
+      created_at: 1743705137729
+      reviewed_at: 1743705148357
+      type: method-name
+  - target: $["paths"]["/cheques"]["post"]
+    update:
+      x-speakeasy-name-override: create
+    x-speakeasy-metadata:
+      after: sdk.cheques.create()
+      before: sdk.Cheques.Cheques_create()
+      created_at: 1743705137729
+      reviewed_at: 1743705148357
+      type: method-name
+  - target: $["paths"]["/boxes"]["get"]
+    update:
+      x-speakeasy-name-override: list
+    x-speakeasy-metadata:
+      after: sdk.boxes.list()
+      before: sdk.Boxes.Boxes_list()
+      created_at: 1743705137729
+      reviewed_at: 1743705148357
+      type: method-name
+  - target: $["paths"]["/letters/{id}/url"]["get"]
+    update:
+      x-speakeasy-name-override: getUrl
+    x-speakeasy-metadata:
+      after: sdk.letters.getUrl()
+      before: sdk.Letters.Letters_getURL()
+      created_at: 1743705137729
+      reviewed_at: 1743705148357
+      type: method-name
+  - target: $["paths"]["/letters"]["post"]
+    update:
+      x-speakeasy-name-override: create
+    x-speakeasy-metadata:
+      after: sdk.letters.create()
+      before: sdk.Letters.Letters_create()
+      created_at: 1743705137729
+      reviewed_at: 1743705148357
+      type: method-name
+  - target: $["paths"]["/self-mailers/{id}"]["delete"]
+    update:
+      x-speakeasy-group: selfMailers
+      x-speakeasy-name-override: delete
+    x-speakeasy-metadata:
+      after: sdk.selfMailers.delete()
+      before: sdk.Self Mailers.SelfMailers_delete()
+      created_at: 1743705137729
+      reviewed_at: 1743705148357
+      type: method-name
+  - target: $["paths"]["/templates"]["get"]
+    update:
+      x-speakeasy-name-override: list
+    x-speakeasy-metadata:
+      after: sdk.templates.list()
+      before: sdk.Templates.Templates_list()
+      created_at: 1743705137729
+      reviewed_at: 1743705148357
+      type: method-name
+  - target: $["paths"]["/bank_accounts"]["post"]
+    update:
+      x-speakeasy-group: bankAccounts
+      x-speakeasy-name-override: create
+    x-speakeasy-metadata:
+      after: sdk.bankAccounts.create()
+      before: sdk.Bank Accounts.BankAccounts_create()
+      created_at: 1743705137729
+      reviewed_at: 1743705148357
+      type: method-name
+  - target: $["paths"]["/cheques/{id}/url"]["get"]
+    update:
+      x-speakeasy-name-override: getUrl
+    x-speakeasy-metadata:
+      after: sdk.cheques.getUrl()
+      before: sdk.Cheques.Cheques_getURL()
+      created_at: 1743705137729
+      reviewed_at: 1743705148357
+      type: method-name
