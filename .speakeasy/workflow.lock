@@ -1,8 +1,6 @@
 speakeasyVersion: 1.528.1
 sources: {}
 targets:
-    post-grid:
-        source: PostGrid Print & Mail API
     postgrid:
         source: PostGrid Print & Mail API
 workflow:
@@ -20,6 +18,9 @@ workflow:
         postgrid:
             target: typescript
             source: PostGrid Print & Mail API
+            publish:
+                npm:
+                    token: $npm_token
             codeSamples:
                 registry:
                     location: registry.speakeasyapi.dev/postgrid/postgrid/post-grid-print-&-mail-api-typescript-code-samples

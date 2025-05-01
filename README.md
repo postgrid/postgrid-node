@@ -44,34 +44,30 @@ Developer-friendly & type-safe Typescript SDK specifically catered to leverage t
 <!-- Start SDK Installation [installation] -->
 ## SDK Installation
 
-> [!TIP]
-> To finish publishing your SDK to npm and others you must [run your first generation action](https://www.speakeasy.com/docs/github-setup#step-by-step-guide).
-
-
 The SDK can be installed with either [npm](https://www.npmjs.com/), [pnpm](https://pnpm.io/), [bun](https://bun.sh/) or [yarn](https://classic.yarnpkg.com/en/) package managers.
 
 ### NPM
 
 ```bash
-npm add https://github.com/postgrid/postgrid-node
+npm add postgrid-node
 ```
 
 ### PNPM
 
 ```bash
-pnpm add https://github.com/postgrid/postgrid-node
+pnpm add postgrid-node
 ```
 
 ### Bun
 
 ```bash
-bun add https://github.com/postgrid/postgrid-node
+bun add postgrid-node
 ```
 
 ### Yarn
 
 ```bash
-yarn add https://github.com/postgrid/postgrid-node zod
+yarn add postgrid-node zod
 
 # Note that Yarn does not install peer dependencies automatically. You will need
 # to install zod as shown above.

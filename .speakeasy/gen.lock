@@ -5,10 +5,11 @@ management:
   docVersion: 0.0.0
   speakeasyVersion: 1.528.1
   generationVersion: 2.565.1
-  releaseVersion: 0.1.3
-  configChecksum: 41b52cc4f9a33d2836a8550364fad3f6
+  releaseVersion: 0.1.4
+  configChecksum: 2d96fc8a80b08d8cdb235cd89fffa77e
   repoURL: https://github.com/postgrid/postgrid-node.git
   installationURL: https://github.com/postgrid/postgrid-node
+  published: true
 features:
   typescript:
     additionalDependencies: 0.1.0
