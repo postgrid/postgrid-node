@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.1.0-alpha.2 (2025-05-01)
+
+Full Changelog: [v0.1.0-alpha.1...v0.1.0-alpha.2](https://github.com/postgrid/postgrid-node/compare/v0.1.0-alpha.1...v0.1.0-alpha.2)
+
+### Features
+
+* **api:** update via SDK Studio ([3745078](https://github.com/postgrid/postgrid-node/commit/3745078a44541176ddfc903de912d43c13b0a4ab))
+* **api:** update via SDK Studio ([c1e2bd8](https://github.com/postgrid/postgrid-node/commit/c1e2bd8d18e94f74fc35ca456b6ef231943c78e9))
+* **api:** update via SDK Studio ([e144cd3](https://github.com/postgrid/postgrid-node/commit/e144cd3dc698aa550261d1b9e57d17262957e8fa))
+
 ## 0.1.0-alpha.1 (2025-05-01)
 
 Full Changelog: [v0.0.1-alpha.0...v0.1.0-alpha.1](https://github.com/postgrid/postgrid-node/compare/v0.0.1-alpha.0...v0.1.0-alpha.1)

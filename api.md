@@ -158,6 +158,8 @@ Types:
 - <code><a href="./src/resources/reports/reports.ts">ReportUpdateResponse</a></code>
 - <code><a href="./src/resources/reports/reports.ts">ReportListResponse</a></code>
 - <code><a href="./src/resources/reports/reports.ts">ReportDeleteResponse</a></code>
+- <code><a href="./src/resources/reports/reports.ts">ReportRunAdHocQueryResponse</a></code>
+- <code><a href="./src/resources/reports/reports.ts">ReportSampleResponse</a></code>
 
 Methods:
 
@@ -166,18 +168,8 @@ Methods:
 - <code title="post /reports/{id}">client.reports.<a href="./src/resources/reports/reports.ts">update</a>(id, { ...params }) -> ReportUpdateResponse</code>
 - <code title="get /reports/">client.reports.<a href="./src/resources/reports/reports.ts">list</a>({ ...params }) -> ReportListResponsesList</code>
 - <code title="delete /reports/{id}">client.reports.<a href="./src/resources/reports/reports.ts">delete</a>(id) -> ReportDeleteResponse</code>
-
-## Samples
-
-Types:
-
-- <code><a href="./src/resources/reports/samples.ts">SampleRunResponse</a></code>
-- <code><a href="./src/resources/reports/samples.ts">SampleSampleResponse</a></code>
-
-Methods:
-
-- <code title="post /reports/samples">client.reports.samples.<a href="./src/resources/reports/samples.ts">run</a>({ ...params }) -> SampleRunResponse</code>
-- <code title="post /reports/{id}/samples">client.reports.samples.<a href="./src/resources/reports/samples.ts">sample</a>(id, { ...params }) -> SampleSampleResponse</code>
+- <code title="post /reports/samples">client.reports.<a href="./src/resources/reports/reports.ts">runAdHocQuery</a>({ ...params }) -> ReportRunAdHocQueryResponse</code>
+- <code title="post /reports/{id}/samples">client.reports.<a href="./src/resources/reports/reports.ts">sample</a>(id, { ...params }) -> ReportSampleResponse</code>
 
 ## Exports
 

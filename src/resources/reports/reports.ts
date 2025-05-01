@@ -11,18 +11,9 @@ import {
   ExportRetrieveResponse,
   Exports,
 } from './exports';
-import * as SamplesAPI from './samples';
-import {
-  SampleRunParams,
-  SampleRunResponse,
-  SampleSampleParams,
-  SampleSampleResponse,
-  Samples,
-} from './samples';
 import { List, type ListParams } from '../../pagination';
 
 export class Reports extends APIResource {
-  samples: SamplesAPI.Samples = new SamplesAPI.Samples(this._client);
   exports: ExportsAPI.Exports = new ExportsAPI.Exports(this._client);
 
   /**
@@ -79,6 +70,32 @@ export class Reports extends APIResource {
    */
   delete(id: string, options?: Core.RequestOptions): Core.APIPromise<ReportDeleteResponse> {
     return this._client.delete(`/reports/${id}`, options);
+  }
+
+  /**
+   * Run an ad-hoc SQL query against your data lake and get a sample of the results.
+   * This is useful for quickly testing queries without saving them as a report. The
+   * query execution time and result size are limited.
+   */
+  runAdHocQuery(
+    body: ReportRunAdHocQueryParams,
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<ReportRunAdHocQueryResponse> {
+    return this._client.post('/reports/samples', { body, ...options });
+  }
+
+  /**
+   * Run the query associated with a saved report and get a sample of the results.
+   * This allows getting up to 1000 rows of resutls but the runtime of the query is
+   * limited to 30 seconds. If you need more rows or longer runtime, you should
+   * create an export from this report.
+   */
+  sample(
+    id: string,
+    body: ReportSampleParams,
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<ReportSampleResponse> {
+    return this._client.post(`/reports/${id}/samples`, { body, ...options });
   }
 }
 
@@ -279,6 +296,46 @@ export interface ReportDeleteResponse {
   deleted: true;
 }
 
+/**
+ * Represents the result of a report sample query.
+ */
+export interface ReportRunAdHocQueryResponse {
+  /**
+   * Unique identifier for the sample query result.
+   */
+  id: string;
+
+  /**
+   * The actual data records returned by the sample query.
+   */
+  records: Array<Record<string, unknown>>;
+
+  /**
+   * The ID of the report this sample was generated from, or null for ad-hoc samples.
+   */
+  report: string | null;
+}
+
+/**
+ * Represents the result of a report sample query.
+ */
+export interface ReportSampleResponse {
+  /**
+   * Unique identifier for the sample query result.
+   */
+  id: string;
+
+  /**
+   * The actual data records returned by the sample query.
+   */
+  records: Array<Record<string, unknown>>;
+
+  /**
+   * The ID of the report this sample was generated from, or null for ad-hoc samples.
+   */
+  report: string | null;
+}
+
 export interface ReportCreateParams {
   /**
    * The SQL query defining the report.
@@ -324,8 +381,38 @@ export interface ReportListParams extends ListParams {
   search?: string;
 }
 
+export interface ReportRunAdHocQueryParams {
+  /**
+   * The SQL query to execute for the sample.
+   */
+  sqlQuery: string;
+
+  /**
+   * Maximum number of rows to return in the sample.
+   */
+  limit?: number;
+
+  /**
+   * Optional parameters to bind to the SQL query (e.g., for placeholders like ? or
+   * $1).
+   */
+  params?: Array<string>;
+}
+
+export interface ReportSampleParams {
+  /**
+   * Maximum number of rows to return in the sample.
+   */
+  limit?: number;
+
+  /**
+   * Optional parameters to bind to the SQL query (e.g., for placeholders like ? or
+   * $1).
+   */
+  params?: Array<string>;
+}
+
 Reports.ReportListResponsesList = ReportListResponsesList;
-Reports.Samples = Samples;
 Reports.Exports = Exports;
 
 export declare namespace Reports {
@@ -335,18 +422,14 @@ export declare namespace Reports {
     type ReportUpdateResponse as ReportUpdateResponse,
     type ReportListResponse as ReportListResponse,
     type ReportDeleteResponse as ReportDeleteResponse,
+    type ReportRunAdHocQueryResponse as ReportRunAdHocQueryResponse,
+    type ReportSampleResponse as ReportSampleResponse,
     ReportListResponsesList as ReportListResponsesList,
     type ReportCreateParams as ReportCreateParams,
     type ReportUpdateParams as ReportUpdateParams,
     type ReportListParams as ReportListParams,
-  };
-
-  export {
-    Samples as Samples,
-    type SampleRunResponse as SampleRunResponse,
-    type SampleSampleResponse as SampleSampleResponse,
-    type SampleRunParams as SampleRunParams,
-    type SampleSampleParams as SampleSampleParams,
+    type ReportRunAdHocQueryParams as ReportRunAdHocQueryParams,
+    type ReportSampleParams as ReportSampleParams,
   };
 
   export {

@@ -15,14 +15,11 @@ export {
   type ReportUpdateResponse,
   type ReportListResponse,
   type ReportDeleteResponse,
+  type ReportRunAdHocQueryResponse,
+  type ReportSampleResponse,
   type ReportCreateParams,
   type ReportUpdateParams,
   type ReportListParams,
+  type ReportRunAdHocQueryParams,
+  type ReportSampleParams,
 } from './reports';
-export {
-  Samples,
-  type SampleRunResponse,
-  type SampleSampleResponse,
-  type SampleRunParams,
-  type SampleSampleParams,
-} from './samples';

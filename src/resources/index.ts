@@ -76,9 +76,13 @@ export {
   type ReportUpdateResponse,
   type ReportListResponse,
   type ReportDeleteResponse,
+  type ReportRunAdHocQueryResponse,
+  type ReportSampleResponse,
   type ReportCreateParams,
   type ReportUpdateParams,
   type ReportListParams,
+  type ReportRunAdHocQueryParams,
+  type ReportSampleParams,
 } from './reports/reports';
 export {
   SelfMailerListResponsesList,
