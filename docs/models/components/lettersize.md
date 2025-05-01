@@ -7,7 +7,7 @@ Enum representing the supported letter sizes.
 ```typescript
 import { LetterSize } from "postgrid-node/models/components";
 
-let value: LetterSize = "a4";
+let value: LetterSize = "us_letter";
 ```
 
 ## Values

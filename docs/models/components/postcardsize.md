@@ -7,7 +7,7 @@ Enum representing the supported postcard sizes.
 ```typescript
 import { PostcardSize } from "postgrid-node/models/components";
 
-let value: PostcardSize = "9x6";
+let value: PostcardSize = "11x6";
 ```
 
 ## Values

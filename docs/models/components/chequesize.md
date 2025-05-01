@@ -7,7 +7,7 @@ Enum representing the supported cheque sizes.
 ```typescript
 import { ChequeSize } from "postgrid-node/models/components";
 
-let value: ChequeSize = "us_legal";
+let value: ChequeSize = "us_letter";
 ```
 
 ## Values

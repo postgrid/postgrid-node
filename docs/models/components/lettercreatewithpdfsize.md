@@ -7,7 +7,7 @@ The size of the letter.
 ```typescript
 import { LetterCreateWithPDFSize } from "postgrid-node/models/components";
 
-let value: LetterCreateWithPDFSize = "us_letter";
+let value: LetterCreateWithPDFSize = "a4";
 ```
 
 ## Values

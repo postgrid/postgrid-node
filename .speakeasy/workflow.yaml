@@ -9,12 +9,10 @@ sources:
         registry:
             location: registry.speakeasyapi.dev/postgrid/postgrid/post-grid-print-&-mail-api
 targets:
-    post-grid:
+    postgrid:
         target: typescript
         source: PostGrid Print & Mail API
-        publish:
-            npm:
-                token: $npm_token
+        output: .
         codeSamples:
             registry:
                 location: registry.speakeasyapi.dev/postgrid/postgrid/post-grid-print-&-mail-api-typescript-code-samples

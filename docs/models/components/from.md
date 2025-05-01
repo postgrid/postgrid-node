@@ -9,11 +9,11 @@ The 'from' (sender) of the entire box. Accepts inline ContactCreate or a contact
 
 ```typescript
 const value: components.ContactCreate = {
-  addressLine1: "476 Greenholt Gateway",
-  countryCode: "VI",
+  addressLine1: "6566 Treutel Haven",
+  countryCode: "IS",
   skipVerification: false,
   forceVerifiedStatus: false,
-  firstName: "Jayden",
+  firstName: "Simeon",
 };
 ```
 

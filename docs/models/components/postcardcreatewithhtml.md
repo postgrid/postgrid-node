@@ -7,13 +7,13 @@ import { PostcardCreateWithHTML } from "postgrid-node/models/components";
 
 let value: PostcardCreateWithHTML = {
   to: {
-    addressLine1: "8700 Kling Orchard",
-    countryCode: "MO",
+    addressLine1: "1867 Brown Island",
+    countryCode: "ID",
     skipVerification: false,
     forceVerifiedStatus: false,
-    firstName: "Amaya",
+    firstName: "Emmie",
   },
-  size: "11x6",
+  size: "6x4",
   frontHTML: "<value>",
   backHTML: "<value>",
 };

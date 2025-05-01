@@ -5,7 +5,7 @@
 ```typescript
 import { OrderStatus } from "postgrid-node/models/components";
 
-let value: OrderStatus = "cancelled";
+let value: OrderStatus = "completed";
 ```
 
 ## Values

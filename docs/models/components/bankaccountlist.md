@@ -7,9 +7,9 @@ import { BankAccountList } from "postgrid-node/models/components";
 
 let value: BankAccountList = {
   object: "list",
-  totalCount: 887856,
-  skip: 496323,
-  limit: 472785,
+  totalCount: 778157,
+  skip: 870013,
+  limit: 978619,
   data: [
     {
       object: "bank_account",
@@ -18,8 +18,8 @@ let value: BankAccountList = {
       accountNumber: "<value>",
       id: "<id>",
       live: false,
-      createdAt: new Date("2024-04-17T16:45:28.479Z"),
-      updatedAt: new Date("2023-03-25T08:48:54.278Z"),
+      createdAt: new Date("2024-05-20T18:45:11.321Z"),
+      updatedAt: new Date("2025-05-05T11:02:22.031Z"),
     },
   ],
 };

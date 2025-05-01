@@ -7,20 +7,14 @@ import { LetterCreateWithPDF } from "postgrid-node/models/components";
 
 let value: LetterCreateWithPDF = {
   to: {
-    addressLine1: "74586 Parisian Walks",
-    countryCode: "SE",
+    addressLine1: "7690 Miller Oval",
+    countryCode: "VI",
     skipVerification: false,
     forceVerifiedStatus: false,
-    firstName: "Burdette",
+    firstName: "Agustin",
   },
-  from: {
-    addressLine1: "426 Buster Trace",
-    countryCode: "CH",
-    skipVerification: false,
-    forceVerifiedStatus: false,
-    firstName: "Coby",
-  },
-  pdf: "https://dependable-muscat.com/",
+  from: "<value>",
+  pdf: "https://memorable-finger.net",
 };
 ```
 

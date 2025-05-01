@@ -9,11 +9,11 @@ The recipient of this order. You can either supply the contact information inlin
 
 ```typescript
 const value: components.ContactCreate = {
-  addressLine1: "476 Greenholt Gateway",
-  countryCode: "VI",
+  addressLine1: "721 Elisha Ford",
+  countryCode: "JP",
   skipVerification: false,
   forceVerifiedStatus: false,
-  firstName: "Jayden",
+  companyName: "Predovic, Graham and Hoeger",
 };
 ```
 

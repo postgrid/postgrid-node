@@ -7,9 +7,9 @@ import { BankAccountCreateSignatureImageURL } from "postgrid-node/models/compone
 
 let value: BankAccountCreateSignatureImageURL = {
   bankName: "<value>",
-  bankCountryCode: "CA",
+  bankCountryCode: "US",
   accountNumber: "<value>",
-  signatureImage: "https://reasonable-aircraft.net/",
+  signatureImage: "https://blaring-bog.com",
 };
 ```
 

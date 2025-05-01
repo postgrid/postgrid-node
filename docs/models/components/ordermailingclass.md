@@ -5,7 +5,7 @@
 ```typescript
 import { OrderMailingClass } from "postgrid-node/models/components";
 
-let value: OrderMailingClass = "usps_first_class_certified_return_receipt";
+let value: OrderMailingClass = "usps_express_3_day";
 ```
 
 ## Values

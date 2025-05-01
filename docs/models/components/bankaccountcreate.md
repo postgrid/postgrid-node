@@ -8,7 +8,7 @@
 ```typescript
 const value: components.BankAccountCreateSignatureText = {
   bankName: "<value>",
-  bankCountryCode: "US",
+  bankCountryCode: "CA",
   accountNumber: "<value>",
   signatureText: "<value>",
 };
@@ -19,9 +19,9 @@ const value: components.BankAccountCreateSignatureText = {
 ```typescript
 const value: components.BankAccountCreateSignatureImageURL = {
   bankName: "<value>",
-  bankCountryCode: "CA",
+  bankCountryCode: "US",
   accountNumber: "<value>",
-  signatureImage: "https://palatable-collaboration.name",
+  signatureImage: "https://unique-veto.info/",
 };
 ```
 

@@ -7,7 +7,13 @@
 
 ```typescript
 const value: components.PostcardCreateWithHTML = {
-  to: "<value>",
+  to: {
+    addressLine1: "3253 Hauck Walks",
+    countryCode: "BV",
+    skipVerification: false,
+    forceVerifiedStatus: false,
+    companyName: "Heathcote - McLaughlin",
+  },
   size: "9x6",
   frontHTML: "<value>",
   backHTML: "<value>",
@@ -28,14 +34,14 @@ const value: components.PostcardCreateWithTemplate = {
 ```typescript
 const value: components.PostcardCreateWithPDFURL = {
   to: {
-    addressLine1: "29581 Abbigail Valleys",
-    countryCode: "BH",
+    addressLine1: "7689 St George's Road",
+    countryCode: "PE",
     skipVerification: false,
     forceVerifiedStatus: false,
-    firstName: "Marcellus",
+    companyName: "Corkery Group",
   },
   size: "6x4",
-  pdf: "https://mild-fuel.com",
+  pdf: "https://misguided-saloon.org/",
 };
 ```
 
@@ -43,8 +49,14 @@ const value: components.PostcardCreateWithPDFURL = {
 
 ```typescript
 const value: components.PostcardCreateWithPDFFile = {
-  to: "<value>",
-  size: "6x4",
+  to: {
+    addressLine1: "7899 Hoeger Creek",
+    countryCode: "NZ",
+    skipVerification: false,
+    forceVerifiedStatus: false,
+    firstName: "Madisyn",
+  },
+  size: "11x6",
   pdf: "<value>",
 };
 ```

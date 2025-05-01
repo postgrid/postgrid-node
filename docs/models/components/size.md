@@ -7,7 +7,7 @@ The size of the cheque.
 ```typescript
 import { Size } from "postgrid-node/models/components";
 
-let value: Size = "us_letter";
+let value: Size = "us_legal";
 ```
 
 ## Values
