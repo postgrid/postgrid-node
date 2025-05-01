@@ -17,8 +17,6 @@ permissions:
         type: string
   schedule:
     - cron: 0 0 * * *
-  pull_request:
-
 jobs:
   generate:
     uses: speakeasy-api/sdk-generation-action/.github/workflows/workflow-executor.yaml@v15
@@ -28,4 +26,5 @@ jobs:
       set_version: ${{ github.event.inputs.set_version }}
     secrets:
       github_access_token: ${{ secrets.GITHUB_TOKEN }}
+      npm_token: ${{ secrets.NPM_TOKEN }}
       speakeasy_api_key: ${{ secrets.SPEAKEASY_API_KEY }}
