@@ -7,20 +7,14 @@ import { SelfMailerCreateWithHTML } from "postgrid-node/models/components";
 
 let value: SelfMailerCreateWithHTML = {
   to: {
-    addressLine1: "98085 Tromp Landing",
-    countryCode: "FJ",
+    addressLine1: "6486 Johnson Spurs",
+    countryCode: "GP",
     skipVerification: false,
     forceVerifiedStatus: false,
-    companyName: "Rippin, Torphy and Conn",
+    firstName: "Cory",
   },
-  size: "9.5x16_trifold",
-  from: {
-    addressLine1: "54066 Alexandra Road",
-    countryCode: "PS",
-    skipVerification: false,
-    forceVerifiedStatus: false,
-    firstName: "Leila",
-  },
+  size: "8.5x11_bifold",
+  from: "<value>",
   insideHTML: "<value>",
   outsideHTML: "<value>",
 };

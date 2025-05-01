@@ -7,11 +7,11 @@
 
 ```typescript
 const value: components.ContactCreate = {
-  addressLine1: "476 Greenholt Gateway",
-  countryCode: "VI",
+  addressLine1: "261 The Green",
+  countryCode: "MG",
   skipVerification: false,
   forceVerifiedStatus: false,
-  firstName: "Jayden",
+  firstName: "Gwendolyn",
 };
 ```
 

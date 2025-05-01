@@ -8,12 +8,12 @@ import { Contact } from "postgrid-node/models/components";
 let value: Contact = {
   id: "<id>",
   live: false,
-  createdAt: new Date("2024-11-18T09:35:12.762Z"),
-  updatedAt: new Date("2023-10-07T02:22:37.218Z"),
+  createdAt: new Date("2025-11-20T13:24:26.967Z"),
+  updatedAt: new Date("2023-09-30T15:12:09.673Z"),
   object: "contact",
-  addressLine1: "64345 Kohler Burg",
-  countryCode: "UZ",
-  addressStatus: "verified",
+  addressLine1: "6529 Stamm Ramp",
+  countryCode: "FR",
+  addressStatus: "failed",
 };
 ```
 

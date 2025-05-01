@@ -6,7 +6,7 @@
 import { Cancellation } from "postgrid-node/models/components";
 
 let value: Cancellation = {
-  reason: "user_initiated",
+  reason: "invalid_content",
 };
 ```
 

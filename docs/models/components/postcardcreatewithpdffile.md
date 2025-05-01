@@ -7,11 +7,11 @@ import { PostcardCreateWithPDFFile } from "postgrid-node/models/components";
 
 let value: PostcardCreateWithPDFFile = {
   to: {
-    addressLine1: "3941 Lauryn Knoll",
-    countryCode: "TW",
+    addressLine1: "528 Abbott Fields",
+    countryCode: "GF",
     skipVerification: false,
     forceVerifiedStatus: false,
-    firstName: "Cathy",
+    companyName: "Koch, Kilback and Harvey",
   },
   size: "11x6",
   pdf: "<value>",

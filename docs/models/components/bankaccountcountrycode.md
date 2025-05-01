@@ -8,7 +8,7 @@ which PostGrid's bank accounts API supports.
 ```typescript
 import { BankAccountCountryCode } from "postgrid-node/models/components";
 
-let value: BankAccountCountryCode = "CA";
+let value: BankAccountCountryCode = "US";
 ```
 
 ## Values

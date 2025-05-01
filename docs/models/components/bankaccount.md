@@ -12,8 +12,8 @@ let value: BankAccount = {
   accountNumber: "<value>",
   id: "<id>",
   live: false,
-  createdAt: new Date("2023-04-16T09:09:38.246Z"),
-  updatedAt: new Date("2023-12-31T03:26:29.560Z"),
+  createdAt: new Date("2025-02-22T20:20:27.935Z"),
+  updatedAt: new Date("2024-10-22T15:05:16.239Z"),
 };
 ```
 

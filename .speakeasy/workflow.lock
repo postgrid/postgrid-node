@@ -1,7 +1,9 @@
-speakeasyVersion: 1.541.2
+speakeasyVersion: 1.528.1
 sources: {}
 targets:
     post-grid:
+        source: PostGrid Print & Mail API
+    postgrid:
         source: PostGrid Print & Mail API
 workflow:
     workflowVersion: 1.0.0
@@ -15,7 +17,7 @@ workflow:
             registry:
                 location: registry.speakeasyapi.dev/postgrid/postgrid/post-grid-print-&-mail-api
     targets:
-        post-grid:
+        postgrid:
             target: typescript
             source: PostGrid Print & Mail API
             codeSamples:

@@ -7,14 +7,14 @@ import { PostcardCreateWithPDFURL } from "postgrid-node/models/components";
 
 let value: PostcardCreateWithPDFURL = {
   to: {
-    addressLine1: "520 W Broadway Street",
-    countryCode: "UZ",
+    addressLine1: "67411 Legros Groves",
+    countryCode: "SC",
     skipVerification: false,
     forceVerifiedStatus: false,
-    companyName: "Johnson, Williamson and Johnson",
+    companyName: "Walter, Barrows and Tremblay",
   },
-  size: "6x4",
-  pdf: "https://definite-litter.biz/",
+  size: "9x6",
+  pdf: "https://rotating-willow.net",
 };
 ```
 

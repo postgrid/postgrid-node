@@ -10,7 +10,7 @@ import { ChequesGetURLResponseBody } from "postgrid-node/models/operations";
 let value: ChequesGetURLResponseBody = {
   id: "<id>",
   object: "<value>",
-  url: "https://pertinent-knuckle.net/",
+  url: "https://squiggly-provider.name/",
 };
 ```
 
