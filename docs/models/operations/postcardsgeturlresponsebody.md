@@ -10,7 +10,7 @@ import { PostcardsGetURLResponseBody } from "postgrid-node/models/operations";
 let value: PostcardsGetURLResponseBody = {
   id: "<id>",
   object: "<value>",
-  url: "https://impassioned-sand.com",
+  url: "https://private-forage.net/",
 };
 ```
 

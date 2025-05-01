@@ -9,11 +9,11 @@ The contact information of the sender. You can pass contact information inline h
 
 ```typescript
 const value: components.ContactCreate = {
-  addressLine1: "52359 S Union Street",
-  countryCode: "ME",
+  addressLine1: "476 Greenholt Gateway",
+  countryCode: "VI",
   skipVerification: false,
   forceVerifiedStatus: false,
-  companyName: "Kulas, Swift and Skiles",
+  firstName: "Jayden",
 };
 ```
 

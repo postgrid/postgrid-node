@@ -7,20 +7,8 @@
 
 ```typescript
 const value: components.LetterCreateWithHTML = {
-  to: {
-    addressLine1: "902 Schultz Ways",
-    countryCode: "VU",
-    skipVerification: false,
-    forceVerifiedStatus: false,
-    firstName: "Susan",
-  },
-  from: {
-    addressLine1: "19260 W 8th Street",
-    countryCode: "ES",
-    skipVerification: false,
-    forceVerifiedStatus: false,
-    companyName: "Hirthe LLC",
-  },
+  to: "<value>",
+  from: "<value>",
   html: "<value>",
 };
 ```
@@ -38,14 +26,14 @@ const value: components.LetterCreateWithTemplate = {
 ```typescript
 const value: components.LetterCreateWithPDF = {
   to: {
-    addressLine1: "3825 Priory Road",
-    countryCode: "TF",
+    addressLine1: "522 Curtis Trace",
+    countryCode: "AG",
     skipVerification: false,
     forceVerifiedStatus: false,
-    firstName: "Tristian",
+    firstName: "Audreanne",
   },
   from: "<value>",
-  pdf: "https://wide-eyed-yarmulke.info",
+  pdf: "https://swift-operating.info",
 };
 ```
 

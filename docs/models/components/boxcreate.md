@@ -11,10 +11,22 @@ let value: BoxCreate = {
   cheques: [
     {
       bankAccount: "<value>",
-      amount: 100226,
-      number: 919483,
-      from: "<value>",
-      to: "<value>",
+      amount: 415018,
+      number: 632886,
+      from: {
+        addressLine1: "17046 Elliot Terrace",
+        countryCode: "ME",
+        skipVerification: false,
+        forceVerifiedStatus: false,
+        companyName: "Jones, Waelchi and Jenkins",
+      },
+      to: {
+        addressLine1: "26352 1st Street",
+        countryCode: "KW",
+        skipVerification: false,
+        forceVerifiedStatus: false,
+        companyName: "Mohr, Reilly and Skiles",
+      },
     },
   ],
 };

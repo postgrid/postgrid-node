@@ -7,7 +7,7 @@ The placement of the address on the letter.
 ```typescript
 import { LetterCreateWithHTMLAddressPlacement } from "postgrid-node/models/components";
 
-let value: LetterCreateWithHTMLAddressPlacement = "top_first_page";
+let value: LetterCreateWithHTMLAddressPlacement = "insert_blank_page";
 ```
 
 ## Values

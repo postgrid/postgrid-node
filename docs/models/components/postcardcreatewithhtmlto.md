@@ -9,11 +9,11 @@ The recipient of this order. You can either supply the contact information inlin
 
 ```typescript
 const value: components.ContactCreate = {
-  addressLine1: "6218 Janie Corners",
-  countryCode: "JP",
+  addressLine1: "476 Greenholt Gateway",
+  countryCode: "VI",
   skipVerification: false,
   forceVerifiedStatus: false,
-  firstName: "Wilhelm",
+  firstName: "Jayden",
 };
 ```
 

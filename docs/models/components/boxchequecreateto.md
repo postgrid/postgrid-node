@@ -7,11 +7,11 @@
 
 ```typescript
 const value: components.ContactCreate = {
-  addressLine1: "578 Vicarage Close",
-  countryCode: "AF",
+  addressLine1: "476 Greenholt Gateway",
+  countryCode: "VI",
   skipVerification: false,
   forceVerifiedStatus: false,
-  firstName: "Floyd",
+  firstName: "Jayden",
 };
 ```
 

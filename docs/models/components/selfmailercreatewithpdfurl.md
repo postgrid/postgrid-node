@@ -6,22 +6,10 @@
 import { SelfMailerCreateWithPDFURL } from "postgrid-node/models/components";
 
 let value: SelfMailerCreateWithPDFURL = {
-  to: {
-    addressLine1: "8213 Cherry Tree Close",
-    countryCode: "DE",
-    skipVerification: false,
-    forceVerifiedStatus: false,
-    firstName: "Annette",
-  },
-  size: "9.5x16_trifold",
-  from: {
-    addressLine1: "478 Wayne Crossing",
-    countryCode: "FM",
-    skipVerification: false,
-    forceVerifiedStatus: false,
-    firstName: "Chelsey",
-  },
-  pdf: "https://lonely-license.org/",
+  to: "<value>",
+  size: "8.5x11_trifold",
+  from: "<value>",
+  pdf: "https://celebrated-remark.name",
 };
 ```
 

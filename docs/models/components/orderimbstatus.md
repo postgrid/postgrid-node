@@ -5,7 +5,7 @@
 ```typescript
 import { OrderIMBStatus } from "postgrid-node/models/components";
 
-let value: OrderIMBStatus = "returned_to_sender";
+let value: OrderIMBStatus = "out_for_delivery";
 ```
 
 ## Values

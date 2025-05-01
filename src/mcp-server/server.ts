@@ -11,7 +11,7 @@ import {
   createRegisterResource,
   createRegisterResourceTemplate,
 } from "./resources.js";
-import { MCPScope, mcpScopes } from "./scopes.js";
+import { MCPScope } from "./scopes.js";
 import { createRegisterTool } from "./tools.js";
 import { tool$bankAccountsCreate } from "./tools/bankAccountsCreate.js";
 import { tool$bankAccountsDelete } from "./tools/bankAccountsDelete.js";
@@ -62,7 +62,7 @@ export function createMCPServer(deps: {
 }) {
   const server = new McpServer({
     name: "PostGrid",
-    version: "0.1.1",
+    version: "0.1.2",
   });
 
   const client = new PostGridCore({
@@ -71,7 +71,7 @@ export function createMCPServer(deps: {
     serverIdx: deps.serverIdx,
   });
 
-  const scopes = new Set(deps.scopes ?? mcpScopes);
+  const scopes = new Set(deps.scopes);
 
   const allowedTools = deps.allowedTools && new Set(deps.allowedTools);
   const tool = createRegisterTool(

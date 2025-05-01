@@ -8,8 +8,8 @@ import { Template } from "postgrid-node/models/components";
 let value: Template = {
   id: "<id>",
   live: false,
-  createdAt: new Date("2025-11-28T05:59:28.499Z"),
-  updatedAt: new Date("2023-10-19T03:11:54.710Z"),
+  createdAt: new Date("2024-02-24T06:57:40.612Z"),
+  updatedAt: new Date("2023-07-18T18:39:42.485Z"),
   object: "template",
 };
 ```
