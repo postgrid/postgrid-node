@@ -1182,7 +1182,7 @@ paths:
               example:
                 id: cheque_123456
                 object: cheque_url
-                url: https://pg-prod-bucket-1.s3.amazonaws.com/test/cheque_uzTtdAPiBVC25hjEYDvyLk?AWSAccessKeyId=AKIA5GFUILSULWTWCR64&Expires=1736192587&Signature=GS6kJK3fgWWy49jq1Yb%2FRn%2BQjD4%3D
+                url: https://pg-prod-bucket-1.s3.amazonaws.com/test/cheque_uzTtdAPiBVC25hjEYDvyLk
         '401':
           description: the Cheque Preview URL.
           content:
