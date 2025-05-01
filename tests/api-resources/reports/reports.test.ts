@@ -101,4 +101,34 @@ describe('resource reports', () => {
       PostGrid.NotFoundError,
     );
   });
+
+  test('runAdHocQuery: only required params', async () => {
+    const responsePromise = client.reports.runAdHocQuery({ sqlQuery: 'sqlQuery' });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  test('runAdHocQuery: required and optional params', async () => {
+    const response = await client.reports.runAdHocQuery({
+      sqlQuery: 'sqlQuery',
+      limit: 1000,
+      params: ['string'],
+    });
+  });
+
+  test('sample', async () => {
+    const responsePromise = client.reports.sample('id', {});
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
 });

@@ -102,6 +102,10 @@ import {
   ReportListResponse,
   ReportListResponsesList,
   ReportRetrieveResponse,
+  ReportRunAdHocQueryParams,
+  ReportRunAdHocQueryResponse,
+  ReportSampleParams,
+  ReportSampleResponse,
   ReportUpdateParams,
   ReportUpdateResponse,
   Reports,
@@ -386,10 +390,14 @@ export declare namespace PostGrid {
     type ReportUpdateResponse as ReportUpdateResponse,
     type ReportListResponse as ReportListResponse,
     type ReportDeleteResponse as ReportDeleteResponse,
+    type ReportRunAdHocQueryResponse as ReportRunAdHocQueryResponse,
+    type ReportSampleResponse as ReportSampleResponse,
     ReportListResponsesList as ReportListResponsesList,
     type ReportCreateParams as ReportCreateParams,
     type ReportUpdateParams as ReportUpdateParams,
     type ReportListParams as ReportListParams,
+    type ReportRunAdHocQueryParams as ReportRunAdHocQueryParams,
+    type ReportSampleParams as ReportSampleParams,
   };
 
   export {
