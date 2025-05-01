@@ -17,6 +17,30 @@ import {
   BankAccountsList,
 } from './resources/bank-accounts';
 import {
+  BoxCancelResponse,
+  BoxCreateParams,
+  BoxCreateResponse,
+  BoxListParams,
+  BoxListResponse,
+  BoxListResponsesList,
+  BoxRetrieveResponse,
+  Boxes,
+} from './resources/boxes';
+import {
+  CampaignCreateParams,
+  CampaignCreateResponse,
+  CampaignDeleteResponse,
+  CampaignListParams,
+  CampaignListResponse,
+  CampaignListResponsesList,
+  CampaignRetrieveResponse,
+  CampaignSendParams,
+  CampaignSendResponse,
+  CampaignUpdateParams,
+  CampaignUpdateResponse,
+  Campaigns,
+} from './resources/campaigns';
+import {
   Contact,
   ContactCreateParams,
   ContactDeleteResponse,
@@ -43,6 +67,16 @@ import {
   PostcardsList,
 } from './resources/postcards';
 import {
+  SelfMailerCancelResponse,
+  SelfMailerCreateParams,
+  SelfMailerCreateResponse,
+  SelfMailerListParams,
+  SelfMailerListResponse,
+  SelfMailerListResponsesList,
+  SelfMailerRetrieveResponse,
+  SelfMailers,
+} from './resources/self-mailers';
+import {
   Template,
   TemplateCreateParams,
   TemplateDeleteResponse,
@@ -60,10 +94,22 @@ import {
   Cheques,
   ChequesList,
 } from './resources/cheques/cheques';
+import {
+  ReportCreateParams,
+  ReportCreateResponse,
+  ReportDeleteResponse,
+  ReportListParams,
+  ReportListResponse,
+  ReportListResponsesList,
+  ReportRetrieveResponse,
+  ReportUpdateParams,
+  ReportUpdateResponse,
+  Reports,
+} from './resources/reports/reports';
 
 export interface ClientOptions {
   /**
-   * API Key for accessing the PostGrid Print & Mail API
+   * Defaults to process.env['POSTGRID_API_KEY'].
    */
   apiKey?: string | undefined;
 
@@ -181,6 +227,10 @@ export class PostGrid extends Core.APIClient {
   cheques: API.Cheques = new API.Cheques(this);
   letters: API.Letters = new API.Letters(this);
   postcards: API.Postcards = new API.Postcards(this);
+  boxes: API.Boxes = new API.Boxes(this);
+  campaigns: API.Campaigns = new API.Campaigns(this);
+  reports: API.Reports = new API.Reports(this);
+  selfMailers: API.SelfMailers = new API.SelfMailers(this);
 
   protected override defaultQuery(): Core.DefaultQuery | undefined {
     return this._options.defaultQuery;
@@ -230,6 +280,14 @@ PostGrid.Letters = Letters;
 PostGrid.LettersList = LettersList;
 PostGrid.Postcards = Postcards;
 PostGrid.PostcardsList = PostcardsList;
+PostGrid.Boxes = Boxes;
+PostGrid.BoxListResponsesList = BoxListResponsesList;
+PostGrid.Campaigns = Campaigns;
+PostGrid.CampaignListResponsesList = CampaignListResponsesList;
+PostGrid.Reports = Reports;
+PostGrid.ReportListResponsesList = ReportListResponsesList;
+PostGrid.SelfMailers = SelfMailers;
+PostGrid.SelfMailerListResponsesList = SelfMailerListResponsesList;
 export declare namespace PostGrid {
   export type RequestOptions = Core.RequestOptions;
 
@@ -293,6 +351,56 @@ export declare namespace PostGrid {
     PostcardsList as PostcardsList,
     type PostcardCreateParams as PostcardCreateParams,
     type PostcardListParams as PostcardListParams,
+  };
+
+  export {
+    Boxes as Boxes,
+    type BoxCreateResponse as BoxCreateResponse,
+    type BoxRetrieveResponse as BoxRetrieveResponse,
+    type BoxListResponse as BoxListResponse,
+    type BoxCancelResponse as BoxCancelResponse,
+    BoxListResponsesList as BoxListResponsesList,
+    type BoxCreateParams as BoxCreateParams,
+    type BoxListParams as BoxListParams,
+  };
+
+  export {
+    Campaigns as Campaigns,
+    type CampaignCreateResponse as CampaignCreateResponse,
+    type CampaignRetrieveResponse as CampaignRetrieveResponse,
+    type CampaignUpdateResponse as CampaignUpdateResponse,
+    type CampaignListResponse as CampaignListResponse,
+    type CampaignDeleteResponse as CampaignDeleteResponse,
+    type CampaignSendResponse as CampaignSendResponse,
+    CampaignListResponsesList as CampaignListResponsesList,
+    type CampaignCreateParams as CampaignCreateParams,
+    type CampaignUpdateParams as CampaignUpdateParams,
+    type CampaignListParams as CampaignListParams,
+    type CampaignSendParams as CampaignSendParams,
+  };
+
+  export {
+    Reports as Reports,
+    type ReportCreateResponse as ReportCreateResponse,
+    type ReportRetrieveResponse as ReportRetrieveResponse,
+    type ReportUpdateResponse as ReportUpdateResponse,
+    type ReportListResponse as ReportListResponse,
+    type ReportDeleteResponse as ReportDeleteResponse,
+    ReportListResponsesList as ReportListResponsesList,
+    type ReportCreateParams as ReportCreateParams,
+    type ReportUpdateParams as ReportUpdateParams,
+    type ReportListParams as ReportListParams,
+  };
+
+  export {
+    SelfMailers as SelfMailers,
+    type SelfMailerCreateResponse as SelfMailerCreateResponse,
+    type SelfMailerRetrieveResponse as SelfMailerRetrieveResponse,
+    type SelfMailerListResponse as SelfMailerListResponse,
+    type SelfMailerCancelResponse as SelfMailerCancelResponse,
+    SelfMailerListResponsesList as SelfMailerListResponsesList,
+    type SelfMailerCreateParams as SelfMailerCreateParams,
+    type SelfMailerListParams as SelfMailerListParams,
   };
 
   export type Cancellation = API.Cancellation;
