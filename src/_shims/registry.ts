@@ -42,12 +42,12 @@ export let isFsReadStream: Shims['isFsReadStream'] | undefined = undefined;
 export function setShims(shims: Shims, options: { auto: boolean } = { auto: false }) {
   if (auto) {
     throw new Error(
-      `you must \`import 'postgrid/shims/${shims.kind}'\` before importing anything else from postgrid`,
+      `you must \`import 'postgrid-node/shims/${shims.kind}'\` before importing anything else from postgrid-node`,
     );
   }
   if (kind) {
     throw new Error(
-      `can't \`import 'postgrid/shims/${shims.kind}'\` after \`import 'postgrid/shims/${kind}'\``,
+      `can't \`import 'postgrid-node/shims/${shims.kind}'\` after \`import 'postgrid-node/shims/${kind}'\``,
     );
   }
   auto = options.auto;

@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { PostGrid } from 'postgrid';
+import { PostGrid } from 'postgrid-node';
 
 const { stringifyQuery } = PostGrid.prototype as any;
 

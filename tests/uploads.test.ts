@@ -1,6 +1,6 @@
 import fs from 'fs';
-import { toFile, type ResponseLike } from 'postgrid/uploads';
-import { File } from 'postgrid/_shims/index';
+import { toFile, type ResponseLike } from 'postgrid-node/uploads';
+import { File } from 'postgrid-node/_shims/index';
 
 class MyClass {
   name: string = 'foo';

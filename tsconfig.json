@@ -9,9 +9,9 @@
     "esModuleInterop": true,
     "baseUrl": "./",
     "paths": {
-      "postgrid/_shims/auto/*": ["src/_shims/auto/*-node"],
-      "postgrid/*": ["src/*"],
-      "postgrid": ["src/index.ts"]
+      "postgrid-node/_shims/auto/*": ["src/_shims/auto/*-node"],
+      "postgrid-node/*": ["src/*"],
+      "postgrid-node": ["src/index.ts"]
     },
     "noEmit": true,
 

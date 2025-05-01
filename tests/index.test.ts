@@ -1,8 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import PostGrid from 'postgrid';
-import { APIUserAbortError } from 'postgrid';
-import { Headers } from 'postgrid/core';
+import PostGrid from 'postgrid-node';
+import { APIUserAbortError } from 'postgrid-node';
+import { Headers } from 'postgrid-node/core';
 import defaultFetch, { Response, type RequestInit, type RequestInfo } from 'node-fetch';
 
 describe('instantiate client', () => {
