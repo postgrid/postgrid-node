@@ -17,6 +17,8 @@ permissions:
         type: string
   schedule:
     - cron: 0 0 * * *
+  pull_request:
+
 jobs:
   generate:
     uses: speakeasy-api/sdk-generation-action/.github/workflows/workflow-executor.yaml@v15
