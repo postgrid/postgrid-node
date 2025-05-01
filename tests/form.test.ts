@@ -1,6 +1,6 @@
-import { multipartFormRequestOptions, createForm } from 'postgrid/core';
-import { Blob } from 'postgrid/_shims/index';
-import { toFile } from 'postgrid';
+import { multipartFormRequestOptions, createForm } from 'postgrid-node/core';
+import { Blob } from 'postgrid-node/_shims/index';
+import { toFile } from 'postgrid-node';
 
 describe('form data validation', () => {
   test('valid values do not error', async () => {

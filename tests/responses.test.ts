@@ -1,5 +1,5 @@
-import { createResponseHeaders } from 'postgrid/core';
-import { Headers } from 'postgrid/_shims/index';
+import { createResponseHeaders } from 'postgrid-node/core';
+import { Headers } from 'postgrid-node/_shims/index';
 
 describe('response parsing', () => {
   // TODO: test unicode characters

@@ -4,8 +4,8 @@
 /**
  * Types will get added to this namespace when you import one of the following:
  *
- *   import 'postgrid/shims/node'
- *   import 'postgrid/shims/web'
+ *   import 'postgrid-node/shims/node'
+ *   import 'postgrid-node/shims/web'
  *
  * Importing more than one will cause type and runtime errors.
  */
