@@ -23,10 +23,3 @@ export {
   type ReportRunAdHocQueryParams,
   type ReportSampleParams,
 } from './reports';
-export {
-  Samples,
-  type SampleRunResponse,
-  type SampleSampleResponse,
-  type SampleRunParams,
-  type SampleSampleParams,
-} from './samples';
