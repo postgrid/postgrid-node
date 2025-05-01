@@ -11,6 +11,30 @@ export {
   type BankAccountListParams,
 } from './bank-accounts';
 export {
+  BoxListResponsesList,
+  Boxes,
+  type BoxCreateResponse,
+  type BoxRetrieveResponse,
+  type BoxListResponse,
+  type BoxCancelResponse,
+  type BoxCreateParams,
+  type BoxListParams,
+} from './boxes';
+export {
+  CampaignListResponsesList,
+  Campaigns,
+  type CampaignCreateResponse,
+  type CampaignRetrieveResponse,
+  type CampaignUpdateResponse,
+  type CampaignListResponse,
+  type CampaignDeleteResponse,
+  type CampaignSendResponse,
+  type CampaignCreateParams,
+  type CampaignUpdateParams,
+  type CampaignListParams,
+  type CampaignSendParams,
+} from './campaigns';
+export {
   ChequesList,
   Cheques,
   type Cheque,
@@ -44,6 +68,28 @@ export {
   type PostcardCreateParams,
   type PostcardListParams,
 } from './postcards';
+export {
+  ReportListResponsesList,
+  Reports,
+  type ReportCreateResponse,
+  type ReportRetrieveResponse,
+  type ReportUpdateResponse,
+  type ReportListResponse,
+  type ReportDeleteResponse,
+  type ReportCreateParams,
+  type ReportUpdateParams,
+  type ReportListParams,
+} from './reports/reports';
+export {
+  SelfMailerListResponsesList,
+  SelfMailers,
+  type SelfMailerCreateResponse,
+  type SelfMailerRetrieveResponse,
+  type SelfMailerListResponse,
+  type SelfMailerCancelResponse,
+  type SelfMailerCreateParams,
+  type SelfMailerListParams,
+} from './self-mailers';
 export {
   TemplatesList,
   Templates,
