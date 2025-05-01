@@ -294,6 +294,10 @@ export declare namespace PostGrid {
     type PostcardCreateParams as PostcardCreateParams,
     type PostcardListParams as PostcardListParams,
   };
+
+  export type Cancellation = API.Cancellation;
+  export type ContactCreateWithCompanyName = API.ContactCreateWithCompanyName;
+  export type ContactCreateWithFirstName = API.ContactCreateWithFirstName;
 }
 
 export { toFile, fileFromPath } from './uploads';
