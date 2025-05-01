@@ -1,6 +1,6 @@
 {
   "name": "postgrid-node",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "author": "PostGrid",
   "type": "module",
   "bin": {

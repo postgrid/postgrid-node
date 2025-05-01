@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 9f4aaa8f-29bf-480f-a075-3d787451c5ef
 management:
-  docChecksum: 61388a618916598a95221f11f8b497e5
+  docChecksum: b8e2c0e17ccde043ea4d5413dfb26df7
   docVersion: 0.0.0
   speakeasyVersion: 1.528.1
   generationVersion: 2.565.1
-  releaseVersion: 0.1.4
-  configChecksum: 2d96fc8a80b08d8cdb235cd89fffa77e
+  releaseVersion: 0.1.5
+  configChecksum: 8ef8335ebd7dcef69126944309a2002e
   repoURL: https://github.com/postgrid/postgrid-node.git
   installationURL: https://github.com/postgrid/postgrid-node
   published: true
@@ -608,7 +608,7 @@ examples:
           id: "<id>"
       responses:
         "200":
-          application/json: {"id": "cheque_123456", "object": "cheque_url", "url": "https://pg-prod-bucket-1.s3.amazonaws.com/test/cheque_uzTtdAPiBVC25hjEYDvyLk?AWSAccessKeyId=AKIA5GFUILSULWTWCR64&Expires=1736192587&Signature=GS6kJK3fgWWy49jq1Yb%2FRn%2BQjD4%3D"}
+          application/json: {"id": "cheque_123456", "object": "cheque_url", "url": "https://pg-prod-bucket-1.s3.amazonaws.com/test/cheque_uzTtdAPiBVC25hjEYDvyLk"}
   Cheques_getDepositReadyPDF:
     "":
       parameters:
