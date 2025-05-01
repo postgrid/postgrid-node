@@ -1,3 +1,11 @@
+# Shared
+
+Types:
+
+- <code><a href="./src/resources/shared.ts">Cancellation</a></code>
+- <code><a href="./src/resources/shared.ts">ContactCreateWithCompanyName</a></code>
+- <code><a href="./src/resources/shared.ts">ContactCreateWithFirstName</a></code>
+
 # Contacts
 
 Types:
