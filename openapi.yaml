@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  title: PostGrid Print & Mail API
+  title: PostGrid
   contact:
     email: support@postgrid.com
     url: postgrid.com
