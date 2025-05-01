@@ -11,18 +11,9 @@ import {
   ExportRetrieveResponse,
   Exports,
 } from './exports';
-import * as SamplesAPI from './samples';
-import {
-  SampleRunParams,
-  SampleRunResponse,
-  SampleSampleParams,
-  SampleSampleResponse,
-  Samples,
-} from './samples';
 import { List, type ListParams } from '../../pagination';
 
 export class Reports extends APIResource {
-  samples: SamplesAPI.Samples = new SamplesAPI.Samples(this._client);
   exports: ExportsAPI.Exports = new ExportsAPI.Exports(this._client);
 
   /**
@@ -422,7 +413,6 @@ export interface ReportSampleParams {
 }
 
 Reports.ReportListResponsesList = ReportListResponsesList;
-Reports.Samples = Samples;
 Reports.Exports = Exports;
 
 export declare namespace Reports {
@@ -440,14 +430,6 @@ export declare namespace Reports {
     type ReportListParams as ReportListParams,
     type ReportRunAdHocQueryParams as ReportRunAdHocQueryParams,
     type ReportSampleParams as ReportSampleParams,
-  };
-
-  export {
-    Samples as Samples,
-    type SampleRunResponse as SampleRunResponse,
-    type SampleSampleResponse as SampleSampleResponse,
-    type SampleRunParams as SampleRunParams,
-    type SampleSampleParams as SampleSampleParams,
   };
 
   export {

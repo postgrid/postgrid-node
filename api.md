@@ -171,18 +171,6 @@ Methods:
 - <code title="post /reports/samples">client.reports.<a href="./src/resources/reports/reports.ts">runAdHocQuery</a>({ ...params }) -> ReportRunAdHocQueryResponse</code>
 - <code title="post /reports/{id}/samples">client.reports.<a href="./src/resources/reports/reports.ts">sample</a>(id, { ...params }) -> ReportSampleResponse</code>
 
-## Samples
-
-Types:
-
-- <code><a href="./src/resources/reports/samples.ts">SampleRunResponse</a></code>
-- <code><a href="./src/resources/reports/samples.ts">SampleSampleResponse</a></code>
-
-Methods:
-
-- <code title="post /reports/samples">client.reports.samples.<a href="./src/resources/reports/samples.ts">run</a>({ ...params }) -> SampleRunResponse</code>
-- <code title="post /reports/{id}/samples">client.reports.samples.<a href="./src/resources/reports/samples.ts">sample</a>(id, { ...params }) -> SampleSampleResponse</code>
-
 ## Exports
 
 Types:
