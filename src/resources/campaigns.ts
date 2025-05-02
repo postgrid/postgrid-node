@@ -831,7 +831,7 @@ export interface CampaignSendParams {
    * The date and time the campaign should be sent. Must be in the future. If
    * omitted, defaults to the earliest possible processing date.
    */
-  sendDate?: string | string;
+  sendDate?: (string & {}) | string;
 }
 
 Campaigns.CampaignListResponsesList = CampaignListResponsesList;
