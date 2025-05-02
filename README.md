@@ -6,7 +6,7 @@ This library provides convenient access to the PostGrid REST API from server-sid
 
 The REST API documentation can be found on [docs.postgrid.com](https://docs.postgrid.com). The full API of this library can be found in [api.md](api.md).
 
-It is generated with [Stainless](https://www.stainlessapi.com/).
+It is generated with [Stainless](https://www.stainless.com/).
 
 ## Installation
 
