@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.1.0-alpha.3 (2025-05-02)
+
+Full Changelog: [v0.1.0-alpha.2...v0.1.0-alpha.3](https://github.com/postgrid/postgrid-node/compare/v0.1.0-alpha.2...v0.1.0-alpha.3)
+
+### Chores
+
+* **internal:** codegen related update ([de1f5d3](https://github.com/postgrid/postgrid-node/commit/de1f5d333a7fec766d202e130488df625edce3af))
+
+
+### Documentation
+
+* **readme:** fix typo ([949b5ca](https://github.com/postgrid/postgrid-node/commit/949b5ca1d24524fe9541167d289550481dafdd8f))
+
 ## 0.1.0-alpha.2 (2025-05-01)
 
 Full Changelog: [v0.1.0-alpha.1...v0.1.0-alpha.2](https://github.com/postgrid/postgrid-node/compare/v0.1.0-alpha.1...v0.1.0-alpha.2)
