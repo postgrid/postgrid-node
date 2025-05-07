@@ -40,6 +40,19 @@ export class Cheques extends APIResource {
    *   }
    * }
    * ```
+   *
+   * @example
+   * ```ts
+   * const cheque = await client.cheques.create({
+   *   amount: 1000,
+   *   bankAccount: 'bank_123',
+   *   from: 'contact_123',
+   *   to: 'contact_123',
+   *   currencyCode: 'USD',
+   *   number: 123456,
+   *   size: 'us_letter',
+   * });
+   * ```
    */
   create(body: ChequeCreateParams, options?: Core.RequestOptions): Core.APIPromise<Cheque> {
     return this._client.post('/cheques', { body, ...options });
@@ -47,6 +60,11 @@ export class Cheques extends APIResource {
 
   /**
    * Retrieve a cheque by ID.
+   *
+   * @example
+   * ```ts
+   * const cheque = await client.cheques.retrieve('id');
+   * ```
    */
   retrieve(id: string, options?: Core.RequestOptions): Core.APIPromise<Cheque> {
     return this._client.get(`/cheques/${id}`, options);
@@ -54,6 +72,14 @@ export class Cheques extends APIResource {
 
   /**
    * Get a list of cheques.
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const cheque of client.cheques.list()) {
+   *   // ...
+   * }
+   * ```
    */
   list(query?: ChequeListParams, options?: Core.RequestOptions): Core.PagePromise<ChequesList, Cheque>;
   list(options?: Core.RequestOptions): Core.PagePromise<ChequesList, Cheque>;
@@ -69,6 +95,11 @@ export class Cheques extends APIResource {
 
   /**
    * Cancel a cheque by ID. Note that this operation cannot be undone.
+   *
+   * @example
+   * ```ts
+   * const cheque = await client.cheques.cancel('id');
+   * ```
    */
   cancel(id: string, options?: Core.RequestOptions): Core.APIPromise<Cheque> {
     return this._client.delete(`/cheques/${id}`, options);
