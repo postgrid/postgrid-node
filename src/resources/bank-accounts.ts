@@ -14,6 +14,19 @@ export class BankAccounts extends APIResource {
    *
    * You must specify _either_ `signatureImage` or `signatureText`. The image can be
    * supplied as either a URL or a multipart file upload.
+   *
+   * @example
+   * ```ts
+   * const bankAccount = await client.bankAccounts.create({
+   *   accountNumber: '1234567',
+   *   bankCountryCode: 'US',
+   *   bankName: 'Test Bank',
+   *   signatureText: 'Example',
+   *   bankPrimaryLine: '145 mulberry st',
+   *   bankSecondaryLine: 'new york ny 10013',
+   *   routingNumber: '123456789',
+   * });
+   * ```
    */
   create(body: BankAccountCreateParams, options?: Core.RequestOptions): Core.APIPromise<BankAccount> {
     return this._client.post('/bank_accounts', { body, ...options });
@@ -21,6 +34,13 @@ export class BankAccounts extends APIResource {
 
   /**
    * Retrieve a bank account by ID.
+   *
+   * @example
+   * ```ts
+   * const bankAccount = await client.bankAccounts.retrieve(
+   *   'id',
+   * );
+   * ```
    */
   retrieve(id: string, options?: Core.RequestOptions): Core.APIPromise<BankAccount> {
     return this._client.get(`/bank_accounts/${id}`, options);
@@ -28,6 +48,14 @@ export class BankAccounts extends APIResource {
 
   /**
    * Get a list of bank accounts.
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const bankAccount of client.bankAccounts.list()) {
+   *   // ...
+   * }
+   * ```
    */
   list(
     query?: BankAccountListParams,
@@ -46,6 +74,11 @@ export class BankAccounts extends APIResource {
 
   /**
    * Delete a bank account by ID. Note that this operation cannot be undone.
+   *
+   * @example
+   * ```ts
+   * const bankAccount = await client.bankAccounts.delete('id');
+   * ```
    */
   delete(id: string, options?: Core.RequestOptions): Core.APIPromise<BankAccountDeleteResponse> {
     return this._client.delete(`/bank_accounts/${id}`, options);

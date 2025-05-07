@@ -16,6 +16,17 @@ export class Postcards extends APIResource {
    * - A URL or file for a 2 page PDF where the first page is the front of the
    *   postcard and the second page is the back
    * - Upload the aforementioned PDF file via a multipart form upload request
+   *
+   * @example
+   * ```ts
+   * const postcard = await client.postcards.create({
+   *   backHTML: '<html>Back</html>',
+   *   frontHTML: '<html>Front</html>',
+   *   size: '6x4',
+   *   to: 'contact_456',
+   *   from: 'contact_123',
+   * });
+   * ```
    */
   create(body: PostcardCreateParams, options?: Core.RequestOptions): Core.APIPromise<Postcard> {
     return this._client.post('/postcards', { body, ...options });
@@ -23,6 +34,11 @@ export class Postcards extends APIResource {
 
   /**
    * Retrieve a postcard by ID.
+   *
+   * @example
+   * ```ts
+   * const postcard = await client.postcards.retrieve('id');
+   * ```
    */
   retrieve(id: string, options?: Core.RequestOptions): Core.APIPromise<Postcard> {
     return this._client.get(`/postcards/${id}`, options);
@@ -30,6 +46,14 @@ export class Postcards extends APIResource {
 
   /**
    * Get a list of postcards.
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const postcard of client.postcards.list()) {
+   *   // ...
+   * }
+   * ```
    */
   list(query?: PostcardListParams, options?: Core.RequestOptions): Core.PagePromise<PostcardsList, Postcard>;
   list(options?: Core.RequestOptions): Core.PagePromise<PostcardsList, Postcard>;
@@ -45,6 +69,11 @@ export class Postcards extends APIResource {
 
   /**
    * Cancel a postcard by ID. Note that this operation cannot be undone.
+   *
+   * @example
+   * ```ts
+   * const postcard = await client.postcards.delete('id');
+   * ```
    */
   delete(id: string, options?: Core.RequestOptions): Core.APIPromise<Postcard> {
     return this._client.delete(`/postcards/${id}`, options);
@@ -57,6 +86,11 @@ export class Postcards extends APIResource {
    * offers document generation and hosting capabilities. This endpoint has a much
    * higher rate limit than the regular order retrieval endpoint, so it is suitable
    * for customer-facing use-cases.
+   *
+   * @example
+   * ```ts
+   * const response = await client.postcards.url('id');
+   * ```
    */
   url(id: string, options?: Core.RequestOptions): Core.APIPromise<PostcardURLResponse> {
     return this._client.get(`/postcards/${id}/url`, options);

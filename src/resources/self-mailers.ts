@@ -16,6 +16,17 @@ export class SelfMailers extends APIResource {
    * - A URL or file for a 2 page PDF where the first page is the outside of the
    *   self-mailer and the second page is the inside
    * - Upload the aforementioned PDF file via a multipart form upload request
+   *
+   * @example
+   * ```ts
+   * const selfMailer = await client.selfMailers.create({
+   *   from: 'contact_123',
+   *   insideHTML: '<html>Inside</html>',
+   *   outsideHTML: '<html>Outside</html>',
+   *   size: '8.5x11_bifold',
+   *   to: 'contact_456',
+   * });
+   * ```
    */
   create(
     body: SelfMailerCreateParams,
@@ -26,6 +37,11 @@ export class SelfMailers extends APIResource {
 
   /**
    * Retrieve a self-mailer by ID.
+   *
+   * @example
+   * ```ts
+   * const selfMailer = await client.selfMailers.retrieve('id');
+   * ```
    */
   retrieve(id: string, options?: Core.RequestOptions): Core.APIPromise<SelfMailerRetrieveResponse> {
     return this._client.get(`/self_mailers/${id}`, options);
@@ -33,6 +49,14 @@ export class SelfMailers extends APIResource {
 
   /**
    * Get a list of self-mailers.
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const selfMailerListResponse of client.selfMailers.list()) {
+   *   // ...
+   * }
+   * ```
    */
   list(
     query?: SelfMailerListParams,
@@ -51,6 +75,11 @@ export class SelfMailers extends APIResource {
 
   /**
    * Cancel a self-mailer by ID. Note that this operation cannot be undone.
+   *
+   * @example
+   * ```ts
+   * const response = await client.selfMailers.cancel('id');
+   * ```
    */
   cancel(id: string, options?: Core.RequestOptions): Core.APIPromise<SelfMailerCancelResponse> {
     return this._client.delete(`/self_mailers/${id}`, options);
