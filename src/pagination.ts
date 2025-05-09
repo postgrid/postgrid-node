@@ -6,6 +6,8 @@ export interface ListResponse<Item> {
   data: Array<Item>;
 
   totalCount: number;
+
+  limit: number;
 }
 
 export interface ListParams {
@@ -25,11 +27,14 @@ export class List<Item> extends AbstractPage<Item> implements ListResponse<Item>
 
   totalCount: number;
 
+  limit: number;
+
   constructor(client: APIClient, response: Response, body: ListResponse<Item>, options: FinalRequestOptions) {
     super(client, response, body, options);
 
     this.data = body.data || [];
     this.totalCount = body.totalCount || 0;
+    this.limit = body.limit || 0;
   }
 
   getPaginatedItems(): Item[] {
@@ -47,7 +52,7 @@ export class List<Item> extends AbstractPage<Item> implements ListResponse<Item>
   }
 
   nextPageInfo(): PageInfo | null {
-    const offset = (this.options.query as ListParams).skip ?? 0;
+    const offset = this.limit;
     if (!offset) {
       return null;
     }
