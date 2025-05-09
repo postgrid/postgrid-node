@@ -6,8 +6,6 @@ This library provides convenient access to the PostGrid REST API from server-sid
 
 The REST API documentation can be found on [docs.postgrid.com](https://docs.postgrid.com). The full API of this library can be found in [api.md](api.md).
 
-It is generated with [Stainless](https://www.stainless.com/).
-
 ## Installation
 
 ```sh
@@ -23,7 +21,7 @@ The full API of this library can be found in [api.md](api.md).
 import PostGrid from 'postgrid-node';
 
 const client = new PostGrid({
-  apiKey: process.env['POSTGRID_API_KEY'], // This is the default and can be omitted
+  apiKey: 'My API Key',
 });
 
 async function main() {
@@ -48,7 +46,7 @@ This library includes TypeScript definitions for all request params and response
 import PostGrid from 'postgrid-node';
 
 const client = new PostGrid({
-  apiKey: process.env['POSTGRID_API_KEY'], // This is the default and can be omitted
+  apiKey: 'My API Key',
 });
 
 async function main() {
