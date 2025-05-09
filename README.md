@@ -22,9 +22,7 @@ The full API of this library can be found in [api.md](api.md).
 ```js
 import PostGrid from 'postgrid-node';
 
-const client = new PostGrid({
-  pmAPIKey: process.env['POSTGRID_PM_API_KEY'], // This is the default and can be omitted
-});
+const client = new PostGrid();
 
 async function main() {
   const contact = await client.contacts.create({
@@ -47,9 +45,7 @@ This library includes TypeScript definitions for all request params and response
 ```ts
 import PostGrid from 'postgrid-node';
 
-const client = new PostGrid({
-  pmAPIKey: process.env['POSTGRID_PM_API_KEY'], // This is the default and can be omitted
-});
+const client = new PostGrid();
 
 async function main() {
   const params: PostGrid.ContactCreateParams = {
