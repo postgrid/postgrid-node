@@ -205,6 +205,29 @@ describe('instantiate client', () => {
       const client = new PostGrid({ pmAPIKey: 'My Pm API Key', avAPIKey: 'My Av API Key' });
       expect(client.baseURL).toEqual('https://api.postgrid.com/print-mail/v1');
     });
+
+    test('env variable with environment', () => {
+      process.env['POSTGRID_BASE_URL'] = 'https://example.com/from_env';
+
+      expect(
+        () =>
+          new PostGrid({
+            pmAPIKey: 'My Pm API Key',
+            avAPIKey: 'My Av API Key',
+            environment: 'pm_production',
+          }),
+      ).toThrowErrorMatchingInlineSnapshot(
+        `"Ambiguous URL; The \`baseURL\` option (or POSTGRID_BASE_URL env var) and the \`environment\` option are given. If you want to use the environment you must pass baseURL: null"`,
+      );
+
+      const client = new PostGrid({
+        pmAPIKey: 'My Pm API Key',
+        avAPIKey: 'My Av API Key',
+        baseURL: null,
+        environment: 'pm_production',
+      });
+      expect(client.baseURL).toEqual('https://api.postgrid.com/print-mail/v1');
+    });
   });
 
   test('maxRetries option is correctly set', () => {
