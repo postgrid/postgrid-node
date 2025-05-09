@@ -84,6 +84,27 @@ export class SelfMailers extends APIResource {
   cancel(id: string, options?: Core.RequestOptions): Core.APIPromise<SelfMailerCancelResponse> {
     return this._client.delete(`/self_mailers/${id}`, options);
   }
+
+  /**
+   * Retrieve a self-mailer preview URL.
+   *
+   * This is only available for customers with our document management addon, which
+   * offers document generation and hosting capabilities. This endpoint has a much
+   * higher rate limit than the regular order retrieval endpoint, so it is suitable
+   * for customer-facing use-cases.
+   *
+   * @example
+   * ```ts
+   * const response =
+   *   await client.selfMailers.retrievePreviewURL('id');
+   * ```
+   */
+  retrievePreviewURL(
+    id: string,
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<SelfMailerRetrievePreviewURLResponse> {
+    return this._client.get(`/self_mailers/${id}/url`, options);
+  }
 }
 
 export class SelfMailerListResponsesList extends List<SelfMailerListResponse> {}
@@ -680,6 +701,21 @@ export interface SelfMailerCancelResponse {
   url?: string;
 }
 
+export interface SelfMailerRetrievePreviewURLResponse {
+  /**
+   * A unique ID prefixed with self*mailer*
+   */
+  id: string;
+
+  object: string;
+
+  /**
+   * A signed URL linking to the order preview PDF. The link remains valid for 15
+   * minutes from the time of the API call.
+   */
+  url: string;
+}
+
 export type SelfMailerCreateParams =
   | SelfMailerCreateParams.SelfMailerCreateWithHTML
   | SelfMailerCreateParams.SelfMailerCreateWithTemplate
@@ -980,6 +1016,7 @@ export declare namespace SelfMailers {
     type SelfMailerRetrieveResponse as SelfMailerRetrieveResponse,
     type SelfMailerListResponse as SelfMailerListResponse,
     type SelfMailerCancelResponse as SelfMailerCancelResponse,
+    type SelfMailerRetrievePreviewURLResponse as SelfMailerRetrievePreviewURLResponse,
     SelfMailerListResponsesList as SelfMailerListResponsesList,
     type SelfMailerCreateParams as SelfMailerCreateParams,
     type SelfMailerListParams as SelfMailerListParams,
