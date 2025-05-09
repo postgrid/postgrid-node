@@ -118,6 +118,11 @@ export interface ClientOptions {
   pmAPIKey?: string | null | undefined;
 
   /**
+   * Defaults to process.env['POSTGRID_AV_API_KEY'].
+   */
+  avAPIKey?: string | null | undefined;
+
+  /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
    *
    * Defaults to process.env['POSTGRID_BASE_URL'].
@@ -179,6 +184,7 @@ export interface ClientOptions {
  */
 export class PostGrid extends Core.APIClient {
   pmAPIKey: string | null;
+  avAPIKey: string | null;
 
   private _options: ClientOptions;
 
@@ -186,6 +192,7 @@ export class PostGrid extends Core.APIClient {
    * API Client for interfacing with the PostGrid API.
    *
    * @param {string | null | undefined} [opts.pmAPIKey=process.env['POSTGRID_PM_API_KEY'] ?? null]
+   * @param {string | null | undefined} [opts.avAPIKey=process.env['POSTGRID_AV_API_KEY'] ?? null]
    * @param {string} [opts.baseURL=process.env['POSTGRID_BASE_URL'] ?? https://api.postgrid.com/print-mail/v1] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {number} [opts.httpAgent] - An HTTP agent used to manage HTTP(s) connections.
@@ -197,10 +204,12 @@ export class PostGrid extends Core.APIClient {
   constructor({
     baseURL = Core.readEnv('POSTGRID_BASE_URL'),
     pmAPIKey = Core.readEnv('POSTGRID_PM_API_KEY') ?? null,
+    avAPIKey = Core.readEnv('POSTGRID_AV_API_KEY') ?? null,
     ...opts
   }: ClientOptions = {}) {
     const options: ClientOptions = {
       pmAPIKey,
+      avAPIKey,
       ...opts,
       baseURL: baseURL || `https://api.postgrid.com/print-mail/v1`,
     };
@@ -217,6 +226,7 @@ export class PostGrid extends Core.APIClient {
     this.idempotencyHeader = 'Idempotency-Key';
 
     this.pmAPIKey = pmAPIKey;
+    this.avAPIKey = avAPIKey;
   }
 
   contacts: API.Contacts = new API.Contacts(this);
