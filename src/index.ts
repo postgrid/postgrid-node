@@ -111,31 +111,8 @@ import {
   Reports,
 } from './resources/reports/reports';
 
-const environments = {
-  pm_production: 'https://api.postgrid.com/print-mail/v1',
-  av_production: 'https://api.postgrid.com/v1',
-};
-type Environment = keyof typeof environments;
-
 export interface ClientOptions {
-  /**
-   * Defaults to process.env['POSTGRID_PM_API_KEY'].
-   */
-  pmAPIKey?: string | null | undefined;
-
-  /**
-   * Defaults to process.env['POSTGRID_AV_API_KEY'].
-   */
-  avAPIKey?: string | null | undefined;
-
-  /**
-   * Specifies the environment to use for the API.
-   *
-   * Each environment maps to a different base URL:
-   * - `pm_production` corresponds to `https://api.postgrid.com/print-mail/v1`
-   * - `av_production` corresponds to `https://api.postgrid.com/v1`
-   */
-  environment?: Environment | undefined;
+  apiKey?: string | null | undefined;
 
   /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
@@ -198,17 +175,14 @@ export interface ClientOptions {
  * API Client for interfacing with the PostGrid API.
  */
 export class PostGrid extends Core.APIClient {
-  pmAPIKey: string | null;
-  avAPIKey: string | null;
+  apiKey: string | null;
 
   private _options: ClientOptions;
 
   /**
    * API Client for interfacing with the PostGrid API.
    *
-   * @param {string | null | undefined} [opts.pmAPIKey=process.env['POSTGRID_PM_API_KEY'] ?? null]
-   * @param {string | null | undefined} [opts.avAPIKey=process.env['POSTGRID_AV_API_KEY'] ?? null]
-   * @param {Environment} [opts.environment=pm_production] - Specifies the environment URL to use for the API.
+   * @param {string | null | undefined} [opts.apiKey]
    * @param {string} [opts.baseURL=process.env['POSTGRID_BASE_URL'] ?? https://api.postgrid.com/print-mail/v1] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {number} [opts.httpAgent] - An HTTP agent used to manage HTTP(s) connections.
@@ -217,28 +191,15 @@ export class PostGrid extends Core.APIClient {
    * @param {Core.Headers} opts.defaultHeaders - Default headers to include with every request to the API.
    * @param {Core.DefaultQuery} opts.defaultQuery - Default query parameters to include with every request to the API.
    */
-  constructor({
-    baseURL = Core.readEnv('POSTGRID_BASE_URL'),
-    pmAPIKey = Core.readEnv('POSTGRID_PM_API_KEY') ?? null,
-    avAPIKey = Core.readEnv('POSTGRID_AV_API_KEY') ?? null,
-    ...opts
-  }: ClientOptions = {}) {
+  constructor({ baseURL = Core.readEnv('POSTGRID_BASE_URL'), apiKey = null, ...opts }: ClientOptions = {}) {
     const options: ClientOptions = {
-      pmAPIKey,
-      avAPIKey,
+      apiKey,
       ...opts,
-      baseURL,
-      environment: opts.environment ?? 'pm_production',
+      baseURL: baseURL || `https://api.postgrid.com/print-mail/v1`,
     };
 
-    if (baseURL && opts.environment) {
-      throw new Errors.PostGridError(
-        'Ambiguous URL; The `baseURL` option (or POSTGRID_BASE_URL env var) and the `environment` option are given. If you want to use the environment you must pass baseURL: null',
-      );
-    }
-
     super({
-      baseURL: options.baseURL || environments[options.environment || 'pm_production'],
+      baseURL: options.baseURL!,
       timeout: options.timeout ?? 60000 /* 1 minute */,
       httpAgent: options.httpAgent,
       maxRetries: options.maxRetries,
@@ -248,8 +209,7 @@ export class PostGrid extends Core.APIClient {
     this._options = options;
     this.idempotencyHeader = 'Idempotency-Key';
 
-    this.pmAPIKey = pmAPIKey;
-    this.avAPIKey = avAPIKey;
+    this.apiKey = apiKey;
   }
 
   contacts: API.Contacts = new API.Contacts(this);
@@ -275,7 +235,7 @@ export class PostGrid extends Core.APIClient {
   }
 
   protected override validateHeaders(headers: Core.Headers, customHeaders: Core.Headers) {
-    if (this.pmAPIKey && headers['x-api-key']) {
+    if (this.apiKey && headers['x-api-key']) {
       return;
     }
     if (customHeaders['x-api-key'] === null) {
@@ -283,15 +243,15 @@ export class PostGrid extends Core.APIClient {
     }
 
     throw new Error(
-      'Could not resolve authentication method. Expected the pmAPIKey to be set. Or for the "X-API-Key" headers to be explicitly omitted',
+      'Could not resolve authentication method. Expected the apiKey to be set. Or for the "X-API-Key" headers to be explicitly omitted',
     );
   }
 
   protected override authHeaders(opts: Core.FinalRequestOptions): Core.Headers {
-    if (this.pmAPIKey == null) {
+    if (this.apiKey == null) {
       return {};
     }
-    return { 'X-API-Key': this.pmAPIKey };
+    return { 'X-API-Key': this.apiKey };
   }
 
   static PostGrid = this;
