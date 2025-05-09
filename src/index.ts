@@ -113,9 +113,9 @@ import {
 
 export interface ClientOptions {
   /**
-   * Defaults to process.env['POSTGRID_API_KEY'].
+   * Defaults to process.env['POSTGRID_PM_API_KEY'].
    */
-  apiKey?: string | undefined;
+  pmAPIKey?: string | null | undefined;
 
   /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
@@ -178,14 +178,14 @@ export interface ClientOptions {
  * API Client for interfacing with the PostGrid API.
  */
 export class PostGrid extends Core.APIClient {
-  apiKey: string;
+  pmAPIKey: string | null;
 
   private _options: ClientOptions;
 
   /**
    * API Client for interfacing with the PostGrid API.
    *
-   * @param {string | undefined} [opts.apiKey=process.env['POSTGRID_API_KEY'] ?? undefined]
+   * @param {string | null | undefined} [opts.pmAPIKey=process.env['POSTGRID_PM_API_KEY'] ?? null]
    * @param {string} [opts.baseURL=process.env['POSTGRID_BASE_URL'] ?? https://api.postgrid.com/print-mail/v1] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {number} [opts.httpAgent] - An HTTP agent used to manage HTTP(s) connections.
@@ -196,17 +196,11 @@ export class PostGrid extends Core.APIClient {
    */
   constructor({
     baseURL = Core.readEnv('POSTGRID_BASE_URL'),
-    apiKey = Core.readEnv('POSTGRID_API_KEY'),
+    pmAPIKey = Core.readEnv('POSTGRID_PM_API_KEY') ?? null,
     ...opts
   }: ClientOptions = {}) {
-    if (apiKey === undefined) {
-      throw new Errors.PostGridError(
-        "The POSTGRID_API_KEY environment variable is missing or empty; either provide it, or instantiate the PostGrid client with an apiKey option, like new PostGrid({ apiKey: 'My API Key' }).",
-      );
-    }
-
     const options: ClientOptions = {
-      apiKey,
+      pmAPIKey,
       ...opts,
       baseURL: baseURL || `https://api.postgrid.com/print-mail/v1`,
     };
@@ -222,7 +216,7 @@ export class PostGrid extends Core.APIClient {
     this._options = options;
     this.idempotencyHeader = 'Idempotency-Key';
 
-    this.apiKey = apiKey;
+    this.pmAPIKey = pmAPIKey;
   }
 
   contacts: API.Contacts = new API.Contacts(this);
@@ -247,8 +241,24 @@ export class PostGrid extends Core.APIClient {
     };
   }
 
+  protected override validateHeaders(headers: Core.Headers, customHeaders: Core.Headers) {
+    if (this.pmAPIKey && headers['x-api-key']) {
+      return;
+    }
+    if (customHeaders['x-api-key'] === null) {
+      return;
+    }
+
+    throw new Error(
+      'Could not resolve authentication method. Expected the pmAPIKey to be set. Or for the "X-API-Key" headers to be explicitly omitted',
+    );
+  }
+
   protected override authHeaders(opts: Core.FinalRequestOptions): Core.Headers {
-    return { 'X-API-Key': this.apiKey };
+    if (this.pmAPIKey == null) {
+      return {};
+    }
+    return { 'X-API-Key': this.pmAPIKey };
   }
 
   static PostGrid = this;

@@ -23,7 +23,7 @@ The full API of this library can be found in [api.md](api.md).
 import PostGrid from 'postgrid-node';
 
 const client = new PostGrid({
-  apiKey: process.env['POSTGRID_API_KEY'], // This is the default and can be omitted
+  pmAPIKey: process.env['POSTGRID_PM_API_KEY'], // This is the default and can be omitted
 });
 
 async function main() {
@@ -48,7 +48,7 @@ This library includes TypeScript definitions for all request params and response
 import PostGrid from 'postgrid-node';
 
 const client = new PostGrid({
-  apiKey: process.env['POSTGRID_API_KEY'], // This is the default and can be omitted
+  pmAPIKey: process.env['POSTGRID_PM_API_KEY'], // This is the default and can be omitted
 });
 
 async function main() {
