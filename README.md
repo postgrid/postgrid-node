@@ -24,6 +24,7 @@ import PostGrid from 'postgrid-node';
 
 const client = new PostGrid({
   pmAPIKey: process.env['POSTGRID_PM_API_KEY'], // This is the default and can be omitted
+  environment: 'av_production', // defaults to 'pm_production'
 });
 
 async function main() {
@@ -49,6 +50,7 @@ import PostGrid from 'postgrid-node';
 
 const client = new PostGrid({
   pmAPIKey: process.env['POSTGRID_PM_API_KEY'], // This is the default and can be omitted
+  environment: 'av_production', // defaults to 'pm_production'
 });
 
 async function main() {
