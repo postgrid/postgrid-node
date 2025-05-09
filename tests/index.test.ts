@@ -23,6 +23,8 @@ describe('instantiate client', () => {
     const client = new PostGrid({
       baseURL: 'http://localhost:5000/',
       defaultHeaders: { 'X-My-Default-Header': '2' },
+      pmAPIKey: 'My Pm API Key',
+      avAPIKey: 'My Av API Key',
     });
 
     test('they are used in the request', () => {
@@ -51,7 +53,12 @@ describe('instantiate client', () => {
 
   describe('defaultQuery', () => {
     test('with null query params given', () => {
-      const client = new PostGrid({ baseURL: 'http://localhost:5000/', defaultQuery: { apiVersion: 'foo' } });
+      const client = new PostGrid({
+        baseURL: 'http://localhost:5000/',
+        defaultQuery: { apiVersion: 'foo' },
+        pmAPIKey: 'My Pm API Key',
+        avAPIKey: 'My Av API Key',
+      });
       expect(client.buildURL('/foo', null)).toEqual('http://localhost:5000/foo?apiVersion=foo');
     });
 
@@ -59,12 +66,19 @@ describe('instantiate client', () => {
       const client = new PostGrid({
         baseURL: 'http://localhost:5000/',
         defaultQuery: { apiVersion: 'foo', hello: 'world' },
+        pmAPIKey: 'My Pm API Key',
+        avAPIKey: 'My Av API Key',
       });
       expect(client.buildURL('/foo', null)).toEqual('http://localhost:5000/foo?apiVersion=foo&hello=world');
     });
 
     test('overriding with `undefined`', () => {
-      const client = new PostGrid({ baseURL: 'http://localhost:5000/', defaultQuery: { hello: 'world' } });
+      const client = new PostGrid({
+        baseURL: 'http://localhost:5000/',
+        defaultQuery: { hello: 'world' },
+        pmAPIKey: 'My Pm API Key',
+        avAPIKey: 'My Av API Key',
+      });
       expect(client.buildURL('/foo', { hello: undefined })).toEqual('http://localhost:5000/foo');
     });
   });
@@ -72,6 +86,8 @@ describe('instantiate client', () => {
   test('custom fetch', async () => {
     const client = new PostGrid({
       baseURL: 'http://localhost:5000/',
+      pmAPIKey: 'My Pm API Key',
+      avAPIKey: 'My Av API Key',
       fetch: (url) => {
         return Promise.resolve(
           new Response(JSON.stringify({ url, custom: true }), {
@@ -87,12 +103,19 @@ describe('instantiate client', () => {
 
   test('explicit global fetch', async () => {
     // make sure the global fetch type is assignable to our Fetch type
-    const client = new PostGrid({ baseURL: 'http://localhost:5000/', fetch: defaultFetch });
+    const client = new PostGrid({
+      baseURL: 'http://localhost:5000/',
+      pmAPIKey: 'My Pm API Key',
+      avAPIKey: 'My Av API Key',
+      fetch: defaultFetch,
+    });
   });
 
   test('custom signal', async () => {
     const client = new PostGrid({
       baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
+      pmAPIKey: 'My Pm API Key',
+      avAPIKey: 'My Av API Key',
       fetch: (...args) => {
         return new Promise((resolve, reject) =>
           setTimeout(
@@ -122,7 +145,12 @@ describe('instantiate client', () => {
       return new Response(JSON.stringify({}), { headers: { 'Content-Type': 'application/json' } });
     };
 
-    const client = new PostGrid({ baseURL: 'http://localhost:5000/', fetch: testFetch });
+    const client = new PostGrid({
+      baseURL: 'http://localhost:5000/',
+      pmAPIKey: 'My Pm API Key',
+      avAPIKey: 'My Av API Key',
+      fetch: testFetch,
+    });
 
     await client.patch('/foo');
     expect(capturedRequest?.method).toEqual('PATCH');
@@ -130,12 +158,20 @@ describe('instantiate client', () => {
 
   describe('baseUrl', () => {
     test('trailing slash', () => {
-      const client = new PostGrid({ baseURL: 'http://localhost:5000/custom/path/' });
+      const client = new PostGrid({
+        baseURL: 'http://localhost:5000/custom/path/',
+        pmAPIKey: 'My Pm API Key',
+        avAPIKey: 'My Av API Key',
+      });
       expect(client.buildURL('/foo', null)).toEqual('http://localhost:5000/custom/path/foo');
     });
 
     test('no trailing slash', () => {
-      const client = new PostGrid({ baseURL: 'http://localhost:5000/custom/path' });
+      const client = new PostGrid({
+        baseURL: 'http://localhost:5000/custom/path',
+        pmAPIKey: 'My Pm API Key',
+        avAPIKey: 'My Av API Key',
+      });
       expect(client.buildURL('/foo', null)).toEqual('http://localhost:5000/custom/path/foo');
     });
 
@@ -144,42 +180,68 @@ describe('instantiate client', () => {
     });
 
     test('explicit option', () => {
-      const client = new PostGrid({ baseURL: 'https://example.com' });
+      const client = new PostGrid({
+        baseURL: 'https://example.com',
+        pmAPIKey: 'My Pm API Key',
+        avAPIKey: 'My Av API Key',
+      });
       expect(client.baseURL).toEqual('https://example.com');
     });
 
     test('env variable', () => {
       process.env['POSTGRID_BASE_URL'] = 'https://example.com/from_env';
-      const client = new PostGrid({});
+      const client = new PostGrid({ pmAPIKey: 'My Pm API Key', avAPIKey: 'My Av API Key' });
       expect(client.baseURL).toEqual('https://example.com/from_env');
     });
 
     test('empty env variable', () => {
       process.env['POSTGRID_BASE_URL'] = ''; // empty
-      const client = new PostGrid({});
+      const client = new PostGrid({ pmAPIKey: 'My Pm API Key', avAPIKey: 'My Av API Key' });
       expect(client.baseURL).toEqual('https://api.postgrid.com/print-mail/v1');
     });
 
     test('blank env variable', () => {
       process.env['POSTGRID_BASE_URL'] = '  '; // blank
-      const client = new PostGrid({});
+      const client = new PostGrid({ pmAPIKey: 'My Pm API Key', avAPIKey: 'My Av API Key' });
       expect(client.baseURL).toEqual('https://api.postgrid.com/print-mail/v1');
     });
   });
 
   test('maxRetries option is correctly set', () => {
-    const client = new PostGrid({ maxRetries: 4 });
+    const client = new PostGrid({ maxRetries: 4, pmAPIKey: 'My Pm API Key', avAPIKey: 'My Av API Key' });
     expect(client.maxRetries).toEqual(4);
 
     // default
-    const client2 = new PostGrid({});
+    const client2 = new PostGrid({ pmAPIKey: 'My Pm API Key', avAPIKey: 'My Av API Key' });
     expect(client2.maxRetries).toEqual(2);
+  });
+
+  test('with environment variable arguments', () => {
+    // set options via env var
+    process.env['POSTGRID_PM_API_KEY'] = 'My Pm API Key';
+    process.env['POSTGRID_AV_API_KEY'] = 'My Av API Key';
+    const client = new PostGrid();
+    expect(client.pmAPIKey).toBe('My Pm API Key');
+    expect(client.avAPIKey).toBe('My Av API Key');
+  });
+
+  test('with overridden environment variable arguments', () => {
+    // set options via env var
+    process.env['POSTGRID_PM_API_KEY'] = 'another My Pm API Key';
+    process.env['POSTGRID_AV_API_KEY'] = 'another My Av API Key';
+    const client = new PostGrid({ pmAPIKey: 'My Pm API Key', avAPIKey: 'My Av API Key' });
+    expect(client.pmAPIKey).toBe('My Pm API Key');
+    expect(client.avAPIKey).toBe('My Av API Key');
   });
 });
 
 describe('idempotency', () => {
   test('key can be set per-request', async () => {
-    const client = new PostGrid({ baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010' });
+    const client = new PostGrid({
+      baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
+      pmAPIKey: 'My Pm API Key',
+      avAPIKey: 'My Av API Key',
+    });
     await client.contacts.create(
       { addressLine1: 'addressLine1', countryCode: 'countryCode', firstName: 'firstName' },
       { idempotencyKey: 'my-idempotency-key' },
@@ -188,7 +250,7 @@ describe('idempotency', () => {
 });
 
 describe('request building', () => {
-  const client = new PostGrid({});
+  const client = new PostGrid({ pmAPIKey: 'My Pm API Key', avAPIKey: 'My Av API Key' });
 
   describe('Content-Length', () => {
     test('handles multi-byte characters', () => {
@@ -230,7 +292,12 @@ describe('retries', () => {
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
 
-    const client = new PostGrid({ timeout: 10, fetch: testFetch });
+    const client = new PostGrid({
+      pmAPIKey: 'My Pm API Key',
+      avAPIKey: 'My Av API Key',
+      timeout: 10,
+      fetch: testFetch,
+    });
 
     expect(await client.request({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
     expect(count).toEqual(2);
@@ -260,7 +327,12 @@ describe('retries', () => {
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
 
-    const client = new PostGrid({ fetch: testFetch, maxRetries: 4 });
+    const client = new PostGrid({
+      pmAPIKey: 'My Pm API Key',
+      avAPIKey: 'My Av API Key',
+      fetch: testFetch,
+      maxRetries: 4,
+    });
 
     expect(await client.request({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
 
@@ -284,7 +356,12 @@ describe('retries', () => {
       capturedRequest = init;
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
-    const client = new PostGrid({ fetch: testFetch, maxRetries: 4 });
+    const client = new PostGrid({
+      pmAPIKey: 'My Pm API Key',
+      avAPIKey: 'My Av API Key',
+      fetch: testFetch,
+      maxRetries: 4,
+    });
 
     expect(
       await client.request({
@@ -314,6 +391,8 @@ describe('retries', () => {
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
     const client = new PostGrid({
+      pmAPIKey: 'My Pm API Key',
+      avAPIKey: 'My Av API Key',
       fetch: testFetch,
       maxRetries: 4,
       defaultHeaders: { 'X-Stainless-Retry-Count': null },
@@ -345,7 +424,12 @@ describe('retries', () => {
       capturedRequest = init;
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
-    const client = new PostGrid({ fetch: testFetch, maxRetries: 4 });
+    const client = new PostGrid({
+      pmAPIKey: 'My Pm API Key',
+      avAPIKey: 'My Av API Key',
+      fetch: testFetch,
+      maxRetries: 4,
+    });
 
     expect(
       await client.request({
@@ -372,7 +456,7 @@ describe('retries', () => {
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
 
-    const client = new PostGrid({ fetch: testFetch });
+    const client = new PostGrid({ pmAPIKey: 'My Pm API Key', avAPIKey: 'My Av API Key', fetch: testFetch });
 
     expect(await client.request({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
     expect(count).toEqual(2);
@@ -399,7 +483,7 @@ describe('retries', () => {
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
 
-    const client = new PostGrid({ fetch: testFetch });
+    const client = new PostGrid({ pmAPIKey: 'My Pm API Key', avAPIKey: 'My Av API Key', fetch: testFetch });
 
     expect(await client.request({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
     expect(count).toEqual(2);
