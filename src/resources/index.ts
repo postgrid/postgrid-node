@@ -60,6 +60,33 @@ export {
   type LetterListParams,
 } from './letters';
 export {
+  MailingListImportListResponsesList,
+  MailingListImports,
+  type MailingListImportCreateResponse,
+  type MailingListImportRetrieveResponse,
+  type MailingListImportUpdateResponse,
+  type MailingListImportListResponse,
+  type MailingListImportDeleteResponse,
+  type MailingListImportCreateParams,
+  type MailingListImportUpdateParams,
+  type MailingListImportListParams,
+} from './mailing-list-imports';
+export {
+  MailingListListResponsesList,
+  MailingLists,
+  type MailingListCreateResponse,
+  type MailingListRetrieveResponse,
+  type MailingListUpdateResponse,
+  type MailingListListResponse,
+  type MailingListDeleteResponse,
+  type MailingListSubmitJobResponse,
+  type MailingListCreateParams,
+  type MailingListUpdateParams,
+  type MailingListListParams,
+  type MailingListSubmitJobParams,
+} from './mailing-lists';
+export { OrderProfiles } from './order-profiles/order-profiles';
+export {
   PostcardsList,
   Postcards,
   type Postcard,
@@ -91,9 +118,21 @@ export {
   type SelfMailerRetrieveResponse,
   type SelfMailerListResponse,
   type SelfMailerCancelResponse,
+  type SelfMailerRetrievePreviewURLResponse,
   type SelfMailerCreateParams,
   type SelfMailerListParams,
 } from './self-mailers';
+export {
+  SubOrganizationListResponsesList,
+  SubOrganizations,
+  type SubOrganizationCreateResponse,
+  type SubOrganizationRetrieveResponse,
+  type SubOrganizationListResponse,
+  type SubOrganizationListUsersResponse,
+  type SubOrganizationCreateParams,
+  type SubOrganizationListParams,
+  type SubOrganizationListUsersParams,
+} from './sub-organizations';
 export {
   TemplatesList,
   Templates,
