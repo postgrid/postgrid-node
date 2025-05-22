@@ -15,6 +15,15 @@ export class Letters extends APIResource {
    * - A template ID for the letter
    * - A URL or file for a PDF for the letter
    * - Upload the aforementioned PDF file via a multipart form upload request
+   *
+   * @example
+   * ```ts
+   * const letter = await client.letters.create({
+   *   from: 'contact_123',
+   *   html: '<html>Content</html>',
+   *   to: 'contact_123',
+   * });
+   * ```
    */
   create(body: LetterCreateParams, options?: Core.RequestOptions): Core.APIPromise<Letter> {
     return this._client.post('/letters', { body, ...options });
@@ -22,6 +31,11 @@ export class Letters extends APIResource {
 
   /**
    * Retrieve a letter by ID.
+   *
+   * @example
+   * ```ts
+   * const letter = await client.letters.retrieve('id');
+   * ```
    */
   retrieve(id: string, options?: Core.RequestOptions): Core.APIPromise<Letter> {
     return this._client.get(`/letters/${id}`, options);
@@ -29,6 +43,14 @@ export class Letters extends APIResource {
 
   /**
    * Get a list of letters.
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const letter of client.letters.list()) {
+   *   // ...
+   * }
+   * ```
    */
   list(query?: LetterListParams, options?: Core.RequestOptions): Core.PagePromise<LettersList, Letter>;
   list(options?: Core.RequestOptions): Core.PagePromise<LettersList, Letter>;
@@ -44,6 +66,11 @@ export class Letters extends APIResource {
 
   /**
    * Cancel a letter by ID. Note that this operation cannot be undone.
+   *
+   * @example
+   * ```ts
+   * const letter = await client.letters.delete('id');
+   * ```
    */
   delete(id: string, options?: Core.RequestOptions): Core.APIPromise<Letter> {
     return this._client.delete(`/letters/${id}`, options);
@@ -56,6 +83,11 @@ export class Letters extends APIResource {
    * offers document generation and hosting capabilities. This endpoint has a much
    * higher rate limit than the regular order retrieval endpoint, so it is suitable
    * for customer-facing use-cases.
+   *
+   * @example
+   * ```ts
+   * const response = await client.letters.url('id');
+   * ```
    */
   url(id: string, options?: Core.RequestOptions): Core.APIPromise<LetterURLResponse> {
     return this._client.get(`/letters/${id}/url`, options);
