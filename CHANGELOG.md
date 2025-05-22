@@ -1,5 +1,32 @@
 # Changelog
 
+## 0.1.0-alpha.4 (2025-05-22)
+
+Full Changelog: [v0.1.0-alpha.3...v0.1.0-alpha.4](https://github.com/postgrid/postgrid-node/compare/v0.1.0-alpha.3...v0.1.0-alpha.4)
+
+### Features
+
+* **api:** update via SDK Studio ([9f8374e](https://github.com/postgrid/postgrid-node/commit/9f8374eae3157197e837847c6e33c14bcf02dd4f))
+* **api:** update via SDK Studio ([726afdd](https://github.com/postgrid/postgrid-node/commit/726afdd8d99ef6083f48fd4cc876c75c638bba32))
+* **api:** update via SDK Studio ([935bbb1](https://github.com/postgrid/postgrid-node/commit/935bbb15a3d477b80752b6c296a3c9ae0ba7e249))
+* **api:** update via SDK Studio ([34c087b](https://github.com/postgrid/postgrid-node/commit/34c087b89fb6a9a2f1ac791aeef8ddc65e1921c7))
+* **api:** update via SDK Studio ([55bc247](https://github.com/postgrid/postgrid-node/commit/55bc247034dc8fd9f1d64519de930ace804b66c2))
+* **api:** update via SDK Studio ([9008e58](https://github.com/postgrid/postgrid-node/commit/9008e589681d70d0c877140622a7f474d259110d))
+* **api:** update via SDK Studio ([a5c9e07](https://github.com/postgrid/postgrid-node/commit/a5c9e072f20efa4a5c7538c1cc403aa7e93834de))
+* **api:** update via SDK Studio ([fb78bb5](https://github.com/postgrid/postgrid-node/commit/fb78bb55828321be0e4c2aca85222bda21b74a99))
+* **api:** update via SDK Studio ([e8a8138](https://github.com/postgrid/postgrid-node/commit/e8a8138784f4fafd5f7757b1cb8d78e098f40b18))
+
+
+### Chores
+
+* **ci:** bump node version for release workflows ([ad1ef06](https://github.com/postgrid/postgrid-node/commit/ad1ef06e3444816671a6c3b16efd70b1a3d01825))
+* **docs:** grammar improvements ([f6f7296](https://github.com/postgrid/postgrid-node/commit/f6f7296fa8324a508531e1dc5e6f30b90c0a9a01))
+
+
+### Documentation
+
+* add examples to tsdocs ([3478106](https://github.com/postgrid/postgrid-node/commit/347810627ea464f630c305ea44a50e08a2ae0c5b))
+
 ## 0.1.0-alpha.3 (2025-05-02)
 
 Full Changelog: [v0.1.0-alpha.2...v0.1.0-alpha.3](https://github.com/postgrid/postgrid-node/compare/v0.1.0-alpha.2...v0.1.0-alpha.3)
