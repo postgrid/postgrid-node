@@ -24,17 +24,13 @@ const client = new PostGrid({
   apiKey: 'My API Key',
 });
 
-async function main() {
-  const contact = await client.contacts.create({
-    addressLine1: 'addressLine1',
-    countryCode: 'countryCode',
-    firstName: 'firstName',
-  });
+const contact = await client.contacts.create({
+  addressLine1: 'addressLine1',
+  countryCode: 'countryCode',
+  firstName: 'firstName',
+});
 
-  console.log(contact.id);
-}
-
-main();
+console.log(contact.id);
 ```
 
 ### Request & Response types
@@ -49,16 +45,12 @@ const client = new PostGrid({
   apiKey: 'My API Key',
 });
 
-async function main() {
-  const params: PostGrid.ContactCreateParams = {
-    addressLine1: 'addressLine1',
-    countryCode: 'countryCode',
-    firstName: 'firstName',
-  };
-  const contact: PostGrid.Contact = await client.contacts.create(params);
-}
-
-main();
+const params: PostGrid.ContactCreateParams = {
+  addressLine1: 'addressLine1',
+  countryCode: 'countryCode',
+  firstName: 'firstName',
+};
+const contact: PostGrid.Contact = await client.contacts.create(params);
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -71,21 +63,17 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-async function main() {
-  const contact = await client.contacts
-    .create({ addressLine1: 'addressLine1', countryCode: 'countryCode', firstName: 'firstName' })
-    .catch(async (err) => {
-      if (err instanceof PostGrid.APIError) {
-        console.log(err.status); // 400
-        console.log(err.name); // BadRequestError
-        console.log(err.headers); // {server: 'nginx', ...}
-      } else {
-        throw err;
-      }
-    });
-}
-
-main();
+const contact = await client.contacts
+  .create({ addressLine1: 'addressLine1', countryCode: 'countryCode', firstName: 'firstName' })
+  .catch(async (err) => {
+    if (err instanceof PostGrid.APIError) {
+      console.log(err.status); // 400
+      console.log(err.name); // BadRequestError
+      console.log(err.headers); // {server: 'nginx', ...}
+    } else {
+      throw err;
+    }
+  });
 ```
 
 Error codes are as follows:
