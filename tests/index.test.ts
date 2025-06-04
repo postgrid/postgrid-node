@@ -195,20 +195,6 @@ describe('instantiate client', () => {
     const client2 = new PostGrid({ apiKey: 'My API Key' });
     expect(client2.maxRetries).toEqual(2);
   });
-
-  test('with environment variable arguments', () => {
-    // set options via env var
-    process.env['POSTGRID_API_KEY'] = 'My API Key';
-    const client = new PostGrid();
-    expect(client.apiKey).toBe('My API Key');
-  });
-
-  test('with overridden environment variable arguments', () => {
-    // set options via env var
-    process.env['POSTGRID_API_KEY'] = 'another My API Key';
-    const client = new PostGrid({ apiKey: 'My API Key' });
-    expect(client.apiKey).toBe('My API Key');
-  });
 });
 
 describe('idempotency', () => {

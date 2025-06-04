@@ -11,6 +11,11 @@ export class URL extends APIResource {
    * offers document generation and hosting capabilities. This endpoint has a much
    * higher rate limit than the regular order retrieval endpoint, so it is suitable
    * for customer-facing use-cases.
+   *
+   * @example
+   * ```ts
+   * const url = await client.cheques.url.retrieve('id');
+   * ```
    */
   retrieve(id: string, options?: Core.RequestOptions): Core.APIPromise<URLRetrieveResponse> {
     return this._client.get(`/cheques/${id}/url`, options);

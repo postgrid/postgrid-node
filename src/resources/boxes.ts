@@ -25,6 +25,23 @@ export class Boxes extends APIResource {
    * - `bankAccount`: The bank account ID
    * - `amount`: The amount to be sent
    * - `number`: The cheque number
+   *
+   * @example
+   * ```ts
+   * const box = await client.boxes.create({
+   *   cheques: [
+   *     {
+   *       from: 'contact_456',
+   *       to: 'contact_123',
+   *       bankAccount: 'bank_abc',
+   *       amount: 5000,
+   *       number: 1042,
+   *     },
+   *   ],
+   *   from: 'contact_456',
+   *   to: 'contact_123',
+   * });
+   * ```
    */
   create(body: BoxCreateParams, options?: Core.RequestOptions): Core.APIPromise<BoxCreateResponse> {
     return this._client.post('/boxes', { body, ...options });
@@ -32,6 +49,11 @@ export class Boxes extends APIResource {
 
   /**
    * Retrieve a box by ID.
+   *
+   * @example
+   * ```ts
+   * const box = await client.boxes.retrieve('id');
+   * ```
    */
   retrieve(id: string, options?: Core.RequestOptions): Core.APIPromise<BoxRetrieveResponse> {
     return this._client.get(`/boxes/${id}`, options);
@@ -39,6 +61,14 @@ export class Boxes extends APIResource {
 
   /**
    * List all boxes.
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const boxListResponse of client.boxes.list()) {
+   *   // ...
+   * }
+   * ```
    */
   list(
     query?: BoxListParams,
@@ -57,6 +87,11 @@ export class Boxes extends APIResource {
 
   /**
    * Cancel a box by ID (cannot be undone).
+   *
+   * @example
+   * ```ts
+   * const response = await client.boxes.cancel('id');
+   * ```
    */
   cancel(id: string, options?: Core.RequestOptions): Core.APIPromise<BoxCancelResponse> {
     return this._client.delete(`/boxes/${id}`, options);
