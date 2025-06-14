@@ -22,6 +22,16 @@ export class Reports extends APIResource {
    *
    * If you just want to do ad-hoc queries, you should use the `/reports/samples`
    * endpoint.
+   *
+   * @example
+   * ```ts
+   * const report = await client.reports.create({
+   *   sqlQuery:
+   *     'SELECT id, status FROM orders WHERE created_at > ?',
+   *   description: 'Recent Orders',
+   *   metadata: { team: 'Sales' },
+   * });
+   * ```
    */
   create(body: ReportCreateParams, options?: Core.RequestOptions): Core.APIPromise<ReportCreateResponse> {
     return this._client.post('/reports/', { body, ...options });
@@ -29,6 +39,11 @@ export class Reports extends APIResource {
 
   /**
    * Retrieve the details of a specific saved report by its ID.
+   *
+   * @example
+   * ```ts
+   * const report = await client.reports.retrieve('id');
+   * ```
    */
   retrieve(id: string, options?: Core.RequestOptions): Core.APIPromise<ReportRetrieveResponse> {
     return this._client.get(`/reports/${id}`, options);
@@ -37,6 +52,13 @@ export class Reports extends APIResource {
   /**
    * Update an existing saved report definition. You can change the query,
    * description, or metadata.
+   *
+   * @example
+   * ```ts
+   * const report = await client.reports.update('id', {
+   *   description: 'Recent Orders (Updated)',
+   * });
+   * ```
    */
   update(
     id: string,
@@ -48,6 +70,14 @@ export class Reports extends APIResource {
 
   /**
    * Retrieve a list of saved reports for your organization.
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const reportListResponse of client.reports.list()) {
+   *   // ...
+   * }
+   * ```
    */
   list(
     query?: ReportListParams,
@@ -67,6 +97,11 @@ export class Reports extends APIResource {
   /**
    * Delete a saved report definition. This action cannot be undone. Associated
    * exports are not automatically deleted.
+   *
+   * @example
+   * ```ts
+   * const report = await client.reports.delete('id');
+   * ```
    */
   delete(id: string, options?: Core.RequestOptions): Core.APIPromise<ReportDeleteResponse> {
     return this._client.delete(`/reports/${id}`, options);
@@ -76,6 +111,15 @@ export class Reports extends APIResource {
    * Run an ad-hoc SQL query against your data lake and get a sample of the results.
    * This is useful for quickly testing queries without saving them as a report. The
    * query execution time and result size are limited.
+   *
+   * @example
+   * ```ts
+   * const response = await client.reports.runAdHocQuery({
+   *   sqlQuery: 'SELECT id FROM contacts LIMIT 5',
+   *   limit: 5,
+   *   params: [],
+   * });
+   * ```
    */
   runAdHocQuery(
     body: ReportRunAdHocQueryParams,
@@ -89,6 +133,14 @@ export class Reports extends APIResource {
    * This allows getting up to 1000 rows of resutls but the runtime of the query is
    * limited to 30 seconds. If you need more rows or longer runtime, you should
    * create an export from this report.
+   *
+   * @example
+   * ```ts
+   * const response = await client.reports.sample('id', {
+   *   limit: 10,
+   *   params: ['2023-10-01T00:00:00Z'],
+   * });
+   * ```
    */
   sample(
     id: string,

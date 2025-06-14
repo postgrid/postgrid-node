@@ -6,8 +6,6 @@ This library provides convenient access to the PostGrid REST API from server-sid
 
 The REST API documentation can be found on [docs.postgrid.com](https://docs.postgrid.com). The full API of this library can be found in [api.md](api.md).
 
-It is generated with [Stainless](https://www.stainless.com/).
-
 ## Installation
 
 ```sh
@@ -23,20 +21,16 @@ The full API of this library can be found in [api.md](api.md).
 import PostGrid from 'postgrid-node';
 
 const client = new PostGrid({
-  apiKey: process.env['POSTGRID_API_KEY'], // This is the default and can be omitted
+  apiKey: 'My API Key',
 });
 
-async function main() {
-  const contact = await client.contacts.create({
-    addressLine1: 'addressLine1',
-    countryCode: 'countryCode',
-    firstName: 'firstName',
-  });
+const contact = await client.contacts.create({
+  addressLine1: 'addressLine1',
+  countryCode: 'countryCode',
+  firstName: 'firstName',
+});
 
-  console.log(contact.id);
-}
-
-main();
+console.log(contact.id);
 ```
 
 ### Request & Response types
@@ -48,19 +42,15 @@ This library includes TypeScript definitions for all request params and response
 import PostGrid from 'postgrid-node';
 
 const client = new PostGrid({
-  apiKey: process.env['POSTGRID_API_KEY'], // This is the default and can be omitted
+  apiKey: 'My API Key',
 });
 
-async function main() {
-  const params: PostGrid.ContactCreateParams = {
-    addressLine1: 'addressLine1',
-    countryCode: 'countryCode',
-    firstName: 'firstName',
-  };
-  const contact: PostGrid.Contact = await client.contacts.create(params);
-}
-
-main();
+const params: PostGrid.ContactCreateParams = {
+  addressLine1: 'addressLine1',
+  countryCode: 'countryCode',
+  firstName: 'firstName',
+};
+const contact: PostGrid.Contact = await client.contacts.create(params);
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -73,21 +63,17 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-async function main() {
-  const contact = await client.contacts
-    .create({ addressLine1: 'addressLine1', countryCode: 'countryCode', firstName: 'firstName' })
-    .catch(async (err) => {
-      if (err instanceof PostGrid.APIError) {
-        console.log(err.status); // 400
-        console.log(err.name); // BadRequestError
-        console.log(err.headers); // {server: 'nginx', ...}
-      } else {
-        throw err;
-      }
-    });
-}
-
-main();
+const contact = await client.contacts
+  .create({ addressLine1: 'addressLine1', countryCode: 'countryCode', firstName: 'firstName' })
+  .catch(async (err) => {
+    if (err instanceof PostGrid.APIError) {
+      console.log(err.status); // 400
+      console.log(err.name); // BadRequestError
+      console.log(err.headers); // {server: 'nginx', ...}
+    } else {
+      throw err;
+    }
+  });
 ```
 
 Error codes are as follows:
