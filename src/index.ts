@@ -246,6 +246,7 @@ export class PostGrid extends Core.APIClient {
 
     super({
       baseURL: options.baseURL!,
+      baseURLOverridden: baseURL ? baseURL !== 'https://api.postgrid.com/print-mail/v1' : false,
       timeout: options.timeout ?? 60000 /* 1 minute */,
       httpAgent: options.httpAgent,
       maxRetries: options.maxRetries,
@@ -272,6 +273,13 @@ export class PostGrid extends Core.APIClient {
   mailingLists: API.MailingLists = new API.MailingLists(this);
   orderProfiles: API.OrderProfiles = new API.OrderProfiles(this);
   subOrganizations: API.SubOrganizations = new API.SubOrganizations(this);
+
+  /**
+   * Check whether the base URL is set to its default.
+   */
+  #baseURLOverridden(): boolean {
+    return this.baseURL !== 'https://api.postgrid.com/print-mail/v1';
+  }
 
   protected override defaultQuery(): Core.DefaultQuery | undefined {
     return this._options.defaultQuery;
