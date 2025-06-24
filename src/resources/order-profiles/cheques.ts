@@ -226,7 +226,7 @@ export interface ChequeCreateResponse {
   /**
    * Default merge variables for orders created using this profile.
    */
-  mergeVariables?: Record<string, unknown> | null;
+  mergeVariables?: { [key: string]: unknown } | null;
 
   /**
    * Message included on the cheque stub. Set to `null` to remove during update.
@@ -236,7 +236,7 @@ export interface ChequeCreateResponse {
   /**
    * Optional key-value metadata.
    */
-  metadata?: Record<string, string> | null;
+  metadata?: { [key: string]: string } | null;
 
   /**
    * Contact details for redirection (output).
@@ -353,7 +353,7 @@ export interface ChequeRetrieveResponse {
   /**
    * Default merge variables for orders created using this profile.
    */
-  mergeVariables?: Record<string, unknown> | null;
+  mergeVariables?: { [key: string]: unknown } | null;
 
   /**
    * Message included on the cheque stub. Set to `null` to remove during update.
@@ -363,7 +363,7 @@ export interface ChequeRetrieveResponse {
   /**
    * Optional key-value metadata.
    */
-  metadata?: Record<string, string> | null;
+  metadata?: { [key: string]: string } | null;
 
   /**
    * Contact details for redirection (output).
@@ -480,7 +480,7 @@ export interface ChequeUpdateResponse {
   /**
    * Default merge variables for orders created using this profile.
    */
-  mergeVariables?: Record<string, unknown> | null;
+  mergeVariables?: { [key: string]: unknown } | null;
 
   /**
    * Message included on the cheque stub. Set to `null` to remove during update.
@@ -490,7 +490,7 @@ export interface ChequeUpdateResponse {
   /**
    * Optional key-value metadata.
    */
-  metadata?: Record<string, string> | null;
+  metadata?: { [key: string]: string } | null;
 
   /**
    * Contact details for redirection (output).
@@ -602,7 +602,7 @@ export interface ChequeListResponse {
   /**
    * Default merge variables for orders created using this profile.
    */
-  mergeVariables?: Record<string, unknown> | null;
+  mergeVariables?: { [key: string]: unknown } | null;
 
   /**
    * Message included on the cheque stub. Set to `null` to remove during update.
@@ -612,7 +612,7 @@ export interface ChequeListResponse {
   /**
    * Optional key-value metadata.
    */
-  metadata?: Record<string, string> | null;
+  metadata?: { [key: string]: string } | null;
 
   /**
    * Contact details for redirection (output).
@@ -726,7 +726,7 @@ export interface ChequeCreateParams {
   /**
    * Body param: Default merge variables for orders created using this profile.
    */
-  mergeVariables?: Record<string, unknown> | null;
+  mergeVariables?: { [key: string]: unknown } | null;
 
   /**
    * Body param: Message included on the cheque stub. Set to `null` to remove during
@@ -737,7 +737,7 @@ export interface ChequeCreateParams {
   /**
    * Body param: Optional key-value metadata.
    */
-  metadata?: Record<string, string> | null;
+  metadata?: { [key: string]: string } | null;
 }
 
 export interface ChequeRetrieveParams {
@@ -845,7 +845,7 @@ export interface ChequeUpdateParams {
   /**
    * Body param: Default merge variables for orders created using this profile.
    */
-  mergeVariables?: Record<string, unknown> | null;
+  mergeVariables?: { [key: string]: unknown } | null;
 
   /**
    * Body param: Message included on the cheque stub. Set to `null` to remove during
@@ -856,7 +856,7 @@ export interface ChequeUpdateParams {
   /**
    * Body param: Optional key-value metadata.
    */
-  metadata?: Record<string, string> | null;
+  metadata?: { [key: string]: string } | null;
 }
 
 export interface ChequeListParams extends ListParams {

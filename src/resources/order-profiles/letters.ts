@@ -218,12 +218,12 @@ export interface LetterCreateResponse {
   /**
    * Default merge variables for orders created using this profile.
    */
-  mergeVariables?: Record<string, unknown> | null;
+  mergeVariables?: { [key: string]: unknown } | null;
 
   /**
    * Optional key-value metadata.
    */
-  metadata?: Record<string, string> | null;
+  metadata?: { [key: string]: string } | null;
 
   /**
    * Specifies which page number should be perforated (if any).
@@ -353,12 +353,12 @@ export interface LetterRetrieveResponse {
   /**
    * Default merge variables for orders created using this profile.
    */
-  mergeVariables?: Record<string, unknown> | null;
+  mergeVariables?: { [key: string]: unknown } | null;
 
   /**
    * Optional key-value metadata.
    */
-  metadata?: Record<string, string> | null;
+  metadata?: { [key: string]: string } | null;
 
   /**
    * Specifies which page number should be perforated (if any).
@@ -488,12 +488,12 @@ export interface LetterUpdateResponse {
   /**
    * Default merge variables for orders created using this profile.
    */
-  mergeVariables?: Record<string, unknown> | null;
+  mergeVariables?: { [key: string]: unknown } | null;
 
   /**
    * Optional key-value metadata.
    */
-  metadata?: Record<string, string> | null;
+  metadata?: { [key: string]: string } | null;
 
   /**
    * Specifies which page number should be perforated (if any).
@@ -623,12 +623,12 @@ export interface LetterListResponse {
   /**
    * Default merge variables for orders created using this profile.
    */
-  mergeVariables?: Record<string, unknown> | null;
+  mergeVariables?: { [key: string]: unknown } | null;
 
   /**
    * Optional key-value metadata.
    */
-  metadata?: Record<string, string> | null;
+  metadata?: { [key: string]: string } | null;
 
   /**
    * Specifies which page number should be perforated (if any).
@@ -754,12 +754,12 @@ export interface LetterCreateParams {
   /**
    * Body param: Default merge variables for orders created using this profile.
    */
-  mergeVariables?: Record<string, unknown> | null;
+  mergeVariables?: { [key: string]: unknown } | null;
 
   /**
    * Body param: Optional key-value metadata.
    */
-  metadata?: Record<string, string> | null;
+  metadata?: { [key: string]: string } | null;
 
   /**
    * Body param: A PDF file containing the letter content. Cannot be used with
@@ -880,12 +880,12 @@ export interface LetterUpdateParams {
   /**
    * Body param: Default merge variables for orders created using this profile.
    */
-  mergeVariables?: Record<string, unknown> | null;
+  mergeVariables?: { [key: string]: unknown } | null;
 
   /**
    * Body param: Optional key-value metadata.
    */
-  metadata?: Record<string, string> | null;
+  metadata?: { [key: string]: string } | null;
 
   /**
    * Body param: A PDF file containing the letter content. Cannot be used with

@@ -277,7 +277,7 @@ export interface Cheque {
    * template _exactly_ as they are case-sensitive. Note that these _do not_ apply to
    * PDFs uploaded with the order.
    */
-  mergeVariables?: Record<string, unknown>;
+  mergeVariables?: { [key: string]: unknown };
 
   /**
    * The message of the cheque.
@@ -287,7 +287,7 @@ export interface Cheque {
   /**
    * See the section on Metadata.
    */
-  metadata?: Record<string, unknown>;
+  metadata?: { [key: string]: unknown };
 
   /**
    * The number of the cheque. If you don't provide this, it will automatically be
@@ -441,7 +441,7 @@ export interface ChequeCreateParams {
    * template _exactly_ as they are case-sensitive. Note that these _do not_ apply to
    * PDFs uploaded with the order.
    */
-  mergeVariables?: Record<string, unknown>;
+  mergeVariables?: { [key: string]: unknown };
 
   /**
    * The message of the cheque.
@@ -451,7 +451,7 @@ export interface ChequeCreateParams {
   /**
    * See the section on Metadata.
    */
-  metadata?: Record<string, unknown>;
+  metadata?: { [key: string]: unknown };
 
   /**
    * The number of the cheque. If you don't provide this, it will automatically be

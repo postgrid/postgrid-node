@@ -197,12 +197,12 @@ export interface SelfMailerCreateResponse {
   /**
    * Default merge variables for orders created using this profile.
    */
-  mergeVariables?: Record<string, unknown> | null;
+  mergeVariables?: { [key: string]: unknown } | null;
 
   /**
    * Optional key-value metadata.
    */
-  metadata?: Record<string, string> | null;
+  metadata?: { [key: string]: string } | null;
 
   /**
    * ID of the template for the outside. Required unless `pdf` is provided.
@@ -293,12 +293,12 @@ export interface SelfMailerRetrieveResponse {
   /**
    * Default merge variables for orders created using this profile.
    */
-  mergeVariables?: Record<string, unknown> | null;
+  mergeVariables?: { [key: string]: unknown } | null;
 
   /**
    * Optional key-value metadata.
    */
-  metadata?: Record<string, string> | null;
+  metadata?: { [key: string]: string } | null;
 
   /**
    * ID of the template for the outside. Required unless `pdf` is provided.
@@ -389,12 +389,12 @@ export interface SelfMailerUpdateResponse {
   /**
    * Default merge variables for orders created using this profile.
    */
-  mergeVariables?: Record<string, unknown> | null;
+  mergeVariables?: { [key: string]: unknown } | null;
 
   /**
    * Optional key-value metadata.
    */
-  metadata?: Record<string, string> | null;
+  metadata?: { [key: string]: string } | null;
 
   /**
    * ID of the template for the outside. Required unless `pdf` is provided.
@@ -485,12 +485,12 @@ export interface SelfMailerListResponse {
   /**
    * Default merge variables for orders created using this profile.
    */
-  mergeVariables?: Record<string, unknown> | null;
+  mergeVariables?: { [key: string]: unknown } | null;
 
   /**
    * Optional key-value metadata.
    */
-  metadata?: Record<string, string> | null;
+  metadata?: { [key: string]: string } | null;
 
   /**
    * ID of the template for the outside. Required unless `pdf` is provided.
@@ -574,12 +574,12 @@ export interface SelfMailerCreateParams {
   /**
    * Body param: Default merge variables for orders created using this profile.
    */
-  mergeVariables?: Record<string, unknown> | null;
+  mergeVariables?: { [key: string]: unknown } | null;
 
   /**
    * Body param: Optional key-value metadata.
    */
-  metadata?: Record<string, string> | null;
+  metadata?: { [key: string]: string } | null;
 
   /**
    * Body param: ID of the template for the outside. Required unless `pdf` is
@@ -658,12 +658,12 @@ export interface SelfMailerUpdateParams {
   /**
    * Body param: Default merge variables for orders created using this profile.
    */
-  mergeVariables?: Record<string, unknown> | null;
+  mergeVariables?: { [key: string]: unknown } | null;
 
   /**
    * Body param: Optional key-value metadata.
    */
-  metadata?: Record<string, string> | null;
+  metadata?: { [key: string]: string } | null;
 
   /**
    * Body param: ID of the template for the outside. Required unless `pdf` is

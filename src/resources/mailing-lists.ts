@@ -179,7 +179,7 @@ export interface MailingListCreateResponse {
   /**
    * See the section on Metadata.
    */
-  metadata?: Record<string, unknown>;
+  metadata?: { [key: string]: unknown };
 }
 
 export namespace MailingListCreateResponse {
@@ -246,7 +246,7 @@ export interface MailingListRetrieveResponse {
   /**
    * See the section on Metadata.
    */
-  metadata?: Record<string, unknown>;
+  metadata?: { [key: string]: unknown };
 }
 
 export namespace MailingListRetrieveResponse {
@@ -283,7 +283,7 @@ export interface MailingListUpdateResponse {
   /**
    * See the section on Metadata.
    */
-  metadata?: Record<string, unknown>;
+  metadata?: { [key: string]: unknown };
 }
 
 /**
@@ -329,7 +329,7 @@ export interface MailingListListResponse {
   /**
    * See the section on Metadata.
    */
-  metadata?: Record<string, unknown>;
+  metadata?: { [key: string]: unknown };
 }
 
 export namespace MailingListListResponse {
@@ -405,7 +405,7 @@ export interface MailingListSubmitJobResponse {
   /**
    * See the section on Metadata.
    */
-  metadata?: Record<string, unknown>;
+  metadata?: { [key: string]: unknown };
 }
 
 export namespace MailingListSubmitJobResponse {
@@ -439,7 +439,7 @@ export interface MailingListCreateParams {
   /**
    * See the section on Metadata.
    */
-  metadata?: Record<string, unknown>;
+  metadata?: { [key: string]: unknown };
 }
 
 export interface MailingListUpdateParams {
@@ -452,7 +452,7 @@ export interface MailingListUpdateParams {
   /**
    * See the section on Metadata.
    */
-  metadata?: Record<string, unknown>;
+  metadata?: { [key: string]: unknown };
 }
 
 export interface MailingListListParams extends ListParams {

@@ -249,12 +249,12 @@ export interface Letter {
    * template _exactly_ as they are case-sensitive. Note that these _do not_ apply to
    * PDFs uploaded with the order.
    */
-  mergeVariables?: Record<string, unknown>;
+  mergeVariables?: { [key: string]: unknown };
 
   /**
    * See the section on Metadata.
    */
-  metadata?: Record<string, unknown>;
+  metadata?: { [key: string]: unknown };
 
   /**
    * The ID of the PDF workflow run that created the letter, if any.
@@ -524,12 +524,12 @@ export declare namespace LetterCreateParams {
      * template _exactly_ as they are case-sensitive. Note that these _do not_ apply to
      * PDFs uploaded with the order.
      */
-    mergeVariables?: Record<string, unknown>;
+    mergeVariables?: { [key: string]: unknown };
 
     /**
      * See the section on Metadata.
      */
-    metadata?: Record<string, unknown>;
+    metadata?: { [key: string]: unknown };
 
     /**
      * If specified, indicates which letter page is perforated. Currently, only the
@@ -749,12 +749,12 @@ export declare namespace LetterCreateParams {
      * template _exactly_ as they are case-sensitive. Note that these _do not_ apply to
      * PDFs uploaded with the order.
      */
-    mergeVariables?: Record<string, unknown>;
+    mergeVariables?: { [key: string]: unknown };
 
     /**
      * See the section on Metadata.
      */
-    metadata?: Record<string, unknown>;
+    metadata?: { [key: string]: unknown };
 
     /**
      * If specified, indicates which letter page is perforated. Currently, only the

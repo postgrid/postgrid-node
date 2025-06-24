@@ -221,12 +221,12 @@ export interface Postcard {
    * template _exactly_ as they are case-sensitive. Note that these _do not_ apply to
    * PDFs uploaded with the order.
    */
-  mergeVariables?: Record<string, unknown>;
+  mergeVariables?: { [key: string]: unknown };
 
   /**
    * See the section on Metadata.
    */
-  metadata?: Record<string, unknown>;
+  metadata?: { [key: string]: unknown };
 
   /**
    * The tracking number of this order. Populated after an express/certified order
@@ -358,12 +358,12 @@ export declare namespace PostcardCreateParams {
      * template _exactly_ as they are case-sensitive. Note that these _do not_ apply to
      * PDFs uploaded with the order.
      */
-    mergeVariables?: Record<string, unknown>;
+    mergeVariables?: { [key: string]: unknown };
 
     /**
      * See the section on Metadata.
      */
-    metadata?: Record<string, unknown>;
+    metadata?: { [key: string]: unknown };
 
     /**
      * This order will transition from `ready` to `printing` on the day after this
@@ -457,12 +457,12 @@ export declare namespace PostcardCreateParams {
      * template _exactly_ as they are case-sensitive. Note that these _do not_ apply to
      * PDFs uploaded with the order.
      */
-    mergeVariables?: Record<string, unknown>;
+    mergeVariables?: { [key: string]: unknown };
 
     /**
      * See the section on Metadata.
      */
-    metadata?: Record<string, unknown>;
+    metadata?: { [key: string]: unknown };
 
     /**
      * This order will transition from `ready` to `printing` on the day after this
@@ -542,12 +542,12 @@ export declare namespace PostcardCreateParams {
      * template _exactly_ as they are case-sensitive. Note that these _do not_ apply to
      * PDFs uploaded with the order.
      */
-    mergeVariables?: Record<string, unknown>;
+    mergeVariables?: { [key: string]: unknown };
 
     /**
      * See the section on Metadata.
      */
-    metadata?: Record<string, unknown>;
+    metadata?: { [key: string]: unknown };
 
     /**
      * This order will transition from `ready` to `printing` on the day after this

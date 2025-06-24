@@ -118,7 +118,7 @@ export interface ExportCreateResponse {
   /**
    * Optional key-value metadata associated with the export.
    */
-  metadata?: Record<string, string>;
+  metadata?: { [key: string]: string };
 
   /**
    * A signed URL to download the exported data (CSV format). Available when
@@ -211,7 +211,7 @@ export interface ExportRetrieveResponse {
   /**
    * Optional key-value metadata associated with the export.
    */
-  metadata?: Record<string, string>;
+  metadata?: { [key: string]: string };
 
   /**
    * A signed URL to download the exported data (CSV format). Available when
@@ -281,7 +281,7 @@ export interface ExportCreateParams {
   /**
    * Optional key-value metadata associated with the export.
    */
-  metadata?: Record<string, string>;
+  metadata?: { [key: string]: string };
 
   /**
    * Optional parameters to bind to the SQL query of the associated report.

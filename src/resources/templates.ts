@@ -127,7 +127,7 @@ export interface Template {
   /**
    * See the section on Metadata.
    */
-  metadata?: Record<string, unknown>;
+  metadata?: { [key: string]: unknown };
 }
 
 export interface TemplateList {
@@ -171,7 +171,7 @@ export interface TemplateCreateParams {
   /**
    * See the section on Metadata.
    */
-  metadata?: Record<string, unknown>;
+  metadata?: { [key: string]: unknown };
 }
 
 export interface TemplateUpdateParams {
@@ -189,7 +189,7 @@ export interface TemplateUpdateParams {
   /**
    * See the section on Metadata.
    */
-  metadata?: Record<string, unknown>;
+  metadata?: { [key: string]: unknown };
 }
 
 export interface TemplateListParams extends ListParams {

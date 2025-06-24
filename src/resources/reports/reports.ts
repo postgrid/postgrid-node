@@ -195,7 +195,7 @@ export interface ReportCreateResponse {
   /**
    * Optional key-value metadata associated with the report.
    */
-  metadata?: Record<string, string>;
+  metadata?: { [key: string]: string };
 }
 
 /**
@@ -240,7 +240,7 @@ export interface ReportRetrieveResponse {
   /**
    * Optional key-value metadata associated with the report.
    */
-  metadata?: Record<string, string>;
+  metadata?: { [key: string]: string };
 }
 
 /**
@@ -285,7 +285,7 @@ export interface ReportUpdateResponse {
   /**
    * Optional key-value metadata associated with the report.
    */
-  metadata?: Record<string, string>;
+  metadata?: { [key: string]: string };
 }
 
 /**
@@ -330,7 +330,7 @@ export interface ReportListResponse {
   /**
    * Optional key-value metadata associated with the report.
    */
-  metadata?: Record<string, string>;
+  metadata?: { [key: string]: string };
 }
 
 /**
@@ -360,7 +360,7 @@ export interface ReportRunAdHocQueryResponse {
   /**
    * The actual data records returned by the sample query.
    */
-  records: Array<Record<string, unknown>>;
+  records: Array<{ [key: string]: unknown }>;
 
   /**
    * The ID of the report this sample was generated from, or null for ad-hoc samples.
@@ -380,7 +380,7 @@ export interface ReportSampleResponse {
   /**
    * The actual data records returned by the sample query.
    */
-  records: Array<Record<string, unknown>>;
+  records: Array<{ [key: string]: unknown }>;
 
   /**
    * The ID of the report this sample was generated from, or null for ad-hoc samples.
@@ -402,7 +402,7 @@ export interface ReportCreateParams {
   /**
    * Optional key-value metadata associated with the report.
    */
-  metadata?: Record<string, string>;
+  metadata?: { [key: string]: string };
 }
 
 export interface ReportUpdateParams {
@@ -414,7 +414,7 @@ export interface ReportUpdateParams {
   /**
    * Optional key-value metadata associated with the report. Set to null to remove.
    */
-  metadata?: Record<string, string> | null;
+  metadata?: { [key: string]: string } | null;
 
   /**
    * The SQL query defining the report.
