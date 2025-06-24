@@ -198,12 +198,12 @@ export interface PostcardCreateResponse {
   /**
    * Default merge variables for orders created using this profile.
    */
-  mergeVariables?: Record<string, unknown> | null;
+  mergeVariables?: { [key: string]: unknown } | null;
 
   /**
    * Optional key-value metadata.
    */
-  metadata?: Record<string, string> | null;
+  metadata?: { [key: string]: string } | null;
 
   /**
    * A temporary, signed URL to view the uploaded PDF content, if any.
@@ -292,12 +292,12 @@ export interface PostcardRetrieveResponse {
   /**
    * Default merge variables for orders created using this profile.
    */
-  mergeVariables?: Record<string, unknown> | null;
+  mergeVariables?: { [key: string]: unknown } | null;
 
   /**
    * Optional key-value metadata.
    */
-  metadata?: Record<string, string> | null;
+  metadata?: { [key: string]: string } | null;
 
   /**
    * A temporary, signed URL to view the uploaded PDF content, if any.
@@ -386,12 +386,12 @@ export interface PostcardUpdateResponse {
   /**
    * Default merge variables for orders created using this profile.
    */
-  mergeVariables?: Record<string, unknown> | null;
+  mergeVariables?: { [key: string]: unknown } | null;
 
   /**
    * Optional key-value metadata.
    */
-  metadata?: Record<string, string> | null;
+  metadata?: { [key: string]: string } | null;
 
   /**
    * A temporary, signed URL to view the uploaded PDF content, if any.
@@ -480,12 +480,12 @@ export interface PostcardListResponse {
   /**
    * Default merge variables for orders created using this profile.
    */
-  mergeVariables?: Record<string, unknown> | null;
+  mergeVariables?: { [key: string]: unknown } | null;
 
   /**
    * Optional key-value metadata.
    */
-  metadata?: Record<string, string> | null;
+  metadata?: { [key: string]: string } | null;
 
   /**
    * A temporary, signed URL to view the uploaded PDF content, if any.
@@ -571,12 +571,12 @@ export interface PostcardCreateParams {
   /**
    * Body param: Default merge variables for orders created using this profile.
    */
-  mergeVariables?: Record<string, unknown> | null;
+  mergeVariables?: { [key: string]: unknown } | null;
 
   /**
    * Body param: Optional key-value metadata.
    */
-  metadata?: Record<string, string> | null;
+  metadata?: { [key: string]: string } | null;
 
   /**
    * Body param: A 2-page PDF file containing the postcard content (front and back).
@@ -651,12 +651,12 @@ export interface PostcardUpdateParams {
   /**
    * Body param: Default merge variables for orders created using this profile.
    */
-  mergeVariables?: Record<string, unknown> | null;
+  mergeVariables?: { [key: string]: unknown } | null;
 
   /**
    * Body param: Optional key-value metadata.
    */
-  metadata?: Record<string, string> | null;
+  metadata?: { [key: string]: string } | null;
 
   /**
    * Body param: A 2-page PDF file containing the postcard content (front and back).

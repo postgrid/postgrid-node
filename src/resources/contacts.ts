@@ -183,7 +183,7 @@ export interface Contact {
   /**
    * See the section on Metadata.
    */
-  metadata?: Record<string, unknown>;
+  metadata?: { [key: string]: unknown };
 
   /**
    * Phone number of the contact.
@@ -284,7 +284,7 @@ export declare namespace ContactCreateParams {
     /**
      * See the section on Metadata.
      */
-    metadata?: Record<string, unknown>;
+    metadata?: { [key: string]: unknown };
 
     /**
      * Phone number of the contact.
@@ -366,7 +366,7 @@ export declare namespace ContactCreateParams {
     /**
      * See the section on Metadata.
      */
-    metadata?: Record<string, unknown>;
+    metadata?: { [key: string]: unknown };
 
     /**
      * Phone number of the contact.

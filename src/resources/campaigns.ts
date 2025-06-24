@@ -166,7 +166,7 @@ export interface CampaignCreateResponse {
   /**
    * See the section on Metadata.
    */
-  metadata?: Record<string, unknown>;
+  metadata?: { [key: string]: unknown };
 
   /**
    * A temporary URL to preview the first rendered order, available once the campaign
@@ -290,7 +290,7 @@ export interface CampaignRetrieveResponse {
   /**
    * See the section on Metadata.
    */
-  metadata?: Record<string, unknown>;
+  metadata?: { [key: string]: unknown };
 
   /**
    * A temporary URL to preview the first rendered order, available once the campaign
@@ -414,7 +414,7 @@ export interface CampaignUpdateResponse {
   /**
    * See the section on Metadata.
    */
-  metadata?: Record<string, unknown>;
+  metadata?: { [key: string]: unknown };
 
   /**
    * A temporary URL to preview the first rendered order, available once the campaign
@@ -538,7 +538,7 @@ export interface CampaignListResponse {
   /**
    * See the section on Metadata.
    */
-  metadata?: Record<string, unknown>;
+  metadata?: { [key: string]: unknown };
 
   /**
    * A temporary URL to preview the first rendered order, available once the campaign
@@ -671,7 +671,7 @@ export interface CampaignSendResponse {
   /**
    * See the section on Metadata.
    */
-  metadata?: Record<string, unknown>;
+  metadata?: { [key: string]: unknown };
 
   /**
    * A temporary URL to preview the first rendered order, available once the campaign
@@ -749,7 +749,7 @@ export interface CampaignCreateParams {
   /**
    * See the section on Metadata.
    */
-  metadata?: Record<string, unknown>;
+  metadata?: { [key: string]: unknown };
 
   /**
    * The ID of the postcard profile used for this campaign, if applicable.
@@ -800,7 +800,7 @@ export interface CampaignUpdateParams {
    * Optional key-value data associated with the campaign. Set to `null` to remove
    * existing metadata.
    */
-  metadata?: Record<string, string> | null;
+  metadata?: { [key: string]: string } | null;
 
   /**
    * The ID of the postcard profile to use. Setting this will remove other profile

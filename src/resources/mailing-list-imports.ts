@@ -199,7 +199,7 @@ export interface MailingListImportCreateResponse {
   /**
    * See the section on Metadata.
    */
-  metadata?: Record<string, unknown>;
+  metadata?: { [key: string]: unknown };
 
   /**
    * A temporary URL to download the processing report, available once the import is
@@ -260,7 +260,7 @@ export namespace MailingListImportCreateResponse {
      * - provinceOrState
      * - countryCode
      */
-    receiverAddressMapping: Record<string, string>;
+    receiverAddressMapping: { [key: string]: string };
 
     /**
      * The signed URL your controller generates.
@@ -270,17 +270,17 @@ export namespace MailingListImportCreateResponse {
     /**
      * Optional mapping of columns for receiver merge variables.
      */
-    receiverMergeVariableMapping?: Record<string, string>;
+    receiverMergeVariableMapping?: { [key: string]: string };
 
     /**
      * Optional mapping of columns for sender addresses.
      */
-    senderAddressMapping?: Record<string, string>;
+    senderAddressMapping?: { [key: string]: string };
 
     /**
      * Optional mapping of columns for sender merge variables.
      */
-    senderMergeVariableMapping?: Record<string, string>;
+    senderMergeVariableMapping?: { [key: string]: string };
   }
 
   /**
@@ -413,7 +413,7 @@ export interface MailingListImportRetrieveResponse {
   /**
    * See the section on Metadata.
    */
-  metadata?: Record<string, unknown>;
+  metadata?: { [key: string]: unknown };
 
   /**
    * A temporary URL to download the processing report, available once the import is
@@ -474,7 +474,7 @@ export namespace MailingListImportRetrieveResponse {
      * - provinceOrState
      * - countryCode
      */
-    receiverAddressMapping: Record<string, string>;
+    receiverAddressMapping: { [key: string]: string };
 
     /**
      * The signed URL your controller generates.
@@ -484,17 +484,17 @@ export namespace MailingListImportRetrieveResponse {
     /**
      * Optional mapping of columns for receiver merge variables.
      */
-    receiverMergeVariableMapping?: Record<string, string>;
+    receiverMergeVariableMapping?: { [key: string]: string };
 
     /**
      * Optional mapping of columns for sender addresses.
      */
-    senderAddressMapping?: Record<string, string>;
+    senderAddressMapping?: { [key: string]: string };
 
     /**
      * Optional mapping of columns for sender merge variables.
      */
-    senderMergeVariableMapping?: Record<string, string>;
+    senderMergeVariableMapping?: { [key: string]: string };
   }
 
   /**
@@ -627,7 +627,7 @@ export interface MailingListImportUpdateResponse {
   /**
    * See the section on Metadata.
    */
-  metadata?: Record<string, unknown>;
+  metadata?: { [key: string]: unknown };
 
   /**
    * A temporary URL to download the processing report, available once the import is
@@ -688,7 +688,7 @@ export namespace MailingListImportUpdateResponse {
      * - provinceOrState
      * - countryCode
      */
-    receiverAddressMapping: Record<string, string>;
+    receiverAddressMapping: { [key: string]: string };
 
     /**
      * The signed URL your controller generates.
@@ -698,17 +698,17 @@ export namespace MailingListImportUpdateResponse {
     /**
      * Optional mapping of columns for receiver merge variables.
      */
-    receiverMergeVariableMapping?: Record<string, string>;
+    receiverMergeVariableMapping?: { [key: string]: string };
 
     /**
      * Optional mapping of columns for sender addresses.
      */
-    senderAddressMapping?: Record<string, string>;
+    senderAddressMapping?: { [key: string]: string };
 
     /**
      * Optional mapping of columns for sender merge variables.
      */
-    senderMergeVariableMapping?: Record<string, string>;
+    senderMergeVariableMapping?: { [key: string]: string };
   }
 
   /**
@@ -841,7 +841,7 @@ export interface MailingListImportListResponse {
   /**
    * See the section on Metadata.
    */
-  metadata?: Record<string, unknown>;
+  metadata?: { [key: string]: unknown };
 
   /**
    * A temporary URL to download the processing report, available once the import is
@@ -902,7 +902,7 @@ export namespace MailingListImportListResponse {
      * - provinceOrState
      * - countryCode
      */
-    receiverAddressMapping: Record<string, string>;
+    receiverAddressMapping: { [key: string]: string };
 
     /**
      * The signed URL your controller generates.
@@ -912,17 +912,17 @@ export namespace MailingListImportListResponse {
     /**
      * Optional mapping of columns for receiver merge variables.
      */
-    receiverMergeVariableMapping?: Record<string, string>;
+    receiverMergeVariableMapping?: { [key: string]: string };
 
     /**
      * Optional mapping of columns for sender addresses.
      */
-    senderAddressMapping?: Record<string, string>;
+    senderAddressMapping?: { [key: string]: string };
 
     /**
      * Optional mapping of columns for sender merge variables.
      */
-    senderMergeVariableMapping?: Record<string, string>;
+    senderMergeVariableMapping?: { [key: string]: string };
   }
 
   /**
@@ -1004,7 +1004,7 @@ export interface MailingListImportCreateParams {
   /**
    * Mapping of columns for receiver addresses.
    */
-  receiverAddressMapping: Record<string, string>;
+  receiverAddressMapping: { [key: string]: string };
 
   /**
    * An optional string describing this resource. Will be visible in the API and the
@@ -1015,23 +1015,23 @@ export interface MailingListImportCreateParams {
   /**
    * See the section on Metadata.
    */
-  metadata?: Record<string, unknown>;
+  metadata?: { [key: string]: unknown };
 
   /**
    * Optional mapping of columns for receiver merge variables.
    */
-  receiverMergeVariableMapping?: Record<string, string>;
+  receiverMergeVariableMapping?: { [key: string]: string };
 
   /**
    * Optional mapping of columns for sender addresses. If this is present, then all
    * receivers should have a corresponding sender.
    */
-  senderAddressMapping?: Record<string, string>;
+  senderAddressMapping?: { [key: string]: string };
 
   /**
    * Optional mapping of columns for sender merge variables.
    */
-  senderMergeVariableMapping?: Record<string, string>;
+  senderMergeVariableMapping?: { [key: string]: string };
 }
 
 export interface MailingListImportUpdateParams {
@@ -1045,7 +1045,7 @@ export interface MailingListImportUpdateParams {
    * Optional key-value data associated with the import. Set to `null` to remove
    * existing metadata.
    */
-  metadata?: Record<string, string> | null;
+  metadata?: { [key: string]: string } | null;
 }
 
 export interface MailingListImportListParams extends ListParams {

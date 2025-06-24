@@ -148,7 +148,7 @@ export interface BankAccount {
   /**
    * See the section on Metadata.
    */
-  metadata?: Record<string, unknown>;
+  metadata?: { [key: string]: unknown };
 
   /**
    * The route number of the bank account (for CA).
@@ -251,7 +251,7 @@ export declare namespace BankAccountCreateParams {
     /**
      * See the section on Metadata.
      */
-    metadata?: Record<string, unknown>;
+    metadata?: { [key: string]: unknown };
 
     /**
      * The route number of the bank account (for CA).
@@ -311,7 +311,7 @@ export declare namespace BankAccountCreateParams {
     /**
      * See the section on Metadata.
      */
-    metadata?: Record<string, unknown>;
+    metadata?: { [key: string]: unknown };
 
     /**
      * The route number of the bank account (for CA).
@@ -371,7 +371,7 @@ export declare namespace BankAccountCreateParams {
     /**
      * See the section on Metadata.
      */
-    metadata?: Record<string, unknown>;
+    metadata?: { [key: string]: unknown };
 
     /**
      * The route number of the bank account (for CA).
