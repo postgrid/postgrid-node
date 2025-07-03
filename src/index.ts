@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { type Agent } from './_shims/index';
+import * as qs from './internal/qs';
 import * as Core from './core';
 import * as Errors from './error';
 import * as Pagination from './pagination';
@@ -58,6 +59,32 @@ import {
   LettersList,
 } from './resources/letters';
 import {
+  MailingListImportCreateParams,
+  MailingListImportCreateResponse,
+  MailingListImportDeleteResponse,
+  MailingListImportListParams,
+  MailingListImportListResponse,
+  MailingListImportListResponsesList,
+  MailingListImportRetrieveResponse,
+  MailingListImportUpdateParams,
+  MailingListImportUpdateResponse,
+  MailingListImports,
+} from './resources/mailing-list-imports';
+import {
+  MailingListCreateParams,
+  MailingListCreateResponse,
+  MailingListDeleteResponse,
+  MailingListListParams,
+  MailingListListResponse,
+  MailingListListResponsesList,
+  MailingListRetrieveResponse,
+  MailingListSubmitJobParams,
+  MailingListSubmitJobResponse,
+  MailingListUpdateParams,
+  MailingListUpdateResponse,
+  MailingLists,
+} from './resources/mailing-lists';
+import {
   Postcard,
   PostcardCreateParams,
   PostcardList,
@@ -73,9 +100,21 @@ import {
   SelfMailerListParams,
   SelfMailerListResponse,
   SelfMailerListResponsesList,
+  SelfMailerRetrievePreviewURLResponse,
   SelfMailerRetrieveResponse,
   SelfMailers,
 } from './resources/self-mailers';
+import {
+  SubOrganizationCreateParams,
+  SubOrganizationCreateResponse,
+  SubOrganizationListParams,
+  SubOrganizationListResponse,
+  SubOrganizationListResponsesList,
+  SubOrganizationListUsersParams,
+  SubOrganizationListUsersResponse,
+  SubOrganizationRetrieveResponse,
+  SubOrganizations,
+} from './resources/sub-organizations';
 import {
   Template,
   TemplateCreateParams,
@@ -94,6 +133,7 @@ import {
   Cheques,
   ChequesList,
 } from './resources/cheques/cheques';
+import { OrderProfiles } from './resources/order-profiles/order-profiles';
 import {
   ReportCreateParams,
   ReportCreateResponse,
@@ -112,10 +152,7 @@ import {
 } from './resources/reports/reports';
 
 export interface ClientOptions {
-  /**
-   * Defaults to process.env['POSTGRID_API_KEY'].
-   */
-  apiKey?: string | undefined;
+  apiKey: string;
 
   /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
@@ -130,6 +167,8 @@ export interface ClientOptions {
    *
    * Note that request timeouts are retried by default, so in a worst-case scenario you may wait
    * much longer than this timeout before the promise succeeds or fails.
+   *
+   * @unit milliseconds
    */
   timeout?: number | undefined;
 
@@ -185,7 +224,7 @@ export class PostGrid extends Core.APIClient {
   /**
    * API Client for interfacing with the PostGrid API.
    *
-   * @param {string | undefined} [opts.apiKey=process.env['POSTGRID_API_KEY'] ?? undefined]
+   * @param {string} opts.apiKey
    * @param {string} [opts.baseURL=process.env['POSTGRID_BASE_URL'] ?? https://api.postgrid.com/print-mail/v1] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {number} [opts.httpAgent] - An HTTP agent used to manage HTTP(s) connections.
@@ -194,14 +233,10 @@ export class PostGrid extends Core.APIClient {
    * @param {Core.Headers} opts.defaultHeaders - Default headers to include with every request to the API.
    * @param {Core.DefaultQuery} opts.defaultQuery - Default query parameters to include with every request to the API.
    */
-  constructor({
-    baseURL = Core.readEnv('POSTGRID_BASE_URL'),
-    apiKey = Core.readEnv('POSTGRID_API_KEY'),
-    ...opts
-  }: ClientOptions = {}) {
+  constructor({ baseURL = Core.readEnv('POSTGRID_BASE_URL'), apiKey, ...opts }: ClientOptions) {
     if (apiKey === undefined) {
       throw new Errors.PostGridError(
-        "The POSTGRID_API_KEY environment variable is missing or empty; either provide it, or instantiate the PostGrid client with an apiKey option, like new PostGrid({ apiKey: 'My API Key' }).",
+        "Missing required client option apiKey; you need to instantiate the PostGrid client with an apiKey option, like new PostGrid({ apiKey: 'My API Key' }).",
       );
     }
 
@@ -213,6 +248,7 @@ export class PostGrid extends Core.APIClient {
 
     super({
       baseURL: options.baseURL!,
+      baseURLOverridden: baseURL ? baseURL !== 'https://api.postgrid.com/print-mail/v1' : false,
       timeout: options.timeout ?? 60000 /* 1 minute */,
       httpAgent: options.httpAgent,
       maxRetries: options.maxRetries,
@@ -235,6 +271,17 @@ export class PostGrid extends Core.APIClient {
   campaigns: API.Campaigns = new API.Campaigns(this);
   reports: API.Reports = new API.Reports(this);
   selfMailers: API.SelfMailers = new API.SelfMailers(this);
+  mailingListImports: API.MailingListImports = new API.MailingListImports(this);
+  mailingLists: API.MailingLists = new API.MailingLists(this);
+  orderProfiles: API.OrderProfiles = new API.OrderProfiles(this);
+  subOrganizations: API.SubOrganizations = new API.SubOrganizations(this);
+
+  /**
+   * Check whether the base URL is set to its default.
+   */
+  #baseURLOverridden(): boolean {
+    return this.baseURL !== 'https://api.postgrid.com/print-mail/v1';
+  }
 
   protected override defaultQuery(): Core.DefaultQuery | undefined {
     return this._options.defaultQuery;
@@ -249,6 +296,10 @@ export class PostGrid extends Core.APIClient {
 
   protected override authHeaders(opts: Core.FinalRequestOptions): Core.Headers {
     return { 'X-API-Key': this.apiKey };
+  }
+
+  protected override stringifyQuery(query: Record<string, unknown>): string {
+    return qs.stringify(query, { arrayFormat: 'comma' });
   }
 
   static PostGrid = this;
@@ -292,6 +343,13 @@ PostGrid.Reports = Reports;
 PostGrid.ReportListResponsesList = ReportListResponsesList;
 PostGrid.SelfMailers = SelfMailers;
 PostGrid.SelfMailerListResponsesList = SelfMailerListResponsesList;
+PostGrid.MailingListImports = MailingListImports;
+PostGrid.MailingListImportListResponsesList = MailingListImportListResponsesList;
+PostGrid.MailingLists = MailingLists;
+PostGrid.MailingListListResponsesList = MailingListListResponsesList;
+PostGrid.OrderProfiles = OrderProfiles;
+PostGrid.SubOrganizations = SubOrganizations;
+PostGrid.SubOrganizationListResponsesList = SubOrganizationListResponsesList;
 export declare namespace PostGrid {
   export type RequestOptions = Core.RequestOptions;
 
@@ -406,9 +464,52 @@ export declare namespace PostGrid {
     type SelfMailerRetrieveResponse as SelfMailerRetrieveResponse,
     type SelfMailerListResponse as SelfMailerListResponse,
     type SelfMailerCancelResponse as SelfMailerCancelResponse,
+    type SelfMailerRetrievePreviewURLResponse as SelfMailerRetrievePreviewURLResponse,
     SelfMailerListResponsesList as SelfMailerListResponsesList,
     type SelfMailerCreateParams as SelfMailerCreateParams,
     type SelfMailerListParams as SelfMailerListParams,
+  };
+
+  export {
+    MailingListImports as MailingListImports,
+    type MailingListImportCreateResponse as MailingListImportCreateResponse,
+    type MailingListImportRetrieveResponse as MailingListImportRetrieveResponse,
+    type MailingListImportUpdateResponse as MailingListImportUpdateResponse,
+    type MailingListImportListResponse as MailingListImportListResponse,
+    type MailingListImportDeleteResponse as MailingListImportDeleteResponse,
+    MailingListImportListResponsesList as MailingListImportListResponsesList,
+    type MailingListImportCreateParams as MailingListImportCreateParams,
+    type MailingListImportUpdateParams as MailingListImportUpdateParams,
+    type MailingListImportListParams as MailingListImportListParams,
+  };
+
+  export {
+    MailingLists as MailingLists,
+    type MailingListCreateResponse as MailingListCreateResponse,
+    type MailingListRetrieveResponse as MailingListRetrieveResponse,
+    type MailingListUpdateResponse as MailingListUpdateResponse,
+    type MailingListListResponse as MailingListListResponse,
+    type MailingListDeleteResponse as MailingListDeleteResponse,
+    type MailingListSubmitJobResponse as MailingListSubmitJobResponse,
+    MailingListListResponsesList as MailingListListResponsesList,
+    type MailingListCreateParams as MailingListCreateParams,
+    type MailingListUpdateParams as MailingListUpdateParams,
+    type MailingListListParams as MailingListListParams,
+    type MailingListSubmitJobParams as MailingListSubmitJobParams,
+  };
+
+  export { OrderProfiles as OrderProfiles };
+
+  export {
+    SubOrganizations as SubOrganizations,
+    type SubOrganizationCreateResponse as SubOrganizationCreateResponse,
+    type SubOrganizationRetrieveResponse as SubOrganizationRetrieveResponse,
+    type SubOrganizationListResponse as SubOrganizationListResponse,
+    type SubOrganizationListUsersResponse as SubOrganizationListUsersResponse,
+    SubOrganizationListResponsesList as SubOrganizationListResponsesList,
+    type SubOrganizationCreateParams as SubOrganizationCreateParams,
+    type SubOrganizationListParams as SubOrganizationListParams,
+    type SubOrganizationListUsersParams as SubOrganizationListUsersParams,
   };
 
   export type Cancellation = API.Cancellation;

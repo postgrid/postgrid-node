@@ -25,6 +25,23 @@ export class Boxes extends APIResource {
    * - `bankAccount`: The bank account ID
    * - `amount`: The amount to be sent
    * - `number`: The cheque number
+   *
+   * @example
+   * ```ts
+   * const box = await client.boxes.create({
+   *   cheques: [
+   *     {
+   *       from: 'contact_456',
+   *       to: 'contact_123',
+   *       bankAccount: 'bank_abc',
+   *       amount: 5000,
+   *       number: 1042,
+   *     },
+   *   ],
+   *   from: 'contact_456',
+   *   to: 'contact_123',
+   * });
+   * ```
    */
   create(body: BoxCreateParams, options?: Core.RequestOptions): Core.APIPromise<BoxCreateResponse> {
     return this._client.post('/boxes', { body, ...options });
@@ -32,6 +49,11 @@ export class Boxes extends APIResource {
 
   /**
    * Retrieve a box by ID.
+   *
+   * @example
+   * ```ts
+   * const box = await client.boxes.retrieve('id');
+   * ```
    */
   retrieve(id: string, options?: Core.RequestOptions): Core.APIPromise<BoxRetrieveResponse> {
     return this._client.get(`/boxes/${id}`, options);
@@ -39,6 +61,14 @@ export class Boxes extends APIResource {
 
   /**
    * List all boxes.
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const boxListResponse of client.boxes.list()) {
+   *   // ...
+   * }
+   * ```
    */
   list(
     query?: BoxListParams,
@@ -57,6 +87,11 @@ export class Boxes extends APIResource {
 
   /**
    * Cancel a box by ID (cannot be undone).
+   *
+   * @example
+   * ```ts
+   * const response = await client.boxes.cancel('id');
+   * ```
    */
   cancel(id: string, options?: Core.RequestOptions): Core.APIPromise<BoxCancelResponse> {
     return this._client.delete(`/boxes/${id}`, options);
@@ -187,12 +222,12 @@ export interface BoxCreateResponse {
    * template _exactly_ as they are case-sensitive. Note that these _do not_ apply to
    * PDFs uploaded with the order.
    */
-  mergeVariables?: Record<string, unknown>;
+  mergeVariables?: { [key: string]: unknown };
 
   /**
    * See the section on Metadata.
    */
-  metadata?: Record<string, unknown>;
+  metadata?: { [key: string]: unknown };
 
   /**
    * The tracking number of this order. Populated after an express/certified order
@@ -248,7 +283,7 @@ export namespace BoxCreateResponse {
      * A set of dynamic merge variables for customizing the cheque or accompanying
      * documents (optional).
      */
-    mergeVariables?: Record<string, unknown>;
+    mergeVariables?: { [key: string]: unknown };
 
     /**
      * An optional message template to be printed on or with the cheque.
@@ -379,12 +414,12 @@ export interface BoxRetrieveResponse {
    * template _exactly_ as they are case-sensitive. Note that these _do not_ apply to
    * PDFs uploaded with the order.
    */
-  mergeVariables?: Record<string, unknown>;
+  mergeVariables?: { [key: string]: unknown };
 
   /**
    * See the section on Metadata.
    */
-  metadata?: Record<string, unknown>;
+  metadata?: { [key: string]: unknown };
 
   /**
    * The tracking number of this order. Populated after an express/certified order
@@ -440,7 +475,7 @@ export namespace BoxRetrieveResponse {
      * A set of dynamic merge variables for customizing the cheque or accompanying
      * documents (optional).
      */
-    mergeVariables?: Record<string, unknown>;
+    mergeVariables?: { [key: string]: unknown };
 
     /**
      * An optional message template to be printed on or with the cheque.
@@ -571,12 +606,12 @@ export interface BoxListResponse {
    * template _exactly_ as they are case-sensitive. Note that these _do not_ apply to
    * PDFs uploaded with the order.
    */
-  mergeVariables?: Record<string, unknown>;
+  mergeVariables?: { [key: string]: unknown };
 
   /**
    * See the section on Metadata.
    */
-  metadata?: Record<string, unknown>;
+  metadata?: { [key: string]: unknown };
 
   /**
    * The tracking number of this order. Populated after an express/certified order
@@ -632,7 +667,7 @@ export namespace BoxListResponse {
      * A set of dynamic merge variables for customizing the cheque or accompanying
      * documents (optional).
      */
-    mergeVariables?: Record<string, unknown>;
+    mergeVariables?: { [key: string]: unknown };
 
     /**
      * An optional message template to be printed on or with the cheque.
@@ -763,12 +798,12 @@ export interface BoxCancelResponse {
    * template _exactly_ as they are case-sensitive. Note that these _do not_ apply to
    * PDFs uploaded with the order.
    */
-  mergeVariables?: Record<string, unknown>;
+  mergeVariables?: { [key: string]: unknown };
 
   /**
    * See the section on Metadata.
    */
-  metadata?: Record<string, unknown>;
+  metadata?: { [key: string]: unknown };
 
   /**
    * The tracking number of this order. Populated after an express/certified order
@@ -824,7 +859,7 @@ export namespace BoxCancelResponse {
      * A set of dynamic merge variables for customizing the cheque or accompanying
      * documents (optional).
      */
-    mergeVariables?: Record<string, unknown>;
+    mergeVariables?: { [key: string]: unknown };
 
     /**
      * An optional message template to be printed on or with the cheque.
@@ -898,12 +933,12 @@ export interface BoxCreateParams {
    * template _exactly_ as they are case-sensitive. Note that these _do not_ apply to
    * PDFs uploaded with the order.
    */
-  mergeVariables?: Record<string, unknown>;
+  mergeVariables?: { [key: string]: unknown };
 
   /**
    * See the section on Metadata.
    */
-  metadata?: Record<string, unknown>;
+  metadata?: { [key: string]: unknown };
 
   /**
    * This order will transition from `ready` to `printing` on the day after this
@@ -947,7 +982,7 @@ export namespace BoxCreateParams {
      * A set of dynamic merge variables for customizing the cheque or accompanying
      * documents (optional).
      */
-    mergeVariables?: Record<string, unknown>;
+    mergeVariables?: { [key: string]: unknown };
 
     /**
      * An optional message template to be printed on or with the cheque.

@@ -20,6 +20,16 @@ export class Contacts extends APIResource {
    * _Note that if you create a contact that has identical information to another
    * contact, this will simply update the description of the existing contact and
    * return it. This avoids creating duplicate contacts._
+   *
+   * @example
+   * ```ts
+   * const contact = await client.contacts.create({
+   *   addressLine1: '90 Canal St Suite 600, Boston MA 90210',
+   *   countryCode: 'US',
+   *   firstName: 'Kevin',
+   *   companyName: 'PostGrid',
+   * });
+   * ```
    */
   create(body: ContactCreateParams, options?: Core.RequestOptions): Core.APIPromise<Contact> {
     return this._client.post('/contacts', { body, ...options });
@@ -27,6 +37,11 @@ export class Contacts extends APIResource {
 
   /**
    * Retrieve a contact.
+   *
+   * @example
+   * ```ts
+   * const contact = await client.contacts.retrieve('id');
+   * ```
    */
   retrieve(id: string, options?: Core.RequestOptions): Core.APIPromise<Contact> {
     return this._client.get(`/contacts/${id}`, options);
@@ -34,6 +49,14 @@ export class Contacts extends APIResource {
 
   /**
    * Get a list of contacts.
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const contact of client.contacts.list()) {
+   *   // ...
+   * }
+   * ```
    */
   list(query?: ContactListParams, options?: Core.RequestOptions): Core.PagePromise<ContactsList, Contact>;
   list(options?: Core.RequestOptions): Core.PagePromise<ContactsList, Contact>;
@@ -50,6 +73,11 @@ export class Contacts extends APIResource {
   /**
    * Delete a contact. Note that this will not affect orders that were sent to this
    * contact.
+   *
+   * @example
+   * ```ts
+   * const contact = await client.contacts.delete('id');
+   * ```
    */
   delete(id: string, options?: Core.RequestOptions): Core.APIPromise<ContactDeleteResponse> {
     return this._client.delete(`/contacts/${id}`, options);
@@ -155,7 +183,7 @@ export interface Contact {
   /**
    * See the section on Metadata.
    */
-  metadata?: Record<string, unknown>;
+  metadata?: { [key: string]: unknown };
 
   /**
    * Phone number of the contact.
@@ -256,7 +284,7 @@ export declare namespace ContactCreateParams {
     /**
      * See the section on Metadata.
      */
-    metadata?: Record<string, unknown>;
+    metadata?: { [key: string]: unknown };
 
     /**
      * Phone number of the contact.
@@ -338,7 +366,7 @@ export declare namespace ContactCreateParams {
     /**
      * See the section on Metadata.
      */
-    metadata?: Record<string, unknown>;
+    metadata?: { [key: string]: unknown };
 
     /**
      * Phone number of the contact.
