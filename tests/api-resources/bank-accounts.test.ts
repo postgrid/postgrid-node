@@ -33,6 +33,7 @@ describe('resource bankAccounts', () => {
       signatureText: 'signatureText',
       bankPrimaryLine: 'bankPrimaryLine',
       bankSecondaryLine: 'bankSecondaryLine',
+      caDesignationNumber: 'caDesignationNumber',
       description: 'description',
       metadata: { foo: 'bar' },
       routeNumber: 'routeNumber',
