@@ -1,5 +1,52 @@
 # Changelog
 
+## 0.1.0-alpha.4 (2025-07-24)
+
+Full Changelog: [v0.1.0-alpha.3...v0.1.0-alpha.4](https://github.com/postgrid/postgrid-node/compare/v0.1.0-alpha.3...v0.1.0-alpha.4)
+
+### Features
+
+* **api:** update via SDK Studio ([9f8374e](https://github.com/postgrid/postgrid-node/commit/9f8374eae3157197e837847c6e33c14bcf02dd4f))
+* **api:** update via SDK Studio ([726afdd](https://github.com/postgrid/postgrid-node/commit/726afdd8d99ef6083f48fd4cc876c75c638bba32))
+* **api:** update via SDK Studio ([935bbb1](https://github.com/postgrid/postgrid-node/commit/935bbb15a3d477b80752b6c296a3c9ae0ba7e249))
+* **api:** update via SDK Studio ([34c087b](https://github.com/postgrid/postgrid-node/commit/34c087b89fb6a9a2f1ac791aeef8ddc65e1921c7))
+* **api:** update via SDK Studio ([55bc247](https://github.com/postgrid/postgrid-node/commit/55bc247034dc8fd9f1d64519de930ace804b66c2))
+* **api:** update via SDK Studio ([9008e58](https://github.com/postgrid/postgrid-node/commit/9008e589681d70d0c877140622a7f474d259110d))
+* **api:** update via SDK Studio ([a5c9e07](https://github.com/postgrid/postgrid-node/commit/a5c9e072f20efa4a5c7538c1cc403aa7e93834de))
+* **api:** update via SDK Studio ([fb78bb5](https://github.com/postgrid/postgrid-node/commit/fb78bb55828321be0e4c2aca85222bda21b74a99))
+* **api:** update via SDK Studio ([e8a8138](https://github.com/postgrid/postgrid-node/commit/e8a8138784f4fafd5f7757b1cb8d78e098f40b18))
+* **api:** updates to fix pagination ([2b76796](https://github.com/postgrid/postgrid-node/commit/2b767960e020229b46a5bf15d935d8038ac7c78a))
+* **client:** add support for endpoint-specific base URLs ([02e27ba](https://github.com/postgrid/postgrid-node/commit/02e27bac8223956955f75e51dd4317acf071439a))
+
+
+### Bug Fixes
+
+* **ci:** release-doctor — report correct token name ([547acb3](https://github.com/postgrid/postgrid-node/commit/547acb3837767fffedd85a4e7c5e1fb552ff83f5))
+* **client:** don't send `Content-Type` for bodyless methods ([9609b5e](https://github.com/postgrid/postgrid-node/commit/9609b5e32696447f522786a7cdd52318d1466f3a))
+* publish script — handle NPM errors correctly ([8175eac](https://github.com/postgrid/postgrid-node/commit/8175eacdedad17eccc0cbc0e0a3258a64c2324d9))
+
+
+### Chores
+
+* **ci:** bump node version for release workflows ([ad1ef06](https://github.com/postgrid/postgrid-node/commit/ad1ef06e3444816671a6c3b16efd70b1a3d01825))
+* **ci:** enable for pull requests ([6d489df](https://github.com/postgrid/postgrid-node/commit/6d489dfd63f07772773c29aaf7f77550836bdaff))
+* **ci:** only run for pushes and fork pull requests ([c3dfbd6](https://github.com/postgrid/postgrid-node/commit/c3dfbd6bcd95fc8f0dc471291368ba5f5f4d975b))
+* **docs:** grammar improvements ([f6f7296](https://github.com/postgrid/postgrid-node/commit/f6f7296fa8324a508531e1dc5e6f30b90c0a9a01))
+* **docs:** use top-level-await in example snippets ([7ce5795](https://github.com/postgrid/postgrid-node/commit/7ce5795e659ab089758fc495d2ad6f8ea5d997e5))
+* improve publish-npm script --latest tag logic ([a51c7fd](https://github.com/postgrid/postgrid-node/commit/a51c7fd17aeb3e0c79fb32789ac61139bca0452e))
+* **internal:** make base APIResource abstract ([c3b0fe4](https://github.com/postgrid/postgrid-node/commit/c3b0fe45050c1bce99de582419f26514fc977a9b))
+* mention unit type in timeout docs ([ea8c83b](https://github.com/postgrid/postgrid-node/commit/ea8c83bdde2d435cee8003c343c353fd65decb09))
+
+
+### Documentation
+
+* add examples to tsdocs ([3478106](https://github.com/postgrid/postgrid-node/commit/347810627ea464f630c305ea44a50e08a2ae0c5b))
+
+
+### Refactors
+
+* **types:** replace Record with mapped types ([329b531](https://github.com/postgrid/postgrid-node/commit/329b531028b46b5ca00ccade32b6c07d8380beb6))
+
 ## 0.1.0-alpha.3 (2025-05-02)
 
 Full Changelog: [v0.1.0-alpha.2...v0.1.0-alpha.3](https://github.com/postgrid/postgrid-node/compare/v0.1.0-alpha.2...v0.1.0-alpha.3)
