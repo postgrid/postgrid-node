@@ -75,7 +75,7 @@ export interface ContactCreateWithCompanyName {
   /**
    * See the section on Metadata.
    */
-  metadata?: Record<string, unknown>;
+  metadata?: { [key: string]: unknown };
 
   /**
    * Phone number of the contact.
@@ -157,7 +157,7 @@ export interface ContactCreateWithFirstName {
   /**
    * See the section on Metadata.
    */
-  metadata?: Record<string, unknown>;
+  metadata?: { [key: string]: unknown };
 
   /**
    * Phone number of the contact.

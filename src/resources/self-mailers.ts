@@ -16,6 +16,17 @@ export class SelfMailers extends APIResource {
    * - A URL or file for a 2 page PDF where the first page is the outside of the
    *   self-mailer and the second page is the inside
    * - Upload the aforementioned PDF file via a multipart form upload request
+   *
+   * @example
+   * ```ts
+   * const selfMailer = await client.selfMailers.create({
+   *   from: 'contact_123',
+   *   insideHTML: '<html>Inside</html>',
+   *   outsideHTML: '<html>Outside</html>',
+   *   size: '8.5x11_bifold',
+   *   to: 'contact_456',
+   * });
+   * ```
    */
   create(
     body: SelfMailerCreateParams,
@@ -26,6 +37,11 @@ export class SelfMailers extends APIResource {
 
   /**
    * Retrieve a self-mailer by ID.
+   *
+   * @example
+   * ```ts
+   * const selfMailer = await client.selfMailers.retrieve('id');
+   * ```
    */
   retrieve(id: string, options?: Core.RequestOptions): Core.APIPromise<SelfMailerRetrieveResponse> {
     return this._client.get(`/self_mailers/${id}`, options);
@@ -33,6 +49,14 @@ export class SelfMailers extends APIResource {
 
   /**
    * Get a list of self-mailers.
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const selfMailerListResponse of client.selfMailers.list()) {
+   *   // ...
+   * }
+   * ```
    */
   list(
     query?: SelfMailerListParams,
@@ -51,9 +75,35 @@ export class SelfMailers extends APIResource {
 
   /**
    * Cancel a self-mailer by ID. Note that this operation cannot be undone.
+   *
+   * @example
+   * ```ts
+   * const response = await client.selfMailers.cancel('id');
+   * ```
    */
   cancel(id: string, options?: Core.RequestOptions): Core.APIPromise<SelfMailerCancelResponse> {
     return this._client.delete(`/self_mailers/${id}`, options);
+  }
+
+  /**
+   * Retrieve a self-mailer preview URL.
+   *
+   * This is only available for customers with our document management addon, which
+   * offers document generation and hosting capabilities. This endpoint has a much
+   * higher rate limit than the regular order retrieval endpoint, so it is suitable
+   * for customer-facing use-cases.
+   *
+   * @example
+   * ```ts
+   * const response =
+   *   await client.selfMailers.retrievePreviewURL('id');
+   * ```
+   */
+  retrievePreviewURL(
+    id: string,
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<SelfMailerRetrievePreviewURLResponse> {
+    return this._client.get(`/self_mailers/${id}/url`, options);
   }
 }
 
@@ -181,12 +231,12 @@ export interface SelfMailerCreateResponse {
    * template _exactly_ as they are case-sensitive. Note that these _do not_ apply to
    * PDFs uploaded with the order.
    */
-  mergeVariables?: Record<string, unknown>;
+  mergeVariables?: { [key: string]: unknown };
 
   /**
    * See the section on Metadata.
    */
-  metadata?: Record<string, unknown>;
+  metadata?: { [key: string]: unknown };
 
   /**
    * The tracking number of this order. Populated after an express/certified order
@@ -329,12 +379,12 @@ export interface SelfMailerRetrieveResponse {
    * template _exactly_ as they are case-sensitive. Note that these _do not_ apply to
    * PDFs uploaded with the order.
    */
-  mergeVariables?: Record<string, unknown>;
+  mergeVariables?: { [key: string]: unknown };
 
   /**
    * See the section on Metadata.
    */
-  metadata?: Record<string, unknown>;
+  metadata?: { [key: string]: unknown };
 
   /**
    * The tracking number of this order. Populated after an express/certified order
@@ -477,12 +527,12 @@ export interface SelfMailerListResponse {
    * template _exactly_ as they are case-sensitive. Note that these _do not_ apply to
    * PDFs uploaded with the order.
    */
-  mergeVariables?: Record<string, unknown>;
+  mergeVariables?: { [key: string]: unknown };
 
   /**
    * See the section on Metadata.
    */
-  metadata?: Record<string, unknown>;
+  metadata?: { [key: string]: unknown };
 
   /**
    * The tracking number of this order. Populated after an express/certified order
@@ -625,12 +675,12 @@ export interface SelfMailerCancelResponse {
    * template _exactly_ as they are case-sensitive. Note that these _do not_ apply to
    * PDFs uploaded with the order.
    */
-  mergeVariables?: Record<string, unknown>;
+  mergeVariables?: { [key: string]: unknown };
 
   /**
    * See the section on Metadata.
    */
-  metadata?: Record<string, unknown>;
+  metadata?: { [key: string]: unknown };
 
   /**
    * The tracking number of this order. Populated after an express/certified order
@@ -649,6 +699,21 @@ export interface SelfMailerCancelResponse {
    * regenerate it by calling the `GET` endpoint again.
    */
   url?: string;
+}
+
+export interface SelfMailerRetrievePreviewURLResponse {
+  /**
+   * A unique ID prefixed with self*mailer*
+   */
+  id: string;
+
+  object: string;
+
+  /**
+   * A signed URL linking to the order preview PDF. The link remains valid for 15
+   * minutes from the time of the API call.
+   */
+  url: string;
 }
 
 export type SelfMailerCreateParams =
@@ -734,12 +799,12 @@ export declare namespace SelfMailerCreateParams {
      * template _exactly_ as they are case-sensitive. Note that these _do not_ apply to
      * PDFs uploaded with the order.
      */
-    mergeVariables?: Record<string, unknown>;
+    mergeVariables?: { [key: string]: unknown };
 
     /**
      * See the section on Metadata.
      */
-    metadata?: Record<string, unknown>;
+    metadata?: { [key: string]: unknown };
 
     /**
      * This order will transition from `ready` to `printing` on the day after this
@@ -833,12 +898,12 @@ export declare namespace SelfMailerCreateParams {
      * template _exactly_ as they are case-sensitive. Note that these _do not_ apply to
      * PDFs uploaded with the order.
      */
-    mergeVariables?: Record<string, unknown>;
+    mergeVariables?: { [key: string]: unknown };
 
     /**
      * See the section on Metadata.
      */
-    metadata?: Record<string, unknown>;
+    metadata?: { [key: string]: unknown };
 
     /**
      * This order will transition from `ready` to `printing` on the day after this
@@ -917,12 +982,12 @@ export declare namespace SelfMailerCreateParams {
      * template _exactly_ as they are case-sensitive. Note that these _do not_ apply to
      * PDFs uploaded with the order.
      */
-    mergeVariables?: Record<string, unknown>;
+    mergeVariables?: { [key: string]: unknown };
 
     /**
      * See the section on Metadata.
      */
-    metadata?: Record<string, unknown>;
+    metadata?: { [key: string]: unknown };
 
     /**
      * This order will transition from `ready` to `printing` on the day after this
@@ -951,6 +1016,7 @@ export declare namespace SelfMailers {
     type SelfMailerRetrieveResponse as SelfMailerRetrieveResponse,
     type SelfMailerListResponse as SelfMailerListResponse,
     type SelfMailerCancelResponse as SelfMailerCancelResponse,
+    type SelfMailerRetrievePreviewURLResponse as SelfMailerRetrievePreviewURLResponse,
     SelfMailerListResponsesList as SelfMailerListResponsesList,
     type SelfMailerCreateParams as SelfMailerCreateParams,
     type SelfMailerListParams as SelfMailerListParams,

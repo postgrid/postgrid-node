@@ -9,6 +9,17 @@ export class Exports extends APIResource {
    * asynchronously and generates a downloadable CSV file with the full results. Your
    * queries can run for up to 13 minutes the resulting file can be up to 100mb
    * large.
+   *
+   * @example
+   * ```ts
+   * const _export = await client.reports.exports.create(
+   *   'reportID',
+   *   {
+   *     description: 'October Orders Export',
+   *     params: ['2023-10-01T00:00:00Z'],
+   *   },
+   * );
+   * ```
    */
   create(
     reportId: string,
@@ -21,6 +32,14 @@ export class Exports extends APIResource {
   /**
    * Retrieve the status and details of a specific report export job. Check the
    * `outputURL` property for the download link once generation is complete.
+   *
+   * @example
+   * ```ts
+   * const _export = await client.reports.exports.retrieve(
+   *   'reportID',
+   *   'exportID',
+   * );
+   * ```
    */
   retrieve(
     reportId: string,
@@ -34,6 +53,14 @@ export class Exports extends APIResource {
    * Delete a completed or failed report export job and its associated output file
    * (if any). This action cannot be undone. You cannot delete an export that is
    * still generating.
+   *
+   * @example
+   * ```ts
+   * const _export = await client.reports.exports.delete(
+   *   'reportID',
+   *   'exportID',
+   * );
+   * ```
    */
   delete(
     reportId: string,
@@ -91,7 +118,7 @@ export interface ExportCreateResponse {
   /**
    * Optional key-value metadata associated with the export.
    */
-  metadata?: Record<string, string>;
+  metadata?: { [key: string]: string };
 
   /**
    * A signed URL to download the exported data (CSV format). Available when
@@ -184,7 +211,7 @@ export interface ExportRetrieveResponse {
   /**
    * Optional key-value metadata associated with the export.
    */
-  metadata?: Record<string, string>;
+  metadata?: { [key: string]: string };
 
   /**
    * A signed URL to download the exported data (CSV format). Available when
@@ -254,7 +281,7 @@ export interface ExportCreateParams {
   /**
    * Optional key-value metadata associated with the export.
    */
-  metadata?: Record<string, string>;
+  metadata?: { [key: string]: string };
 
   /**
    * Optional parameters to bind to the SQL query of the associated report.

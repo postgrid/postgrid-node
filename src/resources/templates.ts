@@ -9,6 +9,14 @@ export class Templates extends APIResource {
   /**
    * Create a template. Note that if you want to create a template that works with
    * our template editor, you must use our dashboard.
+   *
+   * @example
+   * ```ts
+   * const template = await client.templates.create({
+   *   description: 'Test',
+   *   html: '<b>Hello</b> {{to.firstName}}',
+   * });
+   * ```
    */
   create(body: TemplateCreateParams, options?: Core.RequestOptions): Core.APIPromise<Template> {
     return this._client.post('/templates', { body, ...options });
@@ -16,6 +24,11 @@ export class Templates extends APIResource {
 
   /**
    * Retrieve a template by ID.
+   *
+   * @example
+   * ```ts
+   * const template = await client.templates.retrieve('id');
+   * ```
    */
   retrieve(id: string, options?: Core.RequestOptions): Core.APIPromise<Template> {
     return this._client.get(`/templates/${id}`, options);
@@ -23,6 +36,14 @@ export class Templates extends APIResource {
 
   /**
    * Update a template by ID.
+   *
+   * @example
+   * ```ts
+   * const template = await client.templates.update('id', {
+   *   description: 'Test',
+   *   html: '<b>Hello</b> {{to.firstName}}!',
+   * });
+   * ```
    */
   update(id: string, body: TemplateUpdateParams, options?: Core.RequestOptions): Core.APIPromise<Template> {
     return this._client.post(`/templates/${id}`, { body, ...options });
@@ -30,6 +51,14 @@ export class Templates extends APIResource {
 
   /**
    * Get a list of templates.
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const template of client.templates.list()) {
+   *   // ...
+   * }
+   * ```
    */
   list(query?: TemplateListParams, options?: Core.RequestOptions): Core.PagePromise<TemplatesList, Template>;
   list(options?: Core.RequestOptions): Core.PagePromise<TemplatesList, Template>;
@@ -45,6 +74,11 @@ export class Templates extends APIResource {
 
   /**
    * Delete a template by ID. Note that this operation cannot be undone.
+   *
+   * @example
+   * ```ts
+   * const template = await client.templates.delete('id');
+   * ```
    */
   delete(id: string, options?: Core.RequestOptions): Core.APIPromise<TemplateDeleteResponse> {
     return this._client.delete(`/templates/${id}`, options);
@@ -93,7 +127,7 @@ export interface Template {
   /**
    * See the section on Metadata.
    */
-  metadata?: Record<string, unknown>;
+  metadata?: { [key: string]: unknown };
 }
 
 export interface TemplateList {
@@ -137,7 +171,7 @@ export interface TemplateCreateParams {
   /**
    * See the section on Metadata.
    */
-  metadata?: Record<string, unknown>;
+  metadata?: { [key: string]: unknown };
 }
 
 export interface TemplateUpdateParams {
@@ -155,7 +189,7 @@ export interface TemplateUpdateParams {
   /**
    * See the section on Metadata.
    */
-  metadata?: Record<string, unknown>;
+  metadata?: { [key: string]: unknown };
 }
 
 export interface TemplateListParams extends ListParams {
