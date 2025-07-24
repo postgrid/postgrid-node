@@ -140,6 +140,11 @@ export interface BankAccount {
   bankSecondaryLine?: string;
 
   /**
+   * The designation number of the bank account (for CA).
+   */
+  caDesignationNumber?: string;
+
+  /**
    * An optional string describing this resource. Will be visible in the API and the
    * dashboard.
    */
@@ -243,6 +248,11 @@ export declare namespace BankAccountCreateParams {
     bankSecondaryLine?: string;
 
     /**
+     * The designation number of the bank account (for CA).
+     */
+    caDesignationNumber?: string;
+
+    /**
      * An optional string describing this resource. Will be visible in the API and the
      * dashboard.
      */
@@ -303,6 +313,11 @@ export declare namespace BankAccountCreateParams {
     bankSecondaryLine?: string;
 
     /**
+     * The designation number of the bank account (for CA).
+     */
+    caDesignationNumber?: string;
+
+    /**
      * An optional string describing this resource. Will be visible in the API and the
      * dashboard.
      */
@@ -361,6 +376,11 @@ export declare namespace BankAccountCreateParams {
      * The secondary address line of the bank.
      */
     bankSecondaryLine?: string;
+
+    /**
+     * The designation number of the bank account (for CA).
+     */
+    caDesignationNumber?: string;
 
     /**
      * An optional string describing this resource. Will be visible in the API and the
