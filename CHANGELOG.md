@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.0-alpha.5 (2025-08-07)
+
+Full Changelog: [v0.1.0-alpha.4...v0.1.0-alpha.5](https://github.com/postgrid/postgrid-node/compare/v0.1.0-alpha.4...v0.1.0-alpha.5)
+
+### Chores
+
+* **internal:** move publish config ([d54ef96](https://github.com/postgrid/postgrid-node/commit/d54ef96aaead49055df7ec142379824f6e6d98c3))
+* **internal:** remove redundant imports config ([744c409](https://github.com/postgrid/postgrid-node/commit/744c409582f6af93168e3d75d9b2f53ee367e182))
+
 ## 0.1.0-alpha.4 (2025-07-24)
 
 Full Changelog: [v0.1.0-alpha.3...v0.1.0-alpha.4](https://github.com/postgrid/postgrid-node/compare/v0.1.0-alpha.3...v0.1.0-alpha.4)
