@@ -350,6 +350,7 @@ PostGrid.MailingListListResponsesList = MailingListListResponsesList;
 PostGrid.OrderProfiles = OrderProfiles;
 PostGrid.SubOrganizations = SubOrganizations;
 PostGrid.SubOrganizationListResponsesList = SubOrganizationListResponsesList;
+
 export declare namespace PostGrid {
   export type RequestOptions = Core.RequestOptions;
 
