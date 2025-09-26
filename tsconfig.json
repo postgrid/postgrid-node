@@ -7,11 +7,10 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "baseUrl": "./",
     "paths": {
-      "postgrid-node/_shims/auto/*": ["src/_shims/auto/*-node"],
-      "postgrid-node/*": ["src/*"],
-      "postgrid-node": ["src/index.ts"]
+      "postgrid-node/_shims/auto/*": ["./src/_shims/auto/*-node"],
+      "postgrid-node/*": ["./src/*"],
+      "postgrid-node": ["./src/index.ts"]
     },
     "noEmit": true,
 
@@ -32,7 +31,7 @@
     "noUncheckedIndexedAccess": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
-		"isolatedModules": false,
+    "isolatedModules": false,
 
     "skipLibCheck": true
   }
