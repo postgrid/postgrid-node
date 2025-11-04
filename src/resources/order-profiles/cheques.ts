@@ -3,7 +3,6 @@
 import { APIResource } from '../../resource';
 import { isRequestOptions } from '../../core';
 import * as Core from '../../core';
-import * as ContactsAPI from '../contacts';
 import { List, type ListParams } from '../../pagination';
 
 export class Cheques extends APIResource {
@@ -164,12 +163,6 @@ export interface ChequeCreateResponse {
   description?: string | null;
 
   /**
-   * HTML content for an optional attached letter. Cannot be used with
-   * `letterTemplate` or `letterPDF`.
-   */
-  letterHTML?: string;
-
-  /**
    * ID of a template for an optional attached letter. Cannot be used with
    * `letterHTML` or `letterPDF`.
    */
@@ -237,11 +230,6 @@ export interface ChequeCreateResponse {
    * Optional key-value metadata.
    */
   metadata?: { [key: string]: string } | null;
-
-  /**
-   * Contact details for redirection (output).
-   */
-  redirectTo?: ContactsAPI.Contact;
 }
 
 export interface ChequeRetrieveResponse {
@@ -291,12 +279,6 @@ export interface ChequeRetrieveResponse {
   description?: string | null;
 
   /**
-   * HTML content for an optional attached letter. Cannot be used with
-   * `letterTemplate` or `letterPDF`.
-   */
-  letterHTML?: string;
-
-  /**
    * ID of a template for an optional attached letter. Cannot be used with
    * `letterHTML` or `letterPDF`.
    */
@@ -364,11 +346,6 @@ export interface ChequeRetrieveResponse {
    * Optional key-value metadata.
    */
   metadata?: { [key: string]: string } | null;
-
-  /**
-   * Contact details for redirection (output).
-   */
-  redirectTo?: ContactsAPI.Contact;
 }
 
 export interface ChequeUpdateResponse {
@@ -418,12 +395,6 @@ export interface ChequeUpdateResponse {
   description?: string | null;
 
   /**
-   * HTML content for an optional attached letter. Cannot be used with
-   * `letterTemplate` or `letterPDF`.
-   */
-  letterHTML?: string;
-
-  /**
    * ID of a template for an optional attached letter. Cannot be used with
    * `letterHTML` or `letterPDF`.
    */
@@ -491,11 +462,6 @@ export interface ChequeUpdateResponse {
    * Optional key-value metadata.
    */
   metadata?: { [key: string]: string } | null;
-
-  /**
-   * Contact details for redirection (output).
-   */
-  redirectTo?: ContactsAPI.Contact;
 }
 
 export interface ChequeListResponse {
@@ -540,12 +506,6 @@ export interface ChequeListResponse {
   description?: string | null;
 
   /**
-   * HTML content for an optional attached letter. Cannot be used with
-   * `letterTemplate` or `letterPDF`.
-   */
-  letterHTML?: string;
-
-  /**
    * ID of a template for an optional attached letter. Cannot be used with
    * `letterHTML` or `letterPDF`.
    */
@@ -613,11 +573,6 @@ export interface ChequeListResponse {
    * Optional key-value metadata.
    */
   metadata?: { [key: string]: string } | null;
-
-  /**
-   * Contact details for redirection (output).
-   */
-  redirectTo?: ContactsAPI.Contact;
 }
 
 export interface ChequeDeleteResponse {
@@ -660,12 +615,6 @@ export interface ChequeCreateParams {
    * during update.
    */
   description?: string | null;
-
-  /**
-   * Body param: HTML content for an optional attached letter. Cannot be used with
-   * `letterTemplate` or `letterPDF`.
-   */
-  letterHTML?: string;
 
   /**
    * Body param: PDF file for an optional attached letter. Cannot be used with
@@ -773,18 +722,6 @@ export interface ChequeUpdateParams {
    * during update.
    */
   description?: string | null;
-
-  /**
-   * Body param: Set explicitly to `null` during an update operation to remove the
-   * attached letter.
-   */
-  letter?: unknown;
-
-  /**
-   * Body param: HTML content for an optional attached letter. Cannot be used with
-   * `letterTemplate` or `letterPDF`.
-   */
-  letterHTML?: string;
 
   /**
    * Body param: PDF file for an optional attached letter. Cannot be used with

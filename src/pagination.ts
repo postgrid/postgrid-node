@@ -52,11 +52,7 @@ export class List<Item> extends AbstractPage<Item> implements ListResponse<Item>
   }
 
   nextPageInfo(): PageInfo | null {
-    const offset = this.limit;
-    if (!offset) {
-      return null;
-    }
-
+    const offset = this.limit ?? 0;
     const length = this.getPaginatedItems().length;
     const currentCount = offset + length;
 
