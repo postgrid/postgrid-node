@@ -33,7 +33,6 @@ export class AddressVerification extends APIResource {
     return this._client.post('/addver/verifications', {
       query: { geocode, includeDetails, properCase },
       body,
-      defaultBaseURL: 'https://api.postgrid.com/v1',
       ...options,
     });
   }
