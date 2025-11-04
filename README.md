@@ -1,4 +1,4 @@
-# Post Grid TypeScript API Library
+# PostGrid API Library
 
 [![NPM version](<https://img.shields.io/npm/v/postgrid.svg?label=npm%20(stable)>)](https://npmjs.org/package/postgrid) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/postgrid)
 
