@@ -324,7 +324,9 @@ export class PostGrid {
   ): Promise<void> {
     request.headers = new Headers({
       ...options.headers,
-      ['x-api-key']: (url.includes('print-mail') ? this.printMailAPIKey : this.addressVerificationAPIKey) ?? 'MISSING_API_KEY',
+      ['x-api-key']:
+        (url.includes('print-mail') ? this.printMailAPIKey : this.addressVerificationAPIKey) ??
+        'MISSING_API_KEY',
     });
   }
 
