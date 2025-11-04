@@ -321,7 +321,12 @@ export class PostGrid {
   protected async prepareRequest(
     request: RequestInit,
     { url, options }: { url: string; options: FinalRequestOptions },
-  ): Promise<void> {}
+  ): Promise<void> {
+    options.headers = {
+      ...options.headers,
+      ['x-api-key']: url.includes('print-mail') ? this.printMailAPIKey : this.addressVerificationAPIKey,
+    };
+  }
 
   get<Rsp>(path: string, opts?: PromiseOrValue<RequestOptions>): APIPromise<Rsp> {
     return this.methodRequest('get', path, opts);
