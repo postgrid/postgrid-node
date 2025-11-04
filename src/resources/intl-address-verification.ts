@@ -8,7 +8,8 @@ export class IntlAddressVerification extends APIResource {
    * Verify and standardize an international address.
    *
    * - Supports both structured and freeform address inputs.
-   * - Optional query parameters like `includeDetails=true` can enhance output.
+   * - Specify `includeDetails=true` to get additional details as per the
+   *   `IntlDetails` schema.
    * - Uses 1 lookup.
    *
    * @example
