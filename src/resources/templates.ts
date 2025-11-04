@@ -1,9 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../resource';
-import { isRequestOptions } from '../core';
-import * as Core from '../core';
-import { List, type ListParams } from '../pagination';
+import { APIResource } from '../core/resource';
+import { APIPromise } from '../core/api-promise';
+import { List, type ListParams, PagePromise } from '../core/pagination';
+import { RequestOptions } from '../internal/request-options';
+import { path } from '../internal/utils/path';
 
 export class Templates extends APIResource {
   /**
@@ -18,7 +19,7 @@ export class Templates extends APIResource {
    * });
    * ```
    */
-  create(body: TemplateCreateParams, options?: Core.RequestOptions): Core.APIPromise<Template> {
+  create(body: TemplateCreateParams, options?: RequestOptions): APIPromise<Template> {
     return this._client.post('/templates', { body, ...options });
   }
 
@@ -30,8 +31,8 @@ export class Templates extends APIResource {
    * const template = await client.templates.retrieve('id');
    * ```
    */
-  retrieve(id: string, options?: Core.RequestOptions): Core.APIPromise<Template> {
-    return this._client.get(`/templates/${id}`, options);
+  retrieve(id: string, options?: RequestOptions): APIPromise<Template> {
+    return this._client.get(path`/templates/${id}`, options);
   }
 
   /**
@@ -45,8 +46,8 @@ export class Templates extends APIResource {
    * });
    * ```
    */
-  update(id: string, body: TemplateUpdateParams, options?: Core.RequestOptions): Core.APIPromise<Template> {
-    return this._client.post(`/templates/${id}`, { body, ...options });
+  update(id: string, body: TemplateUpdateParams, options?: RequestOptions): APIPromise<Template> {
+    return this._client.post(path`/templates/${id}`, { body, ...options });
   }
 
   /**
@@ -60,16 +61,11 @@ export class Templates extends APIResource {
    * }
    * ```
    */
-  list(query?: TemplateListParams, options?: Core.RequestOptions): Core.PagePromise<TemplatesList, Template>;
-  list(options?: Core.RequestOptions): Core.PagePromise<TemplatesList, Template>;
   list(
-    query: TemplateListParams | Core.RequestOptions = {},
-    options?: Core.RequestOptions,
-  ): Core.PagePromise<TemplatesList, Template> {
-    if (isRequestOptions(query)) {
-      return this.list({}, query);
-    }
-    return this._client.getAPIList('/templates', TemplatesList, { query, ...options });
+    query: TemplateListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<TemplatesList, Template> {
+    return this._client.getAPIList('/templates', List<Template>, { query, ...options });
   }
 
   /**
@@ -80,12 +76,12 @@ export class Templates extends APIResource {
    * const template = await client.templates.delete('id');
    * ```
    */
-  delete(id: string, options?: Core.RequestOptions): Core.APIPromise<TemplateDeleteResponse> {
-    return this._client.delete(`/templates/${id}`, options);
+  delete(id: string, options?: RequestOptions): APIPromise<TemplateDeleteResponse> {
+    return this._client.delete(path`/templates/${id}`, options);
   }
 }
 
-export class TemplatesList extends List<Template> {}
+export type TemplatesList = List<Template>;
 
 export interface Template {
   /**
@@ -203,14 +199,12 @@ export interface TemplateListParams extends ListParams {
   search?: string;
 }
 
-Templates.TemplatesList = TemplatesList;
-
 export declare namespace Templates {
   export {
     type Template as Template,
     type TemplateList as TemplateList,
     type TemplateDeleteResponse as TemplateDeleteResponse,
-    TemplatesList as TemplatesList,
+    type TemplatesList as TemplatesList,
     type TemplateCreateParams as TemplateCreateParams,
     type TemplateUpdateParams as TemplateUpdateParams,
     type TemplateListParams as TemplateListParams,

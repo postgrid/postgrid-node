@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../../resource';
+import { APIResource } from '../../core/resource';
 import * as ChequesAPI from './cheques';
 import {
   ChequeCreateParams,
@@ -66,13 +66,9 @@ export class OrderProfiles extends APIResource {
 }
 
 OrderProfiles.Cheques = Cheques;
-OrderProfiles.ChequeListResponsesList = ChequeListResponsesList;
 OrderProfiles.Letters = Letters;
-OrderProfiles.LetterListResponsesList = LetterListResponsesList;
 OrderProfiles.Postcards = Postcards;
-OrderProfiles.PostcardListResponsesList = PostcardListResponsesList;
 OrderProfiles.SelfMailers = SelfMailers;
-OrderProfiles.SelfMailerListResponsesList = SelfMailerListResponsesList;
 
 export declare namespace OrderProfiles {
   export {
@@ -82,7 +78,7 @@ export declare namespace OrderProfiles {
     type ChequeUpdateResponse as ChequeUpdateResponse,
     type ChequeListResponse as ChequeListResponse,
     type ChequeDeleteResponse as ChequeDeleteResponse,
-    ChequeListResponsesList as ChequeListResponsesList,
+    type ChequeListResponsesList as ChequeListResponsesList,
     type ChequeCreateParams as ChequeCreateParams,
     type ChequeRetrieveParams as ChequeRetrieveParams,
     type ChequeUpdateParams as ChequeUpdateParams,
@@ -96,7 +92,7 @@ export declare namespace OrderProfiles {
     type LetterUpdateResponse as LetterUpdateResponse,
     type LetterListResponse as LetterListResponse,
     type LetterDeleteResponse as LetterDeleteResponse,
-    LetterListResponsesList as LetterListResponsesList,
+    type LetterListResponsesList as LetterListResponsesList,
     type LetterCreateParams as LetterCreateParams,
     type LetterRetrieveParams as LetterRetrieveParams,
     type LetterUpdateParams as LetterUpdateParams,
@@ -110,7 +106,7 @@ export declare namespace OrderProfiles {
     type PostcardUpdateResponse as PostcardUpdateResponse,
     type PostcardListResponse as PostcardListResponse,
     type PostcardDeleteResponse as PostcardDeleteResponse,
-    PostcardListResponsesList as PostcardListResponsesList,
+    type PostcardListResponsesList as PostcardListResponsesList,
     type PostcardCreateParams as PostcardCreateParams,
     type PostcardRetrieveParams as PostcardRetrieveParams,
     type PostcardUpdateParams as PostcardUpdateParams,
@@ -124,7 +120,7 @@ export declare namespace OrderProfiles {
     type SelfMailerUpdateResponse as SelfMailerUpdateResponse,
     type SelfMailerListResponse as SelfMailerListResponse,
     type SelfMailerDeleteResponse as SelfMailerDeleteResponse,
-    SelfMailerListResponsesList as SelfMailerListResponsesList,
+    type SelfMailerListResponsesList as SelfMailerListResponsesList,
     type SelfMailerCreateParams as SelfMailerCreateParams,
     type SelfMailerRetrieveParams as SelfMailerRetrieveParams,
     type SelfMailerUpdateParams as SelfMailerUpdateParams,

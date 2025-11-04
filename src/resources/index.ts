@@ -1,22 +1,17 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 export * from './shared';
+export { AddressVerification } from './address-verification';
 export {
-  AddressVerification,
-  type AddressVerificationVerifyAddressResponse,
-  type AddressVerificationVerifyAddressParams,
-} from './address-verification';
-export {
-  BankAccountsList,
   BankAccounts,
   type BankAccount,
   type BankAccountList,
   type BankAccountDeleteResponse,
   type BankAccountCreateParams,
   type BankAccountListParams,
+  type BankAccountsList,
 } from './bank-accounts';
 export {
-  BoxListResponsesList,
   Boxes,
   type BoxCreateResponse,
   type BoxRetrieveResponse,
@@ -24,9 +19,9 @@ export {
   type BoxCancelResponse,
   type BoxCreateParams,
   type BoxListParams,
+  type BoxListResponsesList,
 } from './boxes';
 export {
-  CampaignListResponsesList,
   Campaigns,
   type CampaignCreateResponse,
   type CampaignRetrieveResponse,
@@ -38,39 +33,35 @@ export {
   type CampaignUpdateParams,
   type CampaignListParams,
   type CampaignSendParams,
+  type CampaignListResponsesList,
 } from './campaigns';
 export {
-  ChequesList,
   Cheques,
   type Cheque,
   type ChequeList,
   type ChequeCreateParams,
   type ChequeListParams,
+  type ChequesList,
 } from './cheques/cheques';
 export {
-  ContactsList,
   Contacts,
   type Contact,
   type ContactDeleteResponse,
   type ContactCreateParams,
   type ContactListParams,
+  type ContactsList,
 } from './contacts';
+export { IntlAddressVerification } from './intl-address-verification';
 export {
-  IntlAddressVerification,
-  type IntlAddressVerificationVerifyAddressResponse,
-  type IntlAddressVerificationVerifyAddressParams,
-} from './intl-address-verification';
-export {
-  LettersList,
   Letters,
   type Letter,
   type LetterList,
   type LetterURLResponse,
   type LetterCreateParams,
   type LetterListParams,
+  type LettersList,
 } from './letters';
 export {
-  MailingListImportListResponsesList,
   MailingListImports,
   type MailingListImportCreateResponse,
   type MailingListImportRetrieveResponse,
@@ -80,9 +71,9 @@ export {
   type MailingListImportCreateParams,
   type MailingListImportUpdateParams,
   type MailingListImportListParams,
+  type MailingListImportListResponsesList,
 } from './mailing-list-imports';
 export {
-  MailingListListResponsesList,
   MailingLists,
   type MailingListCreateResponse,
   type MailingListRetrieveResponse,
@@ -94,19 +85,19 @@ export {
   type MailingListUpdateParams,
   type MailingListListParams,
   type MailingListSubmitJobParams,
+  type MailingListListResponsesList,
 } from './mailing-lists';
 export { OrderProfiles } from './order-profiles/order-profiles';
 export {
-  PostcardsList,
   Postcards,
   type Postcard,
   type PostcardList,
   type PostcardURLResponse,
   type PostcardCreateParams,
   type PostcardListParams,
+  type PostcardsList,
 } from './postcards';
 export {
-  ReportListResponsesList,
   Reports,
   type ReportCreateResponse,
   type ReportRetrieveResponse,
@@ -120,9 +111,9 @@ export {
   type ReportListParams,
   type ReportRunAdHocQueryParams,
   type ReportSampleParams,
+  type ReportListResponsesList,
 } from './reports/reports';
 export {
-  SelfMailerListResponsesList,
   SelfMailers,
   type SelfMailerCreateResponse,
   type SelfMailerRetrieveResponse,
@@ -131,9 +122,9 @@ export {
   type SelfMailerRetrievePreviewURLResponse,
   type SelfMailerCreateParams,
   type SelfMailerListParams,
+  type SelfMailerListResponsesList,
 } from './self-mailers';
 export {
-  SubOrganizationListResponsesList,
   SubOrganizations,
   type SubOrganizationCreateResponse,
   type SubOrganizationRetrieveResponse,
@@ -142,9 +133,9 @@ export {
   type SubOrganizationCreateParams,
   type SubOrganizationListParams,
   type SubOrganizationListUsersParams,
+  type SubOrganizationListResponsesList,
 } from './sub-organizations';
 export {
-  TemplatesList,
   Templates,
   type Template,
   type TemplateList,
@@ -152,4 +143,5 @@ export {
   type TemplateCreateParams,
   type TemplateUpdateParams,
   type TemplateListParams,
+  type TemplatesList,
 } from './templates';

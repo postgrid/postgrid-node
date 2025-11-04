@@ -8,7 +8,6 @@ const config: JestConfigWithTsJest = {
   },
   moduleNameMapper: {
     '^postgrid-node$': '<rootDir>/src/index.ts',
-    '^postgrid-node/_shims/auto/(.*)$': '<rootDir>/src/_shims/auto/$1-node',
     '^postgrid-node/(.*)$': '<rootDir>/src/$1',
   },
   modulePathIgnorePatterns: [
@@ -16,6 +15,7 @@ const config: JestConfigWithTsJest = {
     '<rootDir>/dist/',
     '<rootDir>/deno/',
     '<rootDir>/deno_tests/',
+    '<rootDir>/packages/',
   ],
   testPathIgnorePatterns: ['scripts'],
 };

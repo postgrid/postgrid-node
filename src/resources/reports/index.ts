@@ -6,9 +6,10 @@ export {
   type ExportRetrieveResponse,
   type ExportDeleteResponse,
   type ExportCreateParams,
+  type ExportRetrieveParams,
+  type ExportDeleteParams,
 } from './exports';
 export {
-  ReportListResponsesList,
   Reports,
   type ReportCreateResponse,
   type ReportRetrieveResponse,
@@ -22,4 +23,5 @@ export {
   type ReportListParams,
   type ReportRunAdHocQueryParams,
   type ReportSampleParams,
+  type ReportListResponsesList,
 } from './reports';

@@ -1,7 +1,9 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../../resource';
-import * as Core from '../../core';
+import { APIResource } from '../../core/resource';
+import { APIPromise } from '../../core/api-promise';
+import { RequestOptions } from '../../internal/request-options';
+import { path } from '../../internal/utils/path';
 
 export class Exports extends APIResource {
   /**
@@ -22,11 +24,11 @@ export class Exports extends APIResource {
    * ```
    */
   create(
-    reportId: string,
+    reportID: string,
     body: ExportCreateParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<ExportCreateResponse> {
-    return this._client.post(`/reports/${reportId}/exports`, { body, ...options });
+    options?: RequestOptions,
+  ): APIPromise<ExportCreateResponse> {
+    return this._client.post(path`/reports/${reportID}/exports`, { body, ...options });
   }
 
   /**
@@ -36,17 +38,18 @@ export class Exports extends APIResource {
    * @example
    * ```ts
    * const _export = await client.reports.exports.retrieve(
-   *   'reportID',
    *   'exportID',
+   *   { reportID: 'reportID' },
    * );
    * ```
    */
   retrieve(
-    reportId: string,
-    exportId: string,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<ExportRetrieveResponse> {
-    return this._client.get(`/reports/${reportId}/exports/${exportId}`, options);
+    exportID: string,
+    params: ExportRetrieveParams,
+    options?: RequestOptions,
+  ): APIPromise<ExportRetrieveResponse> {
+    const { reportID } = params;
+    return this._client.get(path`/reports/${reportID}/exports/${exportID}`, options);
   }
 
   /**
@@ -57,17 +60,18 @@ export class Exports extends APIResource {
    * @example
    * ```ts
    * const _export = await client.reports.exports.delete(
-   *   'reportID',
    *   'exportID',
+   *   { reportID: 'reportID' },
    * );
    * ```
    */
   delete(
-    reportId: string,
-    exportId: string,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<ExportDeleteResponse> {
-    return this._client.delete(`/reports/${reportId}/exports/${exportId}`, options);
+    exportID: string,
+    params: ExportDeleteParams,
+    options?: RequestOptions,
+  ): APIPromise<ExportDeleteResponse> {
+    const { reportID } = params;
+    return this._client.delete(path`/reports/${reportID}/exports/${exportID}`, options);
   }
 }
 
@@ -289,11 +293,27 @@ export interface ExportCreateParams {
   params?: Array<string>;
 }
 
+export interface ExportRetrieveParams {
+  /**
+   * The ID of the report the export belongs to.
+   */
+  reportID: string;
+}
+
+export interface ExportDeleteParams {
+  /**
+   * The ID of the report the export belongs to.
+   */
+  reportID: string;
+}
+
 export declare namespace Exports {
   export {
     type ExportCreateResponse as ExportCreateResponse,
     type ExportRetrieveResponse as ExportRetrieveResponse,
     type ExportDeleteResponse as ExportDeleteResponse,
     type ExportCreateParams as ExportCreateParams,
+    type ExportRetrieveParams as ExportRetrieveParams,
+    type ExportDeleteParams as ExportDeleteParams,
   };
 }

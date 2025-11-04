@@ -1,9 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../resource';
-import { isRequestOptions } from '../core';
-import * as Core from '../core';
-import { List, type ListParams } from '../pagination';
+import { APIResource } from '../core/resource';
+import { APIPromise } from '../core/api-promise';
+import { List, type ListParams, PagePromise } from '../core/pagination';
+import { RequestOptions } from '../internal/request-options';
+import { path } from '../internal/utils/path';
 
 export class Contacts extends APIResource {
   /**
@@ -31,7 +32,7 @@ export class Contacts extends APIResource {
    * });
    * ```
    */
-  create(body: ContactCreateParams, options?: Core.RequestOptions): Core.APIPromise<Contact> {
+  create(body: ContactCreateParams, options?: RequestOptions): APIPromise<Contact> {
     return this._client.post('/contacts', { body, ...options });
   }
 
@@ -43,8 +44,8 @@ export class Contacts extends APIResource {
    * const contact = await client.contacts.retrieve('id');
    * ```
    */
-  retrieve(id: string, options?: Core.RequestOptions): Core.APIPromise<Contact> {
-    return this._client.get(`/contacts/${id}`, options);
+  retrieve(id: string, options?: RequestOptions): APIPromise<Contact> {
+    return this._client.get(path`/contacts/${id}`, options);
   }
 
   /**
@@ -58,16 +59,11 @@ export class Contacts extends APIResource {
    * }
    * ```
    */
-  list(query?: ContactListParams, options?: Core.RequestOptions): Core.PagePromise<ContactsList, Contact>;
-  list(options?: Core.RequestOptions): Core.PagePromise<ContactsList, Contact>;
   list(
-    query: ContactListParams | Core.RequestOptions = {},
-    options?: Core.RequestOptions,
-  ): Core.PagePromise<ContactsList, Contact> {
-    if (isRequestOptions(query)) {
-      return this.list({}, query);
-    }
-    return this._client.getAPIList('/contacts', ContactsList, { query, ...options });
+    query: ContactListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<ContactsList, Contact> {
+    return this._client.getAPIList('/contacts', List<Contact>, { query, ...options });
   }
 
   /**
@@ -79,12 +75,12 @@ export class Contacts extends APIResource {
    * const contact = await client.contacts.delete('id');
    * ```
    */
-  delete(id: string, options?: Core.RequestOptions): Core.APIPromise<ContactDeleteResponse> {
-    return this._client.delete(`/contacts/${id}`, options);
+  delete(id: string, options?: RequestOptions): APIPromise<ContactDeleteResponse> {
+    return this._client.delete(path`/contacts/${id}`, options);
   }
 }
 
-export class ContactsList extends List<Contact> {}
+export type ContactsList = List<Contact>;
 
 export interface Contact {
   /**
@@ -402,13 +398,11 @@ export interface ContactListParams extends ListParams {
   search?: string;
 }
 
-Contacts.ContactsList = ContactsList;
-
 export declare namespace Contacts {
   export {
     type Contact as Contact,
     type ContactDeleteResponse as ContactDeleteResponse,
-    ContactsList as ContactsList,
+    type ContactsList as ContactsList,
     type ContactCreateParams as ContactCreateParams,
     type ContactListParams as ContactListParams,
   };

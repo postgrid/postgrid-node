@@ -1,9 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../../resource';
-import { isRequestOptions } from '../../core';
-import * as Core from '../../core';
-import { List, type ListParams } from '../../pagination';
+import { APIResource } from '../../core/resource';
+import { APIPromise } from '../../core/api-promise';
+import { List, type ListParams, PagePromise } from '../../core/pagination';
+import { RequestOptions } from '../../internal/request-options';
+import { path } from '../../internal/utils/path';
 
 export class Letters extends APIResource {
   /**
@@ -24,7 +25,7 @@ export class Letters extends APIResource {
    * });
    * ```
    */
-  create(params: LetterCreateParams, options?: Core.RequestOptions): Core.APIPromise<LetterCreateResponse> {
+  create(params: LetterCreateParams, options?: RequestOptions): APIPromise<LetterCreateResponse> {
     const { expand, ...body } = params;
     return this._client.post('/order_profiles/letters', { query: { expand }, body, ...options });
   }
@@ -41,19 +42,10 @@ export class Letters extends APIResource {
    */
   retrieve(
     id: string,
-    query?: LetterRetrieveParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<LetterRetrieveResponse>;
-  retrieve(id: string, options?: Core.RequestOptions): Core.APIPromise<LetterRetrieveResponse>;
-  retrieve(
-    id: string,
-    query: LetterRetrieveParams | Core.RequestOptions = {},
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<LetterRetrieveResponse> {
-    if (isRequestOptions(query)) {
-      return this.retrieve(id, {}, query);
-    }
-    return this._client.get(`/order_profiles/letters/${id}`, { query, ...options });
+    query: LetterRetrieveParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<LetterRetrieveResponse> {
+    return this._client.get(path`/order_profiles/letters/${id}`, { query, ...options });
   }
 
   /**
@@ -69,13 +61,9 @@ export class Letters extends APIResource {
    * );
    * ```
    */
-  update(
-    id: string,
-    params: LetterUpdateParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<LetterUpdateResponse> {
+  update(id: string, params: LetterUpdateParams, options?: RequestOptions): APIPromise<LetterUpdateResponse> {
     const { expand, ...body } = params;
-    return this._client.post(`/order_profiles/letters/${id}`, { query: { expand }, body, ...options });
+    return this._client.post(path`/order_profiles/letters/${id}`, { query: { expand }, body, ...options });
   }
 
   /**
@@ -91,18 +79,13 @@ export class Letters extends APIResource {
    * ```
    */
   list(
-    query?: LetterListParams,
-    options?: Core.RequestOptions,
-  ): Core.PagePromise<LetterListResponsesList, LetterListResponse>;
-  list(options?: Core.RequestOptions): Core.PagePromise<LetterListResponsesList, LetterListResponse>;
-  list(
-    query: LetterListParams | Core.RequestOptions = {},
-    options?: Core.RequestOptions,
-  ): Core.PagePromise<LetterListResponsesList, LetterListResponse> {
-    if (isRequestOptions(query)) {
-      return this.list({}, query);
-    }
-    return this._client.getAPIList('/order_profiles/letters', LetterListResponsesList, { query, ...options });
+    query: LetterListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<LetterListResponsesList, LetterListResponse> {
+    return this._client.getAPIList('/order_profiles/letters', List<LetterListResponse>, {
+      query,
+      ...options,
+    });
   }
 
   /**
@@ -116,12 +99,12 @@ export class Letters extends APIResource {
    * );
    * ```
    */
-  delete(id: string, options?: Core.RequestOptions): Core.APIPromise<LetterDeleteResponse> {
-    return this._client.delete(`/order_profiles/letters/${id}`, options);
+  delete(id: string, options?: RequestOptions): APIPromise<LetterDeleteResponse> {
+    return this._client.delete(path`/order_profiles/letters/${id}`, options);
   }
 }
 
-export class LetterListResponsesList extends List<LetterListResponse> {}
+export type LetterListResponsesList = List<LetterListResponse>;
 
 export interface LetterCreateResponse {
   /**
@@ -938,8 +921,6 @@ export interface LetterListParams extends ListParams {
   search?: string;
 }
 
-Letters.LetterListResponsesList = LetterListResponsesList;
-
 export declare namespace Letters {
   export {
     type LetterCreateResponse as LetterCreateResponse,
@@ -947,7 +928,7 @@ export declare namespace Letters {
     type LetterUpdateResponse as LetterUpdateResponse,
     type LetterListResponse as LetterListResponse,
     type LetterDeleteResponse as LetterDeleteResponse,
-    LetterListResponsesList as LetterListResponsesList,
+    type LetterListResponsesList as LetterListResponsesList,
     type LetterCreateParams as LetterCreateParams,
     type LetterRetrieveParams as LetterRetrieveParams,
     type LetterUpdateParams as LetterUpdateParams,

@@ -1,8 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../../resource';
-import * as Core from '../../core';
+import { APIResource } from '../../core/resource';
 import * as ChequesAPI from './cheques';
+import { APIPromise } from '../../core/api-promise';
+import { RequestOptions } from '../../internal/request-options';
+import { path } from '../../internal/utils/path';
 
 export class WithDepositReadyPdf extends APIResource {
   /**
@@ -17,7 +19,7 @@ export class WithDepositReadyPdf extends APIResource {
    *   await client.cheques.withDepositReadyPdf.retrieve('id');
    * ```
    */
-  retrieve(id: string, options?: Core.RequestOptions): Core.APIPromise<ChequesAPI.Cheque> {
-    return this._client.get(`/cheques/${id}/with_deposit_ready_pdf`, options);
+  retrieve(id: string, options?: RequestOptions): APIPromise<ChequesAPI.Cheque> {
+    return this._client.get(path`/cheques/${id}/with_deposit_ready_pdf`, options);
   }
 }

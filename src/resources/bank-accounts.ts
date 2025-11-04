@@ -1,9 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../resource';
-import { isRequestOptions } from '../core';
-import * as Core from '../core';
-import { List, type ListParams } from '../pagination';
+import { APIResource } from '../core/resource';
+import { APIPromise } from '../core/api-promise';
+import { List, type ListParams, PagePromise } from '../core/pagination';
+import { RequestOptions } from '../internal/request-options';
+import { path } from '../internal/utils/path';
 
 export class BankAccounts extends APIResource {
   /**
@@ -28,7 +29,7 @@ export class BankAccounts extends APIResource {
    * });
    * ```
    */
-  create(body: BankAccountCreateParams, options?: Core.RequestOptions): Core.APIPromise<BankAccount> {
+  create(body: BankAccountCreateParams, options?: RequestOptions): APIPromise<BankAccount> {
     return this._client.post('/bank_accounts', { body, ...options });
   }
 
@@ -42,8 +43,8 @@ export class BankAccounts extends APIResource {
    * );
    * ```
    */
-  retrieve(id: string, options?: Core.RequestOptions): Core.APIPromise<BankAccount> {
-    return this._client.get(`/bank_accounts/${id}`, options);
+  retrieve(id: string, options?: RequestOptions): APIPromise<BankAccount> {
+    return this._client.get(path`/bank_accounts/${id}`, options);
   }
 
   /**
@@ -58,18 +59,10 @@ export class BankAccounts extends APIResource {
    * ```
    */
   list(
-    query?: BankAccountListParams,
-    options?: Core.RequestOptions,
-  ): Core.PagePromise<BankAccountsList, BankAccount>;
-  list(options?: Core.RequestOptions): Core.PagePromise<BankAccountsList, BankAccount>;
-  list(
-    query: BankAccountListParams | Core.RequestOptions = {},
-    options?: Core.RequestOptions,
-  ): Core.PagePromise<BankAccountsList, BankAccount> {
-    if (isRequestOptions(query)) {
-      return this.list({}, query);
-    }
-    return this._client.getAPIList('/bank_accounts', BankAccountsList, { query, ...options });
+    query: BankAccountListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<BankAccountsList, BankAccount> {
+    return this._client.getAPIList('/bank_accounts', List<BankAccount>, { query, ...options });
   }
 
   /**
@@ -80,12 +73,12 @@ export class BankAccounts extends APIResource {
    * const bankAccount = await client.bankAccounts.delete('id');
    * ```
    */
-  delete(id: string, options?: Core.RequestOptions): Core.APIPromise<BankAccountDeleteResponse> {
-    return this._client.delete(`/bank_accounts/${id}`, options);
+  delete(id: string, options?: RequestOptions): APIPromise<BankAccountDeleteResponse> {
+    return this._client.delete(path`/bank_accounts/${id}`, options);
   }
 }
 
-export class BankAccountsList extends List<BankAccount> {}
+export type BankAccountsList = List<BankAccount>;
 
 export interface BankAccount {
   /**
@@ -421,14 +414,12 @@ export interface BankAccountListParams extends ListParams {
   search?: string;
 }
 
-BankAccounts.BankAccountsList = BankAccountsList;
-
 export declare namespace BankAccounts {
   export {
     type BankAccount as BankAccount,
     type BankAccountList as BankAccountList,
     type BankAccountDeleteResponse as BankAccountDeleteResponse,
-    BankAccountsList as BankAccountsList,
+    type BankAccountsList as BankAccountsList,
     type BankAccountCreateParams as BankAccountCreateParams,
     type BankAccountListParams as BankAccountListParams,
   };

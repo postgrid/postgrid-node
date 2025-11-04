@@ -1,9 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../resource';
-import { isRequestOptions } from '../core';
-import * as Core from '../core';
-import { List, type ListParams } from '../pagination';
+import { APIResource } from '../core/resource';
+import { APIPromise } from '../core/api-promise';
+import { List, type ListParams, PagePromise } from '../core/pagination';
+import { RequestOptions } from '../internal/request-options';
+import { path } from '../internal/utils/path';
 
 export class Campaigns extends APIResource {
   /**
@@ -13,15 +14,15 @@ export class Campaigns extends APIResource {
    * postcard, cheque, or self-mailer) to send bulk mail. Upon creation, the campaign
    * enters the `drafting` status while assets are validated.
    */
-  create(body: CampaignCreateParams, options?: Core.RequestOptions): Core.APIPromise<CampaignCreateResponse> {
+  create(body: CampaignCreateParams, options?: RequestOptions): APIPromise<CampaignCreateResponse> {
     return this._client.post('/campaigns', { body, ...options });
   }
 
   /**
    * Retrieve a specific campaign by its ID.
    */
-  retrieve(id: string, options?: Core.RequestOptions): Core.APIPromise<CampaignRetrieveResponse> {
-    return this._client.get(`/campaigns/${id}`, options);
+  retrieve(id: string, options?: RequestOptions): APIPromise<CampaignRetrieveResponse> {
+    return this._client.get(path`/campaigns/${id}`, options);
   }
 
   /**
@@ -34,9 +35,9 @@ export class Campaigns extends APIResource {
   update(
     id: string,
     body: CampaignUpdateParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<CampaignUpdateResponse> {
-    return this._client.post(`/campaigns/${id}`, { body, ...options });
+    options?: RequestOptions,
+  ): APIPromise<CampaignUpdateResponse> {
+    return this._client.post(path`/campaigns/${id}`, { body, ...options });
   }
 
   /**
@@ -46,18 +47,10 @@ export class Campaigns extends APIResource {
    * organization, filterable by various parameters.
    */
   list(
-    query?: CampaignListParams,
-    options?: Core.RequestOptions,
-  ): Core.PagePromise<CampaignListResponsesList, CampaignListResponse>;
-  list(options?: Core.RequestOptions): Core.PagePromise<CampaignListResponsesList, CampaignListResponse>;
-  list(
-    query: CampaignListParams | Core.RequestOptions = {},
-    options?: Core.RequestOptions,
-  ): Core.PagePromise<CampaignListResponsesList, CampaignListResponse> {
-    if (isRequestOptions(query)) {
-      return this.list({}, query);
-    }
-    return this._client.getAPIList('/campaigns', CampaignListResponsesList, { query, ...options });
+    query: CampaignListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<CampaignListResponsesList, CampaignListResponse> {
+    return this._client.getAPIList('/campaigns', List<CampaignListResponse>, { query, ...options });
   }
 
   /**
@@ -67,8 +60,8 @@ export class Campaigns extends APIResource {
    * `ready` status. This also permanently deletes associated resources. This
    * operation cannot be undone.
    */
-  delete(id: string, options?: Core.RequestOptions): Core.APIPromise<CampaignDeleteResponse> {
-    return this._client.delete(`/campaigns/${id}`, options);
+  delete(id: string, options?: RequestOptions): APIPromise<CampaignDeleteResponse> {
+    return this._client.delete(path`/campaigns/${id}`, options);
   }
 
   /**
@@ -78,16 +71,12 @@ export class Campaigns extends APIResource {
    * You can optionally specify a future `sendDate`. Once sent, the campaign cannot
    * be updated.
    */
-  send(
-    id: string,
-    body: CampaignSendParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<CampaignSendResponse> {
-    return this._client.post(`/campaigns/${id}/send`, { body, ...options });
+  send(id: string, body: CampaignSendParams, options?: RequestOptions): APIPromise<CampaignSendResponse> {
+    return this._client.post(path`/campaigns/${id}/send`, { body, ...options });
   }
 }
 
-export class CampaignListResponsesList extends List<CampaignListResponse> {}
+export type CampaignListResponsesList = List<CampaignListResponse>;
 
 /**
  * Represents a bulk mail campaign.
@@ -834,8 +823,6 @@ export interface CampaignSendParams {
   sendDate?: (string & {}) | string;
 }
 
-Campaigns.CampaignListResponsesList = CampaignListResponsesList;
-
 export declare namespace Campaigns {
   export {
     type CampaignCreateResponse as CampaignCreateResponse,
@@ -844,7 +831,7 @@ export declare namespace Campaigns {
     type CampaignListResponse as CampaignListResponse,
     type CampaignDeleteResponse as CampaignDeleteResponse,
     type CampaignSendResponse as CampaignSendResponse,
-    CampaignListResponsesList as CampaignListResponsesList,
+    type CampaignListResponsesList as CampaignListResponsesList,
     type CampaignCreateParams as CampaignCreateParams,
     type CampaignUpdateParams as CampaignUpdateParams,
     type CampaignListParams as CampaignListParams,

@@ -1,15 +1,16 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../../resource';
-import { isRequestOptions } from '../../core';
-import * as Core from '../../core';
+import { APIResource } from '../../core/resource';
 import * as ContactsAPI from '../contacts';
 import * as Shared from '../shared';
 import * as URLAPI from './url';
 import { URL, URLRetrieveResponse } from './url';
 import * as WithDepositReadyPdfAPI from './with-deposit-ready-pdf';
 import { WithDepositReadyPdf } from './with-deposit-ready-pdf';
-import { List, type ListParams } from '../../pagination';
+import { APIPromise } from '../../core/api-promise';
+import { List, type ListParams, PagePromise } from '../../core/pagination';
+import { RequestOptions } from '../../internal/request-options';
+import { path } from '../../internal/utils/path';
 
 export class Cheques extends APIResource {
   url: URLAPI.URL = new URLAPI.URL(this._client);
@@ -54,7 +55,7 @@ export class Cheques extends APIResource {
    * });
    * ```
    */
-  create(body: ChequeCreateParams, options?: Core.RequestOptions): Core.APIPromise<Cheque> {
+  create(body: ChequeCreateParams, options?: RequestOptions): APIPromise<Cheque> {
     return this._client.post('/cheques', { body, ...options });
   }
 
@@ -66,8 +67,8 @@ export class Cheques extends APIResource {
    * const cheque = await client.cheques.retrieve('id');
    * ```
    */
-  retrieve(id: string, options?: Core.RequestOptions): Core.APIPromise<Cheque> {
-    return this._client.get(`/cheques/${id}`, options);
+  retrieve(id: string, options?: RequestOptions): APIPromise<Cheque> {
+    return this._client.get(path`/cheques/${id}`, options);
   }
 
   /**
@@ -81,16 +82,11 @@ export class Cheques extends APIResource {
    * }
    * ```
    */
-  list(query?: ChequeListParams, options?: Core.RequestOptions): Core.PagePromise<ChequesList, Cheque>;
-  list(options?: Core.RequestOptions): Core.PagePromise<ChequesList, Cheque>;
   list(
-    query: ChequeListParams | Core.RequestOptions = {},
-    options?: Core.RequestOptions,
-  ): Core.PagePromise<ChequesList, Cheque> {
-    if (isRequestOptions(query)) {
-      return this.list({}, query);
-    }
-    return this._client.getAPIList('/cheques', ChequesList, { query, ...options });
+    query: ChequeListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<ChequesList, Cheque> {
+    return this._client.getAPIList('/cheques', List<Cheque>, { query, ...options });
   }
 
   /**
@@ -101,12 +97,12 @@ export class Cheques extends APIResource {
    * const cheque = await client.cheques.cancel('id');
    * ```
    */
-  cancel(id: string, options?: Core.RequestOptions): Core.APIPromise<Cheque> {
-    return this._client.delete(`/cheques/${id}`, options);
+  cancel(id: string, options?: RequestOptions): APIPromise<Cheque> {
+    return this._client.delete(path`/cheques/${id}`, options);
   }
 }
 
-export class ChequesList extends List<Cheque> {}
+export type ChequesList = List<Cheque>;
 
 export interface Cheque {
   /**
@@ -505,7 +501,6 @@ export interface ChequeListParams extends ListParams {
   search?: string;
 }
 
-Cheques.ChequesList = ChequesList;
 Cheques.URL = URL;
 Cheques.WithDepositReadyPdf = WithDepositReadyPdf;
 
@@ -513,7 +508,7 @@ export declare namespace Cheques {
   export {
     type Cheque as Cheque,
     type ChequeList as ChequeList,
-    ChequesList as ChequesList,
+    type ChequesList as ChequesList,
     type ChequeCreateParams as ChequeCreateParams,
     type ChequeListParams as ChequeListParams,
   };
