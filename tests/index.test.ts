@@ -1,10 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIPromise } from 'postgrid/core/api-promise';
+import { APIPromise } from 'postgrid-node/core/api-promise';
 
 import util from 'node:util';
-import PostGrid from 'postgrid';
-import { APIUserAbortError } from 'postgrid';
+import PostGrid from 'postgrid-node';
+import { APIUserAbortError } from 'postgrid-node';
 const defaultFetch = fetch;
 
 describe('instantiate client', () => {

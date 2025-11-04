@@ -1,7 +1,7 @@
 import iconv from 'iconv-lite';
-import { stringify } from 'postgrid/internal/qs';
-import { encode } from 'postgrid/internal/qs/utils';
-import { StringifyOptions } from 'postgrid/internal/qs/types';
+import { stringify } from 'postgrid-node/internal/qs';
+import { encode } from 'postgrid-node/internal/qs/utils';
+import { StringifyOptions } from 'postgrid-node/internal/qs/types';
 import { empty_test_cases } from './empty-keys-cases';
 import assert from 'assert';
 

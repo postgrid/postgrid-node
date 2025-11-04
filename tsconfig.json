@@ -8,8 +8,8 @@
     "moduleResolution": "node",
     "esModuleInterop": true,
     "paths": {
-      "postgrid/*": ["./src/*"],
-      "postgrid": ["./src/index.ts"]
+      "postgrid-node/*": ["./src/*"],
+      "postgrid-node": ["./src/index.ts"]
     },
     "noEmit": true,
 

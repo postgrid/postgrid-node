@@ -55,12 +55,12 @@ $ cd postgrid-node
 # With yarn
 $ yarn link
 $ cd ../my-package
-$ yarn link postgrid
+$ yarn link postgrid-node
 
 # With pnpm
 $ pnpm link --global
 $ cd ../my-package
-$ pnpm link -—global postgrid
+$ pnpm link -—global postgrid-node
 ```
 
 ## Running tests
