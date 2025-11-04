@@ -11,7 +11,8 @@ export class AddressVerification extends APIResource {
    *    one line. For best results, append the ISO 2-letter country code (e.g., `US`,
    *    `CA`) to the end of the line.
    *
-   * - Optional query parameters like `includeDetails=true` can enhance output.
+   * - Specifying `includeDetails=true` will provide additional output as documented
+   *   in the `Details` schema.
    * - Uses 1 lookup.
    *
    * @example
