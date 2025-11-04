@@ -315,13 +315,13 @@ describe('instantiate client', () => {
     test('empty env variable', () => {
       process.env['POSTGRID_BASE_URL'] = ''; // empty
       const client = new PostGrid({ addressVerificationAPIKey: 'My Address Verification API Key' });
-      expect(client.baseURL).toEqual('https://api.postgrid.com/print-mail/v1');
+      expect(client.baseURL).toEqual('https://api.postgrid.com');
     });
 
     test('blank env variable', () => {
       process.env['POSTGRID_BASE_URL'] = '  '; // blank
       const client = new PostGrid({ addressVerificationAPIKey: 'My Address Verification API Key' });
-      expect(client.baseURL).toEqual('https://api.postgrid.com/print-mail/v1');
+      expect(client.baseURL).toEqual('https://api.postgrid.com');
     });
 
     test('in request options', () => {

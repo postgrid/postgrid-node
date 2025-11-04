@@ -239,7 +239,7 @@ export class PostGrid extends Core.APIClient {
    *
    * @param {string | null | undefined} [opts.printMailAPIKey]
    * @param {string | null | undefined} [opts.addressVerificationAPIKey]
-   * @param {string} [opts.baseURL=process.env['POSTGRID_BASE_URL'] ?? https://api.postgrid.com/print-mail/v1] - Override the default base URL for the API.
+   * @param {string} [opts.baseURL=process.env['POSTGRID_BASE_URL'] ?? https://api.postgrid.com] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {number} [opts.httpAgent] - An HTTP agent used to manage HTTP(s) connections.
    * @param {Core.Fetch} [opts.fetch] - Specify a custom `fetch` function implementation.
@@ -257,12 +257,12 @@ export class PostGrid extends Core.APIClient {
       printMailAPIKey,
       addressVerificationAPIKey,
       ...opts,
-      baseURL: baseURL || `https://api.postgrid.com/print-mail/v1`,
+      baseURL: baseURL || `https://api.postgrid.com`,
     };
 
     super({
       baseURL: options.baseURL!,
-      baseURLOverridden: baseURL ? baseURL !== 'https://api.postgrid.com/print-mail/v1' : false,
+      baseURLOverridden: baseURL ? baseURL !== 'https://api.postgrid.com' : false,
       timeout: options.timeout ?? 60000 /* 1 minute */,
       httpAgent: options.httpAgent,
       maxRetries: options.maxRetries,
@@ -297,7 +297,7 @@ export class PostGrid extends Core.APIClient {
    * Check whether the base URL is set to its default.
    */
   #baseURLOverridden(): boolean {
-    return this.baseURL !== 'https://api.postgrid.com/print-mail/v1';
+    return this.baseURL !== 'https://api.postgrid.com';
   }
 
   protected override defaultQuery(): Core.DefaultQuery | undefined {
