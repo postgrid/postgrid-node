@@ -57,7 +57,7 @@ export interface ClientOptions {
   /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
    *
-   * Defaults to process.env['POSTGRID_BASE_URL'].
+   * Defaults to process.env['POST_GRID_BASE_URL'].
    */
   baseURL?: string | null | undefined;
 
@@ -111,7 +111,7 @@ export interface ClientOptions {
   /**
    * Set the log level.
    *
-   * Defaults to process.env['POSTGRID_LOG'] or 'warn' if it isn't set.
+   * Defaults to process.env['POST_GRID_LOG'] or 'warn' if it isn't set.
    */
   logLevel?: LogLevel | undefined;
 
@@ -124,9 +124,9 @@ export interface ClientOptions {
 }
 
 /**
- * API Client for interfacing with the Postgrid API.
+ * API Client for interfacing with the Post Grid API.
  */
-export class Postgrid {
+export class PostGrid {
   addressVerificationAPIKey: string;
   printMailAPIKey: string;
 
@@ -143,11 +143,11 @@ export class Postgrid {
   private _options: ClientOptions;
 
   /**
-   * API Client for interfacing with the Postgrid API.
+   * API Client for interfacing with the Post Grid API.
    *
    * @param {string | undefined} [opts.addressVerificationAPIKey=process.env['POSTGRID_ADDRESS_VERIFICATION_API_KEY'] ?? undefined]
    * @param {string | undefined} [opts.printMailAPIKey=process.env['POSTGRID_PRINT_MAIL_API_KEY'] ?? undefined]
-   * @param {string} [opts.baseURL=process.env['POSTGRID_BASE_URL'] ?? https://api.postgrid.com] - Override the default base URL for the API.
+   * @param {string} [opts.baseURL=process.env['POST_GRID_BASE_URL'] ?? https://api.postgrid.com] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
    * @param {Fetch} [opts.fetch] - Specify a custom `fetch` function implementation.
@@ -156,19 +156,19 @@ export class Postgrid {
    * @param {Record<string, string | undefined>} opts.defaultQuery - Default query parameters to include with every request to the API.
    */
   constructor({
-    baseURL = readEnv('POSTGRID_BASE_URL'),
+    baseURL = readEnv('POST_GRID_BASE_URL'),
     addressVerificationAPIKey = readEnv('POSTGRID_ADDRESS_VERIFICATION_API_KEY'),
     printMailAPIKey = readEnv('POSTGRID_PRINT_MAIL_API_KEY'),
     ...opts
   }: ClientOptions = {}) {
     if (addressVerificationAPIKey === undefined) {
-      throw new Errors.PostgridError(
-        "The POSTGRID_ADDRESS_VERIFICATION_API_KEY environment variable is missing or empty; either provide it, or instantiate the Postgrid client with an addressVerificationAPIKey option, like new Postgrid({ addressVerificationAPIKey: 'My Address Verification API Key' }).",
+      throw new Errors.PostGridError(
+        "The POSTGRID_ADDRESS_VERIFICATION_API_KEY environment variable is missing or empty; either provide it, or instantiate the PostGrid client with an addressVerificationAPIKey option, like new PostGrid({ addressVerificationAPIKey: 'My Address Verification API Key' }).",
       );
     }
     if (printMailAPIKey === undefined) {
-      throw new Errors.PostgridError(
-        "The POSTGRID_PRINT_MAIL_API_KEY environment variable is missing or empty; either provide it, or instantiate the Postgrid client with an printMailAPIKey option, like new Postgrid({ printMailAPIKey: 'My Print Mail API Key' }).",
+      throw new Errors.PostGridError(
+        "The POSTGRID_PRINT_MAIL_API_KEY environment variable is missing or empty; either provide it, or instantiate the PostGrid client with an printMailAPIKey option, like new PostGrid({ printMailAPIKey: 'My Print Mail API Key' }).",
       );
     }
 
@@ -180,14 +180,14 @@ export class Postgrid {
     };
 
     this.baseURL = options.baseURL!;
-    this.timeout = options.timeout ?? Postgrid.DEFAULT_TIMEOUT /* 1 minute */;
+    this.timeout = options.timeout ?? PostGrid.DEFAULT_TIMEOUT /* 1 minute */;
     this.logger = options.logger ?? console;
     const defaultLogLevel = 'warn';
     // Set default logLevel early so that we can log a warning in parseLogLevel.
     this.logLevel = defaultLogLevel;
     this.logLevel =
       parseLogLevel(options.logLevel, 'ClientOptions.logLevel', this) ??
-      parseLogLevel(readEnv('POSTGRID_LOG'), "process.env['POSTGRID_LOG']", this) ??
+      parseLogLevel(readEnv('POST_GRID_LOG'), "process.env['POST_GRID_LOG']", this) ??
       defaultLogLevel;
     this.fetchOptions = options.fetchOptions;
     this.maxRetries = options.maxRetries ?? 2;
@@ -721,10 +721,10 @@ export class Postgrid {
     }
   }
 
-  static Postgrid = this;
+  static PostGrid = this;
   static DEFAULT_TIMEOUT = 60000; // 1 minute
 
-  static PostgridError = Errors.PostgridError;
+  static PostGridError = Errors.PostGridError;
   static APIError = Errors.APIError;
   static APIConnectionError = Errors.APIConnectionError;
   static APIConnectionTimeoutError = Errors.APIConnectionTimeoutError;
@@ -745,11 +745,11 @@ export class Postgrid {
   printMail: API.PrintMail = new API.PrintMail(this);
 }
 
-Postgrid.AddressVerification = AddressVerification;
-Postgrid.IntlAddressVerification = IntlAddressVerification;
-Postgrid.PrintMail = PrintMail;
+PostGrid.AddressVerification = AddressVerification;
+PostGrid.IntlAddressVerification = IntlAddressVerification;
+PostGrid.PrintMail = PrintMail;
 
-export declare namespace Postgrid {
+export declare namespace PostGrid {
   export type RequestOptions = Opts.RequestOptions;
 
   export {

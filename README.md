@@ -1,8 +1,8 @@
-# Postgrid TypeScript API Library
+# Post Grid TypeScript API Library
 
 [![NPM version](<https://img.shields.io/npm/v/postgrid.svg?label=npm%20(stable)>)](https://npmjs.org/package/postgrid) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/postgrid)
 
-This library provides convenient access to the Postgrid REST API from server-side TypeScript or JavaScript.
+This library provides convenient access to the Post Grid REST API from server-side TypeScript or JavaScript.
 
 The full API of this library can be found in [api.md](api.md).
 
@@ -23,15 +23,19 @@ The full API of this library can be found in [api.md](api.md).
 
 <!-- prettier-ignore -->
 ```js
-import Postgrid from 'postgrid';
+import PostGrid from 'postgrid';
 
-const client = new Postgrid({
-  addressVerificationAPIKey: process.env['POSTGRID_ADDRESS_VERIFICATION_API_KEY'], // This is the default and can be omitted
+const client = new PostGrid({
+  printMailAPIKey: process.env['POSTGRID_PRINT_MAIL_API_KEY'], // This is the default and can be omitted
 });
 
-const response = await client.addressVerification.verify({ address: 'address' });
+const contact = await client.printMail.contacts.create({
+  addressLine1: 'addressLine1',
+  countryCode: 'countryCode',
+  firstName: 'firstName',
+});
 
-console.log(response.data);
+console.log(contact.id);
 ```
 
 ### Request & Response types
@@ -40,14 +44,18 @@ This library includes TypeScript definitions for all request params and response
 
 <!-- prettier-ignore -->
 ```ts
-import Postgrid from 'postgrid';
+import PostGrid from 'postgrid';
 
-const client = new Postgrid({
-  addressVerificationAPIKey: process.env['POSTGRID_ADDRESS_VERIFICATION_API_KEY'], // This is the default and can be omitted
+const client = new PostGrid({
+  printMailAPIKey: process.env['POSTGRID_PRINT_MAIL_API_KEY'], // This is the default and can be omitted
 });
 
-const params: Postgrid.AddressVerificationVerifyParams = { address: 'address' };
-const response: Postgrid.AddressVerificationVerifyResponse = await client.addressVerification.verify(params);
+const params: PostGrid.PrintMail.ContactCreateParams = {
+  addressLine1: 'addressLine1',
+  countryCode: 'countryCode',
+  firstName: 'firstName',
+};
+const contact: PostGrid.PrintMail.Contact = await client.printMail.contacts.create(params);
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -60,15 +68,17 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-const response = await client.addressVerification.verify({ address: 'address' }).catch(async (err) => {
-  if (err instanceof Postgrid.APIError) {
-    console.log(err.status); // 400
-    console.log(err.name); // BadRequestError
-    console.log(err.headers); // {server: 'nginx', ...}
-  } else {
-    throw err;
-  }
-});
+const contact = await client.printMail.contacts
+  .create({ addressLine1: 'addressLine1', countryCode: 'countryCode', firstName: 'firstName' })
+  .catch(async (err) => {
+    if (err instanceof PostGrid.APIError) {
+      console.log(err.status); // 400
+      console.log(err.name); // BadRequestError
+      console.log(err.headers); // {server: 'nginx', ...}
+    } else {
+      throw err;
+    }
+  });
 ```
 
 Error codes are as follows:
@@ -95,12 +105,12 @@ You can use the `maxRetries` option to configure or disable this:
 <!-- prettier-ignore -->
 ```js
 // Configure the default for all requests:
-const client = new Postgrid({
+const client = new PostGrid({
   maxRetries: 0, // default is 2
 });
 
 // Or, configure per-request:
-await client.addressVerification.verify({ address: 'address' }, {
+await client.printMail.contacts.create({ addressLine1: 'addressLine1', countryCode: 'countryCode', firstName: 'firstName' }, {
   maxRetries: 5,
 });
 ```
@@ -112,12 +122,12 @@ Requests time out after 1 minute by default. You can configure this with a `time
 <!-- prettier-ignore -->
 ```ts
 // Configure the default for all requests:
-const client = new Postgrid({
+const client = new PostGrid({
   timeout: 20 * 1000, // 20 seconds (default is 1 minute)
 });
 
 // Override per-request:
-await client.addressVerification.verify({ address: 'address' }, {
+await client.printMail.contacts.create({ addressLine1: 'addressLine1', countryCode: 'countryCode', firstName: 'firstName' }, {
   timeout: 5 * 1000,
 });
 ```
@@ -138,17 +148,19 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 
 <!-- prettier-ignore -->
 ```ts
-const client = new Postgrid();
+const client = new PostGrid();
 
-const response = await client.addressVerification.verify({ address: 'address' }).asResponse();
+const response = await client.printMail.contacts
+  .create({ addressLine1: 'addressLine1', countryCode: 'countryCode', firstName: 'firstName' })
+  .asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: response, response: raw } = await client.addressVerification
-  .verify({ address: 'address' })
+const { data: contact, response: raw } = await client.printMail.contacts
+  .create({ addressLine1: 'addressLine1', countryCode: 'countryCode', firstName: 'firstName' })
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
-console.log(response.data);
+console.log(contact.id);
 ```
 
 ### Logging
@@ -161,13 +173,13 @@ console.log(response.data);
 
 The log level can be configured in two ways:
 
-1. Via the `POSTGRID_LOG` environment variable
+1. Via the `POST_GRID_LOG` environment variable
 2. Using the `logLevel` client option (overrides the environment variable if set)
 
 ```ts
-import Postgrid from 'postgrid';
+import PostGrid from 'postgrid';
 
-const client = new Postgrid({
+const client = new PostGrid({
   logLevel: 'debug', // Show all log messages
 });
 ```
@@ -193,13 +205,13 @@ When providing a custom logger, the `logLevel` option still controls which messa
 below the configured level will not be sent to your logger.
 
 ```ts
-import Postgrid from 'postgrid';
+import PostGrid from 'postgrid';
 import pino from 'pino';
 
 const logger = pino();
 
-const client = new Postgrid({
-  logger: logger.child({ name: 'Postgrid' }),
+const client = new PostGrid({
+  logger: logger.child({ name: 'PostGrid' }),
   logLevel: 'debug', // Send all messages to pino, allowing it to filter
 });
 ```
@@ -228,7 +240,7 @@ parameter. This library doesn't validate at runtime that the request matches the
 send will be sent as-is.
 
 ```ts
-client.addressVerification.verify({
+client.printMail.contacts.create({
   // ...
   // @ts-expect-error baz is not yet public
   baz: 'undocumented option',
@@ -262,10 +274,10 @@ globalThis.fetch = fetch;
 Or pass it to the client:
 
 ```ts
-import Postgrid from 'postgrid';
+import PostGrid from 'postgrid';
 import fetch from 'my-fetch';
 
-const client = new Postgrid({ fetch });
+const client = new PostGrid({ fetch });
 ```
 
 ### Fetch options
@@ -273,9 +285,9 @@ const client = new Postgrid({ fetch });
 If you want to set custom `fetch` options without overriding the `fetch` function, you can provide a `fetchOptions` object when instantiating the client or making a request. (Request-specific options override client options.)
 
 ```ts
-import Postgrid from 'postgrid';
+import PostGrid from 'postgrid';
 
-const client = new Postgrid({
+const client = new PostGrid({
   fetchOptions: {
     // `RequestInit` options
   },
@@ -290,11 +302,11 @@ options to requests:
 <img src="https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/node.svg" align="top" width="18" height="21"> **Node** <sup>[[docs](https://github.com/nodejs/undici/blob/main/docs/docs/api/ProxyAgent.md#example---proxyagent-with-fetch)]</sup>
 
 ```ts
-import Postgrid from 'postgrid';
+import PostGrid from 'postgrid';
 import * as undici from 'undici';
 
 const proxyAgent = new undici.ProxyAgent('http://localhost:8888');
-const client = new Postgrid({
+const client = new PostGrid({
   fetchOptions: {
     dispatcher: proxyAgent,
   },
@@ -304,9 +316,9 @@ const client = new Postgrid({
 <img src="https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/bun.svg" align="top" width="18" height="21"> **Bun** <sup>[[docs](https://bun.sh/guides/http/proxy)]</sup>
 
 ```ts
-import Postgrid from 'postgrid';
+import PostGrid from 'postgrid';
 
-const client = new Postgrid({
+const client = new PostGrid({
   fetchOptions: {
     proxy: 'http://localhost:8888',
   },
@@ -316,10 +328,10 @@ const client = new Postgrid({
 <img src="https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/deno.svg" align="top" width="18" height="21"> **Deno** <sup>[[docs](https://docs.deno.com/api/deno/~/Deno.createHttpClient)]</sup>
 
 ```ts
-import Postgrid from 'npm:postgrid';
+import PostGrid from 'npm:postgrid';
 
 const httpClient = Deno.createHttpClient({ proxy: { url: 'http://localhost:8888' } });
-const client = new Postgrid({
+const client = new PostGrid({
   fetchOptions: {
     client: httpClient,
   },

@@ -3,7 +3,7 @@
 import { APIPromise } from 'postgrid/core/api-promise';
 
 import util from 'node:util';
-import Postgrid from 'postgrid';
+import PostGrid from 'postgrid';
 import { APIUserAbortError } from 'postgrid';
 const defaultFetch = fetch;
 
@@ -20,7 +20,7 @@ describe('instantiate client', () => {
   });
 
   describe('defaultHeaders', () => {
-    const client = new Postgrid({
+    const client = new PostGrid({
       baseURL: 'http://localhost:5000/',
       defaultHeaders: { 'X-My-Default-Header': '2' },
       addressVerificationAPIKey: 'My Address Verification API Key',
@@ -55,14 +55,14 @@ describe('instantiate client', () => {
 
     beforeEach(() => {
       process.env = { ...env };
-      process.env['POSTGRID_LOG'] = undefined;
+      process.env['POST_GRID_LOG'] = undefined;
     });
 
     afterEach(() => {
       process.env = env;
     });
 
-    const forceAPIResponseForClient = async (client: Postgrid) => {
+    const forceAPIResponseForClient = async (client: PostGrid) => {
       await new APIPromise(
         client,
         Promise.resolve({
@@ -88,7 +88,7 @@ describe('instantiate client', () => {
         error: jest.fn(),
       };
 
-      const client = new Postgrid({
+      const client = new PostGrid({
         logger: logger,
         logLevel: 'debug',
         addressVerificationAPIKey: 'My Address Verification API Key',
@@ -100,7 +100,7 @@ describe('instantiate client', () => {
     });
 
     test('default logLevel is warn', async () => {
-      const client = new Postgrid({
+      const client = new PostGrid({
         addressVerificationAPIKey: 'My Address Verification API Key',
         printMailAPIKey: 'My Print Mail API Key',
       });
@@ -116,7 +116,7 @@ describe('instantiate client', () => {
         error: jest.fn(),
       };
 
-      const client = new Postgrid({
+      const client = new PostGrid({
         logger: logger,
         logLevel: 'info',
         addressVerificationAPIKey: 'My Address Verification API Key',
@@ -136,8 +136,8 @@ describe('instantiate client', () => {
         error: jest.fn(),
       };
 
-      process.env['POSTGRID_LOG'] = 'debug';
-      const client = new Postgrid({
+      process.env['POST_GRID_LOG'] = 'debug';
+      const client = new PostGrid({
         logger: logger,
         addressVerificationAPIKey: 'My Address Verification API Key',
         printMailAPIKey: 'My Print Mail API Key',
@@ -157,15 +157,15 @@ describe('instantiate client', () => {
         error: jest.fn(),
       };
 
-      process.env['POSTGRID_LOG'] = 'not a log level';
-      const client = new Postgrid({
+      process.env['POST_GRID_LOG'] = 'not a log level';
+      const client = new PostGrid({
         logger: logger,
         addressVerificationAPIKey: 'My Address Verification API Key',
         printMailAPIKey: 'My Print Mail API Key',
       });
       expect(client.logLevel).toBe('warn');
       expect(warnMock).toHaveBeenCalledWith(
-        'process.env[\'POSTGRID_LOG\'] was set to "not a log level", expected one of ["off","error","warn","info","debug"]',
+        'process.env[\'POST_GRID_LOG\'] was set to "not a log level", expected one of ["off","error","warn","info","debug"]',
       );
     });
 
@@ -178,8 +178,8 @@ describe('instantiate client', () => {
         error: jest.fn(),
       };
 
-      process.env['POSTGRID_LOG'] = 'debug';
-      const client = new Postgrid({
+      process.env['POST_GRID_LOG'] = 'debug';
+      const client = new PostGrid({
         logger: logger,
         logLevel: 'off',
         addressVerificationAPIKey: 'My Address Verification API Key',
@@ -199,8 +199,8 @@ describe('instantiate client', () => {
         error: jest.fn(),
       };
 
-      process.env['POSTGRID_LOG'] = 'not a log level';
-      const client = new Postgrid({
+      process.env['POST_GRID_LOG'] = 'not a log level';
+      const client = new PostGrid({
         logger: logger,
         logLevel: 'debug',
         addressVerificationAPIKey: 'My Address Verification API Key',
@@ -213,7 +213,7 @@ describe('instantiate client', () => {
 
   describe('defaultQuery', () => {
     test('with null query params given', () => {
-      const client = new Postgrid({
+      const client = new PostGrid({
         baseURL: 'http://localhost:5000/',
         defaultQuery: { apiVersion: 'foo' },
         addressVerificationAPIKey: 'My Address Verification API Key',
@@ -223,7 +223,7 @@ describe('instantiate client', () => {
     });
 
     test('multiple default query params', () => {
-      const client = new Postgrid({
+      const client = new PostGrid({
         baseURL: 'http://localhost:5000/',
         defaultQuery: { apiVersion: 'foo', hello: 'world' },
         addressVerificationAPIKey: 'My Address Verification API Key',
@@ -233,7 +233,7 @@ describe('instantiate client', () => {
     });
 
     test('overriding with `undefined`', () => {
-      const client = new Postgrid({
+      const client = new PostGrid({
         baseURL: 'http://localhost:5000/',
         defaultQuery: { hello: 'world' },
         addressVerificationAPIKey: 'My Address Verification API Key',
@@ -244,7 +244,7 @@ describe('instantiate client', () => {
   });
 
   test('custom fetch', async () => {
-    const client = new Postgrid({
+    const client = new PostGrid({
       baseURL: 'http://localhost:5000/',
       addressVerificationAPIKey: 'My Address Verification API Key',
       printMailAPIKey: 'My Print Mail API Key',
@@ -263,7 +263,7 @@ describe('instantiate client', () => {
 
   test('explicit global fetch', async () => {
     // make sure the global fetch type is assignable to our Fetch type
-    const client = new Postgrid({
+    const client = new PostGrid({
       baseURL: 'http://localhost:5000/',
       addressVerificationAPIKey: 'My Address Verification API Key',
       printMailAPIKey: 'My Print Mail API Key',
@@ -272,7 +272,7 @@ describe('instantiate client', () => {
   });
 
   test('custom signal', async () => {
-    const client = new Postgrid({
+    const client = new PostGrid({
       baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
       addressVerificationAPIKey: 'My Address Verification API Key',
       printMailAPIKey: 'My Print Mail API Key',
@@ -305,7 +305,7 @@ describe('instantiate client', () => {
       return new Response(JSON.stringify({}), { headers: { 'Content-Type': 'application/json' } });
     };
 
-    const client = new Postgrid({
+    const client = new PostGrid({
       baseURL: 'http://localhost:5000/',
       addressVerificationAPIKey: 'My Address Verification API Key',
       printMailAPIKey: 'My Print Mail API Key',
@@ -318,7 +318,7 @@ describe('instantiate client', () => {
 
   describe('baseUrl', () => {
     test('trailing slash', () => {
-      const client = new Postgrid({
+      const client = new PostGrid({
         baseURL: 'http://localhost:5000/custom/path/',
         addressVerificationAPIKey: 'My Address Verification API Key',
         printMailAPIKey: 'My Print Mail API Key',
@@ -327,7 +327,7 @@ describe('instantiate client', () => {
     });
 
     test('no trailing slash', () => {
-      const client = new Postgrid({
+      const client = new PostGrid({
         baseURL: 'http://localhost:5000/custom/path',
         addressVerificationAPIKey: 'My Address Verification API Key',
         printMailAPIKey: 'My Print Mail API Key',
@@ -336,11 +336,11 @@ describe('instantiate client', () => {
     });
 
     afterEach(() => {
-      process.env['POSTGRID_BASE_URL'] = undefined;
+      process.env['POST_GRID_BASE_URL'] = undefined;
     });
 
     test('explicit option', () => {
-      const client = new Postgrid({
+      const client = new PostGrid({
         baseURL: 'https://example.com',
         addressVerificationAPIKey: 'My Address Verification API Key',
         printMailAPIKey: 'My Print Mail API Key',
@@ -349,8 +349,8 @@ describe('instantiate client', () => {
     });
 
     test('env variable', () => {
-      process.env['POSTGRID_BASE_URL'] = 'https://example.com/from_env';
-      const client = new Postgrid({
+      process.env['POST_GRID_BASE_URL'] = 'https://example.com/from_env';
+      const client = new PostGrid({
         addressVerificationAPIKey: 'My Address Verification API Key',
         printMailAPIKey: 'My Print Mail API Key',
       });
@@ -358,8 +358,8 @@ describe('instantiate client', () => {
     });
 
     test('empty env variable', () => {
-      process.env['POSTGRID_BASE_URL'] = ''; // empty
-      const client = new Postgrid({
+      process.env['POST_GRID_BASE_URL'] = ''; // empty
+      const client = new PostGrid({
         addressVerificationAPIKey: 'My Address Verification API Key',
         printMailAPIKey: 'My Print Mail API Key',
       });
@@ -367,8 +367,8 @@ describe('instantiate client', () => {
     });
 
     test('blank env variable', () => {
-      process.env['POSTGRID_BASE_URL'] = '  '; // blank
-      const client = new Postgrid({
+      process.env['POST_GRID_BASE_URL'] = '  '; // blank
+      const client = new PostGrid({
         addressVerificationAPIKey: 'My Address Verification API Key',
         printMailAPIKey: 'My Print Mail API Key',
       });
@@ -376,7 +376,7 @@ describe('instantiate client', () => {
     });
 
     test('in request options', () => {
-      const client = new Postgrid({
+      const client = new PostGrid({
         addressVerificationAPIKey: 'My Address Verification API Key',
         printMailAPIKey: 'My Print Mail API Key',
       });
@@ -386,7 +386,7 @@ describe('instantiate client', () => {
     });
 
     test('in request options overridden by client options', () => {
-      const client = new Postgrid({
+      const client = new PostGrid({
         addressVerificationAPIKey: 'My Address Verification API Key',
         printMailAPIKey: 'My Print Mail API Key',
         baseURL: 'http://localhost:5000/client',
@@ -397,8 +397,8 @@ describe('instantiate client', () => {
     });
 
     test('in request options overridden by env variable', () => {
-      process.env['POSTGRID_BASE_URL'] = 'http://localhost:5000/env';
-      const client = new Postgrid({
+      process.env['POST_GRID_BASE_URL'] = 'http://localhost:5000/env';
+      const client = new PostGrid({
         addressVerificationAPIKey: 'My Address Verification API Key',
         printMailAPIKey: 'My Print Mail API Key',
       });
@@ -409,7 +409,7 @@ describe('instantiate client', () => {
   });
 
   test('maxRetries option is correctly set', () => {
-    const client = new Postgrid({
+    const client = new PostGrid({
       maxRetries: 4,
       addressVerificationAPIKey: 'My Address Verification API Key',
       printMailAPIKey: 'My Print Mail API Key',
@@ -417,7 +417,7 @@ describe('instantiate client', () => {
     expect(client.maxRetries).toEqual(4);
 
     // default
-    const client2 = new Postgrid({
+    const client2 = new PostGrid({
       addressVerificationAPIKey: 'My Address Verification API Key',
       printMailAPIKey: 'My Print Mail API Key',
     });
@@ -426,7 +426,7 @@ describe('instantiate client', () => {
 
   describe('withOptions', () => {
     test('creates a new client with overridden options', async () => {
-      const client = new Postgrid({
+      const client = new PostGrid({
         baseURL: 'http://localhost:5000/',
         maxRetries: 3,
         addressVerificationAPIKey: 'My Address Verification API Key',
@@ -452,7 +452,7 @@ describe('instantiate client', () => {
     });
 
     test('inherits options from the parent client', async () => {
-      const client = new Postgrid({
+      const client = new PostGrid({
         baseURL: 'http://localhost:5000/',
         defaultHeaders: { 'X-Test-Header': 'test-value' },
         defaultQuery: { 'test-param': 'test-value' },
@@ -472,7 +472,7 @@ describe('instantiate client', () => {
     });
 
     test('respects runtime property changes when creating new client', () => {
-      const client = new Postgrid({
+      const client = new PostGrid({
         baseURL: 'http://localhost:5000/',
         timeout: 1000,
         addressVerificationAPIKey: 'My Address Verification API Key',
@@ -507,7 +507,7 @@ describe('instantiate client', () => {
     // set options via env var
     process.env['POSTGRID_ADDRESS_VERIFICATION_API_KEY'] = 'My Address Verification API Key';
     process.env['POSTGRID_PRINT_MAIL_API_KEY'] = 'My Print Mail API Key';
-    const client = new Postgrid();
+    const client = new PostGrid();
     expect(client.addressVerificationAPIKey).toBe('My Address Verification API Key');
     expect(client.printMailAPIKey).toBe('My Print Mail API Key');
   });
@@ -516,7 +516,7 @@ describe('instantiate client', () => {
     // set options via env var
     process.env['POSTGRID_ADDRESS_VERIFICATION_API_KEY'] = 'another My Address Verification API Key';
     process.env['POSTGRID_PRINT_MAIL_API_KEY'] = 'another My Print Mail API Key';
-    const client = new Postgrid({
+    const client = new PostGrid({
       addressVerificationAPIKey: 'My Address Verification API Key',
       printMailAPIKey: 'My Print Mail API Key',
     });
@@ -526,7 +526,7 @@ describe('instantiate client', () => {
 });
 
 describe('request building', () => {
-  const client = new Postgrid({
+  const client = new PostGrid({
     addressVerificationAPIKey: 'My Address Verification API Key',
     printMailAPIKey: 'My Print Mail API Key',
   });
@@ -548,7 +548,7 @@ describe('request building', () => {
 });
 
 describe('default encoder', () => {
-  const client = new Postgrid({
+  const client = new PostGrid({
     addressVerificationAPIKey: 'My Address Verification API Key',
     printMailAPIKey: 'My Print Mail API Key',
   });
@@ -636,7 +636,7 @@ describe('retries', () => {
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
 
-    const client = new Postgrid({
+    const client = new PostGrid({
       addressVerificationAPIKey: 'My Address Verification API Key',
       printMailAPIKey: 'My Print Mail API Key',
       timeout: 10,
@@ -671,7 +671,7 @@ describe('retries', () => {
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
 
-    const client = new Postgrid({
+    const client = new PostGrid({
       addressVerificationAPIKey: 'My Address Verification API Key',
       printMailAPIKey: 'My Print Mail API Key',
       fetch: testFetch,
@@ -700,7 +700,7 @@ describe('retries', () => {
       capturedRequest = init;
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
-    const client = new Postgrid({
+    const client = new PostGrid({
       addressVerificationAPIKey: 'My Address Verification API Key',
       printMailAPIKey: 'My Print Mail API Key',
       fetch: testFetch,
@@ -734,7 +734,7 @@ describe('retries', () => {
       capturedRequest = init;
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
-    const client = new Postgrid({
+    const client = new PostGrid({
       addressVerificationAPIKey: 'My Address Verification API Key',
       printMailAPIKey: 'My Print Mail API Key',
       fetch: testFetch,
@@ -768,7 +768,7 @@ describe('retries', () => {
       capturedRequest = init;
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
-    const client = new Postgrid({
+    const client = new PostGrid({
       addressVerificationAPIKey: 'My Address Verification API Key',
       printMailAPIKey: 'My Print Mail API Key',
       fetch: testFetch,
@@ -803,7 +803,7 @@ describe('retries', () => {
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
 
-    const client = new Postgrid({
+    const client = new PostGrid({
       addressVerificationAPIKey: 'My Address Verification API Key',
       printMailAPIKey: 'My Print Mail API Key',
       fetch: testFetch,
@@ -837,7 +837,7 @@ describe('retries', () => {
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
 
-    const client = new Postgrid({
+    const client = new PostGrid({
       addressVerificationAPIKey: 'My Address Verification API Key',
       printMailAPIKey: 'My Print Mail API Key',
       fetch: testFetch,
