@@ -328,6 +328,7 @@ export class PostGrid {
 
     request.headers = new Headers({
       ...request.headers,
+      ...Object.fromEntries(Object.entries(options.headers ?? {})),
       ['x-api-key']: apiKey,
     });
   }
