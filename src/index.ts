@@ -8,6 +8,7 @@ import * as Pagination from './pagination';
 import { type ListParams, ListResponse } from './pagination';
 import * as Uploads from './uploads';
 import * as API from './resources/index';
+import { Addver, AddverVerifyAddressParams, AddverVerifyAddressResponse } from './resources/addver';
 import {
   BankAccount,
   BankAccountCreateParams,
@@ -49,6 +50,11 @@ import {
   Contacts,
   ContactsList,
 } from './resources/contacts';
+import {
+  IntlAddver,
+  IntlAddverVerifyAddressParams,
+  IntlAddverVerifyAddressResponse,
+} from './resources/intl-addver';
 import {
   Letter,
   LetterCreateParams,
@@ -280,6 +286,8 @@ export class PostGrid extends Core.APIClient {
   mailingLists: API.MailingLists = new API.MailingLists(this);
   orderProfiles: API.OrderProfiles = new API.OrderProfiles(this);
   subOrganizations: API.SubOrganizations = new API.SubOrganizations(this);
+  addver: API.Addver = new API.Addver(this);
+  intlAddver: API.IntlAddver = new API.IntlAddver(this);
 
   /**
    * Check whether the base URL is set to its default.
@@ -392,6 +400,8 @@ PostGrid.MailingListListResponsesList = MailingListListResponsesList;
 PostGrid.OrderProfiles = OrderProfiles;
 PostGrid.SubOrganizations = SubOrganizations;
 PostGrid.SubOrganizationListResponsesList = SubOrganizationListResponsesList;
+PostGrid.Addver = Addver;
+PostGrid.IntlAddver = IntlAddver;
 
 export declare namespace PostGrid {
   export type RequestOptions = Core.RequestOptions;
@@ -553,6 +563,18 @@ export declare namespace PostGrid {
     type SubOrganizationCreateParams as SubOrganizationCreateParams,
     type SubOrganizationListParams as SubOrganizationListParams,
     type SubOrganizationListUsersParams as SubOrganizationListUsersParams,
+  };
+
+  export {
+    Addver as Addver,
+    type AddverVerifyAddressResponse as AddverVerifyAddressResponse,
+    type AddverVerifyAddressParams as AddverVerifyAddressParams,
+  };
+
+  export {
+    IntlAddver as IntlAddver,
+    type IntlAddverVerifyAddressResponse as IntlAddverVerifyAddressResponse,
+    type IntlAddverVerifyAddressParams as IntlAddverVerifyAddressParams,
   };
 
   export type Cancellation = API.Cancellation;
