@@ -25,7 +25,7 @@ export default tseslint.config(
         {
           patterns: [
             {
-              regex: '^postgrid-node(/.*)?',
+              regex: '^postgrid(/.*)?',
               message: 'Use a relative import, not a package import.',
             },
           ],

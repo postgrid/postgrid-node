@@ -5,8 +5,8 @@
   "compilerOptions": {
     "rootDir": "./dist/src",
     "paths": {
-      "postgrid-node/*": ["./dist/src/*"],
-      "postgrid-node": ["./dist/src/index.ts"]
+      "postgrid/*": ["./dist/src/*"],
+      "postgrid": ["./dist/src/index.ts"]
     },
     "noEmit": false,
     "declaration": true,

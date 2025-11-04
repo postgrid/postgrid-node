@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { type PostGrid } from '../client';
+import { type Postgrid } from '../client';
 
 import { type PromiseOrValue } from '../internal/types';
 import { APIResponseProps, defaultParseResponse } from '../internal/parse';
@@ -11,13 +11,13 @@ import { APIResponseProps, defaultParseResponse } from '../internal/parse';
  */
 export class APIPromise<T> extends Promise<T> {
   private parsedPromise: Promise<T> | undefined;
-  #client: PostGrid;
+  #client: Postgrid;
 
   constructor(
-    client: PostGrid,
+    client: Postgrid,
     private responsePromise: Promise<APIResponseProps>,
     private parseResponse: (
-      client: PostGrid,
+      client: Postgrid,
       props: APIResponseProps,
     ) => PromiseOrValue<T> = defaultParseResponse,
   ) {
