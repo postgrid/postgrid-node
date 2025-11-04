@@ -1,5 +1,55 @@
 # Changelog
 
+## 0.1.0-alpha.6 (2025-11-04)
+
+Full Changelog: [v0.1.0-alpha.5...v0.1.0-alpha.6](https://github.com/postgrid/postgrid-node/compare/v0.1.0-alpha.5...v0.1.0-alpha.6)
+
+### Features
+
+* **api:** manual updates ([3118767](https://github.com/postgrid/postgrid-node/commit/3118767f304a3eaaf80948053d04b52c63e7bbf1))
+* **api:** manual updates ([7e29b7c](https://github.com/postgrid/postgrid-node/commit/7e29b7c3b4ec5b8d989a4d53e014e8c5b3f75278))
+* **api:** manual updates ([8fbab4b](https://github.com/postgrid/postgrid-node/commit/8fbab4b392ec0a773a535fbf77d0f973e185f930))
+* **api:** manual updates ([358526a](https://github.com/postgrid/postgrid-node/commit/358526a9799d45e626ca09dd1456d72df5854da4))
+* **api:** manual updates ([6c6f765](https://github.com/postgrid/postgrid-node/commit/6c6f765a5344da461466d54eff27f7be2b3f66cf))
+* **api:** manual updates ([b4e2f75](https://github.com/postgrid/postgrid-node/commit/b4e2f754489d343477e3aacf7f58622b2fb00f40))
+* **api:** manual updates ([0b3222d](https://github.com/postgrid/postgrid-node/commit/0b3222d1182fa3e1a42d81607e0f18bb70369178))
+* **api:** manual updates ([af5db50](https://github.com/postgrid/postgrid-node/commit/af5db50eb9fd8733cbbed0430cdebadd794241a1))
+* **api:** manual updates ([7affe60](https://github.com/postgrid/postgrid-node/commit/7affe6098d10d0fcf531f30de6f511e3759cbacf))
+* **api:** manual updates to merge PM and AV ([9692120](https://github.com/postgrid/postgrid-node/commit/9692120e792062a8a9d05456a19cc6036e707045))
+* **api:** support both API auth schemes ([8dc1bf5](https://github.com/postgrid/postgrid-node/commit/8dc1bf5d1b5ebfe51a3e525d3787606e49369f54))
+
+
+### Bug Fixes
+
+* **api:** Examples for AV ([2e0d345](https://github.com/postgrid/postgrid-node/commit/2e0d34544da280ab9dca98c305f12bc1f80e28a7))
+* coerce nullable values to undefined ([16b5f52](https://github.com/postgrid/postgrid-node/commit/16b5f52b376752133d92213fcdc48001c3d723b5))
+
+
+### Performance Improvements
+
+* faster formatting ([669e461](https://github.com/postgrid/postgrid-node/commit/669e4618266377faf093b575d65a1e06db6fb957))
+
+
+### Chores
+
+* **api:** more doc updates ([8508c54](https://github.com/postgrid/postgrid-node/commit/8508c54e78645a4373d1d7d916d5e1f6cf9b64e2))
+* **api:** more docs ([9f44e29](https://github.com/postgrid/postgrid-node/commit/9f44e29c300d7df16f65e2dfef7c3ba73afc46d5))
+* **api:** rename API endpoints for AV ([548d9e3](https://github.com/postgrid/postgrid-node/commit/548d9e3085ecb23b038da86ad74284545494f101))
+* **api:** Update OpenAPI schema ([2a29dbc](https://github.com/postgrid/postgrid-node/commit/2a29dbc33aea71d4348e295c203c5c6166b07531))
+* **deps:** update dependency node-fetch to v2.6.13 ([9d18c47](https://github.com/postgrid/postgrid-node/commit/9d18c477e6993a11e5e99a5f1767ccb6f5ca5cd7))
+* do not install brew dependencies in ./scripts/bootstrap by default ([92cd0ec](https://github.com/postgrid/postgrid-node/commit/92cd0ec15019dc755fd2c5d25000dc79a26e9200))
+* **internal:** codegen related update ([b00d3ff](https://github.com/postgrid/postgrid-node/commit/b00d3ffeb99b8a74d7d372bd066e8a8b808cd519))
+* **internal:** codegen related update ([a8ec314](https://github.com/postgrid/postgrid-node/commit/a8ec314e8edbe03fab399e323b9b73912749172b))
+* **internal:** fix incremental formatting in some cases ([2e13552](https://github.com/postgrid/postgrid-node/commit/2e135520c1c15d414dec4ee05377644613a2be20))
+* **internal:** formatting change ([36db802](https://github.com/postgrid/postgrid-node/commit/36db802aa9e9c4eccf281ab0f846fb039ea4152d))
+* **internal:** ignore .eslintcache ([a0a4bd3](https://github.com/postgrid/postgrid-node/commit/a0a4bd3b359f8e1f97b8010ef70aade58c3b701f))
+* **internal:** remove .eslintcache ([c2a1b69](https://github.com/postgrid/postgrid-node/commit/c2a1b697036a5d99876e5c14a748a004f45d581b))
+* **internal:** remove deprecated `compilerOptions.baseUrl` from tsconfig.json ([867309f](https://github.com/postgrid/postgrid-node/commit/867309fd42d75fdca870c4dbc532769626408428))
+* **internal:** update comment in script ([0f4e66e](https://github.com/postgrid/postgrid-node/commit/0f4e66ee5aaf00c64d332c1924062f024ae1df13))
+* **internal:** use npm pack for build uploads ([db5fba9](https://github.com/postgrid/postgrid-node/commit/db5fba95b07d3e51da3e54005a46d186f2755c40))
+* update @stainless-api/prism-cli to v5.15.0 ([4640767](https://github.com/postgrid/postgrid-node/commit/46407677b2142f0a99834bd5a626a119f36fe463))
+* update CI script ([1adf9d4](https://github.com/postgrid/postgrid-node/commit/1adf9d4dc106b6c31f99e709017b1b85070ac8a5))
+
 ## 0.1.0-alpha.5 (2025-08-07)
 
 Full Changelog: [v0.1.0-alpha.4...v0.1.0-alpha.5](https://github.com/postgrid/postgrid-node/compare/v0.1.0-alpha.4...v0.1.0-alpha.5)
