@@ -11,8 +11,8 @@ export {
   Reports,
   type DeletedResponse,
   type Report,
-  type ReportRetrieveResponse,
+  type ReportListResponse,
   type ReportUpdateParams,
-  type ReportRetrieveParams,
+  type ReportListParams,
 } from './reports';
 export { Samples, type ReportSample, type ReportSampleCreateBase, type SampleCreateParams } from './samples';

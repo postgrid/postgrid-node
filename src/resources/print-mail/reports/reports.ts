@@ -49,6 +49,21 @@ export class Reports extends APIResource {
   }
 
   /**
+   * Retrieve a list of saved reports for your organization.
+   *
+   * @example
+   * ```ts
+   * const reports = await client.printMail.reports.list();
+   * ```
+   */
+  list(
+    query: ReportListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<ReportListResponse> {
+    return this._client.get('/print-mail/v1/reports', { query, ...options });
+  }
+
+  /**
    * Delete a saved report definition. This action cannot be undone. Associated
    * exports are not automatically deleted.
    *
@@ -60,21 +75,6 @@ export class Reports extends APIResource {
    */
   delete(id: string, options?: RequestOptions): APIPromise<DeletedResponse> {
     return this._client.delete(path`/print-mail/v1/reports/${id}`, options);
-  }
-
-  /**
-   * Retrieve a list of saved reports for your organization.
-   *
-   * @example
-   * ```ts
-   * const response = await client.printMail.reports.retrieve();
-   * ```
-   */
-  retrieve(
-    query: ReportRetrieveParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<ReportRetrieveResponse> {
-    return this._client.get('/print-mail/v1/reports/', { query, ...options });
   }
 }
 
@@ -141,7 +141,7 @@ export interface Report {
 /**
  * Represents a list of Reports.
  */
-export interface ReportRetrieveResponse {
+export interface ReportListResponse {
   data: Array<Report>;
 
   limit: number;
@@ -170,7 +170,7 @@ export interface ReportUpdateParams {
   sqlQuery?: string;
 }
 
-export interface ReportRetrieveParams {
+export interface ReportListParams {
   limit?: number;
 
   /**
@@ -192,9 +192,9 @@ export declare namespace Reports {
   export {
     type DeletedResponse as DeletedResponse,
     type Report as Report,
-    type ReportRetrieveResponse as ReportRetrieveResponse,
+    type ReportListResponse as ReportListResponse,
     type ReportUpdateParams as ReportUpdateParams,
-    type ReportRetrieveParams as ReportRetrieveParams,
+    type ReportListParams as ReportListParams,
   };
 
   export {

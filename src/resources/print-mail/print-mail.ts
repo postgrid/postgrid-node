@@ -115,8 +115,8 @@ import * as SubOrganizationsAPI from './sub-organizations';
 import {
   EmailPreferences,
   SubOrganization,
-  SubOrganizationRetrieveParams,
-  SubOrganizationRetrieveResponse,
+  SubOrganizationListParams,
+  SubOrganizationListResponse,
   SubOrganizationRetrieveUsersParams,
   SubOrganizationRetrieveUsersResponse,
   SubOrganizationUpdateParams,
@@ -139,8 +139,8 @@ import * as ReportsAPI from './reports/reports';
 import {
   DeletedResponse,
   Report,
-  ReportRetrieveParams,
-  ReportRetrieveResponse,
+  ReportListParams,
+  ReportListResponse,
   ReportUpdateParams,
   Reports,
 } from './reports/reports';
@@ -289,9 +289,9 @@ export declare namespace PrintMail {
     Reports as Reports,
     type DeletedResponse as DeletedResponse,
     type Report as Report,
-    type ReportRetrieveResponse as ReportRetrieveResponse,
+    type ReportListResponse as ReportListResponse,
     type ReportUpdateParams as ReportUpdateParams,
-    type ReportRetrieveParams as ReportRetrieveParams,
+    type ReportListParams as ReportListParams,
   };
 
   export {
@@ -308,10 +308,10 @@ export declare namespace PrintMail {
     type EmailPreferences as EmailPreferences,
     type SubOrganization as SubOrganization,
     type SubOrganizationUpdateResponse as SubOrganizationUpdateResponse,
-    type SubOrganizationRetrieveResponse as SubOrganizationRetrieveResponse,
+    type SubOrganizationListResponse as SubOrganizationListResponse,
     type SubOrganizationRetrieveUsersResponse as SubOrganizationRetrieveUsersResponse,
     type SubOrganizationUpdateParams as SubOrganizationUpdateParams,
-    type SubOrganizationRetrieveParams as SubOrganizationRetrieveParams,
+    type SubOrganizationListParams as SubOrganizationListParams,
     type SubOrganizationRetrieveUsersParams as SubOrganizationRetrieveUsersParams,
   };
 
