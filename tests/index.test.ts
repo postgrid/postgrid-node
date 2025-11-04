@@ -467,10 +467,7 @@ describe('idempotency', () => {
       baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
       addressVerificationAPIKey: 'My Address Verification API Key',
     });
-    await client.contacts.create(
-      { addressLine1: 'addressLine1', countryCode: 'countryCode', firstName: 'firstName' },
-      { idempotencyKey: 'my-idempotency-key' },
-    );
+    await client.addver.createVerification({ address: 'address' }, { idempotencyKey: 'my-idempotency-key' });
   });
 });
 
