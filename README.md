@@ -29,7 +29,7 @@ const client = new Postgrid({
   addressVerificationAPIKey: process.env['POSTGRID_ADDRESS_VERIFICATION_API_KEY'], // This is the default and can be omitted
 });
 
-const response = await client.addver.createVerification({ address: 'address' });
+const response = await client.addressVerification.verify({ address: 'address' });
 
 console.log(response.data);
 ```
@@ -46,8 +46,8 @@ const client = new Postgrid({
   addressVerificationAPIKey: process.env['POSTGRID_ADDRESS_VERIFICATION_API_KEY'], // This is the default and can be omitted
 });
 
-const params: Postgrid.AddverCreateVerificationParams = { address: 'address' };
-const response: Postgrid.AddverCreateVerificationResponse = await client.addver.createVerification(params);
+const params: Postgrid.AddressVerificationVerifyParams = { address: 'address' };
+const response: Postgrid.AddressVerificationVerifyResponse = await client.addressVerification.verify(params);
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -60,7 +60,7 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-const response = await client.addver.createVerification({ address: 'address' }).catch(async (err) => {
+const response = await client.addressVerification.verify({ address: 'address' }).catch(async (err) => {
   if (err instanceof Postgrid.APIError) {
     console.log(err.status); // 400
     console.log(err.name); // BadRequestError
@@ -100,7 +100,7 @@ const client = new Postgrid({
 });
 
 // Or, configure per-request:
-await client.addver.createVerification({ address: 'address' }, {
+await client.addressVerification.verify({ address: 'address' }, {
   maxRetries: 5,
 });
 ```
@@ -117,7 +117,7 @@ const client = new Postgrid({
 });
 
 // Override per-request:
-await client.addver.createVerification({ address: 'address' }, {
+await client.addressVerification.verify({ address: 'address' }, {
   timeout: 5 * 1000,
 });
 ```
@@ -140,12 +140,12 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 ```ts
 const client = new Postgrid();
 
-const response = await client.addver.createVerification({ address: 'address' }).asResponse();
+const response = await client.addressVerification.verify({ address: 'address' }).asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: response, response: raw } = await client.addver
-  .createVerification({ address: 'address' })
+const { data: response, response: raw } = await client.addressVerification
+  .verify({ address: 'address' })
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
 console.log(response.data);
@@ -228,7 +228,7 @@ parameter. This library doesn't validate at runtime that the request matches the
 send will be sent as-is.
 
 ```ts
-client.addver.createVerification({
+client.addressVerification.verify({
   // ...
   // @ts-expect-error baz is not yet public
   baz: 'undocumented option',

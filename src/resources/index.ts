@@ -1,11 +1,15 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 export {
-  Addver,
+  AddressVerification,
   type Errors,
   type Status,
-  type AddverCreateVerificationResponse,
-  type AddverCreateVerificationParams,
-} from './addver';
-export { IntlAddver, type IntlAddverVerifyResponse, type IntlAddverVerifyParams } from './intl-addver';
+  type AddressVerificationVerifyResponse,
+  type AddressVerificationVerifyParams,
+} from './address-verification';
+export {
+  IntlAddressVerification,
+  type IntlAddressVerificationVerifyResponse,
+  type IntlAddressVerificationVerifyParams,
+} from './intl-address-verification';
 export { PrintMail } from './print-mail/print-mail';

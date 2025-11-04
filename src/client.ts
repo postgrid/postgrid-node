@@ -18,13 +18,17 @@ import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import {
-  Addver,
-  AddverCreateVerificationParams,
-  AddverCreateVerificationResponse,
-  Errors as AddverAPIErrors,
+  AddressVerification,
+  AddressVerificationVerifyParams,
+  AddressVerificationVerifyResponse,
+  Errors as AddressVerificationAPIErrors,
   Status,
-} from './resources/addver';
-import { IntlAddver, IntlAddverVerifyParams, IntlAddverVerifyResponse } from './resources/intl-addver';
+} from './resources/address-verification';
+import {
+  IntlAddressVerification,
+  IntlAddressVerificationVerifyParams,
+  IntlAddressVerificationVerifyResponse,
+} from './resources/intl-address-verification';
 import { PrintMail } from './resources/print-mail/print-mail';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
@@ -736,30 +740,30 @@ export class Postgrid {
 
   static toFile = Uploads.toFile;
 
-  addver: API.Addver = new API.Addver(this);
-  intlAddver: API.IntlAddver = new API.IntlAddver(this);
+  addressVerification: API.AddressVerification = new API.AddressVerification(this);
+  intlAddressVerification: API.IntlAddressVerification = new API.IntlAddressVerification(this);
   printMail: API.PrintMail = new API.PrintMail(this);
 }
 
-Postgrid.Addver = Addver;
-Postgrid.IntlAddver = IntlAddver;
+Postgrid.AddressVerification = AddressVerification;
+Postgrid.IntlAddressVerification = IntlAddressVerification;
 Postgrid.PrintMail = PrintMail;
 
 export declare namespace Postgrid {
   export type RequestOptions = Opts.RequestOptions;
 
   export {
-    Addver as Addver,
-    type AddverAPIErrors as Errors,
+    AddressVerification as AddressVerification,
+    type AddressVerificationAPIErrors as Errors,
     type Status as Status,
-    type AddverCreateVerificationResponse as AddverCreateVerificationResponse,
-    type AddverCreateVerificationParams as AddverCreateVerificationParams,
+    type AddressVerificationVerifyResponse as AddressVerificationVerifyResponse,
+    type AddressVerificationVerifyParams as AddressVerificationVerifyParams,
   };
 
   export {
-    IntlAddver as IntlAddver,
-    type IntlAddverVerifyResponse as IntlAddverVerifyResponse,
-    type IntlAddverVerifyParams as IntlAddverVerifyParams,
+    IntlAddressVerification as IntlAddressVerification,
+    type IntlAddressVerificationVerifyResponse as IntlAddressVerificationVerifyResponse,
+    type IntlAddressVerificationVerifyParams as IntlAddressVerificationVerifyParams,
   };
 
   export { PrintMail as PrintMail };
