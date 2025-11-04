@@ -378,12 +378,12 @@ export class PostGrid {
 
   protected async authHeaders(opts: FinalRequestOptions): Promise<NullableHeaders | undefined> {
     return buildHeaders([
-      await this.addressVerificiationAPIKeyAuth(opts),
+      await this.addressVerificationAPIKeyAuth(opts),
       await this.printMailAPIKeyAuth(opts),
     ]);
   }
 
-  protected async addressVerificiationAPIKeyAuth(
+  protected async addressVerificationAPIKeyAuth(
     opts: FinalRequestOptions,
   ): Promise<NullableHeaders | undefined> {
     if (this.addressVerificationAPIKey == null) {
