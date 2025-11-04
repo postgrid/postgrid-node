@@ -152,7 +152,9 @@ import {
 } from './resources/reports/reports';
 
 export interface ClientOptions {
-  apiKey: string;
+  printMailAPIKey?: string | null | undefined;
+
+  addressVerificationAPIKey?: string | null | undefined;
 
   /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
@@ -217,14 +219,16 @@ export interface ClientOptions {
  * API Client for interfacing with the PostGrid API.
  */
 export class PostGrid extends Core.APIClient {
-  apiKey: string;
+  printMailAPIKey: string | null;
+  addressVerificationAPIKey: string | null;
 
   private _options: ClientOptions;
 
   /**
    * API Client for interfacing with the PostGrid API.
    *
-   * @param {string} opts.apiKey
+   * @param {string | null | undefined} [opts.printMailAPIKey]
+   * @param {string | null | undefined} [opts.addressVerificationAPIKey]
    * @param {string} [opts.baseURL=process.env['POSTGRID_BASE_URL'] ?? https://api.postgrid.com/print-mail/v1] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {number} [opts.httpAgent] - An HTTP agent used to manage HTTP(s) connections.
@@ -233,15 +237,15 @@ export class PostGrid extends Core.APIClient {
    * @param {Core.Headers} opts.defaultHeaders - Default headers to include with every request to the API.
    * @param {Core.DefaultQuery} opts.defaultQuery - Default query parameters to include with every request to the API.
    */
-  constructor({ baseURL = Core.readEnv('POSTGRID_BASE_URL'), apiKey, ...opts }: ClientOptions) {
-    if (apiKey === undefined) {
-      throw new Errors.PostGridError(
-        "Missing required client option apiKey; you need to instantiate the PostGrid client with an apiKey option, like new PostGrid({ apiKey: 'My API Key' }).",
-      );
-    }
-
+  constructor({
+    baseURL = Core.readEnv('POSTGRID_BASE_URL'),
+    printMailAPIKey = null,
+    addressVerificationAPIKey = null,
+    ...opts
+  }: ClientOptions = {}) {
     const options: ClientOptions = {
-      apiKey,
+      printMailAPIKey,
+      addressVerificationAPIKey,
       ...opts,
       baseURL: baseURL || `https://api.postgrid.com/print-mail/v1`,
     };
@@ -258,7 +262,8 @@ export class PostGrid extends Core.APIClient {
     this._options = options;
     this.idempotencyHeader = 'Idempotency-Key';
 
-    this.apiKey = apiKey;
+    this.printMailAPIKey = printMailAPIKey;
+    this.addressVerificationAPIKey = addressVerificationAPIKey;
   }
 
   contacts: API.Contacts = new API.Contacts(this);
@@ -292,6 +297,47 @@ export class PostGrid extends Core.APIClient {
       ...super.defaultHeaders(opts),
       ...this._options.defaultHeaders,
     };
+  }
+
+  protected override validateHeaders(headers: Core.Headers, customHeaders: Core.Headers) {
+    if (this.addressVerificationAPIKey && headers['x-api-key']) {
+      return;
+    }
+    if (customHeaders['x-api-key'] === null) {
+      return;
+    }
+
+    if (this.printMailAPIKey && headers['x-api-key']) {
+      return;
+    }
+    if (customHeaders['x-api-key'] === null) {
+      return;
+    }
+
+    throw new Error(
+      'Could not resolve authentication method. Expected either addressVerificationAPIKey or printMailAPIKey to be set. Or for one of the "X-API-Key" or "X-API-Key" headers to be explicitly omitted',
+    );
+  }
+
+  protected override authHeaders(opts: Core.FinalRequestOptions): Core.Headers {
+    return {
+      ...this.addressVerificiationAPIKeyAuth(opts),
+      ...this.printMailAPIKeyAuth(opts),
+    };
+  }
+
+  protected addressVerificiationAPIKeyAuth(opts: Core.FinalRequestOptions): Core.Headers {
+    if (this.addressVerificationAPIKey == null) {
+      return {};
+    }
+    return { 'X-API-Key': this.addressVerificationAPIKey };
+  }
+
+  protected printMailAPIKeyAuth(opts: Core.FinalRequestOptions): Core.Headers {
+    if (this.printMailAPIKey == null) {
+      return {};
+    }
+    return { 'X-API-Key': this.printMailAPIKey };
   }
 
   protected override stringifyQuery(query: Record<string, unknown>): string {

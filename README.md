@@ -20,7 +20,9 @@ The full API of this library can be found in [api.md](api.md).
 ```js
 import PostGrid from 'postgrid-node';
 
-const client = new PostGrid();
+const client = new PostGrid({
+  printMailAPIKey: 'My Print Mail API Key',
+});
 
 const contact = await client.contacts.create({
   addressLine1: 'addressLine1',
@@ -39,7 +41,9 @@ This library includes TypeScript definitions for all request params and response
 ```ts
 import PostGrid from 'postgrid-node';
 
-const client = new PostGrid();
+const client = new PostGrid({
+  printMailAPIKey: 'My Print Mail API Key',
+});
 
 const params: PostGrid.ContactCreateParams = {
   addressLine1: 'addressLine1',
@@ -97,7 +101,6 @@ You can use the `maxRetries` option to configure or disable this:
 ```js
 // Configure the default for all requests:
 const client = new PostGrid({
-  apiKey: 'My API Key',
   maxRetries: 0, // default is 2
 });
 
@@ -115,7 +118,6 @@ Requests time out after 1 minute by default. You can configure this with a `time
 ```ts
 // Configure the default for all requests:
 const client = new PostGrid({
-  apiKey: 'My API Key',
   timeout: 20 * 1000, // 20 seconds (default is 1 minute)
 });
 
@@ -282,7 +284,6 @@ import { HttpsProxyAgent } from 'https-proxy-agent';
 
 // Configure the default for all requests:
 const client = new PostGrid({
-  apiKey: 'My API Key',
   httpAgent: new HttpsProxyAgent(process.env.PROXY_URL),
 });
 
