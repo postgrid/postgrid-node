@@ -322,7 +322,7 @@ export class PostGrid {
     request: RequestInit,
     { url, options }: { url: string; options: FinalRequestOptions },
   ): Promise<void> {
-    options.headers = {
+    request.headers = {
       ...options.headers,
       ['x-api-key']: url.includes('print-mail') ? this.printMailAPIKey : this.addressVerificationAPIKey,
     };
