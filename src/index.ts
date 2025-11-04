@@ -8,7 +8,11 @@ import * as Pagination from './pagination';
 import { type ListParams, ListResponse } from './pagination';
 import * as Uploads from './uploads';
 import * as API from './resources/index';
-import { AddressVerification } from './resources/address-verification';
+import {
+  AddressVerification,
+  AddressVerificationVerifyAddressParams,
+  AddressVerificationVerifyAddressResponse,
+} from './resources/address-verification';
 import {
   BankAccount,
   BankAccountCreateParams,
@@ -50,7 +54,11 @@ import {
   Contacts,
   ContactsList,
 } from './resources/contacts';
-import { IntlAddressVerification } from './resources/intl-address-verification';
+import {
+  IntlAddressVerification,
+  IntlAddressVerificationVerifyAddressParams,
+  IntlAddressVerificationVerifyAddressResponse,
+} from './resources/intl-address-verification';
 import {
   Letter,
   LetterCreateParams,
@@ -303,6 +311,47 @@ export class PostGrid extends Core.APIClient {
     };
   }
 
+  protected override validateHeaders(headers: Core.Headers, customHeaders: Core.Headers) {
+    if (this.addressVerificationAPIKey && headers['x-api-key']) {
+      return;
+    }
+    if (customHeaders['x-api-key'] === null) {
+      return;
+    }
+
+    if (this.printMailAPIKey && headers['x-api-key']) {
+      return;
+    }
+    if (customHeaders['x-api-key'] === null) {
+      return;
+    }
+
+    throw new Error(
+      'Could not resolve authentication method. Expected either addressVerificationAPIKey or printMailAPIKey to be set. Or for one of the "X-API-Key" or "X-API-Key" headers to be explicitly omitted',
+    );
+  }
+
+  protected override authHeaders(opts: Core.FinalRequestOptions): Core.Headers {
+    return {
+      ...this.addressVerificiationAPIKeyAuth(opts),
+      ...this.printMailAPIKeyAuth(opts),
+    };
+  }
+
+  protected addressVerificiationAPIKeyAuth(opts: Core.FinalRequestOptions): Core.Headers {
+    if (this.addressVerificationAPIKey == null) {
+      return {};
+    }
+    return { 'X-API-Key': this.addressVerificationAPIKey };
+  }
+
+  protected printMailAPIKeyAuth(opts: Core.FinalRequestOptions): Core.Headers {
+    if (this.printMailAPIKey == null) {
+      return {};
+    }
+    return { 'X-API-Key': this.printMailAPIKey };
+  }
+
   protected override stringifyQuery(query: Record<string, unknown>): string {
     return qs.stringify(query, { arrayFormat: 'comma' });
   }
@@ -520,9 +569,17 @@ export declare namespace PostGrid {
     type SubOrganizationListUsersParams as SubOrganizationListUsersParams,
   };
 
-  export { AddressVerification as AddressVerification };
+  export {
+    AddressVerification as AddressVerification,
+    type AddressVerificationVerifyAddressResponse as AddressVerificationVerifyAddressResponse,
+    type AddressVerificationVerifyAddressParams as AddressVerificationVerifyAddressParams,
+  };
 
-  export { IntlAddressVerification as IntlAddressVerification };
+  export {
+    IntlAddressVerification as IntlAddressVerification,
+    type IntlAddressVerificationVerifyAddressResponse as IntlAddressVerificationVerifyAddressResponse,
+    type IntlAddressVerificationVerifyAddressParams as IntlAddressVerificationVerifyAddressParams,
+  };
 
   export type Cancellation = API.Cancellation;
   export type ContactCreateWithCompanyName = API.ContactCreateWithCompanyName;

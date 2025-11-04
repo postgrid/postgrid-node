@@ -333,4 +333,20 @@ Methods:
 
 # AddressVerification
 
+Types:
+
+- <code><a href="./src/resources/address-verification.ts">AddressVerificationVerifyAddressResponse</a></code>
+
+Methods:
+
+- <code title="post /addver/verifications">client.addressVerification.<a href="./src/resources/address-verification.ts">verifyAddress</a>({ ...params }) -> AddressVerificationVerifyAddressResponse</code>
+
 # IntlAddressVerification
+
+Types:
+
+- <code><a href="./src/resources/intl-address-verification.ts">IntlAddressVerificationVerifyAddressResponse</a></code>
+
+Methods:
+
+- <code title="post /intl_addver/verifications">client.intlAddressVerification.<a href="./src/resources/intl-address-verification.ts">verifyAddress</a>({ ...params }) -> IntlAddressVerificationVerifyAddressResponse</code>

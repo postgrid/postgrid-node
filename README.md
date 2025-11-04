@@ -20,7 +20,9 @@ The full API of this library can be found in [api.md](api.md).
 ```js
 import PostGrid from 'postgrid-node';
 
-const client = new PostGrid();
+const client = new PostGrid({
+  printMailAPIKey: 'My Print Mail API Key',
+});
 
 const contact = await client.contacts.create({
   addressLine1: 'addressLine1',
@@ -39,7 +41,9 @@ This library includes TypeScript definitions for all request params and response
 ```ts
 import PostGrid from 'postgrid-node';
 
-const client = new PostGrid();
+const client = new PostGrid({
+  printMailAPIKey: 'My Print Mail API Key',
+});
 
 const params: PostGrid.ContactCreateParams = {
   addressLine1: 'addressLine1',

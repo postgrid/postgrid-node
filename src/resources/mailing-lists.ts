@@ -146,7 +146,7 @@ export interface MailingListCreateResponse {
   /**
    * Status of the mailing list processing.
    */
-  status: 'creating_contacts' | 'removing_contacts' | 'completed';
+  status: 'creating_contacts' | 'removing_contacts' | 'counting_recipient_country_codes' | 'completed';
 
   /**
    * The UTC time at which this resource was last updated.
@@ -213,7 +213,7 @@ export interface MailingListRetrieveResponse {
   /**
    * Status of the mailing list processing.
    */
-  status: 'creating_contacts' | 'removing_contacts' | 'completed';
+  status: 'creating_contacts' | 'removing_contacts' | 'counting_recipient_country_codes' | 'completed';
 
   /**
    * The UTC time at which this resource was last updated.
@@ -296,7 +296,7 @@ export interface MailingListListResponse {
   /**
    * Status of the mailing list processing.
    */
-  status: 'creating_contacts' | 'removing_contacts' | 'completed';
+  status: 'creating_contacts' | 'removing_contacts' | 'counting_recipient_country_codes' | 'completed';
 
   /**
    * The UTC time at which this resource was last updated.
@@ -372,7 +372,7 @@ export interface MailingListSubmitJobResponse {
   /**
    * Status of the mailing list processing.
    */
-  status: 'creating_contacts' | 'removing_contacts' | 'completed';
+  status: 'creating_contacts' | 'removing_contacts' | 'counting_recipient_country_codes' | 'completed';
 
   /**
    * The UTC time at which this resource was last updated.
