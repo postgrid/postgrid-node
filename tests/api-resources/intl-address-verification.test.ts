@@ -8,10 +8,17 @@ const client = new Postgrid({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource addver', () => {
+describe('resource intlAddressVerification', () => {
   // Prism tests are disabled
-  test.skip('createVerification: only required params', async () => {
-    const responsePromise = client.addver.createVerification({ address: 'address' });
+  test.skip('verify: only required params', async () => {
+    const responsePromise = client.intlAddressVerification.verify({
+      address: {
+        country: 'country',
+        line1: 'line1',
+        postalOrZip: 'postalOrZip',
+        provinceOrState: 'provinceOrState',
+      },
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -22,10 +29,19 @@ describe('resource addver', () => {
   });
 
   // Prism tests are disabled
-  test.skip('createVerification: required and optional params', async () => {
-    const response = await client.addver.createVerification({
-      address: 'address',
-      geocode: true,
+  test.skip('verify: required and optional params', async () => {
+    const response = await client.intlAddressVerification.verify({
+      address: {
+        country: 'country',
+        line1: 'line1',
+        postalOrZip: 'postalOrZip',
+        provinceOrState: 'provinceOrState',
+        city: 'city',
+        line2: 'line2',
+        line3: 'line3',
+        line4: 'line4',
+      },
+      geoData: true,
       includeDetails: true,
       properCase: true,
     });

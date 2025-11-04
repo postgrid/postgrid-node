@@ -1,11 +1,11 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import * as AddverAPI from './addver';
+import * as AddressVerificationAPI from './address-verification';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 
-export class IntlAddver extends APIResource {
+export class IntlAddressVerification extends APIResource {
   /**
    * Verify and standardize an international address.
    *
@@ -16,38 +16,42 @@ export class IntlAddver extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.intlAddver.verify({
-   *   address: {
-   *     '0': '3',
-   *     '1': '1',
-   *     '2': ' ',
-   *     '3': 'F',
-   *     '4': 'l',
-   *     '5': ' ',
-   *     '6': 'S',
-   *     '7': 'c',
-   *     '8': 'a',
-   *     '9': 'r',
-   *     '10': 'b',
-   *     '11': 'o',
-   *     '12': 'r',
-   *     '13': 'o',
-   *     '14': 'u',
-   *     '15': 'g',
-   *     '16': 'h',
-   *     '17': ',',
-   *     '18': ' ',
-   *     '19': 'C',
-   *     '20': 'a',
-   *     '21': 'n',
-   *     '22': 'a',
-   *     '23': 'd',
-   *     '24': 'a',
-   *   },
-   * });
+   * const response =
+   *   await client.intlAddressVerification.verify({
+   *     address: {
+   *       '0': '3',
+   *       '1': '1',
+   *       '2': ' ',
+   *       '3': 'F',
+   *       '4': 'l',
+   *       '5': ' ',
+   *       '6': 'S',
+   *       '7': 'c',
+   *       '8': 'a',
+   *       '9': 'r',
+   *       '10': 'b',
+   *       '11': 'o',
+   *       '12': 'r',
+   *       '13': 'o',
+   *       '14': 'u',
+   *       '15': 'g',
+   *       '16': 'h',
+   *       '17': ',',
+   *       '18': ' ',
+   *       '19': 'C',
+   *       '20': 'a',
+   *       '21': 'n',
+   *       '22': 'a',
+   *       '23': 'd',
+   *       '24': 'a',
+   *     },
+   *   });
    * ```
    */
-  verify(params: IntlAddverVerifyParams, options?: RequestOptions): APIPromise<IntlAddverVerifyResponse> {
+  verify(
+    params: IntlAddressVerificationVerifyParams,
+    options?: RequestOptions,
+  ): APIPromise<IntlAddressVerificationVerifyResponse> {
     const { geoData, includeDetails, properCase, ...body } = params;
     return this._client.post('/v1/intl_addver/verifications', {
       query: { geoData, includeDetails, properCase },
@@ -57,18 +61,18 @@ export class IntlAddver extends APIResource {
   }
 }
 
-export interface IntlAddverVerifyResponse {
+export interface IntlAddressVerificationVerifyResponse {
   /**
    * The result of a verified international address.
    */
-  data: IntlAddverVerifyResponse.Data;
+  data: IntlAddressVerificationVerifyResponse.Data;
 
   message: string;
 
   status: 'success' | 'error';
 }
 
-export namespace IntlAddverVerifyResponse {
+export namespace IntlAddressVerificationVerifyResponse {
   /**
    * The result of a verified international address.
    */
@@ -112,7 +116,7 @@ export namespace IntlAddverVerifyResponse {
     /**
      * Errors encountered during address verification.
      */
-    errors?: AddverAPI.Errors;
+    errors?: AddressVerificationAPI.Errors;
 
     /**
      * The firm or company name, if available.
@@ -142,7 +146,7 @@ export namespace IntlAddverVerifyResponse {
     /**
      * The verification status of an address.
      */
-    status?: AddverAPI.Status;
+    status?: AddressVerificationAPI.Status;
 
     /**
      * A summary of the verification process and match levels.
@@ -399,11 +403,11 @@ export namespace IntlAddverVerifyResponse {
   }
 }
 
-export type IntlAddverVerifyParams =
-  | IntlAddverVerifyParams.StructuredAddressInput
-  | IntlAddverVerifyParams.FreeformAddressInput;
+export type IntlAddressVerificationVerifyParams =
+  | IntlAddressVerificationVerifyParams.StructuredAddressInput
+  | IntlAddressVerificationVerifyParams.FreeformAddressInput;
 
-export declare namespace IntlAddverVerifyParams {
+export declare namespace IntlAddressVerificationVerifyParams {
   export interface StructuredAddressInput {
     /**
      * Body param:
@@ -493,9 +497,9 @@ export declare namespace IntlAddverVerifyParams {
   }
 }
 
-export declare namespace IntlAddver {
+export declare namespace IntlAddressVerification {
   export {
-    type IntlAddverVerifyResponse as IntlAddverVerifyResponse,
-    type IntlAddverVerifyParams as IntlAddverVerifyParams,
+    type IntlAddressVerificationVerifyResponse as IntlAddressVerificationVerifyResponse,
+    type IntlAddressVerificationVerifyParams as IntlAddressVerificationVerifyParams,
   };
 }

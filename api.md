@@ -1,24 +1,24 @@
-# Addver
+# AddressVerification
 
 Types:
 
-- <code><a href="./src/resources/addver.ts">Errors</a></code>
-- <code><a href="./src/resources/addver.ts">Status</a></code>
-- <code><a href="./src/resources/addver.ts">AddverCreateVerificationResponse</a></code>
+- <code><a href="./src/resources/address-verification.ts">Errors</a></code>
+- <code><a href="./src/resources/address-verification.ts">Status</a></code>
+- <code><a href="./src/resources/address-verification.ts">AddressVerificationVerifyResponse</a></code>
 
 Methods:
 
-- <code title="post /v1/addver/verifications">client.addver.<a href="./src/resources/addver.ts">createVerification</a>({ ...params }) -> AddverCreateVerificationResponse</code>
+- <code title="post /v1/addver/verifications">client.addressVerification.<a href="./src/resources/address-verification.ts">verify</a>({ ...params }) -> AddressVerificationVerifyResponse</code>
 
-# IntlAddver
+# IntlAddressVerification
 
 Types:
 
-- <code><a href="./src/resources/intl-addver.ts">IntlAddverVerifyResponse</a></code>
+- <code><a href="./src/resources/intl-address-verification.ts">IntlAddressVerificationVerifyResponse</a></code>
 
 Methods:
 
-- <code title="post /v1/intl_addver/verifications">client.intlAddver.<a href="./src/resources/intl-addver.ts">verify</a>({ ...params }) -> IntlAddverVerifyResponse</code>
+- <code title="post /v1/intl_addver/verifications">client.intlAddressVerification.<a href="./src/resources/intl-address-verification.ts">verify</a>({ ...params }) -> IntlAddressVerificationVerifyResponse</code>
 
 # PrintMail
 

@@ -1,11 +1,11 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import * as AddverAPI from './addver';
+import * as AddressVerificationAPI from './address-verification';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 
-export class Addver extends APIResource {
+export class AddressVerification extends APIResource {
   /**
    * 1. **Structured Address** — Verify and standardize a structured address (e.g.,
    *    with `line1`, `city`, etc.).
@@ -20,15 +20,15 @@ export class Addver extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.addver.createVerification({
+   * const response = await client.addressVerification.verify({
    *   address: '1234 Elm St, Los Angeles, CA 90001, US',
    * });
    * ```
    */
-  createVerification(
-    params: AddverCreateVerificationParams,
+  verify(
+    params: AddressVerificationVerifyParams,
     options?: RequestOptions,
-  ): APIPromise<AddverCreateVerificationResponse> {
+  ): APIPromise<AddressVerificationVerifyResponse> {
     const { geocode, includeDetails, properCase, ...body } = params;
     return this._client.post('/v1/addver/verifications', {
       query: { geocode, includeDetails, properCase },
@@ -73,15 +73,15 @@ export interface Errors {
  */
 export type Status = 'verified' | 'corrected' | 'failed';
 
-export interface AddverCreateVerificationResponse {
-  data: AddverCreateVerificationResponse.Data;
+export interface AddressVerificationVerifyResponse {
+  data: AddressVerificationVerifyResponse.Data;
 
   message: string;
 
   status: 'success' | 'error';
 }
 
-export namespace AddverCreateVerificationResponse {
+export namespace AddressVerificationVerifyResponse {
   export interface Data {
     /**
      * The city name of the address.
@@ -123,7 +123,7 @@ export namespace AddverCreateVerificationResponse {
     /**
      * Errors encountered during address verification.
      */
-    errors?: AddverAPI.Errors;
+    errors?: AddressVerificationAPI.Errors;
 
     /**
      * The firm name of the address.
@@ -148,7 +148,7 @@ export namespace AddverCreateVerificationResponse {
     /**
      * The verification status of an address.
      */
-    status?: AddverAPI.Status;
+    status?: AddressVerificationAPI.Status;
 
     /**
      * The zip plus 4 code of the address.
@@ -443,11 +443,11 @@ export namespace AddverCreateVerificationResponse {
   }
 }
 
-export type AddverCreateVerificationParams =
-  | AddverCreateVerificationParams.StandardFreeformAddressInput
-  | AddverCreateVerificationParams.StandardStructuredAddressInput;
+export type AddressVerificationVerifyParams =
+  | AddressVerificationVerifyParams.StandardFreeformAddressInput
+  | AddressVerificationVerifyParams.StandardStructuredAddressInput;
 
-export declare namespace AddverCreateVerificationParams {
+export declare namespace AddressVerificationVerifyParams {
   export interface StandardFreeformAddressInput {
     /**
      * Body param: The address you want to verify, written on a single line.
@@ -532,11 +532,11 @@ export declare namespace AddverCreateVerificationParams {
   }
 }
 
-export declare namespace Addver {
+export declare namespace AddressVerification {
   export {
     type Errors as Errors,
     type Status as Status,
-    type AddverCreateVerificationResponse as AddverCreateVerificationResponse,
-    type AddverCreateVerificationParams as AddverCreateVerificationParams,
+    type AddressVerificationVerifyResponse as AddressVerificationVerifyResponse,
+    type AddressVerificationVerifyParams as AddressVerificationVerifyParams,
   };
 }
