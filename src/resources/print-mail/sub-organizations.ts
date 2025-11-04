@@ -42,7 +42,7 @@ export class SubOrganizations extends APIResource {
     body: SubOrganizationUpdateParams,
     options?: RequestOptions,
   ): APIPromise<SubOrganizationUpdateResponse> {
-    return this._client.post('/print-mail/v1/sub_organizations/', { body, ...options });
+    return this._client.post('/print-mail/v1/sub_organizations', { body, ...options });
   }
 
   /**
@@ -50,15 +50,15 @@ export class SubOrganizations extends APIResource {
    *
    * @example
    * ```ts
-   * const response =
-   *   await client.printMail.subOrganizations.retrieve();
+   * const subOrganizations =
+   *   await client.printMail.subOrganizations.list();
    * ```
    */
-  retrieve(
-    query: SubOrganizationRetrieveParams | null | undefined = {},
+  list(
+    query: SubOrganizationListParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<SubOrganizationRetrieveResponse> {
-    return this._client.get('/print-mail/v1/sub_organizations/', { query, ...options });
+  ): APIPromise<SubOrganizationListResponse> {
+    return this._client.get('/print-mail/v1/sub_organizations', { query, ...options });
   }
 
   /**
@@ -240,7 +240,7 @@ export namespace SubOrganizationUpdateResponse {
   }
 }
 
-export interface SubOrganizationRetrieveResponse {
+export interface SubOrganizationListResponse {
   data: Array<SubOrganization>;
 
   limit: number;
@@ -350,7 +350,7 @@ export interface SubOrganizationUpdateParams {
   phoneNumber?: string;
 }
 
-export interface SubOrganizationRetrieveParams {
+export interface SubOrganizationListParams {
   limit?: number;
 
   /**
@@ -385,10 +385,10 @@ export declare namespace SubOrganizations {
     type EmailPreferences as EmailPreferences,
     type SubOrganization as SubOrganization,
     type SubOrganizationUpdateResponse as SubOrganizationUpdateResponse,
-    type SubOrganizationRetrieveResponse as SubOrganizationRetrieveResponse,
+    type SubOrganizationListResponse as SubOrganizationListResponse,
     type SubOrganizationRetrieveUsersResponse as SubOrganizationRetrieveUsersResponse,
     type SubOrganizationUpdateParams as SubOrganizationUpdateParams,
-    type SubOrganizationRetrieveParams as SubOrganizationRetrieveParams,
+    type SubOrganizationListParams as SubOrganizationListParams,
     type SubOrganizationRetrieveUsersParams as SubOrganizationRetrieveUsersParams,
   };
 }

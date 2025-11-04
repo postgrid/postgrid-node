@@ -98,9 +98,9 @@ export {
   Reports,
   type DeletedResponse,
   type Report,
-  type ReportRetrieveResponse,
+  type ReportListResponse,
   type ReportUpdateParams,
-  type ReportRetrieveParams,
+  type ReportListParams,
 } from './reports/index';
 export {
   SelfMailers,
@@ -115,10 +115,10 @@ export {
   type EmailPreferences,
   type SubOrganization,
   type SubOrganizationUpdateResponse,
-  type SubOrganizationRetrieveResponse,
+  type SubOrganizationListResponse,
   type SubOrganizationRetrieveUsersResponse,
   type SubOrganizationUpdateParams,
-  type SubOrganizationRetrieveParams,
+  type SubOrganizationListParams,
   type SubOrganizationRetrieveUsersParams,
 } from './sub-organizations';
 export {

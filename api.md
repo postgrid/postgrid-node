@@ -256,14 +256,14 @@ Types:
 
 - <code><a href="./src/resources/print-mail/reports/reports.ts">DeletedResponse</a></code>
 - <code><a href="./src/resources/print-mail/reports/reports.ts">Report</a></code>
-- <code><a href="./src/resources/print-mail/reports/reports.ts">ReportRetrieveResponse</a></code>
+- <code><a href="./src/resources/print-mail/reports/reports.ts">ReportListResponse</a></code>
 
 Methods:
 
 - <code title="get /print-mail/v1/reports/{id}">client.printMail.reports.<a href="./src/resources/print-mail/reports/reports.ts">retrieve</a>(id) -> Report</code>
 - <code title="post /print-mail/v1/reports/{id}">client.printMail.reports.<a href="./src/resources/print-mail/reports/reports.ts">update</a>(id, { ...params }) -> Report</code>
+- <code title="get /print-mail/v1/reports">client.printMail.reports.<a href="./src/resources/print-mail/reports/reports.ts">list</a>({ ...params }) -> ReportListResponse</code>
 - <code title="delete /print-mail/v1/reports/{id}">client.printMail.reports.<a href="./src/resources/print-mail/reports/reports.ts">delete</a>(id) -> DeletedResponse</code>
-- <code title="get /print-mail/v1/reports/">client.printMail.reports.<a href="./src/resources/print-mail/reports/reports.ts">retrieve</a>({ ...params }) -> ReportRetrieveResponse</code>
 
 ### Samples
 
@@ -311,14 +311,14 @@ Types:
 - <code><a href="./src/resources/print-mail/sub-organizations.ts">EmailPreferences</a></code>
 - <code><a href="./src/resources/print-mail/sub-organizations.ts">SubOrganization</a></code>
 - <code><a href="./src/resources/print-mail/sub-organizations.ts">SubOrganizationUpdateResponse</a></code>
-- <code><a href="./src/resources/print-mail/sub-organizations.ts">SubOrganizationRetrieveResponse</a></code>
+- <code><a href="./src/resources/print-mail/sub-organizations.ts">SubOrganizationListResponse</a></code>
 - <code><a href="./src/resources/print-mail/sub-organizations.ts">SubOrganizationRetrieveUsersResponse</a></code>
 
 Methods:
 
 - <code title="get /print-mail/v1/sub_organizations/{id}">client.printMail.subOrganizations.<a href="./src/resources/print-mail/sub-organizations.ts">retrieve</a>(id) -> SubOrganization</code>
-- <code title="post /print-mail/v1/sub_organizations/">client.printMail.subOrganizations.<a href="./src/resources/print-mail/sub-organizations.ts">update</a>({ ...params }) -> SubOrganizationUpdateResponse</code>
-- <code title="get /print-mail/v1/sub_organizations/">client.printMail.subOrganizations.<a href="./src/resources/print-mail/sub-organizations.ts">retrieve</a>({ ...params }) -> SubOrganizationRetrieveResponse</code>
+- <code title="post /print-mail/v1/sub_organizations">client.printMail.subOrganizations.<a href="./src/resources/print-mail/sub-organizations.ts">update</a>({ ...params }) -> SubOrganizationUpdateResponse</code>
+- <code title="get /print-mail/v1/sub_organizations">client.printMail.subOrganizations.<a href="./src/resources/print-mail/sub-organizations.ts">list</a>({ ...params }) -> SubOrganizationListResponse</code>
 - <code title="get /print-mail/v1/sub_organizations/{id}/users">client.printMail.subOrganizations.<a href="./src/resources/print-mail/sub-organizations.ts">retrieveUsers</a>(id, { ...params }) -> SubOrganizationRetrieveUsersResponse</code>
 
 ## Templates
