@@ -1,8 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import Postgrid from 'postgrid';
+import PostGrid from 'postgrid';
 
-const client = new Postgrid({
+const client = new PostGrid({
   addressVerificationAPIKey: 'My Address Verification API Key',
   printMailAPIKey: 'My Print Mail API Key',
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
@@ -63,7 +63,7 @@ describe('resource letters', () => {
         { expand: ['string'] },
         { path: '/_stainless_unknown_path' },
       ),
-    ).rejects.toThrow(Postgrid.NotFoundError);
+    ).rejects.toThrow(PostGrid.NotFoundError);
   });
 
   // Prism tests are disabled
@@ -98,7 +98,7 @@ describe('resource letters', () => {
         { limit: 0, search: 'search', skip: 0 },
         { path: '/_stainless_unknown_path' },
       ),
-    ).rejects.toThrow(Postgrid.NotFoundError);
+    ).rejects.toThrow(PostGrid.NotFoundError);
   });
 
   // Prism tests are disabled
