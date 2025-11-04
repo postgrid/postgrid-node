@@ -322,10 +322,17 @@ export class PostGrid {
     request: RequestInit,
     { url, options }: { url: string; options: FinalRequestOptions },
   ): Promise<void> {
-    options.headers = {
-      ...options.headers,
-      ['x-api-key']: url.includes('print-mail') ? this.printMailAPIKey : this.addressVerificationAPIKey,
-    };
+    const apiKey =
+      (url.includes('print-mail') ? this.printMailAPIKey : this.addressVerificationAPIKey) ??
+      'MISSING_API_KEY';
+
+    request.headers = buildHeaders([
+      options.headers,
+      request.headers,
+      {
+        ['x-api-key']: apiKey,
+      },
+    ]).values;
   }
 
   get<Rsp>(path: string, opts?: PromiseOrValue<RequestOptions>): APIPromise<Rsp> {
