@@ -47,12 +47,12 @@ export interface ClientOptions {
   /**
    * Defaults to process.env['POSTGRID_ADDRESS_VERIFICATION_API_KEY'].
    */
-  addressVerificationAPIKey?: string | undefined;
+  addressVerificationAPIKey?: string | null | undefined;
 
   /**
    * Defaults to process.env['POSTGRID_PRINT_MAIL_API_KEY'].
    */
-  printMailAPIKey?: string | undefined;
+  printMailAPIKey?: string | null | undefined;
 
   /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
@@ -127,8 +127,8 @@ export interface ClientOptions {
  * API Client for interfacing with the Post Grid API.
  */
 export class PostGrid {
-  addressVerificationAPIKey: string;
-  printMailAPIKey: string;
+  addressVerificationAPIKey: string | null;
+  printMailAPIKey: string | null;
 
   baseURL: string;
   maxRetries: number;
@@ -145,8 +145,8 @@ export class PostGrid {
   /**
    * API Client for interfacing with the Post Grid API.
    *
-   * @param {string | undefined} [opts.addressVerificationAPIKey=process.env['POSTGRID_ADDRESS_VERIFICATION_API_KEY'] ?? undefined]
-   * @param {string | undefined} [opts.printMailAPIKey=process.env['POSTGRID_PRINT_MAIL_API_KEY'] ?? undefined]
+   * @param {string | null | undefined} [opts.addressVerificationAPIKey=process.env['POSTGRID_ADDRESS_VERIFICATION_API_KEY'] ?? null]
+   * @param {string | null | undefined} [opts.printMailAPIKey=process.env['POSTGRID_PRINT_MAIL_API_KEY'] ?? null]
    * @param {string} [opts.baseURL=process.env['POST_GRID_BASE_URL'] ?? https://api.postgrid.com] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
@@ -157,21 +157,10 @@ export class PostGrid {
    */
   constructor({
     baseURL = readEnv('POST_GRID_BASE_URL'),
-    addressVerificationAPIKey = readEnv('POSTGRID_ADDRESS_VERIFICATION_API_KEY'),
-    printMailAPIKey = readEnv('POSTGRID_PRINT_MAIL_API_KEY'),
+    addressVerificationAPIKey = readEnv('POSTGRID_ADDRESS_VERIFICATION_API_KEY') ?? null,
+    printMailAPIKey = readEnv('POSTGRID_PRINT_MAIL_API_KEY') ?? null,
     ...opts
   }: ClientOptions = {}) {
-    if (addressVerificationAPIKey === undefined) {
-      throw new Errors.PostGridError(
-        "The POSTGRID_ADDRESS_VERIFICATION_API_KEY environment variable is missing or empty; either provide it, or instantiate the PostGrid client with an addressVerificationAPIKey option, like new PostGrid({ addressVerificationAPIKey: 'My Address Verification API Key' }).",
-      );
-    }
-    if (printMailAPIKey === undefined) {
-      throw new Errors.PostGridError(
-        "The POSTGRID_PRINT_MAIL_API_KEY environment variable is missing or empty; either provide it, or instantiate the PostGrid client with an printMailAPIKey option, like new PostGrid({ printMailAPIKey: 'My Print Mail API Key' }).",
-      );
-    }
-
     const options: ClientOptions = {
       addressVerificationAPIKey,
       printMailAPIKey,
@@ -232,7 +221,23 @@ export class PostGrid {
   }
 
   protected validateHeaders({ values, nulls }: NullableHeaders) {
-    return;
+    if (this.addressVerificationAPIKey && values.get('x-api-key')) {
+      return;
+    }
+    if (nulls.has('x-api-key')) {
+      return;
+    }
+
+    if (this.printMailAPIKey && values.get('x-api-key')) {
+      return;
+    }
+    if (nulls.has('x-api-key')) {
+      return;
+    }
+
+    throw new Error(
+      'Could not resolve authentication method. Expected either addressVerificationAPIKey or printMailAPIKey to be set. Or for one of the "X-API-Key" or "X-API-Key" headers to be explicitly omitted',
+    );
   }
 
   protected async authHeaders(opts: FinalRequestOptions): Promise<NullableHeaders | undefined> {
@@ -245,10 +250,16 @@ export class PostGrid {
   protected async addressVerificationAPIKeyAuth(
     opts: FinalRequestOptions,
   ): Promise<NullableHeaders | undefined> {
+    if (this.addressVerificationAPIKey == null) {
+      return undefined;
+    }
     return buildHeaders([{ 'X-API-Key': this.addressVerificationAPIKey }]);
   }
 
   protected async printMailAPIKeyAuth(opts: FinalRequestOptions): Promise<NullableHeaders | undefined> {
+    if (this.printMailAPIKey == null) {
+      return undefined;
+    }
     return buildHeaders([{ 'X-API-Key': this.printMailAPIKey }]);
   }
 
