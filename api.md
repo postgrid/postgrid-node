@@ -330,3 +330,23 @@ Methods:
 - <code title="get /sub_organizations/{id}">client.subOrganizations.<a href="./src/resources/sub-organizations.ts">retrieve</a>(id) -> SubOrganizationRetrieveResponse</code>
 - <code title="get /sub_organizations/">client.subOrganizations.<a href="./src/resources/sub-organizations.ts">list</a>({ ...params }) -> SubOrganizationListResponsesList</code>
 - <code title="get /sub_organizations/{id}/users">client.subOrganizations.<a href="./src/resources/sub-organizations.ts">listUsers</a>(id, { ...params }) -> SubOrganizationListUsersResponse</code>
+
+# Addver
+
+Types:
+
+- <code><a href="./src/resources/addver.ts">AddverVerifyAddressResponse</a></code>
+
+Methods:
+
+- <code title="post /addver/verifications">client.addver.<a href="./src/resources/addver.ts">verifyAddress</a>({ ...params }) -> AddverVerifyAddressResponse</code>
+
+# IntlAddver
+
+Types:
+
+- <code><a href="./src/resources/intl-addver.ts">IntlAddverVerifyAddressResponse</a></code>
+
+Methods:
+
+- <code title="post /intl_addver/verifications">client.intlAddver.<a href="./src/resources/intl-addver.ts">verifyAddress</a>({ ...params }) -> IntlAddverVerifyAddressResponse</code>

@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 export * from './shared';
+export { Addver, type AddverVerifyAddressResponse, type AddverVerifyAddressParams } from './addver';
 export {
   BankAccountsList,
   BankAccounts,
@@ -50,6 +51,11 @@ export {
   type ContactCreateParams,
   type ContactListParams,
 } from './contacts';
+export {
+  IntlAddver,
+  type IntlAddverVerifyAddressResponse,
+  type IntlAddverVerifyAddressParams,
+} from './intl-addver';
 export {
   LettersList,
   Letters,
