@@ -10,6 +10,29 @@ const client = new PostGrid({
 
 describe('resource reports', () => {
   // Prism tests are disabled
+  test.skip('create: only required params', async () => {
+    const responsePromise = client.printMail.reports.create({
+      sqlQuery: 'SELECT id, status FROM orders WHERE created_at > ?',
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('create: required and optional params', async () => {
+    const response = await client.printMail.reports.create({
+      sqlQuery: 'SELECT id, status FROM orders WHERE created_at > ?',
+      description: 'Recent Orders',
+      metadata: { team: 'Sales' },
+    });
+  });
+
+  // Prism tests are disabled
   test.skip('retrieve', async () => {
     const responsePromise = client.printMail.reports.retrieve('id');
     const rawResponse = await responsePromise.asResponse();
@@ -66,5 +89,26 @@ describe('resource reports', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('sample: only required params', async () => {
+    const responsePromise = client.printMail.reports.sample({ sqlQuery: 'sqlQuery' });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('sample: required and optional params', async () => {
+    const response = await client.printMail.reports.sample({
+      sqlQuery: 'sqlQuery',
+      limit: 1000,
+      params: ['string'],
+    });
   });
 });

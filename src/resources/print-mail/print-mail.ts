@@ -139,8 +139,10 @@ import * as ReportsAPI from './reports/reports';
 import {
   DeletedResponse,
   Report,
+  ReportCreateParams,
   ReportListParams,
   ReportListResponse,
+  ReportSampleParams,
   ReportUpdateParams,
   Reports,
 } from './reports/reports';
@@ -290,8 +292,10 @@ export declare namespace PrintMail {
     type DeletedResponse as DeletedResponse,
     type Report as Report,
     type ReportListResponse as ReportListResponse,
+    type ReportCreateParams as ReportCreateParams,
     type ReportUpdateParams as ReportUpdateParams,
     type ReportListParams as ReportListParams,
+    type ReportSampleParams as ReportSampleParams,
   };
 
   export {

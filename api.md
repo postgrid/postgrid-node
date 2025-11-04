@@ -260,10 +260,12 @@ Types:
 
 Methods:
 
+- <code title="post /print-mail/v1/reports">client.printMail.reports.<a href="./src/resources/print-mail/reports/reports.ts">create</a>({ ...params }) -> Report</code>
 - <code title="get /print-mail/v1/reports/{id}">client.printMail.reports.<a href="./src/resources/print-mail/reports/reports.ts">retrieve</a>(id) -> Report</code>
 - <code title="post /print-mail/v1/reports/{id}">client.printMail.reports.<a href="./src/resources/print-mail/reports/reports.ts">update</a>(id, { ...params }) -> Report</code>
 - <code title="get /print-mail/v1/reports">client.printMail.reports.<a href="./src/resources/print-mail/reports/reports.ts">list</a>({ ...params }) -> ReportListResponse</code>
 - <code title="delete /print-mail/v1/reports/{id}">client.printMail.reports.<a href="./src/resources/print-mail/reports/reports.ts">delete</a>(id) -> DeletedResponse</code>
+- <code title="post /print-mail/v1/reports/samples">client.printMail.reports.<a href="./src/resources/print-mail/reports/reports.ts">sample</a>({ ...params }) -> ReportSample</code>
 
 ### Samples
 

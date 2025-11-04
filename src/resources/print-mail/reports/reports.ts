@@ -20,6 +20,27 @@ export class Reports extends APIResource {
   exports: ExportsAPI.Exports = new ExportsAPI.Exports(this._client);
 
   /**
+   * Create a new saved report definition. Saved reports are SQL queries that can be
+   * executed later to generate full exports or samples.
+   *
+   * If you just want to do ad-hoc queries, you should use the `/reports/samples`
+   * endpoint.
+   *
+   * @example
+   * ```ts
+   * const report = await client.printMail.reports.create({
+   *   sqlQuery:
+   *     'SELECT id, status FROM orders WHERE created_at > ?',
+   *   description: 'Recent Orders',
+   *   metadata: { team: 'Sales' },
+   * });
+   * ```
+   */
+  create(body: ReportCreateParams, options?: RequestOptions): APIPromise<Report> {
+    return this._client.post('/print-mail/v1/reports', { body, ...options });
+  }
+
+  /**
    * Retrieve the details of a specific saved report by its ID.
    *
    * @example
@@ -75,6 +96,24 @@ export class Reports extends APIResource {
    */
   delete(id: string, options?: RequestOptions): APIPromise<DeletedResponse> {
     return this._client.delete(path`/print-mail/v1/reports/${id}`, options);
+  }
+
+  /**
+   * Run an ad-hoc SQL query against your data lake and get a sample of the results.
+   * This is useful for quickly testing queries without saving them as a report. The
+   * query execution time and result size are limited.
+   *
+   * @example
+   * ```ts
+   * const reportSample = await client.printMail.reports.sample({
+   *   sqlQuery: 'SELECT id FROM contacts LIMIT 5',
+   *   limit: 5,
+   *   params: [],
+   * });
+   * ```
+   */
+  sample(body: ReportSampleParams, options?: RequestOptions): APIPromise<SamplesAPI.ReportSample> {
+    return this._client.post('/print-mail/v1/reports/samples', { body, ...options });
   }
 }
 
@@ -153,6 +192,23 @@ export interface ReportListResponse {
   totalCount: number;
 }
 
+export interface ReportCreateParams {
+  /**
+   * The SQL query defining the report.
+   */
+  sqlQuery: string;
+
+  /**
+   * An optional user-friendly description for the report.
+   */
+  description?: string;
+
+  /**
+   * Optional key-value metadata associated with the report.
+   */
+  metadata?: { [key: string]: string };
+}
+
 export interface ReportUpdateParams {
   /**
    * An optional user-friendly description for the report. Set to null to remove.
@@ -185,6 +241,24 @@ export interface ReportListParams {
   skip?: number;
 }
 
+export interface ReportSampleParams {
+  /**
+   * The SQL query to execute for the sample.
+   */
+  sqlQuery: string;
+
+  /**
+   * Maximum number of rows to return in the sample.
+   */
+  limit?: number;
+
+  /**
+   * Optional parameters to bind to the SQL query (e.g., for placeholders like ? or
+   * $1).
+   */
+  params?: Array<string>;
+}
+
 Reports.Samples = Samples;
 Reports.Exports = Exports;
 
@@ -193,8 +267,10 @@ export declare namespace Reports {
     type DeletedResponse as DeletedResponse,
     type Report as Report,
     type ReportListResponse as ReportListResponse,
+    type ReportCreateParams as ReportCreateParams,
     type ReportUpdateParams as ReportUpdateParams,
     type ReportListParams as ReportListParams,
+    type ReportSampleParams as ReportSampleParams,
   };
 
   export {
