@@ -3,7 +3,7 @@
 import { APIResource } from '../resource';
 import * as Core from '../core';
 
-export class IntlAddver extends APIResource {
+export class IntlAddressVerification extends APIResource {
   /**
    * Verify and standardize an international address.
    *
@@ -13,36 +13,37 @@ export class IntlAddver extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.intlAddver.verifyAddress({
-   *   address: {
-   *     '0': '3',
-   *     '1': '1',
-   *     '2': ' ',
-   *     '3': 'F',
-   *     '4': 'l',
-   *     '5': ' ',
-   *     '6': 'S',
-   *     '7': 'c',
-   *     '8': 'a',
-   *     '9': 'r',
-   *     '10': 'b',
-   *     '11': 'o',
-   *     '12': 'r',
-   *     '13': 'o',
-   *     '14': 'u',
-   *     '15': 'g',
-   *     '16': 'h',
-   *     '17': ' ',
-   *     '18': 'C',
-   *     '19': 'A',
-   *   },
-   * });
+   * const response =
+   *   await client.intlAddressVerification.verifyAddress({
+   *     address: {
+   *       '0': '3',
+   *       '1': '1',
+   *       '2': ' ',
+   *       '3': 'F',
+   *       '4': 'l',
+   *       '5': ' ',
+   *       '6': 'S',
+   *       '7': 'c',
+   *       '8': 'a',
+   *       '9': 'r',
+   *       '10': 'b',
+   *       '11': 'o',
+   *       '12': 'r',
+   *       '13': 'o',
+   *       '14': 'u',
+   *       '15': 'g',
+   *       '16': 'h',
+   *       '17': ' ',
+   *       '18': 'C',
+   *       '19': 'A',
+   *     },
+   *   });
    * ```
    */
   verifyAddress(
-    params: IntlAddverVerifyAddressParams,
+    params: IntlAddressVerificationVerifyAddressParams,
     options?: Core.RequestOptions,
-  ): Core.APIPromise<IntlAddverVerifyAddressResponse> {
+  ): Core.APIPromise<IntlAddressVerificationVerifyAddressResponse> {
     const { geoData, includeDetails, properCase, ...body } = params;
     return this._client.post('/intl_addver/verifications', {
       query: { geoData, includeDetails, properCase },
@@ -52,18 +53,18 @@ export class IntlAddver extends APIResource {
   }
 }
 
-export interface IntlAddverVerifyAddressResponse {
+export interface IntlAddressVerificationVerifyAddressResponse {
   /**
    * The result of a verified international address.
    */
-  data: IntlAddverVerifyAddressResponse.Data;
+  data: IntlAddressVerificationVerifyAddressResponse.Data;
 
   message: string;
 
   status: 'success' | 'error';
 }
 
-export namespace IntlAddverVerifyAddressResponse {
+export namespace IntlAddressVerificationVerifyAddressResponse {
   /**
    * The result of a verified international address.
    */
@@ -424,11 +425,11 @@ export namespace IntlAddverVerifyAddressResponse {
   }
 }
 
-export type IntlAddverVerifyAddressParams =
-  | IntlAddverVerifyAddressParams.StructuredAddressInput
-  | IntlAddverVerifyAddressParams.FreeformAddressInput;
+export type IntlAddressVerificationVerifyAddressParams =
+  | IntlAddressVerificationVerifyAddressParams.StructuredAddressInput
+  | IntlAddressVerificationVerifyAddressParams.FreeformAddressInput;
 
-export declare namespace IntlAddverVerifyAddressParams {
+export declare namespace IntlAddressVerificationVerifyAddressParams {
   export interface StructuredAddressInput {
     /**
      * Body param:
@@ -518,9 +519,9 @@ export declare namespace IntlAddverVerifyAddressParams {
   }
 }
 
-export declare namespace IntlAddver {
+export declare namespace IntlAddressVerification {
   export {
-    type IntlAddverVerifyAddressResponse as IntlAddverVerifyAddressResponse,
-    type IntlAddverVerifyAddressParams as IntlAddverVerifyAddressParams,
+    type IntlAddressVerificationVerifyAddressResponse as IntlAddressVerificationVerifyAddressResponse,
+    type IntlAddressVerificationVerifyAddressParams as IntlAddressVerificationVerifyAddressParams,
   };
 }

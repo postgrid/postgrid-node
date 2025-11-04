@@ -331,22 +331,22 @@ Methods:
 - <code title="get /sub_organizations/">client.subOrganizations.<a href="./src/resources/sub-organizations.ts">list</a>({ ...params }) -> SubOrganizationListResponsesList</code>
 - <code title="get /sub_organizations/{id}/users">client.subOrganizations.<a href="./src/resources/sub-organizations.ts">listUsers</a>(id, { ...params }) -> SubOrganizationListUsersResponse</code>
 
-# Addver
+# AddressVerification
 
 Types:
 
-- <code><a href="./src/resources/addver.ts">AddverVerifyAddressResponse</a></code>
+- <code><a href="./src/resources/address-verification.ts">AddressVerificationVerifyAddressResponse</a></code>
 
 Methods:
 
-- <code title="post /addver/verifications">client.addver.<a href="./src/resources/addver.ts">verifyAddress</a>({ ...params }) -> AddverVerifyAddressResponse</code>
+- <code title="post /addver/verifications">client.addressVerification.<a href="./src/resources/address-verification.ts">verifyAddress</a>({ ...params }) -> AddressVerificationVerifyAddressResponse</code>
 
-# IntlAddver
+# IntlAddressVerification
 
 Types:
 
-- <code><a href="./src/resources/intl-addver.ts">IntlAddverVerifyAddressResponse</a></code>
+- <code><a href="./src/resources/intl-address-verification.ts">IntlAddressVerificationVerifyAddressResponse</a></code>
 
 Methods:
 
-- <code title="post /intl_addver/verifications">client.intlAddver.<a href="./src/resources/intl-addver.ts">verifyAddress</a>({ ...params }) -> IntlAddverVerifyAddressResponse</code>
+- <code title="post /intl_addver/verifications">client.intlAddressVerification.<a href="./src/resources/intl-address-verification.ts">verifyAddress</a>({ ...params }) -> IntlAddressVerificationVerifyAddressResponse</code>

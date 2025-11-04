@@ -8,7 +8,11 @@ import * as Pagination from './pagination';
 import { type ListParams, ListResponse } from './pagination';
 import * as Uploads from './uploads';
 import * as API from './resources/index';
-import { Addver, AddverVerifyAddressParams, AddverVerifyAddressResponse } from './resources/addver';
+import {
+  AddressVerification,
+  AddressVerificationVerifyAddressParams,
+  AddressVerificationVerifyAddressResponse,
+} from './resources/address-verification';
 import {
   BankAccount,
   BankAccountCreateParams,
@@ -51,10 +55,10 @@ import {
   ContactsList,
 } from './resources/contacts';
 import {
-  IntlAddver,
-  IntlAddverVerifyAddressParams,
-  IntlAddverVerifyAddressResponse,
-} from './resources/intl-addver';
+  IntlAddressVerification,
+  IntlAddressVerificationVerifyAddressParams,
+  IntlAddressVerificationVerifyAddressResponse,
+} from './resources/intl-address-verification';
 import {
   Letter,
   LetterCreateParams,
@@ -286,8 +290,8 @@ export class PostGrid extends Core.APIClient {
   mailingLists: API.MailingLists = new API.MailingLists(this);
   orderProfiles: API.OrderProfiles = new API.OrderProfiles(this);
   subOrganizations: API.SubOrganizations = new API.SubOrganizations(this);
-  addver: API.Addver = new API.Addver(this);
-  intlAddver: API.IntlAddver = new API.IntlAddver(this);
+  addressVerification: API.AddressVerification = new API.AddressVerification(this);
+  intlAddressVerification: API.IntlAddressVerification = new API.IntlAddressVerification(this);
 
   /**
    * Check whether the base URL is set to its default.
@@ -400,8 +404,8 @@ PostGrid.MailingListListResponsesList = MailingListListResponsesList;
 PostGrid.OrderProfiles = OrderProfiles;
 PostGrid.SubOrganizations = SubOrganizations;
 PostGrid.SubOrganizationListResponsesList = SubOrganizationListResponsesList;
-PostGrid.Addver = Addver;
-PostGrid.IntlAddver = IntlAddver;
+PostGrid.AddressVerification = AddressVerification;
+PostGrid.IntlAddressVerification = IntlAddressVerification;
 
 export declare namespace PostGrid {
   export type RequestOptions = Core.RequestOptions;
@@ -566,15 +570,15 @@ export declare namespace PostGrid {
   };
 
   export {
-    Addver as Addver,
-    type AddverVerifyAddressResponse as AddverVerifyAddressResponse,
-    type AddverVerifyAddressParams as AddverVerifyAddressParams,
+    AddressVerification as AddressVerification,
+    type AddressVerificationVerifyAddressResponse as AddressVerificationVerifyAddressResponse,
+    type AddressVerificationVerifyAddressParams as AddressVerificationVerifyAddressParams,
   };
 
   export {
-    IntlAddver as IntlAddver,
-    type IntlAddverVerifyAddressResponse as IntlAddverVerifyAddressResponse,
-    type IntlAddverVerifyAddressParams as IntlAddverVerifyAddressParams,
+    IntlAddressVerification as IntlAddressVerification,
+    type IntlAddressVerificationVerifyAddressResponse as IntlAddressVerificationVerifyAddressResponse,
+    type IntlAddressVerificationVerifyAddressParams as IntlAddressVerificationVerifyAddressParams,
   };
 
   export type Cancellation = API.Cancellation;

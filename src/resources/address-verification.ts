@@ -3,7 +3,7 @@
 import { APIResource } from '../resource';
 import * as Core from '../core';
 
-export class Addver extends APIResource {
+export class AddressVerification extends APIResource {
   /**
    * 1. **Structured Address** — Verify and standardize a structured address (e.g.,
    *    with `line1`, `city`, etc.).
@@ -16,15 +16,16 @@ export class Addver extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.addver.verifyAddress({
-   *   address: '1234 Elm St, Los Angeles, CA 90001, US',
-   * });
+   * const response =
+   *   await client.addressVerification.verifyAddress({
+   *     address: '1234 Elm St, Los Angeles, CA 90001, US',
+   *   });
    * ```
    */
   verifyAddress(
-    params: AddverVerifyAddressParams,
+    params: AddressVerificationVerifyAddressParams,
     options?: Core.RequestOptions,
-  ): Core.APIPromise<AddverVerifyAddressResponse> {
+  ): Core.APIPromise<AddressVerificationVerifyAddressResponse> {
     const { geocode, includeDetails, properCase, ...body } = params;
     return this._client.post('/addver/verifications', {
       query: { geocode, includeDetails, properCase },
@@ -34,15 +35,15 @@ export class Addver extends APIResource {
   }
 }
 
-export interface AddverVerifyAddressResponse {
-  data: AddverVerifyAddressResponse.Data;
+export interface AddressVerificationVerifyAddressResponse {
+  data: AddressVerificationVerifyAddressResponse.Data;
 
   message: string;
 
   status: 'success' | 'error';
 }
 
-export namespace AddverVerifyAddressResponse {
+export namespace AddressVerificationVerifyAddressResponse {
   export interface Data {
     /**
      * The city name of the address.
@@ -434,11 +435,11 @@ export namespace AddverVerifyAddressResponse {
   }
 }
 
-export type AddverVerifyAddressParams =
-  | AddverVerifyAddressParams.StandardFreeformAddressInput
-  | AddverVerifyAddressParams.StandardStructuredAddressInput;
+export type AddressVerificationVerifyAddressParams =
+  | AddressVerificationVerifyAddressParams.StandardFreeformAddressInput
+  | AddressVerificationVerifyAddressParams.StandardStructuredAddressInput;
 
-export declare namespace AddverVerifyAddressParams {
+export declare namespace AddressVerificationVerifyAddressParams {
   export interface StandardFreeformAddressInput {
     /**
      * Body param: The address you want to verify, written on a single line.
@@ -523,9 +524,9 @@ export declare namespace AddverVerifyAddressParams {
   }
 }
 
-export declare namespace Addver {
+export declare namespace AddressVerification {
   export {
-    type AddverVerifyAddressResponse as AddverVerifyAddressResponse,
-    type AddverVerifyAddressParams as AddverVerifyAddressParams,
+    type AddressVerificationVerifyAddressResponse as AddressVerificationVerifyAddressResponse,
+    type AddressVerificationVerifyAddressParams as AddressVerificationVerifyAddressParams,
   };
 }
