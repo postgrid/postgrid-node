@@ -2,7 +2,10 @@
 
 import PostGrid from 'postgrid-node';
 
-const client = new PostGrid({ baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010' });
+const client = new PostGrid({
+  addressVerificationAPIKey: 'My Address Verification API Key',
+  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
+});
 
 describe('resource url', () => {
   test('retrieve', async () => {
