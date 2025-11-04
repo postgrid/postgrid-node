@@ -13,7 +13,8 @@ export class AddressVerification extends APIResource {
    *
    * - Specifying `includeDetails=true` will provide additional output as documented
    *   in the `Details` schema.
-   * - Uses 1 lookup.
+   * - Uses 1 lookup for verification, and 1 more if geocoding (unless your contract
+   *   says otherwise).
    *
    * @example
    * ```ts
