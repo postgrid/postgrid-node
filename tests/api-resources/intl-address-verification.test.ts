@@ -8,9 +8,9 @@ const client = new PostGrid({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource intlAddver', () => {
+describe('resource intlAddressVerification', () => {
   test('verifyAddress: only required params', async () => {
-    const responsePromise = client.intlAddver.verifyAddress({
+    const responsePromise = client.intlAddressVerification.verifyAddress({
       address: {
         country: 'country',
         line1: 'line1',
@@ -28,7 +28,7 @@ describe('resource intlAddver', () => {
   });
 
   test('verifyAddress: required and optional params', async () => {
-    const response = await client.intlAddver.verifyAddress({
+    const response = await client.intlAddressVerification.verifyAddress({
       address: {
         country: 'country',
         line1: 'line1',
