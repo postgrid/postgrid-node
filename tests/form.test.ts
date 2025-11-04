@@ -1,5 +1,5 @@
-import { multipartFormRequestOptions, createForm } from 'postgrid/internal/uploads';
-import { toFile } from 'postgrid/core/uploads';
+import { multipartFormRequestOptions, createForm } from 'postgrid-node/internal/uploads';
+import { toFile } from 'postgrid-node/core/uploads';
 
 describe('form data validation', () => {
   test('valid values do not error', async () => {
