@@ -328,6 +328,7 @@ export class PostGrid {
 
     request.headers = buildHeaders([
       options.headers,
+      request.headers,
       {
         ['x-api-key']: apiKey,
       },
