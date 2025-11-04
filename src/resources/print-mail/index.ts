@@ -99,8 +99,10 @@ export {
   type DeletedResponse,
   type Report,
   type ReportListResponse,
+  type ReportCreateParams,
   type ReportUpdateParams,
   type ReportListParams,
+  type ReportSampleParams,
 } from './reports/index';
 export {
   SelfMailers,
