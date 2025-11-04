@@ -1,11 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../../core/resource';
+import { APIResource } from '../../resource';
+import { isRequestOptions } from '../../core';
+import * as Core from '../../core';
 import * as ContactsAPI from '../contacts';
-import { APIPromise } from '../../core/api-promise';
-import { List, type ListParams, PagePromise } from '../../core/pagination';
-import { RequestOptions } from '../../internal/request-options';
-import { path } from '../../internal/utils/path';
+import { List, type ListParams } from '../../pagination';
 
 export class Cheques extends APIResource {
   /**

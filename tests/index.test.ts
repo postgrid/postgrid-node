@@ -408,6 +408,18 @@ describe('idempotency', () => {
 describe('request building', () => {
   const client = new PostGrid({});
 
+  describe('Content-Length', () => {
+    test('handles multi-byte characters', async () => {
+      const { req } = await client.buildRequest({ path: '/foo', method: 'post', body: { value: '—' } });
+      expect((req.headers as Record<string, string>)['content-length']).toEqual('20');
+    });
+
+    test('handles standard characters', async () => {
+      const { req } = await client.buildRequest({ path: '/foo', method: 'post', body: { value: 'hello' } });
+      expect((req.headers as Record<string, string>)['content-length']).toEqual('22');
+    });
+  });
+
   describe('custom headers', () => {
     test('handles undefined', async () => {
       const { req } = await client.buildRequest({

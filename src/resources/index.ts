@@ -3,6 +3,7 @@
 export * from './shared';
 export { AddressVerification } from './address-verification';
 export {
+  BankAccountsList,
   BankAccounts,
   type BankAccount,
   type BankAccountList,
@@ -53,6 +54,7 @@ export {
 } from './contacts';
 export { IntlAddressVerification } from './intl-address-verification';
 export {
+  LettersList,
   Letters,
   type Letter,
   type LetterList,
