@@ -1,9 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../../resource';
-import { isRequestOptions } from '../../core';
-import * as Core from '../../core';
-import { List, type ListParams } from '../../pagination';
+import { APIResource } from '../../core/resource';
+import { APIPromise } from '../../core/api-promise';
+import { List, type ListParams, PagePromise } from '../../core/pagination';
+import { RequestOptions } from '../../internal/request-options';
+import { path } from '../../internal/utils/path';
 
 export class SelfMailers extends APIResource {
   /**
@@ -19,10 +20,7 @@ export class SelfMailers extends APIResource {
    *   });
    * ```
    */
-  create(
-    params: SelfMailerCreateParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<SelfMailerCreateResponse> {
+  create(params: SelfMailerCreateParams, options?: RequestOptions): APIPromise<SelfMailerCreateResponse> {
     const { expand, ...body } = params;
     return this._client.post('/order_profiles/self_mailers', { query: { expand }, body, ...options });
   }
@@ -38,19 +36,10 @@ export class SelfMailers extends APIResource {
    */
   retrieve(
     id: string,
-    query?: SelfMailerRetrieveParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<SelfMailerRetrieveResponse>;
-  retrieve(id: string, options?: Core.RequestOptions): Core.APIPromise<SelfMailerRetrieveResponse>;
-  retrieve(
-    id: string,
-    query: SelfMailerRetrieveParams | Core.RequestOptions = {},
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<SelfMailerRetrieveResponse> {
-    if (isRequestOptions(query)) {
-      return this.retrieve(id, {}, query);
-    }
-    return this._client.get(`/order_profiles/self_mailers/${id}`, { query, ...options });
+    query: SelfMailerRetrieveParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<SelfMailerRetrieveResponse> {
+    return this._client.get(path`/order_profiles/self_mailers/${id}`, { query, ...options });
   }
 
   /**
@@ -68,10 +57,14 @@ export class SelfMailers extends APIResource {
   update(
     id: string,
     params: SelfMailerUpdateParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<SelfMailerUpdateResponse> {
+    options?: RequestOptions,
+  ): APIPromise<SelfMailerUpdateResponse> {
     const { expand, ...body } = params;
-    return this._client.post(`/order_profiles/self_mailers/${id}`, { query: { expand }, body, ...options });
+    return this._client.post(path`/order_profiles/self_mailers/${id}`, {
+      query: { expand },
+      body,
+      ...options,
+    });
   }
 
   /**
@@ -86,18 +79,10 @@ export class SelfMailers extends APIResource {
    * ```
    */
   list(
-    query?: SelfMailerListParams,
-    options?: Core.RequestOptions,
-  ): Core.PagePromise<SelfMailerListResponsesList, SelfMailerListResponse>;
-  list(options?: Core.RequestOptions): Core.PagePromise<SelfMailerListResponsesList, SelfMailerListResponse>;
-  list(
-    query: SelfMailerListParams | Core.RequestOptions = {},
-    options?: Core.RequestOptions,
-  ): Core.PagePromise<SelfMailerListResponsesList, SelfMailerListResponse> {
-    if (isRequestOptions(query)) {
-      return this.list({}, query);
-    }
-    return this._client.getAPIList('/order_profiles/self_mailers', SelfMailerListResponsesList, {
+    query: SelfMailerListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<SelfMailerListResponsesList, SelfMailerListResponse> {
+    return this._client.getAPIList('/order_profiles/self_mailers', List<SelfMailerListResponse>, {
       query,
       ...options,
     });
@@ -112,12 +97,12 @@ export class SelfMailers extends APIResource {
    *   await client.orderProfiles.selfMailers.delete('id');
    * ```
    */
-  delete(id: string, options?: Core.RequestOptions): Core.APIPromise<SelfMailerDeleteResponse> {
-    return this._client.delete(`/order_profiles/self_mailers/${id}`, options);
+  delete(id: string, options?: RequestOptions): APIPromise<SelfMailerDeleteResponse> {
+    return this._client.delete(path`/order_profiles/self_mailers/${id}`, options);
   }
 }
 
-export class SelfMailerListResponsesList extends List<SelfMailerListResponse> {}
+export type SelfMailerListResponsesList = List<SelfMailerListResponse>;
 
 /**
  * Represents a Self-Mailer Profile resource.
@@ -689,8 +674,6 @@ export interface SelfMailerListParams extends ListParams {
   search?: string;
 }
 
-SelfMailers.SelfMailerListResponsesList = SelfMailerListResponsesList;
-
 export declare namespace SelfMailers {
   export {
     type SelfMailerCreateResponse as SelfMailerCreateResponse,
@@ -698,7 +681,7 @@ export declare namespace SelfMailers {
     type SelfMailerUpdateResponse as SelfMailerUpdateResponse,
     type SelfMailerListResponse as SelfMailerListResponse,
     type SelfMailerDeleteResponse as SelfMailerDeleteResponse,
-    SelfMailerListResponsesList as SelfMailerListResponsesList,
+    type SelfMailerListResponsesList as SelfMailerListResponsesList,
     type SelfMailerCreateParams as SelfMailerCreateParams,
     type SelfMailerRetrieveParams as SelfMailerRetrieveParams,
     type SelfMailerUpdateParams as SelfMailerUpdateParams,

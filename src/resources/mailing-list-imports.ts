@@ -1,9 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../resource';
-import { isRequestOptions } from '../core';
-import * as Core from '../core';
-import { List, type ListParams } from '../pagination';
+import { APIResource } from '../core/resource';
+import { APIPromise } from '../core/api-promise';
+import { List, type ListParams, PagePromise } from '../core/pagination';
+import { RequestOptions } from '../internal/request-options';
+import { path } from '../internal/utils/path';
 
 export class MailingListImports extends APIResource {
   /**
@@ -34,8 +35,8 @@ export class MailingListImports extends APIResource {
    */
   create(
     body: MailingListImportCreateParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<MailingListImportCreateResponse> {
+    options?: RequestOptions,
+  ): APIPromise<MailingListImportCreateResponse> {
     return this._client.post('/mailing_list_imports', { body, ...options });
   }
 
@@ -48,8 +49,8 @@ export class MailingListImports extends APIResource {
    *   await client.mailingListImports.retrieve('id');
    * ```
    */
-  retrieve(id: string, options?: Core.RequestOptions): Core.APIPromise<MailingListImportRetrieveResponse> {
-    return this._client.get(`/mailing_list_imports/${id}`, options);
+  retrieve(id: string, options?: RequestOptions): APIPromise<MailingListImportRetrieveResponse> {
+    return this._client.get(path`/mailing_list_imports/${id}`, options);
   }
 
   /**
@@ -67,9 +68,9 @@ export class MailingListImports extends APIResource {
   update(
     id: string,
     body: MailingListImportUpdateParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<MailingListImportUpdateResponse> {
-    return this._client.post(`/mailing_list_imports/${id}`, { body, ...options });
+    options?: RequestOptions,
+  ): APIPromise<MailingListImportUpdateResponse> {
+    return this._client.post(path`/mailing_list_imports/${id}`, { body, ...options });
   }
 
   /**
@@ -87,20 +88,10 @@ export class MailingListImports extends APIResource {
    * ```
    */
   list(
-    query?: MailingListImportListParams,
-    options?: Core.RequestOptions,
-  ): Core.PagePromise<MailingListImportListResponsesList, MailingListImportListResponse>;
-  list(
-    options?: Core.RequestOptions,
-  ): Core.PagePromise<MailingListImportListResponsesList, MailingListImportListResponse>;
-  list(
-    query: MailingListImportListParams | Core.RequestOptions = {},
-    options?: Core.RequestOptions,
-  ): Core.PagePromise<MailingListImportListResponsesList, MailingListImportListResponse> {
-    if (isRequestOptions(query)) {
-      return this.list({}, query);
-    }
-    return this._client.getAPIList('/mailing_list_imports', MailingListImportListResponsesList, {
+    query: MailingListImportListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<MailingListImportListResponsesList, MailingListImportListResponse> {
+    return this._client.getAPIList('/mailing_list_imports', List<MailingListImportListResponse>, {
       query,
       ...options,
     });
@@ -118,12 +109,12 @@ export class MailingListImports extends APIResource {
    *   await client.mailingListImports.delete('id');
    * ```
    */
-  delete(id: string, options?: Core.RequestOptions): Core.APIPromise<MailingListImportDeleteResponse> {
-    return this._client.delete(`/mailing_list_imports/${id}`, options);
+  delete(id: string, options?: RequestOptions): APIPromise<MailingListImportDeleteResponse> {
+    return this._client.delete(path`/mailing_list_imports/${id}`, options);
   }
 }
 
-export class MailingListImportListResponsesList extends List<MailingListImportListResponse> {}
+export type MailingListImportListResponsesList = List<MailingListImportListResponse>;
 
 /**
  * Read-only view of a MailingListImport
@@ -1059,8 +1050,6 @@ export interface MailingListImportListParams extends ListParams {
   search?: string;
 }
 
-MailingListImports.MailingListImportListResponsesList = MailingListImportListResponsesList;
-
 export declare namespace MailingListImports {
   export {
     type MailingListImportCreateResponse as MailingListImportCreateResponse,
@@ -1068,7 +1057,7 @@ export declare namespace MailingListImports {
     type MailingListImportUpdateResponse as MailingListImportUpdateResponse,
     type MailingListImportListResponse as MailingListImportListResponse,
     type MailingListImportDeleteResponse as MailingListImportDeleteResponse,
-    MailingListImportListResponsesList as MailingListImportListResponsesList,
+    type MailingListImportListResponsesList as MailingListImportListResponsesList,
     type MailingListImportCreateParams as MailingListImportCreateParams,
     type MailingListImportUpdateParams as MailingListImportUpdateParams,
     type MailingListImportListParams as MailingListImportListParams,

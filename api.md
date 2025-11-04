@@ -181,9 +181,9 @@ Types:
 
 Methods:
 
-- <code title="post /reports/{reportID}/exports">client.reports.exports.<a href="./src/resources/reports/exports.ts">create</a>(reportId, { ...params }) -> ExportCreateResponse</code>
-- <code title="get /reports/{reportID}/exports/{exportID}">client.reports.exports.<a href="./src/resources/reports/exports.ts">retrieve</a>(reportId, exportId) -> ExportRetrieveResponse</code>
-- <code title="delete /reports/{reportID}/exports/{exportID}">client.reports.exports.<a href="./src/resources/reports/exports.ts">delete</a>(reportId, exportId) -> ExportDeleteResponse</code>
+- <code title="post /reports/{reportID}/exports">client.reports.exports.<a href="./src/resources/reports/exports.ts">create</a>(reportID, { ...params }) -> ExportCreateResponse</code>
+- <code title="get /reports/{reportID}/exports/{exportID}">client.reports.exports.<a href="./src/resources/reports/exports.ts">retrieve</a>(exportID, { ...params }) -> ExportRetrieveResponse</code>
+- <code title="delete /reports/{reportID}/exports/{exportID}">client.reports.exports.<a href="./src/resources/reports/exports.ts">delete</a>(exportID, { ...params }) -> ExportDeleteResponse</code>
 
 # SelfMailers
 
@@ -333,20 +333,4 @@ Methods:
 
 # AddressVerification
 
-Types:
-
-- <code><a href="./src/resources/address-verification.ts">AddressVerificationVerifyAddressResponse</a></code>
-
-Methods:
-
-- <code title="post /addver/verifications">client.addressVerification.<a href="./src/resources/address-verification.ts">verifyAddress</a>({ ...params }) -> AddressVerificationVerifyAddressResponse</code>
-
 # IntlAddressVerification
-
-Types:
-
-- <code><a href="./src/resources/intl-address-verification.ts">IntlAddressVerificationVerifyAddressResponse</a></code>
-
-Methods:
-
-- <code title="post /intl_addver/verifications">client.intlAddressVerification.<a href="./src/resources/intl-address-verification.ts">verifyAddress</a>({ ...params }) -> IntlAddressVerificationVerifyAddressResponse</code>

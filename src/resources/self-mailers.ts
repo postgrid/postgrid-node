@@ -1,11 +1,12 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../resource';
-import { isRequestOptions } from '../core';
-import * as Core from '../core';
+import { APIResource } from '../core/resource';
 import * as ContactsAPI from './contacts';
 import * as Shared from './shared';
-import { List, type ListParams } from '../pagination';
+import { APIPromise } from '../core/api-promise';
+import { List, type ListParams, PagePromise } from '../core/pagination';
+import { RequestOptions } from '../internal/request-options';
+import { path } from '../internal/utils/path';
 
 export class SelfMailers extends APIResource {
   /**
@@ -28,10 +29,7 @@ export class SelfMailers extends APIResource {
    * });
    * ```
    */
-  create(
-    body: SelfMailerCreateParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<SelfMailerCreateResponse> {
+  create(body: SelfMailerCreateParams, options?: RequestOptions): APIPromise<SelfMailerCreateResponse> {
     return this._client.post('/self_mailers', { body, ...options });
   }
 
@@ -43,8 +41,8 @@ export class SelfMailers extends APIResource {
    * const selfMailer = await client.selfMailers.retrieve('id');
    * ```
    */
-  retrieve(id: string, options?: Core.RequestOptions): Core.APIPromise<SelfMailerRetrieveResponse> {
-    return this._client.get(`/self_mailers/${id}`, options);
+  retrieve(id: string, options?: RequestOptions): APIPromise<SelfMailerRetrieveResponse> {
+    return this._client.get(path`/self_mailers/${id}`, options);
   }
 
   /**
@@ -59,18 +57,10 @@ export class SelfMailers extends APIResource {
    * ```
    */
   list(
-    query?: SelfMailerListParams,
-    options?: Core.RequestOptions,
-  ): Core.PagePromise<SelfMailerListResponsesList, SelfMailerListResponse>;
-  list(options?: Core.RequestOptions): Core.PagePromise<SelfMailerListResponsesList, SelfMailerListResponse>;
-  list(
-    query: SelfMailerListParams | Core.RequestOptions = {},
-    options?: Core.RequestOptions,
-  ): Core.PagePromise<SelfMailerListResponsesList, SelfMailerListResponse> {
-    if (isRequestOptions(query)) {
-      return this.list({}, query);
-    }
-    return this._client.getAPIList('/self_mailers', SelfMailerListResponsesList, { query, ...options });
+    query: SelfMailerListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<SelfMailerListResponsesList, SelfMailerListResponse> {
+    return this._client.getAPIList('/self_mailers', List<SelfMailerListResponse>, { query, ...options });
   }
 
   /**
@@ -81,8 +71,8 @@ export class SelfMailers extends APIResource {
    * const response = await client.selfMailers.cancel('id');
    * ```
    */
-  cancel(id: string, options?: Core.RequestOptions): Core.APIPromise<SelfMailerCancelResponse> {
-    return this._client.delete(`/self_mailers/${id}`, options);
+  cancel(id: string, options?: RequestOptions): APIPromise<SelfMailerCancelResponse> {
+    return this._client.delete(path`/self_mailers/${id}`, options);
   }
 
   /**
@@ -99,15 +89,12 @@ export class SelfMailers extends APIResource {
    *   await client.selfMailers.retrievePreviewURL('id');
    * ```
    */
-  retrievePreviewURL(
-    id: string,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<SelfMailerRetrievePreviewURLResponse> {
-    return this._client.get(`/self_mailers/${id}/url`, options);
+  retrievePreviewURL(id: string, options?: RequestOptions): APIPromise<SelfMailerRetrievePreviewURLResponse> {
+    return this._client.get(path`/self_mailers/${id}/url`, options);
   }
 }
 
-export class SelfMailerListResponsesList extends List<SelfMailerListResponse> {}
+export type SelfMailerListResponsesList = List<SelfMailerListResponse>;
 
 export interface SelfMailerCreateResponse {
   /**
@@ -1008,8 +995,6 @@ export interface SelfMailerListParams extends ListParams {
   search?: string;
 }
 
-SelfMailers.SelfMailerListResponsesList = SelfMailerListResponsesList;
-
 export declare namespace SelfMailers {
   export {
     type SelfMailerCreateResponse as SelfMailerCreateResponse,
@@ -1017,7 +1002,7 @@ export declare namespace SelfMailers {
     type SelfMailerListResponse as SelfMailerListResponse,
     type SelfMailerCancelResponse as SelfMailerCancelResponse,
     type SelfMailerRetrievePreviewURLResponse as SelfMailerRetrievePreviewURLResponse,
-    SelfMailerListResponsesList as SelfMailerListResponsesList,
+    type SelfMailerListResponsesList as SelfMailerListResponsesList,
     type SelfMailerCreateParams as SelfMailerCreateParams,
     type SelfMailerListParams as SelfMailerListParams,
   };

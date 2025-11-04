@@ -1,7 +1,9 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../../resource';
-import * as Core from '../../core';
+import { APIResource } from '../../core/resource';
+import { APIPromise } from '../../core/api-promise';
+import { RequestOptions } from '../../internal/request-options';
+import { path } from '../../internal/utils/path';
 
 export class URL extends APIResource {
   /**
@@ -17,8 +19,8 @@ export class URL extends APIResource {
    * const url = await client.cheques.url.retrieve('id');
    * ```
    */
-  retrieve(id: string, options?: Core.RequestOptions): Core.APIPromise<URLRetrieveResponse> {
-    return this._client.get(`/cheques/${id}/url`, options);
+  retrieve(id: string, options?: RequestOptions): APIPromise<URLRetrieveResponse> {
+    return this._client.get(path`/cheques/${id}/url`, options);
   }
 }
 

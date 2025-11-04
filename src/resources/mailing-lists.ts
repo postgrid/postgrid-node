@@ -1,9 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../resource';
-import { isRequestOptions } from '../core';
-import * as Core from '../core';
-import { List, type ListParams } from '../pagination';
+import { APIResource } from '../core/resource';
+import { APIPromise } from '../core/api-promise';
+import { List, type ListParams, PagePromise } from '../core/pagination';
+import { RequestOptions } from '../internal/request-options';
+import { path } from '../internal/utils/path';
 
 export class MailingLists extends APIResource {
   /**
@@ -17,10 +18,7 @@ export class MailingLists extends APIResource {
    * });
    * ```
    */
-  create(
-    body: MailingListCreateParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<MailingListCreateResponse> {
+  create(body: MailingListCreateParams, options?: RequestOptions): APIPromise<MailingListCreateResponse> {
     return this._client.post('/mailing_lists', { body, ...options });
   }
 
@@ -34,8 +32,8 @@ export class MailingLists extends APIResource {
    * );
    * ```
    */
-  retrieve(id: string, options?: Core.RequestOptions): Core.APIPromise<MailingListRetrieveResponse> {
-    return this._client.get(`/mailing_lists/${id}`, options);
+  retrieve(id: string, options?: RequestOptions): APIPromise<MailingListRetrieveResponse> {
+    return this._client.get(path`/mailing_lists/${id}`, options);
   }
 
   /**
@@ -51,9 +49,9 @@ export class MailingLists extends APIResource {
   update(
     id: string,
     body: MailingListUpdateParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<MailingListUpdateResponse> {
-    return this._client.post(`/mailing_lists/${id}`, { body, ...options });
+    options?: RequestOptions,
+  ): APIPromise<MailingListUpdateResponse> {
+    return this._client.post(path`/mailing_lists/${id}`, { body, ...options });
   }
 
   /**
@@ -71,20 +69,10 @@ export class MailingLists extends APIResource {
    * ```
    */
   list(
-    query?: MailingListListParams,
-    options?: Core.RequestOptions,
-  ): Core.PagePromise<MailingListListResponsesList, MailingListListResponse>;
-  list(
-    options?: Core.RequestOptions,
-  ): Core.PagePromise<MailingListListResponsesList, MailingListListResponse>;
-  list(
-    query: MailingListListParams | Core.RequestOptions = {},
-    options?: Core.RequestOptions,
-  ): Core.PagePromise<MailingListListResponsesList, MailingListListResponse> {
-    if (isRequestOptions(query)) {
-      return this.list({}, query);
-    }
-    return this._client.getAPIList('/mailing_lists', MailingListListResponsesList, { query, ...options });
+    query: MailingListListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<MailingListListResponsesList, MailingListListResponse> {
+    return this._client.getAPIList('/mailing_lists', List<MailingListListResponse>, { query, ...options });
   }
 
   /**
@@ -98,8 +86,8 @@ export class MailingLists extends APIResource {
    * const mailingList = await client.mailingLists.delete('id');
    * ```
    */
-  delete(id: string, options?: Core.RequestOptions): Core.APIPromise<MailingListDeleteResponse> {
-    return this._client.delete(`/mailing_lists/${id}`, options);
+  delete(id: string, options?: RequestOptions): APIPromise<MailingListDeleteResponse> {
+    return this._client.delete(path`/mailing_lists/${id}`, options);
   }
 
   /**
@@ -128,13 +116,13 @@ export class MailingLists extends APIResource {
   submitJob(
     id: string,
     body: MailingListSubmitJobParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<MailingListSubmitJobResponse> {
-    return this._client.post(`/mailing_lists/${id}/jobs`, { body, ...options });
+    options?: RequestOptions,
+  ): APIPromise<MailingListSubmitJobResponse> {
+    return this._client.post(path`/mailing_lists/${id}/jobs`, { body, ...options });
   }
 }
 
-export class MailingListListResponsesList extends List<MailingListListResponse> {}
+export type MailingListListResponsesList = List<MailingListListResponse>;
 
 /**
  * Represents a mailing list.
@@ -158,7 +146,7 @@ export interface MailingListCreateResponse {
   /**
    * Status of the mailing list processing.
    */
-  status: 'creating_contacts' | 'removing_contacts' | 'counting_recipient_country_codes' | 'completed';
+  status: 'creating_contacts' | 'removing_contacts' | 'completed';
 
   /**
    * The UTC time at which this resource was last updated.
@@ -225,7 +213,7 @@ export interface MailingListRetrieveResponse {
   /**
    * Status of the mailing list processing.
    */
-  status: 'creating_contacts' | 'removing_contacts' | 'counting_recipient_country_codes' | 'completed';
+  status: 'creating_contacts' | 'removing_contacts' | 'completed';
 
   /**
    * The UTC time at which this resource was last updated.
@@ -308,7 +296,7 @@ export interface MailingListListResponse {
   /**
    * Status of the mailing list processing.
    */
-  status: 'creating_contacts' | 'removing_contacts' | 'counting_recipient_country_codes' | 'completed';
+  status: 'creating_contacts' | 'removing_contacts' | 'completed';
 
   /**
    * The UTC time at which this resource was last updated.
@@ -384,7 +372,7 @@ export interface MailingListSubmitJobResponse {
   /**
    * Status of the mailing list processing.
    */
-  status: 'creating_contacts' | 'removing_contacts' | 'counting_recipient_country_codes' | 'completed';
+  status: 'creating_contacts' | 'removing_contacts' | 'completed';
 
   /**
    * The UTC time at which this resource was last updated.
@@ -492,8 +480,6 @@ export interface MailingListSubmitJobParams {
   removeMailingListImports?: Array<string>;
 }
 
-MailingLists.MailingListListResponsesList = MailingListListResponsesList;
-
 export declare namespace MailingLists {
   export {
     type MailingListCreateResponse as MailingListCreateResponse,
@@ -502,7 +488,7 @@ export declare namespace MailingLists {
     type MailingListListResponse as MailingListListResponse,
     type MailingListDeleteResponse as MailingListDeleteResponse,
     type MailingListSubmitJobResponse as MailingListSubmitJobResponse,
-    MailingListListResponsesList as MailingListListResponsesList,
+    type MailingListListResponsesList as MailingListListResponsesList,
     type MailingListCreateParams as MailingListCreateParams,
     type MailingListUpdateParams as MailingListUpdateParams,
     type MailingListListParams as MailingListListParams,

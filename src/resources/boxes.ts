@@ -1,11 +1,12 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../resource';
-import { isRequestOptions } from '../core';
-import * as Core from '../core';
+import { APIResource } from '../core/resource';
 import * as ContactsAPI from './contacts';
 import * as Shared from './shared';
-import { List, type ListParams } from '../pagination';
+import { APIPromise } from '../core/api-promise';
+import { List, type ListParams, PagePromise } from '../core/pagination';
+import { RequestOptions } from '../internal/request-options';
+import { path } from '../internal/utils/path';
 
 export class Boxes extends APIResource {
   /**
@@ -43,7 +44,7 @@ export class Boxes extends APIResource {
    * });
    * ```
    */
-  create(body: BoxCreateParams, options?: Core.RequestOptions): Core.APIPromise<BoxCreateResponse> {
+  create(body: BoxCreateParams, options?: RequestOptions): APIPromise<BoxCreateResponse> {
     return this._client.post('/boxes', { body, ...options });
   }
 
@@ -55,8 +56,8 @@ export class Boxes extends APIResource {
    * const box = await client.boxes.retrieve('id');
    * ```
    */
-  retrieve(id: string, options?: Core.RequestOptions): Core.APIPromise<BoxRetrieveResponse> {
-    return this._client.get(`/boxes/${id}`, options);
+  retrieve(id: string, options?: RequestOptions): APIPromise<BoxRetrieveResponse> {
+    return this._client.get(path`/boxes/${id}`, options);
   }
 
   /**
@@ -71,18 +72,10 @@ export class Boxes extends APIResource {
    * ```
    */
   list(
-    query?: BoxListParams,
-    options?: Core.RequestOptions,
-  ): Core.PagePromise<BoxListResponsesList, BoxListResponse>;
-  list(options?: Core.RequestOptions): Core.PagePromise<BoxListResponsesList, BoxListResponse>;
-  list(
-    query: BoxListParams | Core.RequestOptions = {},
-    options?: Core.RequestOptions,
-  ): Core.PagePromise<BoxListResponsesList, BoxListResponse> {
-    if (isRequestOptions(query)) {
-      return this.list({}, query);
-    }
-    return this._client.getAPIList('/boxes', BoxListResponsesList, { query, ...options });
+    query: BoxListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<BoxListResponsesList, BoxListResponse> {
+    return this._client.getAPIList('/boxes', List<BoxListResponse>, { query, ...options });
   }
 
   /**
@@ -93,12 +86,12 @@ export class Boxes extends APIResource {
    * const response = await client.boxes.cancel('id');
    * ```
    */
-  cancel(id: string, options?: Core.RequestOptions): Core.APIPromise<BoxCancelResponse> {
-    return this._client.delete(`/boxes/${id}`, options);
+  cancel(id: string, options?: RequestOptions): APIPromise<BoxCancelResponse> {
+    return this._client.delete(path`/boxes/${id}`, options);
   }
 }
 
-export class BoxListResponsesList extends List<BoxListResponse> {}
+export type BoxListResponsesList = List<BoxListResponse>;
 
 export interface BoxCreateResponse {
   /**
@@ -1002,15 +995,13 @@ export interface BoxListParams extends ListParams {
   search?: string;
 }
 
-Boxes.BoxListResponsesList = BoxListResponsesList;
-
 export declare namespace Boxes {
   export {
     type BoxCreateResponse as BoxCreateResponse,
     type BoxRetrieveResponse as BoxRetrieveResponse,
     type BoxListResponse as BoxListResponse,
     type BoxCancelResponse as BoxCancelResponse,
-    BoxListResponsesList as BoxListResponsesList,
+    type BoxListResponsesList as BoxListResponsesList,
     type BoxCreateParams as BoxCreateParams,
     type BoxListParams as BoxListParams,
   };

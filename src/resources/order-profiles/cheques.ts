@@ -1,9 +1,11 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../../resource';
-import { isRequestOptions } from '../../core';
-import * as Core from '../../core';
-import { List, type ListParams } from '../../pagination';
+import { APIResource } from '../../core/resource';
+import * as ContactsAPI from '../contacts';
+import { APIPromise } from '../../core/api-promise';
+import { List, type ListParams, PagePromise } from '../../core/pagination';
+import { RequestOptions } from '../../internal/request-options';
+import { path } from '../../internal/utils/path';
 
 export class Cheques extends APIResource {
   /**
@@ -20,7 +22,7 @@ export class Cheques extends APIResource {
    * });
    * ```
    */
-  create(params: ChequeCreateParams, options?: Core.RequestOptions): Core.APIPromise<ChequeCreateResponse> {
+  create(params: ChequeCreateParams, options?: RequestOptions): APIPromise<ChequeCreateResponse> {
     const { expand, ...body } = params;
     return this._client.post('/order_profiles/cheques', { query: { expand }, body, ...options });
   }
@@ -37,19 +39,10 @@ export class Cheques extends APIResource {
    */
   retrieve(
     id: string,
-    query?: ChequeRetrieveParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<ChequeRetrieveResponse>;
-  retrieve(id: string, options?: Core.RequestOptions): Core.APIPromise<ChequeRetrieveResponse>;
-  retrieve(
-    id: string,
-    query: ChequeRetrieveParams | Core.RequestOptions = {},
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<ChequeRetrieveResponse> {
-    if (isRequestOptions(query)) {
-      return this.retrieve(id, {}, query);
-    }
-    return this._client.get(`/order_profiles/cheques/${id}`, { query, ...options });
+    query: ChequeRetrieveParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<ChequeRetrieveResponse> {
+    return this._client.get(path`/order_profiles/cheques/${id}`, { query, ...options });
   }
 
   /**
@@ -64,13 +57,9 @@ export class Cheques extends APIResource {
    * );
    * ```
    */
-  update(
-    id: string,
-    params: ChequeUpdateParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<ChequeUpdateResponse> {
+  update(id: string, params: ChequeUpdateParams, options?: RequestOptions): APIPromise<ChequeUpdateResponse> {
     const { expand, ...body } = params;
-    return this._client.post(`/order_profiles/cheques/${id}`, { query: { expand }, body, ...options });
+    return this._client.post(path`/order_profiles/cheques/${id}`, { query: { expand }, body, ...options });
   }
 
   /**
@@ -85,18 +74,13 @@ export class Cheques extends APIResource {
    * ```
    */
   list(
-    query?: ChequeListParams,
-    options?: Core.RequestOptions,
-  ): Core.PagePromise<ChequeListResponsesList, ChequeListResponse>;
-  list(options?: Core.RequestOptions): Core.PagePromise<ChequeListResponsesList, ChequeListResponse>;
-  list(
-    query: ChequeListParams | Core.RequestOptions = {},
-    options?: Core.RequestOptions,
-  ): Core.PagePromise<ChequeListResponsesList, ChequeListResponse> {
-    if (isRequestOptions(query)) {
-      return this.list({}, query);
-    }
-    return this._client.getAPIList('/order_profiles/cheques', ChequeListResponsesList, { query, ...options });
+    query: ChequeListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<ChequeListResponsesList, ChequeListResponse> {
+    return this._client.getAPIList('/order_profiles/cheques', List<ChequeListResponse>, {
+      query,
+      ...options,
+    });
   }
 
   /**
@@ -109,12 +93,12 @@ export class Cheques extends APIResource {
    * );
    * ```
    */
-  delete(id: string, options?: Core.RequestOptions): Core.APIPromise<ChequeDeleteResponse> {
-    return this._client.delete(`/order_profiles/cheques/${id}`, options);
+  delete(id: string, options?: RequestOptions): APIPromise<ChequeDeleteResponse> {
+    return this._client.delete(path`/order_profiles/cheques/${id}`, options);
   }
 }
 
-export class ChequeListResponsesList extends List<ChequeListResponse> {}
+export type ChequeListResponsesList = List<ChequeListResponse>;
 
 export interface ChequeCreateResponse {
   /**
@@ -161,6 +145,12 @@ export interface ChequeCreateResponse {
    * An optional description for the profile. Set to `null` to remove during update.
    */
   description?: string | null;
+
+  /**
+   * HTML content for an optional attached letter. Cannot be used with
+   * `letterTemplate` or `letterPDF`.
+   */
+  letterHTML?: string;
 
   /**
    * ID of a template for an optional attached letter. Cannot be used with
@@ -230,6 +220,11 @@ export interface ChequeCreateResponse {
    * Optional key-value metadata.
    */
   metadata?: { [key: string]: string } | null;
+
+  /**
+   * Contact details for redirection (output).
+   */
+  redirectTo?: ContactsAPI.Contact;
 }
 
 export interface ChequeRetrieveResponse {
@@ -279,6 +274,12 @@ export interface ChequeRetrieveResponse {
   description?: string | null;
 
   /**
+   * HTML content for an optional attached letter. Cannot be used with
+   * `letterTemplate` or `letterPDF`.
+   */
+  letterHTML?: string;
+
+  /**
    * ID of a template for an optional attached letter. Cannot be used with
    * `letterHTML` or `letterPDF`.
    */
@@ -346,6 +347,11 @@ export interface ChequeRetrieveResponse {
    * Optional key-value metadata.
    */
   metadata?: { [key: string]: string } | null;
+
+  /**
+   * Contact details for redirection (output).
+   */
+  redirectTo?: ContactsAPI.Contact;
 }
 
 export interface ChequeUpdateResponse {
@@ -395,6 +401,12 @@ export interface ChequeUpdateResponse {
   description?: string | null;
 
   /**
+   * HTML content for an optional attached letter. Cannot be used with
+   * `letterTemplate` or `letterPDF`.
+   */
+  letterHTML?: string;
+
+  /**
    * ID of a template for an optional attached letter. Cannot be used with
    * `letterHTML` or `letterPDF`.
    */
@@ -462,6 +474,11 @@ export interface ChequeUpdateResponse {
    * Optional key-value metadata.
    */
   metadata?: { [key: string]: string } | null;
+
+  /**
+   * Contact details for redirection (output).
+   */
+  redirectTo?: ContactsAPI.Contact;
 }
 
 export interface ChequeListResponse {
@@ -506,6 +523,12 @@ export interface ChequeListResponse {
   description?: string | null;
 
   /**
+   * HTML content for an optional attached letter. Cannot be used with
+   * `letterTemplate` or `letterPDF`.
+   */
+  letterHTML?: string;
+
+  /**
    * ID of a template for an optional attached letter. Cannot be used with
    * `letterHTML` or `letterPDF`.
    */
@@ -573,6 +596,11 @@ export interface ChequeListResponse {
    * Optional key-value metadata.
    */
   metadata?: { [key: string]: string } | null;
+
+  /**
+   * Contact details for redirection (output).
+   */
+  redirectTo?: ContactsAPI.Contact;
 }
 
 export interface ChequeDeleteResponse {
@@ -615,6 +643,12 @@ export interface ChequeCreateParams {
    * during update.
    */
   description?: string | null;
+
+  /**
+   * Body param: HTML content for an optional attached letter. Cannot be used with
+   * `letterTemplate` or `letterPDF`.
+   */
+  letterHTML?: string;
 
   /**
    * Body param: PDF file for an optional attached letter. Cannot be used with
@@ -724,6 +758,18 @@ export interface ChequeUpdateParams {
   description?: string | null;
 
   /**
+   * Body param: Set explicitly to `null` during an update operation to remove the
+   * attached letter.
+   */
+  letter?: unknown;
+
+  /**
+   * Body param: HTML content for an optional attached letter. Cannot be used with
+   * `letterTemplate` or `letterPDF`.
+   */
+  letterHTML?: string;
+
+  /**
    * Body param: PDF file for an optional attached letter. Cannot be used with
    * `letterHTML` or `letterTemplate`. Input only.
    */
@@ -807,8 +853,6 @@ export interface ChequeListParams extends ListParams {
   search?: string;
 }
 
-Cheques.ChequeListResponsesList = ChequeListResponsesList;
-
 export declare namespace Cheques {
   export {
     type ChequeCreateResponse as ChequeCreateResponse,
@@ -816,7 +860,7 @@ export declare namespace Cheques {
     type ChequeUpdateResponse as ChequeUpdateResponse,
     type ChequeListResponse as ChequeListResponse,
     type ChequeDeleteResponse as ChequeDeleteResponse,
-    ChequeListResponsesList as ChequeListResponsesList,
+    type ChequeListResponsesList as ChequeListResponsesList,
     type ChequeCreateParams as ChequeCreateParams,
     type ChequeRetrieveParams as ChequeRetrieveParams,
     type ChequeUpdateParams as ChequeUpdateParams,

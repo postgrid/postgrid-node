@@ -1,9 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../../resource';
-import { isRequestOptions } from '../../core';
-import * as Core from '../../core';
-import { List, type ListParams } from '../../pagination';
+import { APIResource } from '../../core/resource';
+import { APIPromise } from '../../core/api-promise';
+import { List, type ListParams, PagePromise } from '../../core/pagination';
+import { RequestOptions } from '../../internal/request-options';
+import { path } from '../../internal/utils/path';
 
 export class Postcards extends APIResource {
   /**
@@ -19,10 +20,7 @@ export class Postcards extends APIResource {
    *   });
    * ```
    */
-  create(
-    params: PostcardCreateParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<PostcardCreateResponse> {
+  create(params: PostcardCreateParams, options?: RequestOptions): APIPromise<PostcardCreateResponse> {
     const { expand, ...body } = params;
     return this._client.post('/order_profiles/postcards', { query: { expand }, body, ...options });
   }
@@ -38,19 +36,10 @@ export class Postcards extends APIResource {
    */
   retrieve(
     id: string,
-    query?: PostcardRetrieveParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<PostcardRetrieveResponse>;
-  retrieve(id: string, options?: Core.RequestOptions): Core.APIPromise<PostcardRetrieveResponse>;
-  retrieve(
-    id: string,
-    query: PostcardRetrieveParams | Core.RequestOptions = {},
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<PostcardRetrieveResponse> {
-    if (isRequestOptions(query)) {
-      return this.retrieve(id, {}, query);
-    }
-    return this._client.get(`/order_profiles/postcards/${id}`, { query, ...options });
+    query: PostcardRetrieveParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<PostcardRetrieveResponse> {
+    return this._client.get(path`/order_profiles/postcards/${id}`, { query, ...options });
   }
 
   /**
@@ -66,10 +55,10 @@ export class Postcards extends APIResource {
   update(
     id: string,
     params: PostcardUpdateParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<PostcardUpdateResponse> {
+    options?: RequestOptions,
+  ): APIPromise<PostcardUpdateResponse> {
     const { expand, ...body } = params;
-    return this._client.post(`/order_profiles/postcards/${id}`, { query: { expand }, body, ...options });
+    return this._client.post(path`/order_profiles/postcards/${id}`, { query: { expand }, body, ...options });
   }
 
   /**
@@ -84,18 +73,10 @@ export class Postcards extends APIResource {
    * ```
    */
   list(
-    query?: PostcardListParams,
-    options?: Core.RequestOptions,
-  ): Core.PagePromise<PostcardListResponsesList, PostcardListResponse>;
-  list(options?: Core.RequestOptions): Core.PagePromise<PostcardListResponsesList, PostcardListResponse>;
-  list(
-    query: PostcardListParams | Core.RequestOptions = {},
-    options?: Core.RequestOptions,
-  ): Core.PagePromise<PostcardListResponsesList, PostcardListResponse> {
-    if (isRequestOptions(query)) {
-      return this.list({}, query);
-    }
-    return this._client.getAPIList('/order_profiles/postcards', PostcardListResponsesList, {
+    query: PostcardListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<PostcardListResponsesList, PostcardListResponse> {
+    return this._client.getAPIList('/order_profiles/postcards', List<PostcardListResponse>, {
       query,
       ...options,
     });
@@ -110,12 +91,12 @@ export class Postcards extends APIResource {
    *   await client.orderProfiles.postcards.delete('id');
    * ```
    */
-  delete(id: string, options?: Core.RequestOptions): Core.APIPromise<PostcardDeleteResponse> {
-    return this._client.delete(`/order_profiles/postcards/${id}`, options);
+  delete(id: string, options?: RequestOptions): APIPromise<PostcardDeleteResponse> {
+    return this._client.delete(path`/order_profiles/postcards/${id}`, options);
   }
 }
 
-export class PostcardListResponsesList extends List<PostcardListResponse> {}
+export type PostcardListResponsesList = List<PostcardListResponse>;
 
 export interface PostcardCreateResponse {
   /**
@@ -676,8 +657,6 @@ export interface PostcardListParams extends ListParams {
   search?: string;
 }
 
-Postcards.PostcardListResponsesList = PostcardListResponsesList;
-
 export declare namespace Postcards {
   export {
     type PostcardCreateResponse as PostcardCreateResponse,
@@ -685,7 +664,7 @@ export declare namespace Postcards {
     type PostcardUpdateResponse as PostcardUpdateResponse,
     type PostcardListResponse as PostcardListResponse,
     type PostcardDeleteResponse as PostcardDeleteResponse,
-    PostcardListResponsesList as PostcardListResponsesList,
+    type PostcardListResponsesList as PostcardListResponsesList,
     type PostcardCreateParams as PostcardCreateParams,
     type PostcardRetrieveParams as PostcardRetrieveParams,
     type PostcardUpdateParams as PostcardUpdateParams,

@@ -1,9 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../resource';
-import { isRequestOptions } from '../core';
-import * as Core from '../core';
-import { List, type ListParams } from '../pagination';
+import { APIResource } from '../core/resource';
+import { APIPromise } from '../core/api-promise';
+import { List, type ListParams, PagePromise } from '../core/pagination';
+import { RequestOptions } from '../internal/request-options';
+import { path } from '../internal/utils/path';
 
 export class SubOrganizations extends APIResource {
   /**
@@ -26,8 +27,8 @@ export class SubOrganizations extends APIResource {
    */
   create(
     body: SubOrganizationCreateParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<SubOrganizationCreateResponse> {
+    options?: RequestOptions,
+  ): APIPromise<SubOrganizationCreateResponse> {
     return this._client.post('/sub_organizations/', { body, ...options });
   }
 
@@ -40,8 +41,8 @@ export class SubOrganizations extends APIResource {
    *   await client.subOrganizations.retrieve('id');
    * ```
    */
-  retrieve(id: string, options?: Core.RequestOptions): Core.APIPromise<SubOrganizationRetrieveResponse> {
-    return this._client.get(`/sub_organizations/${id}`, options);
+  retrieve(id: string, options?: RequestOptions): APIPromise<SubOrganizationRetrieveResponse> {
+    return this._client.get(path`/sub_organizations/${id}`, options);
   }
 
   /**
@@ -56,20 +57,10 @@ export class SubOrganizations extends APIResource {
    * ```
    */
   list(
-    query?: SubOrganizationListParams,
-    options?: Core.RequestOptions,
-  ): Core.PagePromise<SubOrganizationListResponsesList, SubOrganizationListResponse>;
-  list(
-    options?: Core.RequestOptions,
-  ): Core.PagePromise<SubOrganizationListResponsesList, SubOrganizationListResponse>;
-  list(
-    query: SubOrganizationListParams | Core.RequestOptions = {},
-    options?: Core.RequestOptions,
-  ): Core.PagePromise<SubOrganizationListResponsesList, SubOrganizationListResponse> {
-    if (isRequestOptions(query)) {
-      return this.list({}, query);
-    }
-    return this._client.getAPIList('/sub_organizations/', SubOrganizationListResponsesList, {
+    query: SubOrganizationListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<SubOrganizationListResponsesList, SubOrganizationListResponse> {
+    return this._client.getAPIList('/sub_organizations/', List<SubOrganizationListResponse>, {
       query,
       ...options,
     });
@@ -87,23 +78,14 @@ export class SubOrganizations extends APIResource {
    */
   listUsers(
     id: string,
-    query?: SubOrganizationListUsersParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<SubOrganizationListUsersResponse>;
-  listUsers(id: string, options?: Core.RequestOptions): Core.APIPromise<SubOrganizationListUsersResponse>;
-  listUsers(
-    id: string,
-    query: SubOrganizationListUsersParams | Core.RequestOptions = {},
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<SubOrganizationListUsersResponse> {
-    if (isRequestOptions(query)) {
-      return this.listUsers(id, {}, query);
-    }
-    return this._client.get(`/sub_organizations/${id}/users`, { query, ...options });
+    query: SubOrganizationListUsersParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<SubOrganizationListUsersResponse> {
+    return this._client.get(path`/sub_organizations/${id}/users`, { query, ...options });
   }
 }
 
-export class SubOrganizationListResponsesList extends List<SubOrganizationListResponse> {}
+export type SubOrganizationListResponsesList = List<SubOrganizationListResponse>;
 
 export interface SubOrganizationCreateResponse {
   /**
@@ -502,15 +484,13 @@ export interface SubOrganizationListUsersParams {
   skip?: number;
 }
 
-SubOrganizations.SubOrganizationListResponsesList = SubOrganizationListResponsesList;
-
 export declare namespace SubOrganizations {
   export {
     type SubOrganizationCreateResponse as SubOrganizationCreateResponse,
     type SubOrganizationRetrieveResponse as SubOrganizationRetrieveResponse,
     type SubOrganizationListResponse as SubOrganizationListResponse,
     type SubOrganizationListUsersResponse as SubOrganizationListUsersResponse,
-    SubOrganizationListResponsesList as SubOrganizationListResponsesList,
+    type SubOrganizationListResponsesList as SubOrganizationListResponsesList,
     type SubOrganizationCreateParams as SubOrganizationCreateParams,
     type SubOrganizationListParams as SubOrganizationListParams,
     type SubOrganizationListUsersParams as SubOrganizationListUsersParams,

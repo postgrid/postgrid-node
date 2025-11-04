@@ -1,17 +1,20 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../../resource';
-import { isRequestOptions } from '../../core';
-import * as Core from '../../core';
+import { APIResource } from '../../core/resource';
 import * as ExportsAPI from './exports';
 import {
   ExportCreateParams,
   ExportCreateResponse,
+  ExportDeleteParams,
   ExportDeleteResponse,
+  ExportRetrieveParams,
   ExportRetrieveResponse,
   Exports,
 } from './exports';
-import { List, type ListParams } from '../../pagination';
+import { APIPromise } from '../../core/api-promise';
+import { List, type ListParams, PagePromise } from '../../core/pagination';
+import { RequestOptions } from '../../internal/request-options';
+import { path } from '../../internal/utils/path';
 
 export class Reports extends APIResource {
   exports: ExportsAPI.Exports = new ExportsAPI.Exports(this._client);
@@ -33,7 +36,7 @@ export class Reports extends APIResource {
    * });
    * ```
    */
-  create(body: ReportCreateParams, options?: Core.RequestOptions): Core.APIPromise<ReportCreateResponse> {
+  create(body: ReportCreateParams, options?: RequestOptions): APIPromise<ReportCreateResponse> {
     return this._client.post('/reports/', { body, ...options });
   }
 
@@ -45,8 +48,8 @@ export class Reports extends APIResource {
    * const report = await client.reports.retrieve('id');
    * ```
    */
-  retrieve(id: string, options?: Core.RequestOptions): Core.APIPromise<ReportRetrieveResponse> {
-    return this._client.get(`/reports/${id}`, options);
+  retrieve(id: string, options?: RequestOptions): APIPromise<ReportRetrieveResponse> {
+    return this._client.get(path`/reports/${id}`, options);
   }
 
   /**
@@ -60,12 +63,8 @@ export class Reports extends APIResource {
    * });
    * ```
    */
-  update(
-    id: string,
-    body: ReportUpdateParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<ReportUpdateResponse> {
-    return this._client.post(`/reports/${id}`, { body, ...options });
+  update(id: string, body: ReportUpdateParams, options?: RequestOptions): APIPromise<ReportUpdateResponse> {
+    return this._client.post(path`/reports/${id}`, { body, ...options });
   }
 
   /**
@@ -80,18 +79,10 @@ export class Reports extends APIResource {
    * ```
    */
   list(
-    query?: ReportListParams,
-    options?: Core.RequestOptions,
-  ): Core.PagePromise<ReportListResponsesList, ReportListResponse>;
-  list(options?: Core.RequestOptions): Core.PagePromise<ReportListResponsesList, ReportListResponse>;
-  list(
-    query: ReportListParams | Core.RequestOptions = {},
-    options?: Core.RequestOptions,
-  ): Core.PagePromise<ReportListResponsesList, ReportListResponse> {
-    if (isRequestOptions(query)) {
-      return this.list({}, query);
-    }
-    return this._client.getAPIList('/reports/', ReportListResponsesList, { query, ...options });
+    query: ReportListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<ReportListResponsesList, ReportListResponse> {
+    return this._client.getAPIList('/reports/', List<ReportListResponse>, { query, ...options });
   }
 
   /**
@@ -103,8 +94,8 @@ export class Reports extends APIResource {
    * const report = await client.reports.delete('id');
    * ```
    */
-  delete(id: string, options?: Core.RequestOptions): Core.APIPromise<ReportDeleteResponse> {
-    return this._client.delete(`/reports/${id}`, options);
+  delete(id: string, options?: RequestOptions): APIPromise<ReportDeleteResponse> {
+    return this._client.delete(path`/reports/${id}`, options);
   }
 
   /**
@@ -123,8 +114,8 @@ export class Reports extends APIResource {
    */
   runAdHocQuery(
     body: ReportRunAdHocQueryParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<ReportRunAdHocQueryResponse> {
+    options?: RequestOptions,
+  ): APIPromise<ReportRunAdHocQueryResponse> {
     return this._client.post('/reports/samples', { body, ...options });
   }
 
@@ -142,16 +133,12 @@ export class Reports extends APIResource {
    * });
    * ```
    */
-  sample(
-    id: string,
-    body: ReportSampleParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<ReportSampleResponse> {
-    return this._client.post(`/reports/${id}/samples`, { body, ...options });
+  sample(id: string, body: ReportSampleParams, options?: RequestOptions): APIPromise<ReportSampleResponse> {
+    return this._client.post(path`/reports/${id}/samples`, { body, ...options });
   }
 }
 
-export class ReportListResponsesList extends List<ReportListResponse> {}
+export type ReportListResponsesList = List<ReportListResponse>;
 
 /**
  * Represents a saved Report definition.
@@ -464,7 +451,6 @@ export interface ReportSampleParams {
   params?: Array<string>;
 }
 
-Reports.ReportListResponsesList = ReportListResponsesList;
 Reports.Exports = Exports;
 
 export declare namespace Reports {
@@ -476,7 +462,7 @@ export declare namespace Reports {
     type ReportDeleteResponse as ReportDeleteResponse,
     type ReportRunAdHocQueryResponse as ReportRunAdHocQueryResponse,
     type ReportSampleResponse as ReportSampleResponse,
-    ReportListResponsesList as ReportListResponsesList,
+    type ReportListResponsesList as ReportListResponsesList,
     type ReportCreateParams as ReportCreateParams,
     type ReportUpdateParams as ReportUpdateParams,
     type ReportListParams as ReportListParams,
@@ -490,5 +476,7 @@ export declare namespace Reports {
     type ExportRetrieveResponse as ExportRetrieveResponse,
     type ExportDeleteResponse as ExportDeleteResponse,
     type ExportCreateParams as ExportCreateParams,
+    type ExportRetrieveParams as ExportRetrieveParams,
+    type ExportDeleteParams as ExportDeleteParams,
   };
 }

@@ -1,12 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import PostGrid from 'postgrid-node';
-import { Response } from 'node-fetch';
 
-const client = new PostGrid({
-  addressVerificationAPIKey: 'My Address Verification API Key',
-  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
-});
+const client = new PostGrid({ baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010' });
 
 describe('resource bankAccounts', () => {
   test('create: only required params', async () => {
@@ -53,13 +49,6 @@ describe('resource bankAccounts', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('retrieve: request options instead of params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(client.bankAccounts.retrieve('id', { path: '/_stainless_unknown_path' })).rejects.toThrow(
-      PostGrid.NotFoundError,
-    );
-  });
-
   test('list', async () => {
     const responsePromise = client.bankAccounts.list();
     const rawResponse = await responsePromise.asResponse();
@@ -69,13 +58,6 @@ describe('resource bankAccounts', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  test('list: request options instead of params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(client.bankAccounts.list({ path: '/_stainless_unknown_path' })).rejects.toThrow(
-      PostGrid.NotFoundError,
-    );
   });
 
   test('list: request options and params are passed correctly', async () => {
@@ -94,12 +76,5 @@ describe('resource bankAccounts', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  test('delete: request options instead of params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(client.bankAccounts.delete('id', { path: '/_stainless_unknown_path' })).rejects.toThrow(
-      PostGrid.NotFoundError,
-    );
   });
 });

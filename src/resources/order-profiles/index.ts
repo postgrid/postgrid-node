@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 export {
-  ChequeListResponsesList,
   Cheques,
   type ChequeCreateResponse,
   type ChequeRetrieveResponse,
@@ -12,9 +11,9 @@ export {
   type ChequeRetrieveParams,
   type ChequeUpdateParams,
   type ChequeListParams,
+  type ChequeListResponsesList,
 } from './cheques';
 export {
-  LetterListResponsesList,
   Letters,
   type LetterCreateResponse,
   type LetterRetrieveResponse,
@@ -25,10 +24,10 @@ export {
   type LetterRetrieveParams,
   type LetterUpdateParams,
   type LetterListParams,
+  type LetterListResponsesList,
 } from './letters';
 export { OrderProfiles } from './order-profiles';
 export {
-  PostcardListResponsesList,
   Postcards,
   type PostcardCreateResponse,
   type PostcardRetrieveResponse,
@@ -39,9 +38,9 @@ export {
   type PostcardRetrieveParams,
   type PostcardUpdateParams,
   type PostcardListParams,
+  type PostcardListResponsesList,
 } from './postcards';
 export {
-  SelfMailerListResponsesList,
   SelfMailers,
   type SelfMailerCreateResponse,
   type SelfMailerRetrieveResponse,
@@ -52,4 +51,5 @@ export {
   type SelfMailerRetrieveParams,
   type SelfMailerUpdateParams,
   type SelfMailerListParams,
+  type SelfMailerListResponsesList,
 } from './self-mailers';
