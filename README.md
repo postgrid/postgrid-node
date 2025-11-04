@@ -21,16 +21,12 @@ The full API of this library can be found in [api.md](api.md).
 import PostGrid from 'postgrid-node';
 
 const client = new PostGrid({
-  printMailAPIKey: 'My Print Mail API Key',
+  addressVerificationAPIKey: 'My Address Verification API Key',
 });
 
-const contact = await client.contacts.create({
-  addressLine1: 'addressLine1',
-  countryCode: 'countryCode',
-  firstName: 'firstName',
-});
+const response = await client.addver.createVerification({ address: 'address' });
 
-console.log(contact.id);
+console.log(response.data);
 ```
 
 ### Request & Response types
@@ -42,15 +38,11 @@ This library includes TypeScript definitions for all request params and response
 import PostGrid from 'postgrid-node';
 
 const client = new PostGrid({
-  printMailAPIKey: 'My Print Mail API Key',
+  addressVerificationAPIKey: 'My Address Verification API Key',
 });
 
-const params: PostGrid.ContactCreateParams = {
-  addressLine1: 'addressLine1',
-  countryCode: 'countryCode',
-  firstName: 'firstName',
-};
-const contact: PostGrid.Contact = await client.contacts.create(params);
+const params: PostGrid.AddverCreateVerificationParams = { address: 'address' };
+const response: PostGrid.AddverCreateVerificationResponse = await client.addver.createVerification(params);
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -63,17 +55,15 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-const contact = await client.contacts
-  .create({ addressLine1: 'addressLine1', countryCode: 'countryCode', firstName: 'firstName' })
-  .catch(async (err) => {
-    if (err instanceof PostGrid.APIError) {
-      console.log(err.status); // 400
-      console.log(err.name); // BadRequestError
-      console.log(err.headers); // {server: 'nginx', ...}
-    } else {
-      throw err;
-    }
-  });
+const response = await client.addver.createVerification({ address: 'address' }).catch(async (err) => {
+  if (err instanceof PostGrid.APIError) {
+    console.log(err.status); // 400
+    console.log(err.name); // BadRequestError
+    console.log(err.headers); // {server: 'nginx', ...}
+  } else {
+    throw err;
+  }
+});
 ```
 
 Error codes are as follows:
@@ -105,7 +95,7 @@ const client = new PostGrid({
 });
 
 // Or, configure per-request:
-await client.contacts.create({ addressLine1: 'addressLine1', countryCode: 'countryCode', firstName: 'firstName' }, {
+await client.addver.createVerification({ address: 'address' }, {
   maxRetries: 5,
 });
 ```
@@ -122,7 +112,7 @@ const client = new PostGrid({
 });
 
 // Override per-request:
-await client.contacts.create({ addressLine1: 'addressLine1', countryCode: 'countryCode', firstName: 'firstName' }, {
+await client.addver.createVerification({ address: 'address' }, {
   timeout: 5 * 1000,
 });
 ```
@@ -130,37 +120,6 @@ await client.contacts.create({ addressLine1: 'addressLine1', countryCode: 'count
 On timeout, an `APIConnectionTimeoutError` is thrown.
 
 Note that requests which time out will be [retried twice by default](#retries).
-
-## Auto-pagination
-
-List methods in the PostGrid API are paginated.
-You can use the `for await … of` syntax to iterate through items across all pages:
-
-```ts
-async function fetchAllContacts(params) {
-  const allContacts = [];
-  // Automatically fetches more pages as needed.
-  for await (const contact of client.contacts.list()) {
-    allContacts.push(contact);
-  }
-  return allContacts;
-}
-```
-
-Alternatively, you can request a single page at a time:
-
-```ts
-let page = await client.contacts.list();
-for (const contact of page.data) {
-  console.log(contact);
-}
-
-// Convenience methods are provided for manually paginating:
-while (page.hasNextPage()) {
-  page = await page.getNextPage();
-  // ...
-}
-```
 
 ## Advanced Usage
 
@@ -176,17 +135,15 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 ```ts
 const client = new PostGrid();
 
-const response = await client.contacts
-  .create({ addressLine1: 'addressLine1', countryCode: 'countryCode', firstName: 'firstName' })
-  .asResponse();
+const response = await client.addver.createVerification({ address: 'address' }).asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: contact, response: raw } = await client.contacts
-  .create({ addressLine1: 'addressLine1', countryCode: 'countryCode', firstName: 'firstName' })
+const { data: response, response: raw } = await client.addver
+  .createVerification({ address: 'address' })
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
-console.log(contact.id);
+console.log(response.data);
 ```
 
 ### Logging
@@ -266,7 +223,7 @@ parameter. This library doesn't validate at runtime that the request matches the
 send will be sent as-is.
 
 ```ts
-client.contacts.create({
+client.addver.createVerification({
   // ...
   // @ts-expect-error baz is not yet public
   baz: 'undocumented option',

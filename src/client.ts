@@ -19,158 +19,25 @@ import { AbstractPage, type ListParams, ListResponse } from './core/pagination';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
-import {
-  AddressVerification,
-  AddressVerificationVerifyAddressParams,
-  AddressVerificationVerifyAddressResponse,
-} from './resources/address-verification';
-import {
-  BankAccount,
-  BankAccountCreateParams,
-  BankAccountDeleteResponse,
-  BankAccountList,
-  BankAccountListParams,
-  BankAccounts,
-  BankAccountsList,
-} from './resources/bank-accounts';
-import {
-  BoxCancelResponse,
-  BoxCreateParams,
-  BoxCreateResponse,
-  BoxListParams,
-  BoxListResponse,
-  BoxListResponsesList,
-  BoxRetrieveResponse,
-  Boxes,
-} from './resources/boxes';
-import {
-  CampaignCreateParams,
-  CampaignCreateResponse,
-  CampaignDeleteResponse,
-  CampaignListParams,
-  CampaignListResponse,
-  CampaignListResponsesList,
-  CampaignRetrieveResponse,
-  CampaignSendParams,
-  CampaignSendResponse,
-  CampaignUpdateParams,
-  CampaignUpdateResponse,
-  Campaigns,
-} from './resources/campaigns';
-import {
-  Contact,
-  ContactCreateParams,
-  ContactDeleteResponse,
-  ContactListParams,
-  Contacts,
-  ContactsList,
-} from './resources/contacts';
-import {
-  IntlAddressVerification,
-  IntlAddressVerificationVerifyAddressParams,
-  IntlAddressVerificationVerifyAddressResponse,
-} from './resources/intl-address-verification';
-import {
-  Letter,
-  LetterCreateParams,
-  LetterList,
-  LetterListParams,
-  LetterURLResponse,
-  Letters,
-  LettersList,
-} from './resources/letters';
-import {
-  MailingListImportCreateParams,
-  MailingListImportCreateResponse,
-  MailingListImportDeleteResponse,
-  MailingListImportListParams,
-  MailingListImportListResponse,
-  MailingListImportListResponsesList,
-  MailingListImportRetrieveResponse,
-  MailingListImportUpdateParams,
-  MailingListImportUpdateResponse,
-  MailingListImports,
-} from './resources/mailing-list-imports';
-import {
-  MailingListCreateParams,
-  MailingListCreateResponse,
-  MailingListDeleteResponse,
-  MailingListListParams,
-  MailingListListResponse,
-  MailingListListResponsesList,
-  MailingListRetrieveResponse,
-  MailingListSubmitJobParams,
-  MailingListSubmitJobResponse,
-  MailingListUpdateParams,
-  MailingListUpdateResponse,
-  MailingLists,
-} from './resources/mailing-lists';
-import {
-  Postcard,
-  PostcardCreateParams,
-  PostcardList,
-  PostcardListParams,
-  PostcardURLResponse,
-  Postcards,
-  PostcardsList,
-} from './resources/postcards';
-import {
-  SelfMailerCancelResponse,
-  SelfMailerCreateParams,
-  SelfMailerCreateResponse,
-  SelfMailerListParams,
-  SelfMailerListResponse,
-  SelfMailerListResponsesList,
-  SelfMailerRetrievePreviewURLResponse,
-  SelfMailerRetrieveResponse,
-  SelfMailers,
-} from './resources/self-mailers';
-import {
-  SubOrganizationCreateParams,
-  SubOrganizationCreateResponse,
-  SubOrganizationListParams,
-  SubOrganizationListResponse,
-  SubOrganizationListResponsesList,
-  SubOrganizationListUsersParams,
-  SubOrganizationListUsersResponse,
-  SubOrganizationRetrieveResponse,
-  SubOrganizations,
-} from './resources/sub-organizations';
-import {
-  Template,
-  TemplateCreateParams,
-  TemplateDeleteResponse,
-  TemplateList,
-  TemplateListParams,
-  TemplateUpdateParams,
-  Templates,
-  TemplatesList,
-} from './resources/templates';
-import {
-  Cheque,
-  ChequeCreateParams,
-  ChequeList,
-  ChequeListParams,
-  Cheques,
-  ChequesList,
-} from './resources/cheques/cheques';
+import { AddressVerification } from './resources/address-verification';
+import { Addver, AddverCreateVerificationParams, AddverCreateVerificationResponse } from './resources/addver';
+import { BankAccount, BankAccountList, BankAccounts } from './resources/bank-accounts';
+import { Boxes } from './resources/boxes';
+import { Campaigns } from './resources/campaigns';
+import { Contact, Contacts } from './resources/contacts';
+import { IntlAddressVerification } from './resources/intl-address-verification';
+import { IntlAddver, IntlAddverVerifyParams, IntlAddverVerifyResponse } from './resources/intl-addver';
+import { Letter, LetterList, Letters } from './resources/letters';
+import { MailingListImports } from './resources/mailing-list-imports';
+import { MailingLists } from './resources/mailing-lists';
+import { Postcard, PostcardList, Postcards } from './resources/postcards';
+import { SelfMailers } from './resources/self-mailers';
+import { SubOrganizations } from './resources/sub-organizations';
+import { Template, TemplateList, Templates } from './resources/templates';
+import { Cheque, ChequeList, Cheques } from './resources/cheques/cheques';
 import { OrderProfiles } from './resources/order-profiles/order-profiles';
-import {
-  ReportCreateParams,
-  ReportCreateResponse,
-  ReportDeleteResponse,
-  ReportListParams,
-  ReportListResponse,
-  ReportListResponsesList,
-  ReportRetrieveResponse,
-  ReportRunAdHocQueryParams,
-  ReportRunAdHocQueryResponse,
-  ReportSampleParams,
-  ReportSampleResponse,
-  ReportUpdateParams,
-  ReportUpdateResponse,
-  Reports,
-} from './resources/reports/reports';
+import { PrintMail } from './resources/print-mail/print-mail';
+import { Reports } from './resources/reports/reports';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -922,6 +789,9 @@ export class PostGrid {
   subOrganizations: API.SubOrganizations = new API.SubOrganizations(this);
   addressVerification: API.AddressVerification = new API.AddressVerification(this);
   intlAddressVerification: API.IntlAddressVerification = new API.IntlAddressVerification(this);
+  addver: API.Addver = new API.Addver(this);
+  intlAddver: API.IntlAddver = new API.IntlAddver(this);
+  printMail: API.PrintMail = new API.PrintMail(this);
 }
 
 PostGrid.Contacts = Contacts;
@@ -940,6 +810,9 @@ PostGrid.OrderProfiles = OrderProfiles;
 PostGrid.SubOrganizations = SubOrganizations;
 PostGrid.AddressVerification = AddressVerification;
 PostGrid.IntlAddressVerification = IntlAddressVerification;
+PostGrid.Addver = Addver;
+PostGrid.IntlAddver = IntlAddver;
+PostGrid.PrintMail = PrintMail;
 
 export declare namespace PostGrid {
   export type RequestOptions = Opts.RequestOptions;
@@ -947,173 +820,55 @@ export declare namespace PostGrid {
   export import List = Pagination.List;
   export { type ListParams as ListParams, type ListResponse as ListResponse };
 
-  export {
-    Contacts as Contacts,
-    type Contact as Contact,
-    type ContactDeleteResponse as ContactDeleteResponse,
-    type ContactsList as ContactsList,
-    type ContactCreateParams as ContactCreateParams,
-    type ContactListParams as ContactListParams,
-  };
+  export { Contacts as Contacts, type Contact as Contact };
 
-  export {
-    Templates as Templates,
-    type Template as Template,
-    type TemplateList as TemplateList,
-    type TemplateDeleteResponse as TemplateDeleteResponse,
-    type TemplatesList as TemplatesList,
-    type TemplateCreateParams as TemplateCreateParams,
-    type TemplateUpdateParams as TemplateUpdateParams,
-    type TemplateListParams as TemplateListParams,
-  };
+  export { Templates as Templates, type Template as Template, type TemplateList as TemplateList };
 
   export {
     BankAccounts as BankAccounts,
     type BankAccount as BankAccount,
     type BankAccountList as BankAccountList,
-    type BankAccountDeleteResponse as BankAccountDeleteResponse,
-    type BankAccountsList as BankAccountsList,
-    type BankAccountCreateParams as BankAccountCreateParams,
-    type BankAccountListParams as BankAccountListParams,
   };
 
-  export {
-    Cheques as Cheques,
-    type Cheque as Cheque,
-    type ChequeList as ChequeList,
-    type ChequesList as ChequesList,
-    type ChequeCreateParams as ChequeCreateParams,
-    type ChequeListParams as ChequeListParams,
-  };
+  export { Cheques as Cheques, type Cheque as Cheque, type ChequeList as ChequeList };
 
-  export {
-    Letters as Letters,
-    type Letter as Letter,
-    type LetterList as LetterList,
-    type LetterURLResponse as LetterURLResponse,
-    type LettersList as LettersList,
-    type LetterCreateParams as LetterCreateParams,
-    type LetterListParams as LetterListParams,
-  };
+  export { Letters as Letters, type Letter as Letter, type LetterList as LetterList };
 
-  export {
-    Postcards as Postcards,
-    type Postcard as Postcard,
-    type PostcardList as PostcardList,
-    type PostcardURLResponse as PostcardURLResponse,
-    type PostcardsList as PostcardsList,
-    type PostcardCreateParams as PostcardCreateParams,
-    type PostcardListParams as PostcardListParams,
-  };
+  export { Postcards as Postcards, type Postcard as Postcard, type PostcardList as PostcardList };
 
-  export {
-    Boxes as Boxes,
-    type BoxCreateResponse as BoxCreateResponse,
-    type BoxRetrieveResponse as BoxRetrieveResponse,
-    type BoxListResponse as BoxListResponse,
-    type BoxCancelResponse as BoxCancelResponse,
-    type BoxListResponsesList as BoxListResponsesList,
-    type BoxCreateParams as BoxCreateParams,
-    type BoxListParams as BoxListParams,
-  };
+  export { Boxes as Boxes };
 
-  export {
-    Campaigns as Campaigns,
-    type CampaignCreateResponse as CampaignCreateResponse,
-    type CampaignRetrieveResponse as CampaignRetrieveResponse,
-    type CampaignUpdateResponse as CampaignUpdateResponse,
-    type CampaignListResponse as CampaignListResponse,
-    type CampaignDeleteResponse as CampaignDeleteResponse,
-    type CampaignSendResponse as CampaignSendResponse,
-    type CampaignListResponsesList as CampaignListResponsesList,
-    type CampaignCreateParams as CampaignCreateParams,
-    type CampaignUpdateParams as CampaignUpdateParams,
-    type CampaignListParams as CampaignListParams,
-    type CampaignSendParams as CampaignSendParams,
-  };
+  export { Campaigns as Campaigns };
 
-  export {
-    Reports as Reports,
-    type ReportCreateResponse as ReportCreateResponse,
-    type ReportRetrieveResponse as ReportRetrieveResponse,
-    type ReportUpdateResponse as ReportUpdateResponse,
-    type ReportListResponse as ReportListResponse,
-    type ReportDeleteResponse as ReportDeleteResponse,
-    type ReportRunAdHocQueryResponse as ReportRunAdHocQueryResponse,
-    type ReportSampleResponse as ReportSampleResponse,
-    type ReportListResponsesList as ReportListResponsesList,
-    type ReportCreateParams as ReportCreateParams,
-    type ReportUpdateParams as ReportUpdateParams,
-    type ReportListParams as ReportListParams,
-    type ReportRunAdHocQueryParams as ReportRunAdHocQueryParams,
-    type ReportSampleParams as ReportSampleParams,
-  };
+  export { Reports as Reports };
 
-  export {
-    SelfMailers as SelfMailers,
-    type SelfMailerCreateResponse as SelfMailerCreateResponse,
-    type SelfMailerRetrieveResponse as SelfMailerRetrieveResponse,
-    type SelfMailerListResponse as SelfMailerListResponse,
-    type SelfMailerCancelResponse as SelfMailerCancelResponse,
-    type SelfMailerRetrievePreviewURLResponse as SelfMailerRetrievePreviewURLResponse,
-    type SelfMailerListResponsesList as SelfMailerListResponsesList,
-    type SelfMailerCreateParams as SelfMailerCreateParams,
-    type SelfMailerListParams as SelfMailerListParams,
-  };
+  export { SelfMailers as SelfMailers };
 
-  export {
-    MailingListImports as MailingListImports,
-    type MailingListImportCreateResponse as MailingListImportCreateResponse,
-    type MailingListImportRetrieveResponse as MailingListImportRetrieveResponse,
-    type MailingListImportUpdateResponse as MailingListImportUpdateResponse,
-    type MailingListImportListResponse as MailingListImportListResponse,
-    type MailingListImportDeleteResponse as MailingListImportDeleteResponse,
-    type MailingListImportListResponsesList as MailingListImportListResponsesList,
-    type MailingListImportCreateParams as MailingListImportCreateParams,
-    type MailingListImportUpdateParams as MailingListImportUpdateParams,
-    type MailingListImportListParams as MailingListImportListParams,
-  };
+  export { MailingListImports as MailingListImports };
 
-  export {
-    MailingLists as MailingLists,
-    type MailingListCreateResponse as MailingListCreateResponse,
-    type MailingListRetrieveResponse as MailingListRetrieveResponse,
-    type MailingListUpdateResponse as MailingListUpdateResponse,
-    type MailingListListResponse as MailingListListResponse,
-    type MailingListDeleteResponse as MailingListDeleteResponse,
-    type MailingListSubmitJobResponse as MailingListSubmitJobResponse,
-    type MailingListListResponsesList as MailingListListResponsesList,
-    type MailingListCreateParams as MailingListCreateParams,
-    type MailingListUpdateParams as MailingListUpdateParams,
-    type MailingListListParams as MailingListListParams,
-    type MailingListSubmitJobParams as MailingListSubmitJobParams,
-  };
+  export { MailingLists as MailingLists };
 
   export { OrderProfiles as OrderProfiles };
 
+  export { SubOrganizations as SubOrganizations };
+
+  export { AddressVerification as AddressVerification };
+
+  export { IntlAddressVerification as IntlAddressVerification };
+
   export {
-    SubOrganizations as SubOrganizations,
-    type SubOrganizationCreateResponse as SubOrganizationCreateResponse,
-    type SubOrganizationRetrieveResponse as SubOrganizationRetrieveResponse,
-    type SubOrganizationListResponse as SubOrganizationListResponse,
-    type SubOrganizationListUsersResponse as SubOrganizationListUsersResponse,
-    type SubOrganizationListResponsesList as SubOrganizationListResponsesList,
-    type SubOrganizationCreateParams as SubOrganizationCreateParams,
-    type SubOrganizationListParams as SubOrganizationListParams,
-    type SubOrganizationListUsersParams as SubOrganizationListUsersParams,
+    Addver as Addver,
+    type AddverCreateVerificationResponse as AddverCreateVerificationResponse,
+    type AddverCreateVerificationParams as AddverCreateVerificationParams,
   };
 
   export {
-    AddressVerification as AddressVerification,
-    type AddressVerificationVerifyAddressResponse as AddressVerificationVerifyAddressResponse,
-    type AddressVerificationVerifyAddressParams as AddressVerificationVerifyAddressParams,
+    IntlAddver as IntlAddver,
+    type IntlAddverVerifyResponse as IntlAddverVerifyResponse,
+    type IntlAddverVerifyParams as IntlAddverVerifyParams,
   };
 
-  export {
-    IntlAddressVerification as IntlAddressVerification,
-    type IntlAddressVerificationVerifyAddressResponse as IntlAddressVerificationVerifyAddressResponse,
-    type IntlAddressVerificationVerifyAddressParams as IntlAddressVerificationVerifyAddressParams,
-  };
+  export { PrintMail as PrintMail };
 
   export type Cancellation = API.Cancellation;
   export type ContactCreateWithCompanyName = API.ContactCreateWithCompanyName;
