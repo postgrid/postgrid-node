@@ -17,55 +17,7 @@ export class Addver extends APIResource {
    * @example
    * ```ts
    * const response = await client.addver.verifyAddress({
-   *   address: {
-   *     '0': '1',
-   *     '1': '2',
-   *     '2': '3',
-   *     '3': '4',
-   *     '4': ' ',
-   *     '5': 'E',
-   *     '6': 'l',
-   *     '7': 'm',
-   *     '8': ' ',
-   *     '9': 'S',
-   *     '10': 't',
-   *     '11': ',',
-   *     '12': ' ',
-   *     '13': 'A',
-   *     '14': 'p',
-   *     '15': 't',
-   *     '16': ' ',
-   *     '17': '5',
-   *     '18': '6',
-   *     '19': '7',
-   *     '20': ',',
-   *     '21': ' ',
-   *     '22': 'L',
-   *     '23': 'o',
-   *     '24': 's',
-   *     '25': ' ',
-   *     '26': 'A',
-   *     '27': 'n',
-   *     '28': 'g',
-   *     '29': 'e',
-   *     '30': 'l',
-   *     '31': 'e',
-   *     '32': 's',
-   *     '33': ',',
-   *     '34': ' ',
-   *     '35': 'C',
-   *     '36': 'A',
-   *     '37': ' ',
-   *     '38': '9',
-   *     '39': '0',
-   *     '40': '0',
-   *     '41': '0',
-   *     '42': '1',
-   *     '43': ',',
-   *     '44': ' ',
-   *     '45': 'U',
-   *     '46': 'S',
-   *   },
+   *   address: '1234 Elm St, Los Angeles, CA 90001, US',
    * });
    * ```
    */
@@ -483,10 +435,32 @@ export namespace AddverVerifyAddressResponse {
 }
 
 export type AddverVerifyAddressParams =
-  | AddverVerifyAddressParams.StandardStructuredAddressInput
-  | AddverVerifyAddressParams.StandardFreeformAddressInput;
+  | AddverVerifyAddressParams.StandardFreeformAddressInput
+  | AddverVerifyAddressParams.StandardStructuredAddressInput;
 
 export declare namespace AddverVerifyAddressParams {
+  export interface StandardFreeformAddressInput {
+    /**
+     * Body param: The address you want to verify, written on a single line.
+     */
+    address: string;
+
+    /**
+     * Query param:
+     */
+    geocode?: boolean;
+
+    /**
+     * Query param:
+     */
+    includeDetails?: boolean;
+
+    /**
+     * Query param:
+     */
+    properCase?: boolean;
+  }
+
   export interface StandardStructuredAddressInput {
     /**
      * Body param:
@@ -546,28 +520,6 @@ export declare namespace AddverVerifyAddressParams {
        */
       recipient?: string;
     }
-  }
-
-  export interface StandardFreeformAddressInput {
-    /**
-     * Body param: The address you want to verify, written on a single line.
-     */
-    address: string;
-
-    /**
-     * Query param:
-     */
-    geocode?: boolean;
-
-    /**
-     * Query param:
-     */
-    includeDetails?: boolean;
-
-    /**
-     * Query param:
-     */
-    properCase?: boolean;
   }
 }
 

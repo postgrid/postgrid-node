@@ -10,15 +10,7 @@ const client = new PostGrid({
 
 describe('resource addver', () => {
   test('verifyAddress: only required params', async () => {
-    const responsePromise = client.addver.verifyAddress({
-      address: {
-        city: 'city',
-        country: 'ca',
-        line1: 'line1',
-        postalOrZip: 'postalOrZip',
-        provinceOrState: 'provinceOrState',
-      },
-    });
+    const responsePromise = client.addver.verifyAddress({ address: 'address' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -30,15 +22,7 @@ describe('resource addver', () => {
 
   test('verifyAddress: required and optional params', async () => {
     const response = await client.addver.verifyAddress({
-      address: {
-        city: 'city',
-        country: 'ca',
-        line1: 'line1',
-        postalOrZip: 'postalOrZip',
-        provinceOrState: 'provinceOrState',
-        line2: 'line2',
-        recipient: 'recipient',
-      },
+      address: 'address',
       geocode: true,
       includeDetails: true,
       properCase: true,
