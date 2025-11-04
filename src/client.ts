@@ -327,6 +327,7 @@ export class PostGrid {
       'MISSING_API_KEY';
 
     request.headers = {
+      ...request.headers,
       ['x-api-key']: apiKey,
     };
   }
