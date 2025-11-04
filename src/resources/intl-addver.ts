@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
+import * as AddverAPI from './addver';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 
@@ -111,7 +112,7 @@ export namespace IntlAddverVerifyResponse {
     /**
      * Errors encountered during address verification.
      */
-    errors?: Data.Errors;
+    errors?: AddverAPI.Errors;
 
     /**
      * The firm or company name, if available.
@@ -141,7 +142,7 @@ export namespace IntlAddverVerifyResponse {
     /**
      * The verification status of an address.
      */
-    status?: 'verified' | 'corrected' | 'failed';
+    status?: AddverAPI.Status;
 
     /**
      * A summary of the verification process and match levels.
@@ -324,36 +325,6 @@ export namespace IntlAddverVerifyResponse {
        * The telephone number associated with the address.
        */
       telephone?: string;
-    }
-
-    /**
-     * Errors encountered during address verification.
-     */
-    export interface Errors {
-      /**
-       * Errors related to the city.
-       */
-      city?: Array<string>;
-
-      /**
-       * Generic errors not tied to a specific field.
-       */
-      generic?: Array<string>;
-
-      /**
-       * Errors related to the first address line.
-       */
-      line1?: Array<string>;
-
-      /**
-       * Errors related to the second address line.
-       */
-      line2?: Array<string>;
-
-      /**
-       * Errors related to the province or state.
-       */
-      provinceOrState?: Array<string>;
     }
 
     /**

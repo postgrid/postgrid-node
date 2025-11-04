@@ -14,30 +14,18 @@ import * as Opts from './internal/request-options';
 import * as qs from './internal/qs';
 import { VERSION } from './version';
 import * as Errors from './core/error';
-import * as Pagination from './core/pagination';
-import { AbstractPage, type ListParams, ListResponse } from './core/pagination';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
-import { AddressVerification } from './resources/address-verification';
-import { Addver, AddverCreateVerificationParams, AddverCreateVerificationResponse } from './resources/addver';
-import { BankAccount, BankAccountList, BankAccounts } from './resources/bank-accounts';
-import { Boxes } from './resources/boxes';
-import { Campaigns } from './resources/campaigns';
-import { Contact, Contacts } from './resources/contacts';
-import { IntlAddressVerification } from './resources/intl-address-verification';
+import {
+  Addver,
+  AddverCreateVerificationParams,
+  AddverCreateVerificationResponse,
+  Errors as AddverAPIErrors,
+  Status,
+} from './resources/addver';
 import { IntlAddver, IntlAddverVerifyParams, IntlAddverVerifyResponse } from './resources/intl-addver';
-import { Letter, LetterList, Letters } from './resources/letters';
-import { MailingListImports } from './resources/mailing-list-imports';
-import { MailingLists } from './resources/mailing-lists';
-import { Postcard, PostcardList, Postcards } from './resources/postcards';
-import { SelfMailers } from './resources/self-mailers';
-import { SubOrganizations } from './resources/sub-organizations';
-import { Template, TemplateList, Templates } from './resources/templates';
-import { Cheque, ChequeList, Cheques } from './resources/cheques/cheques';
-import { OrderProfiles } from './resources/order-profiles/order-profiles';
 import { PrintMail } from './resources/print-mail/print-mail';
-import { Reports } from './resources/reports/reports';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -52,9 +40,15 @@ import {
 import { isEmptyObj } from './internal/utils/values';
 
 export interface ClientOptions {
-  printMailAPIKey?: string | null | undefined;
+  /**
+   * Defaults to process.env['POSTGRID_ADDRESS_VERIFICATION_API_KEY'].
+   */
+  addressVerificationAPIKey?: string | undefined;
 
-  addressVerificationAPIKey?: string | null | undefined;
+  /**
+   * Defaults to process.env['POSTGRID_PRINT_MAIL_API_KEY'].
+   */
+  printMailAPIKey?: string | undefined;
 
   /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
@@ -126,11 +120,11 @@ export interface ClientOptions {
 }
 
 /**
- * API Client for interfacing with the PostGrid API.
+ * API Client for interfacing with the Postgrid API.
  */
-export class PostGrid {
-  printMailAPIKey: string | null;
-  addressVerificationAPIKey: string | null;
+export class Postgrid {
+  addressVerificationAPIKey: string;
+  printMailAPIKey: string;
 
   baseURL: string;
   maxRetries: number;
@@ -145,10 +139,10 @@ export class PostGrid {
   private _options: ClientOptions;
 
   /**
-   * API Client for interfacing with the PostGrid API.
+   * API Client for interfacing with the Postgrid API.
    *
-   * @param {string | null | undefined} [opts.printMailAPIKey]
-   * @param {string | null | undefined} [opts.addressVerificationAPIKey]
+   * @param {string | undefined} [opts.addressVerificationAPIKey=process.env['POSTGRID_ADDRESS_VERIFICATION_API_KEY'] ?? undefined]
+   * @param {string | undefined} [opts.printMailAPIKey=process.env['POSTGRID_PRINT_MAIL_API_KEY'] ?? undefined]
    * @param {string} [opts.baseURL=process.env['POSTGRID_BASE_URL'] ?? https://api.postgrid.com] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
@@ -159,19 +153,30 @@ export class PostGrid {
    */
   constructor({
     baseURL = readEnv('POSTGRID_BASE_URL'),
-    printMailAPIKey = null,
-    addressVerificationAPIKey = null,
+    addressVerificationAPIKey = readEnv('POSTGRID_ADDRESS_VERIFICATION_API_KEY'),
+    printMailAPIKey = readEnv('POSTGRID_PRINT_MAIL_API_KEY'),
     ...opts
   }: ClientOptions = {}) {
+    if (addressVerificationAPIKey === undefined) {
+      throw new Errors.PostgridError(
+        "The POSTGRID_ADDRESS_VERIFICATION_API_KEY environment variable is missing or empty; either provide it, or instantiate the Postgrid client with an addressVerificationAPIKey option, like new Postgrid({ addressVerificationAPIKey: 'My Address Verification API Key' }).",
+      );
+    }
+    if (printMailAPIKey === undefined) {
+      throw new Errors.PostgridError(
+        "The POSTGRID_PRINT_MAIL_API_KEY environment variable is missing or empty; either provide it, or instantiate the Postgrid client with an printMailAPIKey option, like new Postgrid({ printMailAPIKey: 'My Print Mail API Key' }).",
+      );
+    }
+
     const options: ClientOptions = {
-      printMailAPIKey,
       addressVerificationAPIKey,
+      printMailAPIKey,
       ...opts,
       baseURL: baseURL || `https://api.postgrid.com`,
     };
 
     this.baseURL = options.baseURL!;
-    this.timeout = options.timeout ?? PostGrid.DEFAULT_TIMEOUT /* 1 minute */;
+    this.timeout = options.timeout ?? Postgrid.DEFAULT_TIMEOUT /* 1 minute */;
     this.logger = options.logger ?? console;
     const defaultLogLevel = 'warn';
     // Set default logLevel early so that we can log a warning in parseLogLevel.
@@ -186,10 +191,9 @@ export class PostGrid {
     this.#encoder = Opts.FallbackEncoder;
 
     this._options = options;
-    this.idempotencyHeader = 'Idempotency-Key';
 
-    this.printMailAPIKey = printMailAPIKey;
     this.addressVerificationAPIKey = addressVerificationAPIKey;
+    this.printMailAPIKey = printMailAPIKey;
   }
 
   /**
@@ -205,8 +209,8 @@ export class PostGrid {
       logLevel: this.logLevel,
       fetch: this.fetch,
       fetchOptions: this.fetchOptions,
-      printMailAPIKey: this.printMailAPIKey,
       addressVerificationAPIKey: this.addressVerificationAPIKey,
+      printMailAPIKey: this.printMailAPIKey,
       ...options,
     });
     return client;
@@ -224,23 +228,7 @@ export class PostGrid {
   }
 
   protected validateHeaders({ values, nulls }: NullableHeaders) {
-    if (this.addressVerificationAPIKey && values.get('x-api-key')) {
-      return;
-    }
-    if (nulls.has('x-api-key')) {
-      return;
-    }
-
-    if (this.printMailAPIKey && values.get('x-api-key')) {
-      return;
-    }
-    if (nulls.has('x-api-key')) {
-      return;
-    }
-
-    throw new Error(
-      'Could not resolve authentication method. Expected either addressVerificationAPIKey or printMailAPIKey to be set. Or for one of the "X-API-Key" or "X-API-Key" headers to be explicitly omitted',
-    );
+    return;
   }
 
   protected async authHeaders(opts: FinalRequestOptions): Promise<NullableHeaders | undefined> {
@@ -253,16 +241,10 @@ export class PostGrid {
   protected async addressVerificationAPIKeyAuth(
     opts: FinalRequestOptions,
   ): Promise<NullableHeaders | undefined> {
-    if (this.addressVerificationAPIKey == null) {
-      return undefined;
-    }
     return buildHeaders([{ 'X-API-Key': this.addressVerificationAPIKey }]);
   }
 
   protected async printMailAPIKeyAuth(opts: FinalRequestOptions): Promise<NullableHeaders | undefined> {
-    if (this.printMailAPIKey == null) {
-      return undefined;
-    }
     return buildHeaders([{ 'X-API-Key': this.printMailAPIKey }]);
   }
 
@@ -522,25 +504,6 @@ export class PostGrid {
     return { response, options, controller, requestLogID, retryOfRequestLogID, startTime };
   }
 
-  getAPIList<Item, PageClass extends Pagination.AbstractPage<Item> = Pagination.AbstractPage<Item>>(
-    path: string,
-    Page: new (...args: any[]) => PageClass,
-    opts?: RequestOptions,
-  ): Pagination.PagePromise<PageClass, Item> {
-    return this.requestAPIList(Page, { method: 'get', path, ...opts });
-  }
-
-  requestAPIList<
-    Item = unknown,
-    PageClass extends Pagination.AbstractPage<Item> = Pagination.AbstractPage<Item>,
-  >(
-    Page: new (...args: ConstructorParameters<typeof Pagination.AbstractPage>) => PageClass,
-    options: FinalRequestOptions,
-  ): Pagination.PagePromise<PageClass, Item> {
-    const request = this.makeRequest(options, null, undefined);
-    return new Pagination.PagePromise<PageClass, Item>(this as any as PostGrid, request, Page);
-  }
-
   async fetchWithTimeout(
     url: RequestInfo,
     init: RequestInit | undefined,
@@ -754,10 +717,10 @@ export class PostGrid {
     }
   }
 
-  static PostGrid = this;
+  static Postgrid = this;
   static DEFAULT_TIMEOUT = 60000; // 1 minute
 
-  static PostGridError = Errors.PostGridError;
+  static PostgridError = Errors.PostgridError;
   static APIError = Errors.APIError;
   static APIConnectionError = Errors.APIConnectionError;
   static APIConnectionTimeoutError = Errors.APIConnectionTimeoutError;
@@ -773,91 +736,22 @@ export class PostGrid {
 
   static toFile = Uploads.toFile;
 
-  contacts: API.Contacts = new API.Contacts(this);
-  templates: API.Templates = new API.Templates(this);
-  bankAccounts: API.BankAccounts = new API.BankAccounts(this);
-  cheques: API.Cheques = new API.Cheques(this);
-  letters: API.Letters = new API.Letters(this);
-  postcards: API.Postcards = new API.Postcards(this);
-  boxes: API.Boxes = new API.Boxes(this);
-  campaigns: API.Campaigns = new API.Campaigns(this);
-  reports: API.Reports = new API.Reports(this);
-  selfMailers: API.SelfMailers = new API.SelfMailers(this);
-  mailingListImports: API.MailingListImports = new API.MailingListImports(this);
-  mailingLists: API.MailingLists = new API.MailingLists(this);
-  orderProfiles: API.OrderProfiles = new API.OrderProfiles(this);
-  subOrganizations: API.SubOrganizations = new API.SubOrganizations(this);
-  addressVerification: API.AddressVerification = new API.AddressVerification(this);
-  intlAddressVerification: API.IntlAddressVerification = new API.IntlAddressVerification(this);
   addver: API.Addver = new API.Addver(this);
   intlAddver: API.IntlAddver = new API.IntlAddver(this);
   printMail: API.PrintMail = new API.PrintMail(this);
 }
 
-PostGrid.Contacts = Contacts;
-PostGrid.Templates = Templates;
-PostGrid.BankAccounts = BankAccounts;
-PostGrid.Cheques = Cheques;
-PostGrid.Letters = Letters;
-PostGrid.Postcards = Postcards;
-PostGrid.Boxes = Boxes;
-PostGrid.Campaigns = Campaigns;
-PostGrid.Reports = Reports;
-PostGrid.SelfMailers = SelfMailers;
-PostGrid.MailingListImports = MailingListImports;
-PostGrid.MailingLists = MailingLists;
-PostGrid.OrderProfiles = OrderProfiles;
-PostGrid.SubOrganizations = SubOrganizations;
-PostGrid.AddressVerification = AddressVerification;
-PostGrid.IntlAddressVerification = IntlAddressVerification;
-PostGrid.Addver = Addver;
-PostGrid.IntlAddver = IntlAddver;
-PostGrid.PrintMail = PrintMail;
+Postgrid.Addver = Addver;
+Postgrid.IntlAddver = IntlAddver;
+Postgrid.PrintMail = PrintMail;
 
-export declare namespace PostGrid {
+export declare namespace Postgrid {
   export type RequestOptions = Opts.RequestOptions;
-
-  export import List = Pagination.List;
-  export { type ListParams as ListParams, type ListResponse as ListResponse };
-
-  export { Contacts as Contacts, type Contact as Contact };
-
-  export { Templates as Templates, type Template as Template, type TemplateList as TemplateList };
-
-  export {
-    BankAccounts as BankAccounts,
-    type BankAccount as BankAccount,
-    type BankAccountList as BankAccountList,
-  };
-
-  export { Cheques as Cheques, type Cheque as Cheque, type ChequeList as ChequeList };
-
-  export { Letters as Letters, type Letter as Letter, type LetterList as LetterList };
-
-  export { Postcards as Postcards, type Postcard as Postcard, type PostcardList as PostcardList };
-
-  export { Boxes as Boxes };
-
-  export { Campaigns as Campaigns };
-
-  export { Reports as Reports };
-
-  export { SelfMailers as SelfMailers };
-
-  export { MailingListImports as MailingListImports };
-
-  export { MailingLists as MailingLists };
-
-  export { OrderProfiles as OrderProfiles };
-
-  export { SubOrganizations as SubOrganizations };
-
-  export { AddressVerification as AddressVerification };
-
-  export { IntlAddressVerification as IntlAddressVerification };
 
   export {
     Addver as Addver,
+    type AddverAPIErrors as Errors,
+    type Status as Status,
     type AddverCreateVerificationResponse as AddverCreateVerificationResponse,
     type AddverCreateVerificationParams as AddverCreateVerificationParams,
   };
@@ -869,8 +763,4 @@ export declare namespace PostGrid {
   };
 
   export { PrintMail as PrintMail };
-
-  export type Cancellation = API.Cancellation;
-  export type ContactCreateWithCompanyName = API.ContactCreateWithCompanyName;
-  export type ContactCreateWithFirstName = API.ContactCreateWithFirstName;
 }

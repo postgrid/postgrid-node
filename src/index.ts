@@ -1,13 +1,12 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-export { PostGrid as default } from './client';
+export { Postgrid as default } from './client';
 
 export { type Uploadable, toFile } from './core/uploads';
 export { APIPromise } from './core/api-promise';
-export { PostGrid, type ClientOptions } from './client';
-export { PagePromise } from './core/pagination';
+export { Postgrid, type ClientOptions } from './client';
 export {
-  PostGridError,
+  PostgridError,
   APIError,
   APIConnectionError,
   APIConnectionTimeoutError,

@@ -1,14 +1,14 @@
 {
-  "name": "postgrid-node",
+  "name": "postgrid",
   "version": "0.1.0-alpha.5",
-  "description": "The official TypeScript library for the PostGrid API",
-  "author": "PostGrid <support@postgrid.com>",
+  "description": "The official TypeScript library for the Postgrid API",
+  "author": "Postgrid <support@postgrid.com>",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
   "type": "commonjs",
-  "repository": "github:postgrid/postgrid-node",
+  "repository": "github:stainless-sdks/postgrid-typescript",
   "license": "Apache-2.0",
-  "packageManager": "yarn@1.22.22",
+  "packageManager": "pnpm@10.14.0",
   "files": [
     "**/*"
   ],
@@ -19,7 +19,7 @@
   "scripts": {
     "test": "./scripts/test",
     "build": "./scripts/build",
-    "prepublishOnly": "echo 'to publish, run yarn build && (cd dist; yarn publish)' && exit 1",
+    "prepublishOnly": "echo 'to publish, run pnpm build && (cd dist; pnpm publish)' && exit 1",
     "format": "./scripts/format",
     "prepare": "if ./scripts/utils/check-is-in-git-install.sh; then ./scripts/build && ./scripts/utils/git-swap.sh; fi",
     "tsn": "ts-node -r tsconfig-paths/register",

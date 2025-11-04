@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
+import * as AddverAPI from './addver';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 
@@ -36,6 +37,41 @@ export class Addver extends APIResource {
     });
   }
 }
+
+/**
+ * Errors encountered during address verification.
+ */
+export interface Errors {
+  /**
+   * Errors related to the city.
+   */
+  city?: Array<string>;
+
+  /**
+   * Generic errors not tied to a specific field.
+   */
+  generic?: Array<string>;
+
+  /**
+   * Errors related to the first address line.
+   */
+  line1?: Array<string>;
+
+  /**
+   * Errors related to the second address line.
+   */
+  line2?: Array<string>;
+
+  /**
+   * Errors related to the province or state.
+   */
+  provinceOrState?: Array<string>;
+}
+
+/**
+ * The verification status of an address.
+ */
+export type Status = 'verified' | 'corrected' | 'failed';
 
 export interface AddverCreateVerificationResponse {
   data: AddverCreateVerificationResponse.Data;
@@ -87,7 +123,7 @@ export namespace AddverCreateVerificationResponse {
     /**
      * Errors encountered during address verification.
      */
-    errors?: Data.Errors;
+    errors?: AddverAPI.Errors;
 
     /**
      * The firm name of the address.
@@ -112,7 +148,7 @@ export namespace AddverCreateVerificationResponse {
     /**
      * The verification status of an address.
      */
-    status?: 'verified' | 'corrected' | 'failed';
+    status?: AddverAPI.Status;
 
     /**
      * The zip plus 4 code of the address.
@@ -360,36 +396,6 @@ export namespace AddverCreateVerificationResponse {
     }
 
     /**
-     * Errors encountered during address verification.
-     */
-    export interface Errors {
-      /**
-       * Errors related to the city.
-       */
-      city?: Array<string>;
-
-      /**
-       * Generic errors not tied to a specific field.
-       */
-      generic?: Array<string>;
-
-      /**
-       * Errors related to the first address line.
-       */
-      line1?: Array<string>;
-
-      /**
-       * Errors related to the second address line.
-       */
-      line2?: Array<string>;
-
-      /**
-       * Errors related to the province or state.
-       */
-      provinceOrState?: Array<string>;
-    }
-
-    /**
      * If the `geocode=true` query parameter is supplied, the response will include a
      * geocodeResult which follows the
      * [Geocoding](https://avdocs.postgrid.com/#geocoding) schema. You can request this
@@ -528,6 +534,8 @@ export declare namespace AddverCreateVerificationParams {
 
 export declare namespace Addver {
   export {
+    type Errors as Errors,
+    type Status as Status,
     type AddverCreateVerificationResponse as AddverCreateVerificationResponse,
     type AddverCreateVerificationParams as AddverCreateVerificationParams,
   };
