@@ -4,7 +4,7 @@ import PostGrid from 'postgrid-node';
 import { Response } from 'node-fetch';
 
 const client = new PostGrid({
-  addressVerificationAPIKey: 'My Address Verification API Key',
+  printMailAPIKey: 'My Print Mail API Key',
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
