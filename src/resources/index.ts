@@ -1,7 +1,11 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 export * from './shared';
-export { AddressVerification } from './address-verification';
+export {
+  AddressVerification,
+  type AddressVerificationVerifyAddressResponse,
+  type AddressVerificationVerifyAddressParams,
+} from './address-verification';
 export {
   BankAccounts,
   type BankAccount,
@@ -51,7 +55,11 @@ export {
   type ContactListParams,
   type ContactsList,
 } from './contacts';
-export { IntlAddressVerification } from './intl-address-verification';
+export {
+  IntlAddressVerification,
+  type IntlAddressVerificationVerifyAddressResponse,
+  type IntlAddressVerificationVerifyAddressParams,
+} from './intl-address-verification';
 export {
   Letters,
   type Letter,

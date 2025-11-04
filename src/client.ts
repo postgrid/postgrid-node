@@ -19,7 +19,11 @@ import { AbstractPage, type ListParams, ListResponse } from './core/pagination';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
-import { AddressVerification } from './resources/address-verification';
+import {
+  AddressVerification,
+  AddressVerificationVerifyAddressParams,
+  AddressVerificationVerifyAddressResponse,
+} from './resources/address-verification';
 import {
   BankAccount,
   BankAccountCreateParams,
@@ -61,7 +65,11 @@ import {
   Contacts,
   ContactsList,
 } from './resources/contacts';
-import { IntlAddressVerification } from './resources/intl-address-verification';
+import {
+  IntlAddressVerification,
+  IntlAddressVerificationVerifyAddressParams,
+  IntlAddressVerificationVerifyAddressResponse,
+} from './resources/intl-address-verification';
 import {
   Letter,
   LetterCreateParams,
@@ -274,7 +282,7 @@ export class PostGrid {
    *
    * @param {string | null | undefined} [opts.printMailAPIKey]
    * @param {string | null | undefined} [opts.addressVerificationAPIKey]
-   * @param {string} [opts.baseURL=process.env['POSTGRID_BASE_URL'] ?? https://api.postgrid.com/print-mail/v1] - Override the default base URL for the API.
+   * @param {string} [opts.baseURL=process.env['POSTGRID_BASE_URL'] ?? https://api.postgrid.com] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
    * @param {Fetch} [opts.fetch] - Specify a custom `fetch` function implementation.
@@ -292,7 +300,7 @@ export class PostGrid {
       printMailAPIKey,
       addressVerificationAPIKey,
       ...opts,
-      baseURL: baseURL || `https://api.postgrid.com/print-mail/v1`,
+      baseURL: baseURL || `https://api.postgrid.com`,
     };
 
     this.baseURL = options.baseURL!;
@@ -341,7 +349,7 @@ export class PostGrid {
    * Check whether the base URL is set to its default.
    */
   #baseURLOverridden(): boolean {
-    return this.baseURL !== 'https://api.postgrid.com/print-mail/v1';
+    return this.baseURL !== 'https://api.postgrid.com';
   }
 
   protected defaultQuery(): Record<string, string | undefined> | undefined {
@@ -349,7 +357,46 @@ export class PostGrid {
   }
 
   protected validateHeaders({ values, nulls }: NullableHeaders) {
-    return;
+    if (this.addressVerificationAPIKey && values.get('x-api-key')) {
+      return;
+    }
+    if (nulls.has('x-api-key')) {
+      return;
+    }
+
+    if (this.printMailAPIKey && values.get('x-api-key')) {
+      return;
+    }
+    if (nulls.has('x-api-key')) {
+      return;
+    }
+
+    throw new Error(
+      'Could not resolve authentication method. Expected either addressVerificationAPIKey or printMailAPIKey to be set. Or for one of the "X-API-Key" or "X-API-Key" headers to be explicitly omitted',
+    );
+  }
+
+  protected async authHeaders(opts: FinalRequestOptions): Promise<NullableHeaders | undefined> {
+    return buildHeaders([
+      await this.addressVerificiationAPIKeyAuth(opts),
+      await this.printMailAPIKeyAuth(opts),
+    ]);
+  }
+
+  protected async addressVerificiationAPIKeyAuth(
+    opts: FinalRequestOptions,
+  ): Promise<NullableHeaders | undefined> {
+    if (this.addressVerificationAPIKey == null) {
+      return undefined;
+    }
+    return buildHeaders([{ 'X-API-Key': this.addressVerificationAPIKey }]);
+  }
+
+  protected async printMailAPIKeyAuth(opts: FinalRequestOptions): Promise<NullableHeaders | undefined> {
+    if (this.printMailAPIKey == null) {
+      return undefined;
+    }
+    return buildHeaders([{ 'X-API-Key': this.printMailAPIKey }]);
   }
 
   protected stringifyQuery(query: Record<string, unknown>): string {
@@ -792,6 +839,7 @@ export class PostGrid {
         ...(options.timeout ? { 'X-Stainless-Timeout': String(Math.trunc(options.timeout / 1000)) } : {}),
         ...getPlatformHeaders(),
       },
+      await this.authHeaders(options),
       this._options.defaultHeaders,
       bodyHeaders,
       options.headers,
@@ -1055,9 +1103,17 @@ export declare namespace PostGrid {
     type SubOrganizationListUsersParams as SubOrganizationListUsersParams,
   };
 
-  export { AddressVerification as AddressVerification };
+  export {
+    AddressVerification as AddressVerification,
+    type AddressVerificationVerifyAddressResponse as AddressVerificationVerifyAddressResponse,
+    type AddressVerificationVerifyAddressParams as AddressVerificationVerifyAddressParams,
+  };
 
-  export { IntlAddressVerification as IntlAddressVerification };
+  export {
+    IntlAddressVerification as IntlAddressVerification,
+    type IntlAddressVerificationVerifyAddressResponse as IntlAddressVerificationVerifyAddressResponse,
+    type IntlAddressVerificationVerifyAddressParams as IntlAddressVerificationVerifyAddressParams,
+  };
 
   export type Cancellation = API.Cancellation;
   export type ContactCreateWithCompanyName = API.ContactCreateWithCompanyName;
