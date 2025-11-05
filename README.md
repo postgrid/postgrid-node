@@ -6,8 +6,6 @@ This library provides convenient access to the Post Grid REST API from server-si
 
 The full API of this library can be found in [api.md](api.md).
 
-It is generated with [Stainless](https://www.stainless.com/).
-
 ## Installation
 
 ```sh
