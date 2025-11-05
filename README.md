@@ -1,16 +1,21 @@
-# PostGrid Node API Library
+# PostGrid API Library
 
-[![NPM version](https://img.shields.io/npm/v/postgrid-node.svg)](https://npmjs.org/package/postgrid-node) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/postgrid-node)
+[![NPM version](<https://img.shields.io/npm/v/postgrid-node.svg?label=npm%20(stable)>)](https://npmjs.org/package/postgrid-node) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/postgrid-node)
 
-This library provides convenient access to the PostGrid REST API from server-side TypeScript or JavaScript.
+This library provides convenient access to the Post Grid REST API from server-side TypeScript or JavaScript.
 
-The REST API documentation can be found on [docs.postgrid.com](https://docs.postgrid.com). The full API of this library can be found in [api.md](api.md).
+The full API of this library can be found in [api.md](api.md).
+
+It is generated with [Stainless](https://www.stainless.com/).
 
 ## Installation
 
 ```sh
-npm install postgrid-node
+npm install git+ssh://git@github.com:postgrid/postgrid-node.git
 ```
+
+> [!NOTE]
+> Once this package is [published to npm](https://www.stainless.com/docs/guides/publish), this will become: `npm install postgrid-node`
 
 ## Usage
 
@@ -21,10 +26,10 @@ The full API of this library can be found in [api.md](api.md).
 import PostGrid from 'postgrid-node';
 
 const client = new PostGrid({
-  apiKey: 'My API Key',
+  printMailAPIKey: process.env['POSTGRID_PRINT_MAIL_API_KEY'], // This is the default and can be omitted
 });
 
-const contact = await client.contacts.create({
+const contact = await client.printMail.contacts.create({
   addressLine1: 'addressLine1',
   countryCode: 'countryCode',
   firstName: 'firstName',
@@ -42,15 +47,15 @@ This library includes TypeScript definitions for all request params and response
 import PostGrid from 'postgrid-node';
 
 const client = new PostGrid({
-  apiKey: 'My API Key',
+  printMailAPIKey: process.env['POSTGRID_PRINT_MAIL_API_KEY'], // This is the default and can be omitted
 });
 
-const params: PostGrid.ContactCreateParams = {
+const params: PostGrid.PrintMail.ContactCreateParams = {
   addressLine1: 'addressLine1',
   countryCode: 'countryCode',
   firstName: 'firstName',
 };
-const contact: PostGrid.Contact = await client.contacts.create(params);
+const contact: PostGrid.PrintMail.Contact = await client.printMail.contacts.create(params);
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -63,7 +68,7 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-const contact = await client.contacts
+const contact = await client.printMail.contacts
   .create({ addressLine1: 'addressLine1', countryCode: 'countryCode', firstName: 'firstName' })
   .catch(async (err) => {
     if (err instanceof PostGrid.APIError) {
@@ -105,7 +110,7 @@ const client = new PostGrid({
 });
 
 // Or, configure per-request:
-await client.contacts.create({ addressLine1: 'addressLine1', countryCode: 'countryCode', firstName: 'firstName' }, {
+await client.printMail.contacts.create({ addressLine1: 'addressLine1', countryCode: 'countryCode', firstName: 'firstName' }, {
   maxRetries: 5,
 });
 ```
@@ -122,7 +127,7 @@ const client = new PostGrid({
 });
 
 // Override per-request:
-await client.contacts.create({ addressLine1: 'addressLine1', countryCode: 'countryCode', firstName: 'firstName' }, {
+await client.printMail.contacts.create({ addressLine1: 'addressLine1', countryCode: 'countryCode', firstName: 'firstName' }, {
   timeout: 5 * 1000,
 });
 ```
@@ -131,60 +136,84 @@ On timeout, an `APIConnectionTimeoutError` is thrown.
 
 Note that requests which time out will be [retried twice by default](#retries).
 
-## Auto-pagination
-
-List methods in the PostGrid API are paginated.
-You can use the `for await … of` syntax to iterate through items across all pages:
-
-```ts
-async function fetchAllContacts(params) {
-  const allContacts = [];
-  // Automatically fetches more pages as needed.
-  for await (const contact of client.contacts.list()) {
-    allContacts.push(contact);
-  }
-  return allContacts;
-}
-```
-
-Alternatively, you can request a single page at a time:
-
-```ts
-let page = await client.contacts.list();
-for (const contact of page.data) {
-  console.log(contact);
-}
-
-// Convenience methods are provided for manually paginating:
-while (page.hasNextPage()) {
-  page = await page.getNextPage();
-  // ...
-}
-```
-
 ## Advanced Usage
 
 ### Accessing raw Response data (e.g., headers)
 
 The "raw" `Response` returned by `fetch()` can be accessed through the `.asResponse()` method on the `APIPromise` type that all methods return.
+This method returns as soon as the headers for a successful response are received and does not consume the response body, so you are free to write custom parsing or streaming logic.
 
 You can also use the `.withResponse()` method to get the raw `Response` along with the parsed data.
+Unlike `.asResponse()` this method consumes the body, returning once it is parsed.
 
 <!-- prettier-ignore -->
 ```ts
 const client = new PostGrid();
 
-const response = await client.contacts
+const response = await client.printMail.contacts
   .create({ addressLine1: 'addressLine1', countryCode: 'countryCode', firstName: 'firstName' })
   .asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: contact, response: raw } = await client.contacts
+const { data: contact, response: raw } = await client.printMail.contacts
   .create({ addressLine1: 'addressLine1', countryCode: 'countryCode', firstName: 'firstName' })
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
 console.log(contact.id);
+```
+
+### Logging
+
+> [!IMPORTANT]
+> All log messages are intended for debugging only. The format and content of log messages
+> may change between releases.
+
+#### Log levels
+
+The log level can be configured in two ways:
+
+1. Via the `POST_GRID_LOG` environment variable
+2. Using the `logLevel` client option (overrides the environment variable if set)
+
+```ts
+import PostGrid from 'postgrid-node';
+
+const client = new PostGrid({
+  logLevel: 'debug', // Show all log messages
+});
+```
+
+Available log levels, from most to least verbose:
+
+- `'debug'` - Show debug messages, info, warnings, and errors
+- `'info'` - Show info messages, warnings, and errors
+- `'warn'` - Show warnings and errors (default)
+- `'error'` - Show only errors
+- `'off'` - Disable all logging
+
+At the `'debug'` level, all HTTP requests and responses are logged, including headers and bodies.
+Some authentication-related headers are redacted, but sensitive data in request and response bodies
+may still be visible.
+
+#### Custom logger
+
+By default, this library logs to `globalThis.console`. You can also provide a custom logger.
+Most logging libraries are supported, including [pino](https://www.npmjs.com/package/pino), [winston](https://www.npmjs.com/package/winston), [bunyan](https://www.npmjs.com/package/bunyan), [consola](https://www.npmjs.com/package/consola), [signale](https://www.npmjs.com/package/signale), and [@std/log](https://jsr.io/@std/log). If your logger doesn't work, please open an issue.
+
+When providing a custom logger, the `logLevel` option still controls which messages are emitted, messages
+below the configured level will not be sent to your logger.
+
+```ts
+import PostGrid from 'postgrid-node';
+import pino from 'pino';
+
+const logger = pino();
+
+const client = new PostGrid({
+  logger: logger.child({ name: 'PostGrid' }),
+  logLevel: 'debug', // Send all messages to pino, allowing it to filter
+});
 ```
 
 ### Making custom/undocumented requests
@@ -211,9 +240,8 @@ parameter. This library doesn't validate at runtime that the request matches the
 send will be sent as-is.
 
 ```ts
-client.foo.create({
-  foo: 'my_param',
-  bar: 12,
+client.printMail.contacts.create({
+  // ...
   // @ts-expect-error baz is not yet public
   baz: 'undocumented option',
 });
@@ -233,68 +261,84 @@ validate or strip extra properties from the response from the API.
 
 ### Customizing the fetch client
 
-By default, this library uses `node-fetch` in Node, and expects a global `fetch` function in other environments.
+By default, this library expects a global `fetch` function is defined.
 
-If you would prefer to use a global, web-standards-compliant `fetch` function even in a Node environment,
-(for example, if you are running Node with `--experimental-fetch` or using NextJS which polyfills with `undici`),
-add the following import before your first import `from "PostGrid"`:
+If you want to use a different `fetch` function, you can either polyfill the global:
 
 ```ts
-// Tell TypeScript and the package to use the global web fetch instead of node-fetch.
-// Note, despite the name, this does not add any polyfills, but expects them to be provided if needed.
-import 'postgrid-node/shims/web';
-import PostGrid from 'postgrid-node';
+import fetch from 'my-fetch';
+
+globalThis.fetch = fetch;
 ```
 
-To do the inverse, add `import "postgrid-node/shims/node"` (which does import polyfills).
-This can also be useful if you are getting the wrong TypeScript types for `Response` ([more details](https://github.com/postgrid/postgrid-node/tree/main/src/_shims#readme)).
-
-### Logging and middleware
-
-You may also provide a custom `fetch` function when instantiating the client,
-which can be used to inspect or alter the `Request` or `Response` before/after each request:
+Or pass it to the client:
 
 ```ts
-import { fetch } from 'undici'; // as one example
+import PostGrid from 'postgrid-node';
+import fetch from 'my-fetch';
+
+const client = new PostGrid({ fetch });
+```
+
+### Fetch options
+
+If you want to set custom `fetch` options without overriding the `fetch` function, you can provide a `fetchOptions` object when instantiating the client or making a request. (Request-specific options override client options.)
+
+```ts
 import PostGrid from 'postgrid-node';
 
 const client = new PostGrid({
-  fetch: async (url: RequestInfo, init?: RequestInit): Promise<Response> => {
-    console.log('About to make a request', url, init);
-    const response = await fetch(url, init);
-    console.log('Got response', response);
-    return response;
+  fetchOptions: {
+    // `RequestInit` options
   },
 });
 ```
 
-Note that if given a `DEBUG=true` environment variable, this library will log all requests and responses automatically.
-This is intended for debugging purposes only and may change in the future without notice.
+#### Configuring proxies
 
-### Configuring an HTTP(S) Agent (e.g., for proxies)
+To modify proxy behavior, you can provide custom `fetchOptions` that add runtime-specific proxy
+options to requests:
 
-By default, this library uses a stable agent for all http/https requests to reuse TCP connections, eliminating many TCP & TLS handshakes and shaving around 100ms off most requests.
+<img src="https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/node.svg" align="top" width="18" height="21"> **Node** <sup>[[docs](https://github.com/nodejs/undici/blob/main/docs/docs/api/ProxyAgent.md#example---proxyagent-with-fetch)]</sup>
 
-If you would like to disable or customize this behavior, for example to use the API behind a proxy, you can pass an `httpAgent` which is used for all requests (be they http or https), for example:
-
-<!-- prettier-ignore -->
 ```ts
-import http from 'http';
-import { HttpsProxyAgent } from 'https-proxy-agent';
+import PostGrid from 'postgrid-node';
+import * as undici from 'undici';
 
-// Configure the default for all requests:
+const proxyAgent = new undici.ProxyAgent('http://localhost:8888');
 const client = new PostGrid({
-  httpAgent: new HttpsProxyAgent(process.env.PROXY_URL),
-});
-
-// Override per-request:
-await client.contacts.create(
-  { addressLine1: 'addressLine1', countryCode: 'countryCode', firstName: 'firstName' },
-  {
-    httpAgent: new http.Agent({ keepAlive: false }),
+  fetchOptions: {
+    dispatcher: proxyAgent,
   },
-);
+});
 ```
+
+<img src="https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/bun.svg" align="top" width="18" height="21"> **Bun** <sup>[[docs](https://bun.sh/guides/http/proxy)]</sup>
+
+```ts
+import PostGrid from 'postgrid-node';
+
+const client = new PostGrid({
+  fetchOptions: {
+    proxy: 'http://localhost:8888',
+  },
+});
+```
+
+<img src="https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/deno.svg" align="top" width="18" height="21"> **Deno** <sup>[[docs](https://docs.deno.com/api/deno/~/Deno.createHttpClient)]</sup>
+
+```ts
+import PostGrid from 'npm:postgrid-node';
+
+const httpClient = Deno.createHttpClient({ proxy: { url: 'http://localhost:8888' } });
+const client = new PostGrid({
+  fetchOptions: {
+    client: httpClient,
+  },
+});
+```
+
+## Frequently Asked Questions
 
 ## Semantic versioning
 
@@ -310,12 +354,12 @@ We are keen for your feedback; please open an [issue](https://www.github.com/pos
 
 ## Requirements
 
-TypeScript >= 4.5 is supported.
+TypeScript >= 4.9 is supported.
 
 The following runtimes are supported:
 
 - Web browsers (Up-to-date Chrome, Firefox, Safari, Edge, and more)
-- Node.js 18 LTS or later ([non-EOL](https://endoflife.date/nodejs)) versions.
+- Node.js 20 LTS or later ([non-EOL](https://endoflife.date/nodejs)) versions.
 - Deno v1.28.0 or higher.
 - Bun 1.0 or later.
 - Cloudflare Workers.

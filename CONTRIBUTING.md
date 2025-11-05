@@ -1,13 +1,13 @@
 ## Setting up the environment
 
-This repository uses [`yarn@v1`](https://classic.yarnpkg.com/lang/en/docs/install).
+This repository uses [`pnpm`](https://pnpm.io/).
 Other package managers may work but are not officially supported for development.
 
 To set up the repository, run:
 
 ```sh
-$ yarn
-$ yarn build
+$ pnpm install
+$ pnpm build
 ```
 
 This will install all the required dependencies and build output files to `dist/`.
@@ -32,7 +32,7 @@ All files in the `examples/` directory are not modified by the generator and can
 ```sh
 $ chmod +x examples/<your-example>.ts
 # run the example against your api
-$ yarn tsn -T examples/<your-example>.ts
+$ pnpm tsn -T examples/<your-example>.ts
 ```
 
 ## Using the repository from source
@@ -72,7 +72,7 @@ $ npx prism mock path/to/your/openapi.yml
 ```
 
 ```sh
-$ yarn run test
+$ pnpm run test
 ```
 
 ## Linting and formatting
@@ -83,25 +83,11 @@ This repository uses [prettier](https://www.npmjs.com/package/prettier) and
 To lint:
 
 ```sh
-$ yarn lint
+$ pnpm lint
 ```
 
 To format and fix all lint issues automatically:
 
 ```sh
-$ yarn fix
+$ pnpm fix
 ```
-
-## Publishing and releases
-
-Changes made to this repository via the automated release PR pipeline should publish to npm automatically. If
-the changes aren't made through the automated pipeline, you may want to make releases manually.
-
-### Publish with a GitHub workflow
-
-You can release to package managers by using [the `Publish NPM` GitHub action](https://www.github.com/postgrid/postgrid-node/actions/workflows/publish-npm.yml). This requires a setup organization or repository secret to be set up.
-
-### Publish manually
-
-If you need to manually release a package, you can run the `bin/publish-npm` script with an `NPM_TOKEN` set on
-the environment.

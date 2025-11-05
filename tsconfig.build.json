@@ -1,12 +1,12 @@
 {
   "extends": "./tsconfig.json",
   "include": ["dist/src"],
-  "exclude": ["dist/src/_shims/*-deno.ts"],
+  "exclude": [],
   "compilerOptions": {
     "rootDir": "./dist/src",
     "paths": {
-      "postgrid-node/*": ["dist/src/*"],
-      "postgrid-node": ["dist/src/index.ts"],
+      "postgrid-node/*": ["./dist/src/*"],
+      "postgrid-node": ["./dist/src/index.ts"]
     },
     "noEmit": false,
     "declaration": true,

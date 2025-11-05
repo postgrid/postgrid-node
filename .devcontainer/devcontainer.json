@@ -6,12 +6,10 @@
   "features": {
     "ghcr.io/devcontainers/features/node:1": {}
   },
-  "postCreateCommand": "yarn install",
+  "postCreateCommand": "pnpm install",
   "customizations": {
     "vscode": {
-      "extensions": [
-        "esbenp.prettier-vscode"
-      ]
+      "extensions": ["esbenp.prettier-vscode"]
     }
   }
 }
