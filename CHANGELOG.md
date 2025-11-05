@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-alpha.7 (2025-11-05)
+
+Full Changelog: [v0.1.0-alpha.6...v0.1.0-alpha.7](https://github.com/postgrid/postgrid-node/compare/v0.1.0-alpha.6...v0.1.0-alpha.7)
+
+### Features
+
+* **api:** manual updates ([d5bec88](https://github.com/postgrid/postgrid-node/commit/d5bec887542cd3fc6075f77c110d1a30510d8c8a))
+
 ## 0.1.0-alpha.6 (2025-11-04)
 
 Full Changelog: [v0.1.0-alpha.5...v0.1.0-alpha.6](https://github.com/postgrid/postgrid-node/compare/v0.1.0-alpha.5...v0.1.0-alpha.6)
