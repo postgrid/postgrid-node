@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.0 (2025-11-06)
+
+Full Changelog: [v0.1.0-alpha.7...v0.2.0](https://github.com/postgrid/postgrid-node/compare/v0.1.0-alpha.7...v0.2.0)
+
+### Chores
+
+* update SDK settings ([b77eaca](https://github.com/postgrid/postgrid-node/commit/b77eacae34e549dec20cbaabf417bac4a26d4bfe))
+
 ## 0.1.0-alpha.7 (2025-11-05)
 
 Full Changelog: [v0.1.0-alpha.6...v0.1.0-alpha.7](https://github.com/postgrid/postgrid-node/compare/v0.1.0-alpha.6...v0.1.0-alpha.7)
