@@ -42,15 +42,11 @@ This library includes TypeScript definitions for all request params and response
 import PostGrid from 'postgrid-node';
 
 const client = new PostGrid({
-  printMailAPIKey: process.env['POSTGRID_PRINT_MAIL_API_KEY'], // This is the default and can be omitted
+  addressVerificationAPIKey: process.env['POSTGRID_ADDRESS_VERIFICATION_API_KEY'], // This is the default and can be omitted
 });
 
-const params: PostGrid.PrintMail.ContactCreateParams = {
-  addressLine1: 'addressLine1',
-  countryCode: 'countryCode',
-  firstName: 'firstName',
-};
-const contact: PostGrid.PrintMail.Contact = await client.printMail.contacts.create(params);
+const params: PostGrid.AddressVerificationVerifyParams = { address: 'address' };
+const response: PostGrid.AddressVerificationVerifyResponse = await client.addressVerification.verify(params);
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -63,17 +59,15 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-const contact = await client.printMail.contacts
-  .create({ addressLine1: 'addressLine1', countryCode: 'countryCode', firstName: 'firstName' })
-  .catch(async (err) => {
-    if (err instanceof PostGrid.APIError) {
-      console.log(err.status); // 400
-      console.log(err.name); // BadRequestError
-      console.log(err.headers); // {server: 'nginx', ...}
-    } else {
-      throw err;
-    }
-  });
+const response = await client.addressVerification.verify({ address: 'address' }).catch(async (err) => {
+  if (err instanceof PostGrid.APIError) {
+    console.log(err.status); // 400
+    console.log(err.name); // BadRequestError
+    console.log(err.headers); // {server: 'nginx', ...}
+  } else {
+    throw err;
+  }
+});
 ```
 
 Error codes are as follows:
@@ -105,7 +99,7 @@ const client = new PostGrid({
 });
 
 // Or, configure per-request:
-await client.printMail.contacts.create({ addressLine1: 'addressLine1', countryCode: 'countryCode', firstName: 'firstName' }, {
+await client.addressVerification.verify({ address: 'address' }, {
   maxRetries: 5,
 });
 ```
@@ -122,7 +116,7 @@ const client = new PostGrid({
 });
 
 // Override per-request:
-await client.printMail.contacts.create({ addressLine1: 'addressLine1', countryCode: 'countryCode', firstName: 'firstName' }, {
+await client.addressVerification.verify({ address: 'address' }, {
   timeout: 5 * 1000,
 });
 ```
@@ -145,17 +139,15 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 ```ts
 const client = new PostGrid();
 
-const response = await client.printMail.contacts
-  .create({ addressLine1: 'addressLine1', countryCode: 'countryCode', firstName: 'firstName' })
-  .asResponse();
+const response = await client.addressVerification.verify({ address: 'address' }).asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: contact, response: raw } = await client.printMail.contacts
-  .create({ addressLine1: 'addressLine1', countryCode: 'countryCode', firstName: 'firstName' })
+const { data: response, response: raw } = await client.addressVerification
+  .verify({ address: 'address' })
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
-console.log(contact.id);
+console.log(response.data);
 ```
 
 ### Logging
