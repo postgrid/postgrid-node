@@ -93,7 +93,7 @@ export {
   type PostcardCreateParams,
   type PostcardListParams,
 } from './postcards';
-export { PrintMail } from './print-mail';
+export { PrintMail, type ContactCreateWithCompanyName, type ContactCreateWithFirstName } from './print-mail';
 export {
   Reports,
   type DeletedResponse,

@@ -29,7 +29,11 @@ import {
   IntlAddressVerificationVerifyParams,
   IntlAddressVerificationVerifyResponse,
 } from './resources/intl-address-verification';
-import { PrintMail } from './resources/print-mail/print-mail';
+import {
+  ContactCreateWithCompanyName,
+  ContactCreateWithFirstName,
+  PrintMail,
+} from './resources/print-mail/print-mail';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -789,5 +793,9 @@ export declare namespace PostGrid {
     type IntlAddressVerificationVerifyParams as IntlAddressVerificationVerifyParams,
   };
 
-  export { PrintMail as PrintMail };
+  export {
+    PrintMail as PrintMail,
+    type ContactCreateWithCompanyName as ContactCreateWithCompanyName,
+    type ContactCreateWithFirstName as ContactCreateWithFirstName,
+  };
 }
