@@ -22,6 +22,11 @@ Methods:
 
 # PrintMail
 
+Types:
+
+- <code><a href="./src/resources/print-mail/print-mail.ts">ContactCreateWithCompanyName</a></code>
+- <code><a href="./src/resources/print-mail/print-mail.ts">ContactCreateWithFirstName</a></code>
+
 ## BankAccounts
 
 Types:

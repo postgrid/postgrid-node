@@ -12,4 +12,8 @@ export {
   type IntlAddressVerificationVerifyResponse,
   type IntlAddressVerificationVerifyParams,
 } from './intl-address-verification';
-export { PrintMail } from './print-mail/print-mail';
+export {
+  PrintMail,
+  type ContactCreateWithCompanyName,
+  type ContactCreateWithFirstName,
+} from './print-mail/print-mail';
