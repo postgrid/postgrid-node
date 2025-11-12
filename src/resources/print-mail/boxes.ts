@@ -5,6 +5,7 @@ import * as BoxesAPI from './boxes';
 import * as ContactsAPI from './contacts';
 import * as PrintMailAPI from './print-mail';
 import { APIPromise } from '../../core/api-promise';
+import { PagePromise, SkipLimit, type SkipLimitParams } from '../../core/pagination';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
@@ -65,11 +66,17 @@ export class Boxes extends APIResource {
    *
    * @example
    * ```ts
-   * const boxes = await client.printMail.boxes.list();
+   * // Automatically fetches more pages as needed.
+   * for await (const box of client.printMail.boxes.list()) {
+   *   // ...
+   * }
    * ```
    */
-  list(query: BoxListParams | null | undefined = {}, options?: RequestOptions): APIPromise<BoxListResponse> {
-    return this._client.get('/print-mail/v1/boxes', { query, ...options });
+  list(
+    query: BoxListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<BoxesSkipLimit, Box> {
+    return this._client.getAPIList('/print-mail/v1/boxes', SkipLimit<Box>, { query, ...options });
   }
 
   /**
@@ -84,6 +91,8 @@ export class Boxes extends APIResource {
     return this._client.delete(path`/print-mail/v1/boxes/${id}`, options);
   }
 }
+
+export type BoxesSkipLimit = SkipLimit<Box>;
 
 export interface Box {
   /**
@@ -310,21 +319,6 @@ export type OrderMailingClass =
 
 export type OrderStatus = 'ready' | 'printing' | 'processed_for_delivery' | 'completed' | 'cancelled';
 
-/**
- * A list of Boxes.
- */
-export interface BoxListResponse {
-  data: Array<Box>;
-
-  limit: number;
-
-  object: 'list';
-
-  skip: number;
-
-  totalCount: number;
-}
-
 export interface BoxCreateParams {
   /**
    * The cheques to be mailed in the box. Only 100 cheques can be included in a box
@@ -392,9 +386,7 @@ export namespace BoxCreateParams {
   }
 }
 
-export interface BoxListParams {
-  limit?: number;
-
+export interface BoxListParams extends SkipLimitParams {
   /**
    * You can supply any string to help narrow down the list of resources. For
    * example, if you pass `"New York"` (quoted), it will return resources that have
@@ -403,8 +395,6 @@ export interface BoxListParams {
    * more details.
    */
   search?: string;
-
-  skip?: number;
 }
 
 export declare namespace Boxes {
@@ -415,7 +405,7 @@ export declare namespace Boxes {
     type OrderImbStatus as OrderImbStatus,
     type OrderMailingClass as OrderMailingClass,
     type OrderStatus as OrderStatus,
-    type BoxListResponse as BoxListResponse,
+    type BoxesSkipLimit as BoxesSkipLimit,
     type BoxCreateParams as BoxCreateParams,
     type BoxListParams as BoxListParams,
   };

@@ -3,6 +3,7 @@
 import { APIResource } from '../../core/resource';
 import * as SubOrganizationsAPI from './sub-organizations';
 import { APIPromise } from '../../core/api-promise';
+import { PagePromise, SkipLimit, type SkipLimitParams } from '../../core/pagination';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
@@ -50,15 +51,20 @@ export class SubOrganizations extends APIResource {
    *
    * @example
    * ```ts
-   * const subOrganizations =
-   *   await client.printMail.subOrganizations.list();
+   * // Automatically fetches more pages as needed.
+   * for await (const subOrganization of client.printMail.subOrganizations.list()) {
+   *   // ...
+   * }
    * ```
    */
   list(
     query: SubOrganizationListParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<SubOrganizationListResponse> {
-    return this._client.get('/print-mail/v1/sub_organizations', { query, ...options });
+  ): PagePromise<SubOrganizationsSkipLimit, SubOrganization> {
+    return this._client.getAPIList('/print-mail/v1/sub_organizations', SkipLimit<SubOrganization>, {
+      query,
+      ...options,
+    });
   }
 
   /**
@@ -80,6 +86,8 @@ export class SubOrganizations extends APIResource {
     return this._client.get(path`/print-mail/v1/sub_organizations/${id}/users`, { query, ...options });
   }
 }
+
+export type SubOrganizationsSkipLimit = SkipLimit<SubOrganization>;
 
 /**
  * A set of preferences for how a user should receive emails.
@@ -240,18 +248,6 @@ export namespace SubOrganizationUpdateResponse {
   }
 }
 
-export interface SubOrganizationListResponse {
-  data: Array<SubOrganization>;
-
-  limit: number;
-
-  object: 'list';
-
-  skip: number;
-
-  totalCount: number;
-}
-
 export type SubOrganizationRetrieveUsersResponse =
   Array<SubOrganizationRetrieveUsersResponse.SubOrganizationRetrieveUsersResponseItem>;
 
@@ -350,9 +346,7 @@ export interface SubOrganizationUpdateParams {
   phoneNumber?: string;
 }
 
-export interface SubOrganizationListParams {
-  limit?: number;
-
+export interface SubOrganizationListParams extends SkipLimitParams {
   /**
    * You can supply any string to help narrow down the list of resources. For
    * example, if you pass `"New York"` (quoted), it will return resources that have
@@ -361,8 +355,6 @@ export interface SubOrganizationListParams {
    * more details.
    */
   search?: string;
-
-  skip?: number;
 }
 
 export interface SubOrganizationRetrieveUsersParams {
@@ -385,8 +377,8 @@ export declare namespace SubOrganizations {
     type EmailPreferences as EmailPreferences,
     type SubOrganization as SubOrganization,
     type SubOrganizationUpdateResponse as SubOrganizationUpdateResponse,
-    type SubOrganizationListResponse as SubOrganizationListResponse,
     type SubOrganizationRetrieveUsersResponse as SubOrganizationRetrieveUsersResponse,
+    type SubOrganizationsSkipLimit as SubOrganizationsSkipLimit,
     type SubOrganizationUpdateParams as SubOrganizationUpdateParams,
     type SubOrganizationListParams as SubOrganizationListParams,
     type SubOrganizationRetrieveUsersParams as SubOrganizationRetrieveUsersParams,

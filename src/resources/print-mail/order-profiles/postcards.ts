@@ -3,6 +3,7 @@
 import { APIResource } from '../../../core/resource';
 import * as BoxesAPI from '../boxes';
 import { APIPromise } from '../../../core/api-promise';
+import { PagePromise, SkipLimit, type SkipLimitParams } from '../../../core/pagination';
 import { RequestOptions } from '../../../internal/request-options';
 import { path } from '../../../internal/utils/path';
 
@@ -74,15 +75,20 @@ export class Postcards extends APIResource {
    *
    * @example
    * ```ts
-   * const postcards =
-   *   await client.printMail.orderProfiles.postcards.list();
+   * // Automatically fetches more pages as needed.
+   * for await (const postcardProfile of client.printMail.orderProfiles.postcards.list()) {
+   *   // ...
+   * }
    * ```
    */
   list(
     query: PostcardListParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<PostcardListResponse> {
-    return this._client.get('/print-mail/v1/order_profiles/postcards', { query, ...options });
+  ): PagePromise<PostcardProfilesSkipLimit, PostcardProfile> {
+    return this._client.getAPIList('/print-mail/v1/order_profiles/postcards', SkipLimit<PostcardProfile>, {
+      query,
+      ...options,
+    });
   }
 
   /**
@@ -100,6 +106,8 @@ export class Postcards extends APIResource {
     return this._client.delete(path`/print-mail/v1/order_profiles/postcards/${id}`, options);
   }
 }
+
+export type PostcardProfilesSkipLimit = SkipLimit<PostcardProfile>;
 
 export interface PostcardProfile {
   /**
@@ -173,21 +181,6 @@ export interface PostcardProfile {
  * Enum representing the supported postcard sizes.
  */
 export type PostcardSize = '6x4' | '9x6' | '11x6';
-
-/**
- * Represents a list of Postcard Profiles.
- */
-export interface PostcardListResponse {
-  data: Array<PostcardProfile>;
-
-  limit: number;
-
-  object: 'list';
-
-  skip: number;
-
-  totalCount: number;
-}
 
 export interface PostcardDeleteResponse {
   /**
@@ -309,9 +302,7 @@ export interface PostcardUpdateParams {
   pdf?: string;
 }
 
-export interface PostcardListParams {
-  limit?: number;
-
+export interface PostcardListParams extends SkipLimitParams {
   /**
    * You can supply any string to help narrow down the list of resources. For
    * example, if you pass `"New York"` (quoted), it will return resources that have
@@ -320,16 +311,14 @@ export interface PostcardListParams {
    * more details.
    */
   search?: string;
-
-  skip?: number;
 }
 
 export declare namespace Postcards {
   export {
     type PostcardProfile as PostcardProfile,
     type PostcardSize as PostcardSize,
-    type PostcardListResponse as PostcardListResponse,
     type PostcardDeleteResponse as PostcardDeleteResponse,
+    type PostcardProfilesSkipLimit as PostcardProfilesSkipLimit,
     type PostcardCreateParams as PostcardCreateParams,
     type PostcardRetrieveParams as PostcardRetrieveParams,
     type PostcardUpdateParams as PostcardUpdateParams,

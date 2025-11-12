@@ -2,6 +2,7 @@
 
 import { APIResource } from '../../core/resource';
 import { APIPromise } from '../../core/api-promise';
+import { PagePromise, SkipLimit, type SkipLimitParams } from '../../core/pagination';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
@@ -51,15 +52,20 @@ export class BankAccounts extends APIResource {
    *
    * @example
    * ```ts
-   * const bankAccounts =
-   *   await client.printMail.bankAccounts.list();
+   * // Automatically fetches more pages as needed.
+   * for await (const bankAccount of client.printMail.bankAccounts.list()) {
+   *   // ...
+   * }
    * ```
    */
   list(
     query: BankAccountListParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<BankAccountListResponse> {
-    return this._client.get('/print-mail/v1/bank_accounts', { query, ...options });
+  ): PagePromise<BankAccountsSkipLimit, BankAccount> {
+    return this._client.getAPIList('/print-mail/v1/bank_accounts', SkipLimit<BankAccount>, {
+      query,
+      ...options,
+    });
   }
 
   /**
@@ -75,6 +81,8 @@ export class BankAccounts extends APIResource {
     return this._client.delete(path`/print-mail/v1/bank_accounts/${id}`, options);
   }
 }
+
+export type BankAccountsSkipLimit = SkipLimit<BankAccount>;
 
 export interface BankAccount {
   /**
@@ -177,18 +185,6 @@ export interface BankAccount {
  * the countries which PostGrid's bank accounts API supports.
  */
 export type BankAccountCountryCode = 'CA' | 'US';
-
-export interface BankAccountListResponse {
-  data: Array<BankAccount>;
-
-  limit: number;
-
-  object: 'list';
-
-  skip: number;
-
-  totalCount: number;
-}
 
 export interface BankAccountDeleteResponse {
   /**
@@ -405,9 +401,7 @@ export declare namespace BankAccountCreateParams {
   }
 }
 
-export interface BankAccountListParams {
-  limit?: number;
-
+export interface BankAccountListParams extends SkipLimitParams {
   /**
    * You can supply any string to help narrow down the list of resources. For
    * example, if you pass `"New York"` (quoted), it will return resources that have
@@ -416,16 +410,14 @@ export interface BankAccountListParams {
    * more details.
    */
   search?: string;
-
-  skip?: number;
 }
 
 export declare namespace BankAccounts {
   export {
     type BankAccount as BankAccount,
     type BankAccountCountryCode as BankAccountCountryCode,
-    type BankAccountListResponse as BankAccountListResponse,
     type BankAccountDeleteResponse as BankAccountDeleteResponse,
+    type BankAccountsSkipLimit as BankAccountsSkipLimit,
     type BankAccountCreateParams as BankAccountCreateParams,
     type BankAccountListParams as BankAccountListParams,
   };

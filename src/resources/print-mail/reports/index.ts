@@ -11,10 +11,10 @@ export {
   Reports,
   type DeletedResponse,
   type Report,
-  type ReportListResponse,
   type ReportCreateParams,
   type ReportUpdateParams,
   type ReportListParams,
   type ReportSampleParams,
+  type ReportsSkipLimit,
 } from './reports';
 export { Samples, type ReportSample, type ReportSampleCreateBase, type SampleCreateParams } from './samples';

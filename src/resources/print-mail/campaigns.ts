@@ -2,6 +2,7 @@
 
 import { APIResource } from '../../core/resource';
 import { APIPromise } from '../../core/api-promise';
+import { PagePromise, SkipLimit, type SkipLimitParams } from '../../core/pagination';
 import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
@@ -73,14 +74,17 @@ export class Campaigns extends APIResource {
    *
    * @example
    * ```ts
-   * const campaigns = await client.printMail.campaigns.list();
+   * // Automatically fetches more pages as needed.
+   * for await (const campaign of client.printMail.campaigns.list()) {
+   *   // ...
+   * }
    * ```
    */
   list(
     query: CampaignListParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<CampaignListResponse> {
-    return this._client.get('/print-mail/v1/campaigns', { query, ...options });
+  ): PagePromise<CampaignsSkipLimit, Campaign> {
+    return this._client.getAPIList('/print-mail/v1/campaigns', SkipLimit<Campaign>, { query, ...options });
   }
 
   /**
@@ -119,6 +123,8 @@ export class Campaigns extends APIResource {
     return this._client.post(path`/print-mail/v1/campaigns/${id}/send`, { body, ...options });
   }
 }
+
+export type CampaignsSkipLimit = SkipLimit<Campaign>;
 
 /**
  * Represents a bulk mail campaign.
@@ -244,21 +250,6 @@ export namespace Campaign {
   }
 }
 
-/**
- * A list of campaigns.
- */
-export interface CampaignListResponse {
-  data: Array<Campaign>;
-
-  limit: number;
-
-  object: 'list';
-
-  skip: number;
-
-  totalCount: number;
-}
-
 export interface CampaignDeleteResponse {
   /**
    * A unique ID prefixed with campaign\_
@@ -372,9 +363,7 @@ export interface CampaignUpdateParams {
   selfMailerProfile?: string | null;
 }
 
-export interface CampaignListParams {
-  limit?: number;
-
+export interface CampaignListParams extends SkipLimitParams {
   /**
    * You can supply any string to help narrow down the list of resources. For
    * example, if you pass `"New York"` (quoted), it will return resources that have
@@ -383,8 +372,6 @@ export interface CampaignListParams {
    * more details.
    */
   search?: string;
-
-  skip?: number;
 }
 
 export interface CampaignSendParams {
@@ -398,8 +385,8 @@ export interface CampaignSendParams {
 export declare namespace Campaigns {
   export {
     type Campaign as Campaign,
-    type CampaignListResponse as CampaignListResponse,
     type CampaignDeleteResponse as CampaignDeleteResponse,
+    type CampaignsSkipLimit as CampaignsSkipLimit,
     type CampaignCreateParams as CampaignCreateParams,
     type CampaignUpdateParams as CampaignUpdateParams,
     type CampaignListParams as CampaignListParams,

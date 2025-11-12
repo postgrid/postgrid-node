@@ -6,6 +6,7 @@ import * as ContactsAPI from './contacts';
 import * as PrintMailAPI from './print-mail';
 import * as OrderProfilesPostcardsAPI from './order-profiles/postcards';
 import { APIPromise } from '../../core/api-promise';
+import { PagePromise, SkipLimit, type SkipLimitParams } from '../../core/pagination';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
@@ -53,14 +54,17 @@ export class Postcards extends APIResource {
    *
    * @example
    * ```ts
-   * const postcards = await client.printMail.postcards.list();
+   * // Automatically fetches more pages as needed.
+   * for await (const postcard of client.printMail.postcards.list()) {
+   *   // ...
+   * }
    * ```
    */
   list(
     query: PostcardListParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<PostcardListResponse> {
-    return this._client.get('/print-mail/v1/postcards', { query, ...options });
+  ): PagePromise<PostcardsSkipLimit, Postcard> {
+    return this._client.getAPIList('/print-mail/v1/postcards', SkipLimit<Postcard>, { query, ...options });
   }
 
   /**
@@ -95,6 +99,8 @@ export class Postcards extends APIResource {
     return this._client.get(path`/print-mail/v1/postcards/${id}/url`, options);
   }
 }
+
+export type PostcardsSkipLimit = SkipLimit<Postcard>;
 
 export interface Postcard {
   /**
@@ -216,18 +222,6 @@ export interface Postcard {
    * regenerate it by calling the `GET` endpoint again.
    */
   url?: string;
-}
-
-export interface PostcardListResponse {
-  data: Array<Postcard>;
-
-  limit: number;
-
-  object: 'list';
-
-  skip: number;
-
-  totalCount: number;
 }
 
 export interface PostcardRetrieveURLResponse {
@@ -450,9 +444,7 @@ export declare namespace PostcardCreateParams {
   }
 }
 
-export interface PostcardListParams {
-  limit?: number;
-
+export interface PostcardListParams extends SkipLimitParams {
   /**
    * You can supply any string to help narrow down the list of resources. For
    * example, if you pass `"New York"` (quoted), it will return resources that have
@@ -461,15 +453,13 @@ export interface PostcardListParams {
    * more details.
    */
   search?: string;
-
-  skip?: number;
 }
 
 export declare namespace Postcards {
   export {
     type Postcard as Postcard,
-    type PostcardListResponse as PostcardListResponse,
     type PostcardRetrieveURLResponse as PostcardRetrieveURLResponse,
+    type PostcardsSkipLimit as PostcardsSkipLimit,
     type PostcardCreateParams as PostcardCreateParams,
     type PostcardListParams as PostcardListParams,
   };
