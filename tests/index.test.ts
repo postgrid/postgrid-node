@@ -55,7 +55,7 @@ describe('instantiate client', () => {
 
     beforeEach(() => {
       process.env = { ...env };
-      process.env['POST_GRID_LOG'] = undefined;
+      process.env['POSTGRID_LOG'] = undefined;
     });
 
     afterEach(() => {
@@ -136,7 +136,7 @@ describe('instantiate client', () => {
         error: jest.fn(),
       };
 
-      process.env['POST_GRID_LOG'] = 'debug';
+      process.env['POSTGRID_LOG'] = 'debug';
       const client = new PostGrid({
         logger: logger,
         addressVerificationAPIKey: 'My Address Verification API Key',
@@ -157,7 +157,7 @@ describe('instantiate client', () => {
         error: jest.fn(),
       };
 
-      process.env['POST_GRID_LOG'] = 'not a log level';
+      process.env['POSTGRID_LOG'] = 'not a log level';
       const client = new PostGrid({
         logger: logger,
         addressVerificationAPIKey: 'My Address Verification API Key',
@@ -165,7 +165,7 @@ describe('instantiate client', () => {
       });
       expect(client.logLevel).toBe('warn');
       expect(warnMock).toHaveBeenCalledWith(
-        'process.env[\'POST_GRID_LOG\'] was set to "not a log level", expected one of ["off","error","warn","info","debug"]',
+        'process.env[\'POSTGRID_LOG\'] was set to "not a log level", expected one of ["off","error","warn","info","debug"]',
       );
     });
 
@@ -178,7 +178,7 @@ describe('instantiate client', () => {
         error: jest.fn(),
       };
 
-      process.env['POST_GRID_LOG'] = 'debug';
+      process.env['POSTGRID_LOG'] = 'debug';
       const client = new PostGrid({
         logger: logger,
         logLevel: 'off',
@@ -199,7 +199,7 @@ describe('instantiate client', () => {
         error: jest.fn(),
       };
 
-      process.env['POST_GRID_LOG'] = 'not a log level';
+      process.env['POSTGRID_LOG'] = 'not a log level';
       const client = new PostGrid({
         logger: logger,
         logLevel: 'debug',
@@ -336,7 +336,7 @@ describe('instantiate client', () => {
     });
 
     afterEach(() => {
-      process.env['POST_GRID_BASE_URL'] = undefined;
+      process.env['POSTGRID_BASE_URL'] = undefined;
     });
 
     test('explicit option', () => {
@@ -349,7 +349,7 @@ describe('instantiate client', () => {
     });
 
     test('env variable', () => {
-      process.env['POST_GRID_BASE_URL'] = 'https://example.com/from_env';
+      process.env['POSTGRID_BASE_URL'] = 'https://example.com/from_env';
       const client = new PostGrid({
         addressVerificationAPIKey: 'My Address Verification API Key',
         printMailAPIKey: 'My Print Mail API Key',
@@ -358,7 +358,7 @@ describe('instantiate client', () => {
     });
 
     test('empty env variable', () => {
-      process.env['POST_GRID_BASE_URL'] = ''; // empty
+      process.env['POSTGRID_BASE_URL'] = ''; // empty
       const client = new PostGrid({
         addressVerificationAPIKey: 'My Address Verification API Key',
         printMailAPIKey: 'My Print Mail API Key',
@@ -367,7 +367,7 @@ describe('instantiate client', () => {
     });
 
     test('blank env variable', () => {
-      process.env['POST_GRID_BASE_URL'] = '  '; // blank
+      process.env['POSTGRID_BASE_URL'] = '  '; // blank
       const client = new PostGrid({
         addressVerificationAPIKey: 'My Address Verification API Key',
         printMailAPIKey: 'My Print Mail API Key',
@@ -397,7 +397,7 @@ describe('instantiate client', () => {
     });
 
     test('in request options overridden by env variable', () => {
-      process.env['POST_GRID_BASE_URL'] = 'http://localhost:5000/env';
+      process.env['POSTGRID_BASE_URL'] = 'http://localhost:5000/env';
       const client = new PostGrid({
         addressVerificationAPIKey: 'My Address Verification API Key',
         printMailAPIKey: 'My Print Mail API Key',

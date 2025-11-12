@@ -63,7 +63,7 @@ export interface ClientOptions {
   /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
    *
-   * Defaults to process.env['POST_GRID_BASE_URL'].
+   * Defaults to process.env['POSTGRID_BASE_URL'].
    */
   baseURL?: string | null | undefined;
 
@@ -117,7 +117,7 @@ export interface ClientOptions {
   /**
    * Set the log level.
    *
-   * Defaults to process.env['POST_GRID_LOG'] or 'warn' if it isn't set.
+   * Defaults to process.env['POSTGRID_LOG'] or 'warn' if it isn't set.
    */
   logLevel?: LogLevel | undefined;
 
@@ -130,7 +130,7 @@ export interface ClientOptions {
 }
 
 /**
- * API Client for interfacing with the Post Grid API.
+ * API Client for interfacing with the PostGrid API.
  */
 export class PostGrid {
   addressVerificationAPIKey: string | null;
@@ -149,11 +149,11 @@ export class PostGrid {
   private _options: ClientOptions;
 
   /**
-   * API Client for interfacing with the Post Grid API.
+   * API Client for interfacing with the PostGrid API.
    *
    * @param {string | null | undefined} [opts.addressVerificationAPIKey=process.env['POSTGRID_ADDRESS_VERIFICATION_API_KEY'] ?? null]
    * @param {string | null | undefined} [opts.printMailAPIKey=process.env['POSTGRID_PRINT_MAIL_API_KEY'] ?? null]
-   * @param {string} [opts.baseURL=process.env['POST_GRID_BASE_URL'] ?? https://api.postgrid.com] - Override the default base URL for the API.
+   * @param {string} [opts.baseURL=process.env['POSTGRID_BASE_URL'] ?? https://api.postgrid.com] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
    * @param {Fetch} [opts.fetch] - Specify a custom `fetch` function implementation.
@@ -162,7 +162,7 @@ export class PostGrid {
    * @param {Record<string, string | undefined>} opts.defaultQuery - Default query parameters to include with every request to the API.
    */
   constructor({
-    baseURL = readEnv('POST_GRID_BASE_URL'),
+    baseURL = readEnv('POSTGRID_BASE_URL'),
     addressVerificationAPIKey = readEnv('POSTGRID_ADDRESS_VERIFICATION_API_KEY') ?? null,
     printMailAPIKey = readEnv('POSTGRID_PRINT_MAIL_API_KEY') ?? null,
     ...opts
@@ -182,7 +182,7 @@ export class PostGrid {
     this.logLevel = defaultLogLevel;
     this.logLevel =
       parseLogLevel(options.logLevel, 'ClientOptions.logLevel', this) ??
-      parseLogLevel(readEnv('POST_GRID_LOG'), "process.env['POST_GRID_LOG']", this) ??
+      parseLogLevel(readEnv('POSTGRID_LOG'), "process.env['POSTGRID_LOG']", this) ??
       defaultLogLevel;
     this.fetchOptions = options.fetchOptions;
     this.maxRetries = options.maxRetries ?? 2;
