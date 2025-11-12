@@ -125,6 +125,37 @@ On timeout, an `APIConnectionTimeoutError` is thrown.
 
 Note that requests which time out will be [retried twice by default](#retries).
 
+## Auto-pagination
+
+List methods in the PostGrid API are paginated.
+You can use the `for await … of` syntax to iterate through items across all pages:
+
+```ts
+async function fetchAllLetters(params) {
+  const allLetters = [];
+  // Automatically fetches more pages as needed.
+  for await (const letter of client.printMail.letters.list({ limit: 100 })) {
+    allLetters.push(letter);
+  }
+  return allLetters;
+}
+```
+
+Alternatively, you can request a single page at a time:
+
+```ts
+let page = await client.printMail.letters.list({ limit: 100 });
+for (const letter of page.data) {
+  console.log(letter);
+}
+
+// Convenience methods are provided for manually paginating:
+while (page.hasNextPage()) {
+  page = await page.getNextPage();
+  // ...
+}
+```
+
 ## Advanced Usage
 
 ### Accessing raw Response data (e.g., headers)
