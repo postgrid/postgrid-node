@@ -3,6 +3,7 @@
 import { APIResource } from '../../../core/resource';
 import * as BoxesAPI from '../boxes';
 import { APIPromise } from '../../../core/api-promise';
+import { PagePromise, SkipLimit, type SkipLimitParams } from '../../../core/pagination';
 import { RequestOptions } from '../../../internal/request-options';
 import { path } from '../../../internal/utils/path';
 
@@ -79,15 +80,21 @@ export class SelfMailers extends APIResource {
    *
    * @example
    * ```ts
-   * const selfMailers =
-   *   await client.printMail.orderProfiles.selfMailers.list();
+   * // Automatically fetches more pages as needed.
+   * for await (const selfMailerProfile of client.printMail.orderProfiles.selfMailers.list()) {
+   *   // ...
+   * }
    * ```
    */
   list(
     query: SelfMailerListParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<SelfMailerListResponse> {
-    return this._client.get('/print-mail/v1/order_profiles/self_mailers', { query, ...options });
+  ): PagePromise<SelfMailerProfilesSkipLimit, SelfMailerProfile> {
+    return this._client.getAPIList(
+      '/print-mail/v1/order_profiles/self_mailers',
+      SkipLimit<SelfMailerProfile>,
+      { query, ...options },
+    );
   }
 
   /**
@@ -105,6 +112,8 @@ export class SelfMailers extends APIResource {
     return this._client.delete(path`/print-mail/v1/order_profiles/self_mailers/${id}`, options);
   }
 }
+
+export type SelfMailerProfilesSkipLimit = SkipLimit<SelfMailerProfile>;
 
 /**
  * Represents a Self-Mailer Profile resource.
@@ -180,21 +189,6 @@ export interface SelfMailerProfile {
  * Enum representing the supported self-mailer sizes.
  */
 export type SelfMailerSize = '8.5x11_bifold' | '8.5x11_trifold' | '9.5x16_trifold';
-
-/**
- * Represents a list of Self-Mailer Profiles.
- */
-export interface SelfMailerListResponse {
-  data: Array<SelfMailerProfile>;
-
-  limit: number;
-
-  object: 'list';
-
-  skip: number;
-
-  totalCount: number;
-}
 
 export interface SelfMailerDeleteResponse {
   /**
@@ -319,9 +313,7 @@ export interface SelfMailerUpdateParams {
   pdf?: string;
 }
 
-export interface SelfMailerListParams {
-  limit?: number;
-
+export interface SelfMailerListParams extends SkipLimitParams {
   /**
    * You can supply any string to help narrow down the list of resources. For
    * example, if you pass `"New York"` (quoted), it will return resources that have
@@ -330,16 +322,14 @@ export interface SelfMailerListParams {
    * more details.
    */
   search?: string;
-
-  skip?: number;
 }
 
 export declare namespace SelfMailers {
   export {
     type SelfMailerProfile as SelfMailerProfile,
     type SelfMailerSize as SelfMailerSize,
-    type SelfMailerListResponse as SelfMailerListResponse,
     type SelfMailerDeleteResponse as SelfMailerDeleteResponse,
+    type SelfMailerProfilesSkipLimit as SelfMailerProfilesSkipLimit,
     type SelfMailerCreateParams as SelfMailerCreateParams,
     type SelfMailerRetrieveParams as SelfMailerRetrieveParams,
     type SelfMailerUpdateParams as SelfMailerUpdateParams,

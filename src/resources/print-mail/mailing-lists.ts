@@ -2,6 +2,7 @@
 
 import { APIResource } from '../../core/resource';
 import { APIPromise } from '../../core/api-promise';
+import { PagePromise, SkipLimit, type SkipLimitParams } from '../../core/pagination';
 import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
@@ -67,15 +68,20 @@ export class MailingLists extends APIResource {
    *
    * @example
    * ```ts
-   * const mailingLists =
-   *   await client.printMail.mailingLists.list();
+   * // Automatically fetches more pages as needed.
+   * for await (const mailingList of client.printMail.mailingLists.list()) {
+   *   // ...
+   * }
    * ```
    */
   list(
     query: MailingListListParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<MailingListListResponse> {
-    return this._client.get('/print-mail/v1/mailing_lists', { query, ...options });
+  ): PagePromise<MailingListsSkipLimit, MailingList> {
+    return this._client.getAPIList('/print-mail/v1/mailing_lists', SkipLimit<MailingList>, {
+      query,
+      ...options,
+    });
   }
 
   /**
@@ -122,6 +128,8 @@ export class MailingLists extends APIResource {
     return this._client.post(path`/print-mail/v1/mailing_lists/${id}/jobs`, { body, ...options });
   }
 }
+
+export type MailingListsSkipLimit = SkipLimit<MailingList>;
 
 /**
  * Represents a mailing list.
@@ -206,21 +214,6 @@ export interface MailingListUpdate {
   metadata?: { [key: string]: unknown };
 }
 
-/**
- * A list of mailing lists.
- */
-export interface MailingListListResponse {
-  data: Array<MailingList>;
-
-  limit: number;
-
-  object: 'list';
-
-  skip: number;
-
-  totalCount: number;
-}
-
 export interface MailingListDeleteResponse {
   /**
    * A unique ID prefixed with mailing*list*
@@ -261,9 +254,7 @@ export interface MailingListUpdateParams {
   metadata?: { [key: string]: unknown };
 }
 
-export interface MailingListListParams {
-  limit?: number;
-
+export interface MailingListListParams extends SkipLimitParams {
   /**
    * You can supply any string to help narrow down the list of resources. For
    * example, if you pass `"New York"` (quoted), it will return resources that have
@@ -272,8 +263,6 @@ export interface MailingListListParams {
    * more details.
    */
   search?: string;
-
-  skip?: number;
 }
 
 export interface MailingListJobsParams {
@@ -306,8 +295,8 @@ export declare namespace MailingLists {
   export {
     type MailingList as MailingList,
     type MailingListUpdate as MailingListUpdate,
-    type MailingListListResponse as MailingListListResponse,
     type MailingListDeleteResponse as MailingListDeleteResponse,
+    type MailingListsSkipLimit as MailingListsSkipLimit,
     type MailingListCreateParams as MailingListCreateParams,
     type MailingListUpdateParams as MailingListUpdateParams,
     type MailingListListParams as MailingListListParams,

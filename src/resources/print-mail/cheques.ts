@@ -3,7 +3,9 @@
 import { APIResource } from '../../core/resource';
 import * as BoxesAPI from './boxes';
 import * as ContactsAPI from './contacts';
+import * as PrintMailAPI from './print-mail';
 import { APIPromise } from '../../core/api-promise';
+import { PagePromise, SkipLimit, type SkipLimitParams } from '../../core/pagination';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
@@ -69,14 +71,17 @@ export class Cheques extends APIResource {
    *
    * @example
    * ```ts
-   * const cheques = await client.printMail.cheques.list();
+   * // Automatically fetches more pages as needed.
+   * for await (const cheque of client.printMail.cheques.list()) {
+   *   // ...
+   * }
    * ```
    */
   list(
     query: ChequeListParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<ChequeListResponse> {
-    return this._client.get('/print-mail/v1/cheques', { query, ...options });
+  ): PagePromise<ChequesSkipLimit, Cheque> {
+    return this._client.getAPIList('/print-mail/v1/cheques', SkipLimit<Cheque>, { query, ...options });
   }
 
   /**
@@ -128,6 +133,8 @@ export class Cheques extends APIResource {
     return this._client.get(path`/print-mail/v1/cheques/${id}/with_deposit_ready_pdf`, options);
   }
 }
+
+export type ChequesSkipLimit = SkipLimit<Cheque>;
 
 export interface Cheque {
   /**
@@ -322,18 +329,6 @@ export interface DigitalOnly {
   watermark: string;
 }
 
-export interface ChequeListResponse {
-  data: Array<Cheque>;
-
-  limit: number;
-
-  object: 'list';
-
-  skip: number;
-
-  totalCount: number;
-}
-
 export interface ChequeRetrieveURLResponse {
   /**
    * A unique ID prefixed with cheque\_
@@ -364,10 +359,7 @@ export interface ChequeCreateParams {
    * The contact information of the sender. You can pass contact information inline
    * here just like you can for the `to`.
    */
-  from:
-    | ChequeCreateParams.ContactCreateWithFirstName
-    | ChequeCreateParams.ContactCreateWithCompanyName
-    | string;
+  from: PrintMailAPI.ContactCreateWithFirstName | PrintMailAPI.ContactCreateWithCompanyName | string;
 
   /**
    * The recipient of this order. You can either supply the contact information
@@ -375,10 +367,7 @@ export interface ChequeCreateParams {
    * contacts regardless of whether you provide the information inline here or call
    * the contact creation endpoint.
    */
-  to:
-    | ChequeCreateParams.ContactCreateWithFirstName
-    | ChequeCreateParams.ContactCreateWithCompanyName
-    | string;
+  to: PrintMailAPI.ContactCreateWithFirstName | PrintMailAPI.ContactCreateWithCompanyName | string;
 
   /**
    * The currency code of the cheque. This will be set to the default currency of the
@@ -456,10 +445,7 @@ export interface ChequeCreateParams {
    * mail it forward to the final recipient yourself. One use case for this is
    * signing cheques at your office before mailing them out yourself.
    */
-  redirectTo?:
-    | ChequeCreateParams.ContactCreateWithFirstName
-    | ChequeCreateParams.ContactCreateWithCompanyName
-    | string;
+  redirectTo?: PrintMailAPI.ContactCreateWithFirstName | PrintMailAPI.ContactCreateWithCompanyName | string;
 
   /**
    * This order will transition from `ready` to `printing` on the day after this
@@ -473,503 +459,7 @@ export interface ChequeCreateParams {
   size?: ChequeSize;
 }
 
-export namespace ChequeCreateParams {
-  export interface ContactCreateWithFirstName {
-    /**
-     * The first line of the contact's address.
-     */
-    addressLine1: string;
-
-    /**
-     * The ISO 3611-1 country code of the contact's address.
-     */
-    countryCode: string;
-
-    firstName: string;
-
-    /**
-     * Second line of the contact's address, if applicable.
-     */
-    addressLine2?: string;
-
-    /**
-     * The city of the contact's address.
-     */
-    city?: string;
-
-    /**
-     * Company name of the contact.
-     */
-    companyName?: string;
-
-    /**
-     * An optional string describing this resource. Will be visible in the API and the
-     * dashboard.
-     */
-    description?: string;
-
-    /**
-     * Email of the contact.
-     */
-    email?: string;
-
-    /**
-     * If `true`, PostGrid will force this contact to have an `addressStatus` of
-     * `verified` even if our address verification system says otherwise.
-     */
-    forceVerifiedStatus?: boolean;
-
-    /**
-     * Job title of the contact.
-     */
-    jobTitle?: string;
-
-    /**
-     * Last name of the contact.
-     */
-    lastName?: string;
-
-    /**
-     * See the section on Metadata.
-     */
-    metadata?: { [key: string]: unknown };
-
-    /**
-     * Phone number of the contact.
-     */
-    phoneNumber?: string;
-
-    /**
-     * The postal or ZIP code of the contact's address.
-     */
-    postalOrZip?: string;
-
-    /**
-     * Province or state of the contact's address.
-     */
-    provinceOrState?: string;
-
-    /**
-     * If `true`, PostGrid will skip running this contact's address through our address
-     * verification system.
-     */
-    skipVerification?: boolean;
-  }
-
-  export interface ContactCreateWithCompanyName {
-    /**
-     * The first line of the contact's address.
-     */
-    addressLine1: string;
-
-    companyName: string;
-
-    /**
-     * The ISO 3611-1 country code of the contact's address.
-     */
-    countryCode: string;
-
-    /**
-     * Second line of the contact's address, if applicable.
-     */
-    addressLine2?: string;
-
-    /**
-     * The city of the contact's address.
-     */
-    city?: string;
-
-    /**
-     * An optional string describing this resource. Will be visible in the API and the
-     * dashboard.
-     */
-    description?: string;
-
-    /**
-     * Email of the contact.
-     */
-    email?: string;
-
-    /**
-     * First name of the contact.
-     */
-    firstName?: string;
-
-    /**
-     * If `true`, PostGrid will force this contact to have an `addressStatus` of
-     * `verified` even if our address verification system says otherwise.
-     */
-    forceVerifiedStatus?: boolean;
-
-    /**
-     * Job title of the contact.
-     */
-    jobTitle?: string;
-
-    /**
-     * Last name of the contact.
-     */
-    lastName?: string;
-
-    /**
-     * See the section on Metadata.
-     */
-    metadata?: { [key: string]: unknown };
-
-    /**
-     * Phone number of the contact.
-     */
-    phoneNumber?: string;
-
-    /**
-     * The postal or ZIP code of the contact's address.
-     */
-    postalOrZip?: string;
-
-    /**
-     * Province or state of the contact's address.
-     */
-    provinceOrState?: string;
-
-    /**
-     * If `true`, PostGrid will skip running this contact's address through our address
-     * verification system.
-     */
-    skipVerification?: boolean;
-  }
-
-  export interface ContactCreateWithFirstName {
-    /**
-     * The first line of the contact's address.
-     */
-    addressLine1: string;
-
-    /**
-     * The ISO 3611-1 country code of the contact's address.
-     */
-    countryCode: string;
-
-    firstName: string;
-
-    /**
-     * Second line of the contact's address, if applicable.
-     */
-    addressLine2?: string;
-
-    /**
-     * The city of the contact's address.
-     */
-    city?: string;
-
-    /**
-     * Company name of the contact.
-     */
-    companyName?: string;
-
-    /**
-     * An optional string describing this resource. Will be visible in the API and the
-     * dashboard.
-     */
-    description?: string;
-
-    /**
-     * Email of the contact.
-     */
-    email?: string;
-
-    /**
-     * If `true`, PostGrid will force this contact to have an `addressStatus` of
-     * `verified` even if our address verification system says otherwise.
-     */
-    forceVerifiedStatus?: boolean;
-
-    /**
-     * Job title of the contact.
-     */
-    jobTitle?: string;
-
-    /**
-     * Last name of the contact.
-     */
-    lastName?: string;
-
-    /**
-     * See the section on Metadata.
-     */
-    metadata?: { [key: string]: unknown };
-
-    /**
-     * Phone number of the contact.
-     */
-    phoneNumber?: string;
-
-    /**
-     * The postal or ZIP code of the contact's address.
-     */
-    postalOrZip?: string;
-
-    /**
-     * Province or state of the contact's address.
-     */
-    provinceOrState?: string;
-
-    /**
-     * If `true`, PostGrid will skip running this contact's address through our address
-     * verification system.
-     */
-    skipVerification?: boolean;
-  }
-
-  export interface ContactCreateWithCompanyName {
-    /**
-     * The first line of the contact's address.
-     */
-    addressLine1: string;
-
-    companyName: string;
-
-    /**
-     * The ISO 3611-1 country code of the contact's address.
-     */
-    countryCode: string;
-
-    /**
-     * Second line of the contact's address, if applicable.
-     */
-    addressLine2?: string;
-
-    /**
-     * The city of the contact's address.
-     */
-    city?: string;
-
-    /**
-     * An optional string describing this resource. Will be visible in the API and the
-     * dashboard.
-     */
-    description?: string;
-
-    /**
-     * Email of the contact.
-     */
-    email?: string;
-
-    /**
-     * First name of the contact.
-     */
-    firstName?: string;
-
-    /**
-     * If `true`, PostGrid will force this contact to have an `addressStatus` of
-     * `verified` even if our address verification system says otherwise.
-     */
-    forceVerifiedStatus?: boolean;
-
-    /**
-     * Job title of the contact.
-     */
-    jobTitle?: string;
-
-    /**
-     * Last name of the contact.
-     */
-    lastName?: string;
-
-    /**
-     * See the section on Metadata.
-     */
-    metadata?: { [key: string]: unknown };
-
-    /**
-     * Phone number of the contact.
-     */
-    phoneNumber?: string;
-
-    /**
-     * The postal or ZIP code of the contact's address.
-     */
-    postalOrZip?: string;
-
-    /**
-     * Province or state of the contact's address.
-     */
-    provinceOrState?: string;
-
-    /**
-     * If `true`, PostGrid will skip running this contact's address through our address
-     * verification system.
-     */
-    skipVerification?: boolean;
-  }
-
-  export interface ContactCreateWithFirstName {
-    /**
-     * The first line of the contact's address.
-     */
-    addressLine1: string;
-
-    /**
-     * The ISO 3611-1 country code of the contact's address.
-     */
-    countryCode: string;
-
-    firstName: string;
-
-    /**
-     * Second line of the contact's address, if applicable.
-     */
-    addressLine2?: string;
-
-    /**
-     * The city of the contact's address.
-     */
-    city?: string;
-
-    /**
-     * Company name of the contact.
-     */
-    companyName?: string;
-
-    /**
-     * An optional string describing this resource. Will be visible in the API and the
-     * dashboard.
-     */
-    description?: string;
-
-    /**
-     * Email of the contact.
-     */
-    email?: string;
-
-    /**
-     * If `true`, PostGrid will force this contact to have an `addressStatus` of
-     * `verified` even if our address verification system says otherwise.
-     */
-    forceVerifiedStatus?: boolean;
-
-    /**
-     * Job title of the contact.
-     */
-    jobTitle?: string;
-
-    /**
-     * Last name of the contact.
-     */
-    lastName?: string;
-
-    /**
-     * See the section on Metadata.
-     */
-    metadata?: { [key: string]: unknown };
-
-    /**
-     * Phone number of the contact.
-     */
-    phoneNumber?: string;
-
-    /**
-     * The postal or ZIP code of the contact's address.
-     */
-    postalOrZip?: string;
-
-    /**
-     * Province or state of the contact's address.
-     */
-    provinceOrState?: string;
-
-    /**
-     * If `true`, PostGrid will skip running this contact's address through our address
-     * verification system.
-     */
-    skipVerification?: boolean;
-  }
-
-  export interface ContactCreateWithCompanyName {
-    /**
-     * The first line of the contact's address.
-     */
-    addressLine1: string;
-
-    companyName: string;
-
-    /**
-     * The ISO 3611-1 country code of the contact's address.
-     */
-    countryCode: string;
-
-    /**
-     * Second line of the contact's address, if applicable.
-     */
-    addressLine2?: string;
-
-    /**
-     * The city of the contact's address.
-     */
-    city?: string;
-
-    /**
-     * An optional string describing this resource. Will be visible in the API and the
-     * dashboard.
-     */
-    description?: string;
-
-    /**
-     * Email of the contact.
-     */
-    email?: string;
-
-    /**
-     * First name of the contact.
-     */
-    firstName?: string;
-
-    /**
-     * If `true`, PostGrid will force this contact to have an `addressStatus` of
-     * `verified` even if our address verification system says otherwise.
-     */
-    forceVerifiedStatus?: boolean;
-
-    /**
-     * Job title of the contact.
-     */
-    jobTitle?: string;
-
-    /**
-     * Last name of the contact.
-     */
-    lastName?: string;
-
-    /**
-     * See the section on Metadata.
-     */
-    metadata?: { [key: string]: unknown };
-
-    /**
-     * Phone number of the contact.
-     */
-    phoneNumber?: string;
-
-    /**
-     * The postal or ZIP code of the contact's address.
-     */
-    postalOrZip?: string;
-
-    /**
-     * Province or state of the contact's address.
-     */
-    provinceOrState?: string;
-
-    /**
-     * If `true`, PostGrid will skip running this contact's address through our address
-     * verification system.
-     */
-    skipVerification?: boolean;
-  }
-}
-
-export interface ChequeListParams {
-  limit?: number;
-
+export interface ChequeListParams extends SkipLimitParams {
   /**
    * You can supply any string to help narrow down the list of resources. For
    * example, if you pass `"New York"` (quoted), it will return resources that have
@@ -978,8 +468,6 @@ export interface ChequeListParams {
    * more details.
    */
   search?: string;
-
-  skip?: number;
 }
 
 export declare namespace Cheques {
@@ -987,8 +475,8 @@ export declare namespace Cheques {
     type Cheque as Cheque,
     type ChequeSize as ChequeSize,
     type DigitalOnly as DigitalOnly,
-    type ChequeListResponse as ChequeListResponse,
     type ChequeRetrieveURLResponse as ChequeRetrieveURLResponse,
+    type ChequesSkipLimit as ChequesSkipLimit,
     type ChequeCreateParams as ChequeCreateParams,
     type ChequeListParams as ChequeListParams,
   };

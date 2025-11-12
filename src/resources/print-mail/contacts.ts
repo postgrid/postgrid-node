@@ -1,7 +1,9 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
+import * as PrintMailAPI from './print-mail';
 import { APIPromise } from '../../core/api-promise';
+import { PagePromise, SkipLimit, type SkipLimitParams } from '../../core/pagination';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
@@ -54,14 +56,17 @@ export class Contacts extends APIResource {
    *
    * @example
    * ```ts
-   * const contacts = await client.printMail.contacts.list();
+   * // Automatically fetches more pages as needed.
+   * for await (const contact of client.printMail.contacts.list()) {
+   *   // ...
+   * }
    * ```
    */
   list(
     query: ContactListParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<ContactListResponse> {
-    return this._client.get('/print-mail/v1/contacts', { query, ...options });
+  ): PagePromise<ContactsSkipLimit, Contact> {
+    return this._client.getAPIList('/print-mail/v1/contacts', SkipLimit<Contact>, { query, ...options });
   }
 
   /**
@@ -79,6 +84,8 @@ export class Contacts extends APIResource {
     return this._client.delete(path`/print-mail/v1/contacts/${id}`, options);
   }
 }
+
+export type ContactsSkipLimit = SkipLimit<Contact>;
 
 export interface Contact {
   /**
@@ -202,186 +209,8 @@ export interface Contact {
 }
 
 export type ContactCreate =
-  | ContactCreate.ContactCreateWithFirstName
-  | ContactCreate.ContactCreateWithCompanyName;
-
-export namespace ContactCreate {
-  export interface ContactCreateWithFirstName {
-    /**
-     * The first line of the contact's address.
-     */
-    addressLine1: string;
-
-    /**
-     * The ISO 3611-1 country code of the contact's address.
-     */
-    countryCode: string;
-
-    firstName: string;
-
-    /**
-     * Second line of the contact's address, if applicable.
-     */
-    addressLine2?: string;
-
-    /**
-     * The city of the contact's address.
-     */
-    city?: string;
-
-    /**
-     * Company name of the contact.
-     */
-    companyName?: string;
-
-    /**
-     * An optional string describing this resource. Will be visible in the API and the
-     * dashboard.
-     */
-    description?: string;
-
-    /**
-     * Email of the contact.
-     */
-    email?: string;
-
-    /**
-     * If `true`, PostGrid will force this contact to have an `addressStatus` of
-     * `verified` even if our address verification system says otherwise.
-     */
-    forceVerifiedStatus?: boolean;
-
-    /**
-     * Job title of the contact.
-     */
-    jobTitle?: string;
-
-    /**
-     * Last name of the contact.
-     */
-    lastName?: string;
-
-    /**
-     * See the section on Metadata.
-     */
-    metadata?: { [key: string]: unknown };
-
-    /**
-     * Phone number of the contact.
-     */
-    phoneNumber?: string;
-
-    /**
-     * The postal or ZIP code of the contact's address.
-     */
-    postalOrZip?: string;
-
-    /**
-     * Province or state of the contact's address.
-     */
-    provinceOrState?: string;
-
-    /**
-     * If `true`, PostGrid will skip running this contact's address through our address
-     * verification system.
-     */
-    skipVerification?: boolean;
-  }
-
-  export interface ContactCreateWithCompanyName {
-    /**
-     * The first line of the contact's address.
-     */
-    addressLine1: string;
-
-    companyName: string;
-
-    /**
-     * The ISO 3611-1 country code of the contact's address.
-     */
-    countryCode: string;
-
-    /**
-     * Second line of the contact's address, if applicable.
-     */
-    addressLine2?: string;
-
-    /**
-     * The city of the contact's address.
-     */
-    city?: string;
-
-    /**
-     * An optional string describing this resource. Will be visible in the API and the
-     * dashboard.
-     */
-    description?: string;
-
-    /**
-     * Email of the contact.
-     */
-    email?: string;
-
-    /**
-     * First name of the contact.
-     */
-    firstName?: string;
-
-    /**
-     * If `true`, PostGrid will force this contact to have an `addressStatus` of
-     * `verified` even if our address verification system says otherwise.
-     */
-    forceVerifiedStatus?: boolean;
-
-    /**
-     * Job title of the contact.
-     */
-    jobTitle?: string;
-
-    /**
-     * Last name of the contact.
-     */
-    lastName?: string;
-
-    /**
-     * See the section on Metadata.
-     */
-    metadata?: { [key: string]: unknown };
-
-    /**
-     * Phone number of the contact.
-     */
-    phoneNumber?: string;
-
-    /**
-     * The postal or ZIP code of the contact's address.
-     */
-    postalOrZip?: string;
-
-    /**
-     * Province or state of the contact's address.
-     */
-    provinceOrState?: string;
-
-    /**
-     * If `true`, PostGrid will skip running this contact's address through our address
-     * verification system.
-     */
-    skipVerification?: boolean;
-  }
-}
-
-export interface ContactListResponse {
-  data: Array<Contact>;
-
-  limit: number;
-
-  object: 'list';
-
-  skip: number;
-
-  totalCount: number;
-}
+  | PrintMailAPI.ContactCreateWithFirstName
+  | PrintMailAPI.ContactCreateWithCompanyName;
 
 export interface ContactDeleteResponse {
   /**
@@ -567,9 +396,7 @@ export declare namespace ContactCreateParams {
   }
 }
 
-export interface ContactListParams {
-  limit?: number;
-
+export interface ContactListParams extends SkipLimitParams {
   /**
    * You can supply any string to help narrow down the list of resources. For
    * example, if you pass `"New York"` (quoted), it will return resources that have
@@ -578,16 +405,14 @@ export interface ContactListParams {
    * more details.
    */
   search?: string;
-
-  skip?: number;
 }
 
 export declare namespace Contacts {
   export {
     type Contact as Contact,
     type ContactCreate as ContactCreate,
-    type ContactListResponse as ContactListResponse,
     type ContactDeleteResponse as ContactDeleteResponse,
+    type ContactsSkipLimit as ContactsSkipLimit,
     type ContactCreateParams as ContactCreateParams,
     type ContactListParams as ContactListParams,
   };

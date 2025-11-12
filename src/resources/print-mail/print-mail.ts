@@ -8,8 +8,8 @@ import {
   BankAccountCreateParams,
   BankAccountDeleteResponse,
   BankAccountListParams,
-  BankAccountListResponse,
   BankAccounts,
+  BankAccountsSkipLimit,
 } from './bank-accounts';
 import * as BoxesAPI from './boxes';
 import {
@@ -17,8 +17,8 @@ import {
   BoxChequeBase,
   BoxCreateParams,
   BoxListParams,
-  BoxListResponse,
   Boxes,
+  BoxesSkipLimit,
   Cancellation,
   OrderImbStatus,
   OrderMailingClass,
@@ -30,20 +30,20 @@ import {
   CampaignCreateParams,
   CampaignDeleteResponse,
   CampaignListParams,
-  CampaignListResponse,
   CampaignSendParams,
   CampaignUpdateParams,
   Campaigns,
+  CampaignsSkipLimit,
 } from './campaigns';
 import * as ChequesAPI from './cheques';
 import {
   Cheque,
   ChequeCreateParams,
   ChequeListParams,
-  ChequeListResponse,
   ChequeRetrieveURLResponse,
   ChequeSize,
   Cheques,
+  ChequesSkipLimit,
   DigitalOnly,
 } from './cheques';
 import * as ContactsAPI from './contacts';
@@ -53,8 +53,8 @@ import {
   ContactCreateParams,
   ContactDeleteResponse,
   ContactListParams,
-  ContactListResponse,
   Contacts,
+  ContactsSkipLimit,
 } from './contacts';
 import * as LettersAPI from './letters';
 import {
@@ -63,10 +63,10 @@ import {
   Letter,
   LetterCreateParams,
   LetterListParams,
-  LetterListResponse,
   LetterRetrieveURLResponse,
   LetterSize,
   Letters,
+  LettersSkipLimit,
   PlasticCard,
 } from './letters';
 import * as MailingListImportsAPI from './mailing-list-imports';
@@ -75,8 +75,8 @@ import {
   MailingListImportCreateParams,
   MailingListImportDeleteResponse,
   MailingListImportListParams,
-  MailingListImportListResponse,
   MailingListImportResponse,
+  MailingListImportResponsesSkipLimit,
   MailingListImportUpdateParams,
   MailingListImports,
   VerificationStatusCount,
@@ -88,40 +88,40 @@ import {
   MailingListDeleteResponse,
   MailingListJobsParams,
   MailingListListParams,
-  MailingListListResponse,
   MailingListUpdate,
   MailingListUpdateParams,
   MailingLists,
+  MailingListsSkipLimit,
 } from './mailing-lists';
 import * as PostcardsAPI from './postcards';
 import {
   Postcard,
   PostcardCreateParams,
   PostcardListParams,
-  PostcardListResponse,
   PostcardRetrieveURLResponse,
   Postcards,
+  PostcardsSkipLimit,
 } from './postcards';
 import * as SelfMailersAPI from './self-mailers';
 import {
   SelfMailer,
   SelfMailerCreateParams,
   SelfMailerListParams,
-  SelfMailerListResponse,
   SelfMailerRetrieveURLResponse,
   SelfMailers,
+  SelfMailersSkipLimit,
 } from './self-mailers';
 import * as SubOrganizationsAPI from './sub-organizations';
 import {
   EmailPreferences,
   SubOrganization,
   SubOrganizationListParams,
-  SubOrganizationListResponse,
   SubOrganizationRetrieveUsersParams,
   SubOrganizationRetrieveUsersResponse,
   SubOrganizationUpdateParams,
   SubOrganizationUpdateResponse,
   SubOrganizations,
+  SubOrganizationsSkipLimit,
 } from './sub-organizations';
 import * as TemplatesAPI from './templates';
 import {
@@ -129,9 +129,9 @@ import {
   TemplateCreateParams,
   TemplateDeleteResponse,
   TemplateListParams,
-  TemplateListResponse,
   TemplateUpdateParams,
   Templates,
+  TemplatesSkipLimit,
 } from './templates';
 import * as OrderProfilesAPI from './order-profiles/order-profiles';
 import { OrderProfiles } from './order-profiles/order-profiles';
@@ -141,10 +141,10 @@ import {
   Report,
   ReportCreateParams,
   ReportListParams,
-  ReportListResponse,
   ReportSampleParams,
   ReportUpdateParams,
   Reports,
+  ReportsSkipLimit,
 } from './reports/reports';
 
 export class PrintMail extends APIResource {
@@ -168,6 +168,170 @@ export class PrintMail extends APIResource {
   templates: TemplatesAPI.Templates = new TemplatesAPI.Templates(this._client);
 }
 
+export interface ContactCreateWithCompanyName {
+  /**
+   * The first line of the contact's address.
+   */
+  addressLine1: string;
+
+  companyName: string;
+
+  /**
+   * The ISO 3611-1 country code of the contact's address.
+   */
+  countryCode: string;
+
+  /**
+   * Second line of the contact's address, if applicable.
+   */
+  addressLine2?: string;
+
+  /**
+   * The city of the contact's address.
+   */
+  city?: string;
+
+  /**
+   * An optional string describing this resource. Will be visible in the API and the
+   * dashboard.
+   */
+  description?: string;
+
+  /**
+   * Email of the contact.
+   */
+  email?: string;
+
+  /**
+   * First name of the contact.
+   */
+  firstName?: string;
+
+  /**
+   * If `true`, PostGrid will force this contact to have an `addressStatus` of
+   * `verified` even if our address verification system says otherwise.
+   */
+  forceVerifiedStatus?: boolean;
+
+  /**
+   * Job title of the contact.
+   */
+  jobTitle?: string;
+
+  /**
+   * Last name of the contact.
+   */
+  lastName?: string;
+
+  /**
+   * See the section on Metadata.
+   */
+  metadata?: { [key: string]: unknown };
+
+  /**
+   * Phone number of the contact.
+   */
+  phoneNumber?: string;
+
+  /**
+   * The postal or ZIP code of the contact's address.
+   */
+  postalOrZip?: string;
+
+  /**
+   * Province or state of the contact's address.
+   */
+  provinceOrState?: string;
+
+  /**
+   * If `true`, PostGrid will skip running this contact's address through our address
+   * verification system.
+   */
+  skipVerification?: boolean;
+}
+
+export interface ContactCreateWithFirstName {
+  /**
+   * The first line of the contact's address.
+   */
+  addressLine1: string;
+
+  /**
+   * The ISO 3611-1 country code of the contact's address.
+   */
+  countryCode: string;
+
+  firstName: string;
+
+  /**
+   * Second line of the contact's address, if applicable.
+   */
+  addressLine2?: string;
+
+  /**
+   * The city of the contact's address.
+   */
+  city?: string;
+
+  /**
+   * Company name of the contact.
+   */
+  companyName?: string;
+
+  /**
+   * An optional string describing this resource. Will be visible in the API and the
+   * dashboard.
+   */
+  description?: string;
+
+  /**
+   * Email of the contact.
+   */
+  email?: string;
+
+  /**
+   * If `true`, PostGrid will force this contact to have an `addressStatus` of
+   * `verified` even if our address verification system says otherwise.
+   */
+  forceVerifiedStatus?: boolean;
+
+  /**
+   * Job title of the contact.
+   */
+  jobTitle?: string;
+
+  /**
+   * Last name of the contact.
+   */
+  lastName?: string;
+
+  /**
+   * See the section on Metadata.
+   */
+  metadata?: { [key: string]: unknown };
+
+  /**
+   * Phone number of the contact.
+   */
+  phoneNumber?: string;
+
+  /**
+   * The postal or ZIP code of the contact's address.
+   */
+  postalOrZip?: string;
+
+  /**
+   * Province or state of the contact's address.
+   */
+  provinceOrState?: string;
+
+  /**
+   * If `true`, PostGrid will skip running this contact's address through our address
+   * verification system.
+   */
+  skipVerification?: boolean;
+}
+
 PrintMail.BankAccounts = BankAccounts;
 PrintMail.Boxes = Boxes;
 PrintMail.Campaigns = Campaigns;
@@ -185,11 +349,16 @@ PrintMail.Templates = Templates;
 
 export declare namespace PrintMail {
   export {
+    type ContactCreateWithCompanyName as ContactCreateWithCompanyName,
+    type ContactCreateWithFirstName as ContactCreateWithFirstName,
+  };
+
+  export {
     BankAccounts as BankAccounts,
     type BankAccount as BankAccount,
     type BankAccountCountryCode as BankAccountCountryCode,
-    type BankAccountListResponse as BankAccountListResponse,
     type BankAccountDeleteResponse as BankAccountDeleteResponse,
+    type BankAccountsSkipLimit as BankAccountsSkipLimit,
     type BankAccountCreateParams as BankAccountCreateParams,
     type BankAccountListParams as BankAccountListParams,
   };
@@ -202,7 +371,7 @@ export declare namespace PrintMail {
     type OrderImbStatus as OrderImbStatus,
     type OrderMailingClass as OrderMailingClass,
     type OrderStatus as OrderStatus,
-    type BoxListResponse as BoxListResponse,
+    type BoxesSkipLimit as BoxesSkipLimit,
     type BoxCreateParams as BoxCreateParams,
     type BoxListParams as BoxListParams,
   };
@@ -210,8 +379,8 @@ export declare namespace PrintMail {
   export {
     Campaigns as Campaigns,
     type Campaign as Campaign,
-    type CampaignListResponse as CampaignListResponse,
     type CampaignDeleteResponse as CampaignDeleteResponse,
+    type CampaignsSkipLimit as CampaignsSkipLimit,
     type CampaignCreateParams as CampaignCreateParams,
     type CampaignUpdateParams as CampaignUpdateParams,
     type CampaignListParams as CampaignListParams,
@@ -223,8 +392,8 @@ export declare namespace PrintMail {
     type Cheque as Cheque,
     type ChequeSize as ChequeSize,
     type DigitalOnly as DigitalOnly,
-    type ChequeListResponse as ChequeListResponse,
     type ChequeRetrieveURLResponse as ChequeRetrieveURLResponse,
+    type ChequesSkipLimit as ChequesSkipLimit,
     type ChequeCreateParams as ChequeCreateParams,
     type ChequeListParams as ChequeListParams,
   };
@@ -233,8 +402,8 @@ export declare namespace PrintMail {
     Contacts as Contacts,
     type Contact as Contact,
     type ContactCreate as ContactCreate,
-    type ContactListResponse as ContactListResponse,
     type ContactDeleteResponse as ContactDeleteResponse,
+    type ContactsSkipLimit as ContactsSkipLimit,
     type ContactCreateParams as ContactCreateParams,
     type ContactListParams as ContactListParams,
   };
@@ -246,8 +415,8 @@ export declare namespace PrintMail {
     type Letter as Letter,
     type LetterSize as LetterSize,
     type PlasticCard as PlasticCard,
-    type LetterListResponse as LetterListResponse,
     type LetterRetrieveURLResponse as LetterRetrieveURLResponse,
+    type LettersSkipLimit as LettersSkipLimit,
     type LetterCreateParams as LetterCreateParams,
     type LetterListParams as LetterListParams,
   };
@@ -257,8 +426,8 @@ export declare namespace PrintMail {
     type FileType as FileType,
     type MailingListImportResponse as MailingListImportResponse,
     type VerificationStatusCount as VerificationStatusCount,
-    type MailingListImportListResponse as MailingListImportListResponse,
     type MailingListImportDeleteResponse as MailingListImportDeleteResponse,
+    type MailingListImportResponsesSkipLimit as MailingListImportResponsesSkipLimit,
     type MailingListImportCreateParams as MailingListImportCreateParams,
     type MailingListImportUpdateParams as MailingListImportUpdateParams,
     type MailingListImportListParams as MailingListImportListParams,
@@ -268,8 +437,8 @@ export declare namespace PrintMail {
     MailingLists as MailingLists,
     type MailingList as MailingList,
     type MailingListUpdate as MailingListUpdate,
-    type MailingListListResponse as MailingListListResponse,
     type MailingListDeleteResponse as MailingListDeleteResponse,
+    type MailingListsSkipLimit as MailingListsSkipLimit,
     type MailingListCreateParams as MailingListCreateParams,
     type MailingListUpdateParams as MailingListUpdateParams,
     type MailingListListParams as MailingListListParams,
@@ -281,8 +450,8 @@ export declare namespace PrintMail {
   export {
     Postcards as Postcards,
     type Postcard as Postcard,
-    type PostcardListResponse as PostcardListResponse,
     type PostcardRetrieveURLResponse as PostcardRetrieveURLResponse,
+    type PostcardsSkipLimit as PostcardsSkipLimit,
     type PostcardCreateParams as PostcardCreateParams,
     type PostcardListParams as PostcardListParams,
   };
@@ -291,7 +460,7 @@ export declare namespace PrintMail {
     Reports as Reports,
     type DeletedResponse as DeletedResponse,
     type Report as Report,
-    type ReportListResponse as ReportListResponse,
+    type ReportsSkipLimit as ReportsSkipLimit,
     type ReportCreateParams as ReportCreateParams,
     type ReportUpdateParams as ReportUpdateParams,
     type ReportListParams as ReportListParams,
@@ -301,8 +470,8 @@ export declare namespace PrintMail {
   export {
     SelfMailers as SelfMailers,
     type SelfMailer as SelfMailer,
-    type SelfMailerListResponse as SelfMailerListResponse,
     type SelfMailerRetrieveURLResponse as SelfMailerRetrieveURLResponse,
+    type SelfMailersSkipLimit as SelfMailersSkipLimit,
     type SelfMailerCreateParams as SelfMailerCreateParams,
     type SelfMailerListParams as SelfMailerListParams,
   };
@@ -312,8 +481,8 @@ export declare namespace PrintMail {
     type EmailPreferences as EmailPreferences,
     type SubOrganization as SubOrganization,
     type SubOrganizationUpdateResponse as SubOrganizationUpdateResponse,
-    type SubOrganizationListResponse as SubOrganizationListResponse,
     type SubOrganizationRetrieveUsersResponse as SubOrganizationRetrieveUsersResponse,
+    type SubOrganizationsSkipLimit as SubOrganizationsSkipLimit,
     type SubOrganizationUpdateParams as SubOrganizationUpdateParams,
     type SubOrganizationListParams as SubOrganizationListParams,
     type SubOrganizationRetrieveUsersParams as SubOrganizationRetrieveUsersParams,
@@ -322,8 +491,8 @@ export declare namespace PrintMail {
   export {
     Templates as Templates,
     type Template as Template,
-    type TemplateListResponse as TemplateListResponse,
     type TemplateDeleteResponse as TemplateDeleteResponse,
+    type TemplatesSkipLimit as TemplatesSkipLimit,
     type TemplateCreateParams as TemplateCreateParams,
     type TemplateUpdateParams as TemplateUpdateParams,
     type TemplateListParams as TemplateListParams,

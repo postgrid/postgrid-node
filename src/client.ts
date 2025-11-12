@@ -14,6 +14,8 @@ import * as Opts from './internal/request-options';
 import * as qs from './internal/qs';
 import { VERSION } from './version';
 import * as Errors from './core/error';
+import * as Pagination from './core/pagination';
+import { AbstractPage, type SkipLimitParams, SkipLimitResponse } from './core/pagination';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
@@ -29,7 +31,11 @@ import {
   IntlAddressVerificationVerifyParams,
   IntlAddressVerificationVerifyResponse,
 } from './resources/intl-address-verification';
-import { PrintMail } from './resources/print-mail/print-mail';
+import {
+  ContactCreateWithCompanyName,
+  ContactCreateWithFirstName,
+  PrintMail,
+} from './resources/print-mail/print-mail';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -531,6 +537,25 @@ export class PostGrid {
     return { response, options, controller, requestLogID, retryOfRequestLogID, startTime };
   }
 
+  getAPIList<Item, PageClass extends Pagination.AbstractPage<Item> = Pagination.AbstractPage<Item>>(
+    path: string,
+    Page: new (...args: any[]) => PageClass,
+    opts?: RequestOptions,
+  ): Pagination.PagePromise<PageClass, Item> {
+    return this.requestAPIList(Page, { method: 'get', path, ...opts });
+  }
+
+  requestAPIList<
+    Item = unknown,
+    PageClass extends Pagination.AbstractPage<Item> = Pagination.AbstractPage<Item>,
+  >(
+    Page: new (...args: ConstructorParameters<typeof Pagination.AbstractPage>) => PageClass,
+    options: FinalRequestOptions,
+  ): Pagination.PagePromise<PageClass, Item> {
+    const request = this.makeRequest(options, null, undefined);
+    return new Pagination.PagePromise<PageClass, Item>(this as any as PostGrid, request, Page);
+  }
+
   async fetchWithTimeout(
     url: RequestInfo,
     init: RequestInit | undefined,
@@ -775,6 +800,9 @@ PostGrid.PrintMail = PrintMail;
 export declare namespace PostGrid {
   export type RequestOptions = Opts.RequestOptions;
 
+  export import SkipLimit = Pagination.SkipLimit;
+  export { type SkipLimitParams as SkipLimitParams, type SkipLimitResponse as SkipLimitResponse };
+
   export {
     AddressVerification as AddressVerification,
     type AddressVerificationAPIErrors as Errors,
@@ -789,5 +817,9 @@ export declare namespace PostGrid {
     type IntlAddressVerificationVerifyParams as IntlAddressVerificationVerifyParams,
   };
 
-  export { PrintMail as PrintMail };
+  export {
+    PrintMail as PrintMail,
+    type ContactCreateWithCompanyName as ContactCreateWithCompanyName,
+    type ContactCreateWithFirstName as ContactCreateWithFirstName,
+  };
 }
