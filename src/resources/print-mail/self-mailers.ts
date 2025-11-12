@@ -6,6 +6,7 @@ import * as ContactsAPI from './contacts';
 import * as PrintMailAPI from './print-mail';
 import * as OrderProfilesSelfMailersAPI from './order-profiles/self-mailers';
 import { APIPromise } from '../../core/api-promise';
+import { PagePromise, SkipLimit, type SkipLimitParams } from '../../core/pagination';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
@@ -53,15 +54,20 @@ export class SelfMailers extends APIResource {
    *
    * @example
    * ```ts
-   * const selfMailers =
-   *   await client.printMail.selfMailers.list();
+   * // Automatically fetches more pages as needed.
+   * for await (const selfMailer of client.printMail.selfMailers.list()) {
+   *   // ...
+   * }
    * ```
    */
   list(
     query: SelfMailerListParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<SelfMailerListResponse> {
-    return this._client.get('/print-mail/v1/self_mailers', { query, ...options });
+  ): PagePromise<SelfMailersSkipLimit, SelfMailer> {
+    return this._client.getAPIList('/print-mail/v1/self_mailers', SkipLimit<SelfMailer>, {
+      query,
+      ...options,
+    });
   }
 
   /**
@@ -95,6 +101,8 @@ export class SelfMailers extends APIResource {
     return this._client.get(path`/print-mail/v1/self_mailers/${id}/url`, options);
   }
 }
+
+export type SelfMailersSkipLimit = SkipLimit<SelfMailer>;
 
 export interface SelfMailer {
   /**
@@ -216,18 +224,6 @@ export interface SelfMailer {
    * regenerate it by calling the `GET` endpoint again.
    */
   url?: string;
-}
-
-export interface SelfMailerListResponse {
-  data: Array<SelfMailer>;
-
-  limit: number;
-
-  object: 'list';
-
-  skip: number;
-
-  totalCount: number;
 }
 
 export interface SelfMailerRetrieveURLResponse {
@@ -448,9 +444,7 @@ export declare namespace SelfMailerCreateParams {
   }
 }
 
-export interface SelfMailerListParams {
-  limit?: number;
-
+export interface SelfMailerListParams extends SkipLimitParams {
   /**
    * You can supply any string to help narrow down the list of resources. For
    * example, if you pass `"New York"` (quoted), it will return resources that have
@@ -459,15 +453,13 @@ export interface SelfMailerListParams {
    * more details.
    */
   search?: string;
-
-  skip?: number;
 }
 
 export declare namespace SelfMailers {
   export {
     type SelfMailer as SelfMailer,
-    type SelfMailerListResponse as SelfMailerListResponse,
     type SelfMailerRetrieveURLResponse as SelfMailerRetrieveURLResponse,
+    type SelfMailersSkipLimit as SelfMailersSkipLimit,
     type SelfMailerCreateParams as SelfMailerCreateParams,
     type SelfMailerListParams as SelfMailerListParams,
   };

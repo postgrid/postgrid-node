@@ -3,6 +3,7 @@
 import { APIResource } from '../../core/resource';
 import * as MailingListImportsAPI from './mailing-list-imports';
 import { APIPromise } from '../../core/api-promise';
+import { PagePromise, SkipLimit, type SkipLimitParams } from '../../core/pagination';
 import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
@@ -90,15 +91,21 @@ export class MailingListImports extends APIResource {
    *
    * @example
    * ```ts
-   * const mailingListImports =
-   *   await client.printMail.mailingListImports.list();
+   * // Automatically fetches more pages as needed.
+   * for await (const mailingListImportResponse of client.printMail.mailingListImports.list()) {
+   *   // ...
+   * }
    * ```
    */
   list(
     query: MailingListImportListParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<MailingListImportListResponse> {
-    return this._client.get('/print-mail/v1/mailing_list_imports', { query, ...options });
+  ): PagePromise<MailingListImportResponsesSkipLimit, MailingListImportResponse> {
+    return this._client.getAPIList(
+      '/print-mail/v1/mailing_list_imports',
+      SkipLimit<MailingListImportResponse>,
+      { query, ...options },
+    );
   }
 
   /**
@@ -117,6 +124,8 @@ export class MailingListImports extends APIResource {
     return this._client.delete(path`/print-mail/v1/mailing_list_imports/${id}`, options);
   }
 }
+
+export type MailingListImportResponsesSkipLimit = SkipLimit<MailingListImportResponse>;
 
 /**
  * Type of file supported for mailing list imports.
@@ -317,21 +326,6 @@ export interface VerificationStatusCount {
   verifiedCount: number;
 }
 
-/**
- * A list of mailing list imports.
- */
-export interface MailingListImportListResponse {
-  data: Array<MailingListImportResponse>;
-
-  limit: number;
-
-  object: 'list';
-
-  skip: number;
-
-  totalCount: number;
-}
-
 export interface MailingListImportDeleteResponse {
   /**
    * A unique ID prefixed with mailing*list_import*
@@ -404,9 +398,7 @@ export interface MailingListImportUpdateParams {
   metadata?: { [key: string]: string } | null;
 }
 
-export interface MailingListImportListParams {
-  limit?: number;
-
+export interface MailingListImportListParams extends SkipLimitParams {
   /**
    * You can supply any string to help narrow down the list of resources. For
    * example, if you pass `"New York"` (quoted), it will return resources that have
@@ -415,8 +407,6 @@ export interface MailingListImportListParams {
    * more details.
    */
   search?: string;
-
-  skip?: number;
 }
 
 export declare namespace MailingListImports {
@@ -424,8 +414,8 @@ export declare namespace MailingListImports {
     type FileType as FileType,
     type MailingListImportResponse as MailingListImportResponse,
     type VerificationStatusCount as VerificationStatusCount,
-    type MailingListImportListResponse as MailingListImportListResponse,
     type MailingListImportDeleteResponse as MailingListImportDeleteResponse,
+    type MailingListImportResponsesSkipLimit as MailingListImportResponsesSkipLimit,
     type MailingListImportCreateParams as MailingListImportCreateParams,
     type MailingListImportUpdateParams as MailingListImportUpdateParams,
     type MailingListImportListParams as MailingListImportListParams,

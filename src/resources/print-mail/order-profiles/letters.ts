@@ -4,6 +4,7 @@ import { APIResource } from '../../../core/resource';
 import * as BoxesAPI from '../boxes';
 import * as LettersAPI from '../letters';
 import { APIPromise } from '../../../core/api-promise';
+import { PagePromise, SkipLimit, type SkipLimitParams } from '../../../core/pagination';
 import { RequestOptions } from '../../../internal/request-options';
 import { path } from '../../../internal/utils/path';
 
@@ -84,15 +85,20 @@ export class Letters extends APIResource {
    *
    * @example
    * ```ts
-   * const letters =
-   *   await client.printMail.orderProfiles.letters.list();
+   * // Automatically fetches more pages as needed.
+   * for await (const letterProfile of client.printMail.orderProfiles.letters.list()) {
+   *   // ...
+   * }
    * ```
    */
   list(
     query: LetterListParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<LetterListResponse> {
-    return this._client.get('/print-mail/v1/order_profiles/letters', { query, ...options });
+  ): PagePromise<LetterProfilesSkipLimit, LetterProfile> {
+    return this._client.getAPIList('/print-mail/v1/order_profiles/letters', SkipLimit<LetterProfile>, {
+      query,
+      ...options,
+    });
   }
 
   /**
@@ -109,6 +115,8 @@ export class Letters extends APIResource {
     return this._client.delete(path`/print-mail/v1/order_profiles/letters/${id}`, options);
   }
 }
+
+export type LetterProfilesSkipLimit = SkipLimit<LetterProfile>;
 
 export interface LetterProfile {
   /**
@@ -200,21 +208,6 @@ export interface LetterProfile {
    * A temporary, signed URL to view the uploaded PDF, if any.
    */
   uploadedPDF?: string;
-}
-
-/**
- * Represents a list of Letter Profiles.
- */
-export interface LetterListResponse {
-  data: Array<LetterProfile>;
-
-  limit: number;
-
-  object: 'list';
-
-  skip: number;
-
-  totalCount: number;
 }
 
 export interface LetterDeleteResponse {
@@ -395,9 +388,7 @@ export interface LetterUpdateParams {
   template?: string;
 }
 
-export interface LetterListParams {
-  limit?: number;
-
+export interface LetterListParams extends SkipLimitParams {
   /**
    * You can supply any string to help narrow down the list of resources. For
    * example, if you pass `"New York"` (quoted), it will return resources that have
@@ -406,15 +397,13 @@ export interface LetterListParams {
    * more details.
    */
   search?: string;
-
-  skip?: number;
 }
 
 export declare namespace Letters {
   export {
     type LetterProfile as LetterProfile,
-    type LetterListResponse as LetterListResponse,
     type LetterDeleteResponse as LetterDeleteResponse,
+    type LetterProfilesSkipLimit as LetterProfilesSkipLimit,
     type LetterCreateParams as LetterCreateParams,
     type LetterRetrieveParams as LetterRetrieveParams,
     type LetterUpdateParams as LetterUpdateParams,

@@ -5,6 +5,7 @@ import * as BoxesAPI from './boxes';
 import * as ContactsAPI from './contacts';
 import * as PrintMailAPI from './print-mail';
 import { APIPromise } from '../../core/api-promise';
+import { PagePromise, SkipLimit, type SkipLimitParams } from '../../core/pagination';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
@@ -49,14 +50,17 @@ export class Letters extends APIResource {
    *
    * @example
    * ```ts
-   * const letters = await client.printMail.letters.list();
+   * // Automatically fetches more pages as needed.
+   * for await (const letter of client.printMail.letters.list()) {
+   *   // ...
+   * }
    * ```
    */
   list(
     query: LetterListParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<LetterListResponse> {
-    return this._client.get('/print-mail/v1/letters', { query, ...options });
+  ): PagePromise<LettersSkipLimit, Letter> {
+    return this._client.getAPIList('/print-mail/v1/letters', SkipLimit<Letter>, { query, ...options });
   }
 
   /**
@@ -90,6 +94,8 @@ export class Letters extends APIResource {
     return this._client.get(path`/print-mail/v1/letters/${id}/url`, options);
   }
 }
+
+export type LettersSkipLimit = SkipLimit<Letter>;
 
 /**
  * Enum representing the placement of the address on the letter.
@@ -377,18 +383,6 @@ export namespace PlasticCard {
   }
 }
 
-export interface LetterListResponse {
-  data: Array<Letter>;
-
-  limit: number;
-
-  object: 'list';
-
-  skip: number;
-
-  totalCount: number;
-}
-
 export interface LetterRetrieveURLResponse {
   /**
    * A unique ID prefixed with letter\_
@@ -618,9 +612,7 @@ export declare namespace LetterCreateParams {
   }
 }
 
-export interface LetterListParams {
-  limit?: number;
-
+export interface LetterListParams extends SkipLimitParams {
   /**
    * You can supply any string to help narrow down the list of resources. For
    * example, if you pass `"New York"` (quoted), it will return resources that have
@@ -629,8 +621,6 @@ export interface LetterListParams {
    * more details.
    */
   search?: string;
-
-  skip?: number;
 }
 
 export declare namespace Letters {
@@ -640,8 +630,8 @@ export declare namespace Letters {
     type Letter as Letter,
     type LetterSize as LetterSize,
     type PlasticCard as PlasticCard,
-    type LetterListResponse as LetterListResponse,
     type LetterRetrieveURLResponse as LetterRetrieveURLResponse,
+    type LettersSkipLimit as LettersSkipLimit,
     type LetterCreateParams as LetterCreateParams,
     type LetterListParams as LetterListParams,
   };

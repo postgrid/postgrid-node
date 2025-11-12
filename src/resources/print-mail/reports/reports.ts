@@ -12,6 +12,7 @@ import {
 import * as SamplesAPI from './samples';
 import { ReportSample, ReportSampleCreateBase, SampleCreateParams, Samples } from './samples';
 import { APIPromise } from '../../../core/api-promise';
+import { PagePromise, SkipLimit, type SkipLimitParams } from '../../../core/pagination';
 import { RequestOptions } from '../../../internal/request-options';
 import { path } from '../../../internal/utils/path';
 
@@ -74,14 +75,17 @@ export class Reports extends APIResource {
    *
    * @example
    * ```ts
-   * const reports = await client.printMail.reports.list();
+   * // Automatically fetches more pages as needed.
+   * for await (const report of client.printMail.reports.list()) {
+   *   // ...
+   * }
    * ```
    */
   list(
     query: ReportListParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<ReportListResponse> {
-    return this._client.get('/print-mail/v1/reports', { query, ...options });
+  ): PagePromise<ReportsSkipLimit, Report> {
+    return this._client.getAPIList('/print-mail/v1/reports', SkipLimit<Report>, { query, ...options });
   }
 
   /**
@@ -116,6 +120,8 @@ export class Reports extends APIResource {
     return this._client.post('/print-mail/v1/reports/samples', { body, ...options });
   }
 }
+
+export type ReportsSkipLimit = SkipLimit<Report>;
 
 /**
  * Generic response for delete operations.
@@ -177,21 +183,6 @@ export interface Report {
   metadata?: { [key: string]: string };
 }
 
-/**
- * Represents a list of Reports.
- */
-export interface ReportListResponse {
-  data: Array<Report>;
-
-  limit: number;
-
-  object: 'list';
-
-  skip: number;
-
-  totalCount: number;
-}
-
 export interface ReportCreateParams {
   /**
    * The SQL query defining the report.
@@ -226,9 +217,7 @@ export interface ReportUpdateParams {
   sqlQuery?: string;
 }
 
-export interface ReportListParams {
-  limit?: number;
-
+export interface ReportListParams extends SkipLimitParams {
   /**
    * You can supply any string to help narrow down the list of resources. For
    * example, if you pass `"New York"` (quoted), it will return resources that have
@@ -237,8 +226,6 @@ export interface ReportListParams {
    * more details.
    */
   search?: string;
-
-  skip?: number;
 }
 
 export interface ReportSampleParams {
@@ -266,7 +253,7 @@ export declare namespace Reports {
   export {
     type DeletedResponse as DeletedResponse,
     type Report as Report,
-    type ReportListResponse as ReportListResponse,
+    type ReportsSkipLimit as ReportsSkipLimit,
     type ReportCreateParams as ReportCreateParams,
     type ReportUpdateParams as ReportUpdateParams,
     type ReportListParams as ReportListParams,

@@ -4,6 +4,7 @@ import { APIResource } from '../../../core/resource';
 import * as BoxesAPI from '../boxes';
 import * as ChequesAPI from '../cheques';
 import { APIPromise } from '../../../core/api-promise';
+import { PagePromise, SkipLimit, type SkipLimitParams } from '../../../core/pagination';
 import { RequestOptions } from '../../../internal/request-options';
 import { path } from '../../../internal/utils/path';
 
@@ -78,15 +79,20 @@ export class Cheques extends APIResource {
    *
    * @example
    * ```ts
-   * const cheques =
-   *   await client.printMail.orderProfiles.cheques.list();
+   * // Automatically fetches more pages as needed.
+   * for await (const chequeListResponse of client.printMail.orderProfiles.cheques.list()) {
+   *   // ...
+   * }
    * ```
    */
   list(
     query: ChequeListParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<ChequeListResponse> {
-    return this._client.get('/print-mail/v1/order_profiles/cheques', { query, ...options });
+  ): PagePromise<ChequeListResponsesSkipLimit, ChequeListResponse> {
+    return this._client.getAPIList('/print-mail/v1/order_profiles/cheques', SkipLimit<ChequeListResponse>, {
+      query,
+      ...options,
+    });
   }
 
   /**
@@ -102,6 +108,8 @@ export class Cheques extends APIResource {
     return this._client.delete(path`/print-mail/v1/order_profiles/cheques/${id}`, options);
   }
 }
+
+export type ChequeListResponsesSkipLimit = SkipLimit<ChequeListResponse>;
 
 export interface ChequeProfile {
   /**
@@ -198,106 +206,89 @@ export interface ChequeProfile {
  */
 export type CurrencyCode = 'CAD' | 'USD';
 
-/**
- * Represents a list of Cheque Profiles.
- */
 export interface ChequeListResponse {
-  data: Array<ChequeListResponse.Data>;
+  /**
+   * Unique identifier for the order profile.
+   */
+  id: string;
 
-  limit: number;
+  /**
+   * ID of the bank account to use for the cheque. Required for creation.
+   */
+  bankAccount: string;
 
-  object: 'list';
+  /**
+   * Timestamp when the profile was created.
+   */
+  createdAt: string;
 
-  skip: number;
+  /**
+   * Indicates if the profile is associated with the live or test environment.
+   */
+  live: boolean;
 
-  totalCount: number;
-}
+  /**
+   * Always `cheque_profile`.
+   */
+  object: 'cheque_profile';
 
-export namespace ChequeListResponse {
-  export interface Data {
-    /**
-     * Unique identifier for the order profile.
-     */
-    id: string;
+  /**
+   * Enum representing the supported cheque sizes.
+   */
+  size: ChequesAPI.ChequeSize;
 
-    /**
-     * ID of the bank account to use for the cheque. Required for creation.
-     */
-    bankAccount: string;
+  /**
+   * Timestamp when the profile was last updated.
+   */
+  updatedAt: string;
 
-    /**
-     * Timestamp when the profile was created.
-     */
-    createdAt: string;
+  /**
+   * An optional description for the profile. Set to `null` to remove during update.
+   */
+  description?: string | null;
 
-    /**
-     * Indicates if the profile is associated with the live or test environment.
-     */
-    live: boolean;
+  /**
+   * ID of a template for an optional attached letter. Cannot be used with
+   * `letterHTML` or `letterPDF`.
+   */
+  letterTemplate?: string;
 
-    /**
-     * Always `cheque_profile`.
-     */
-    object: 'cheque_profile';
+  /**
+   * A temporary, signed URL to view the attached letter PDF, if any. Output only.
+   */
+  letterUploadedPDF?: string;
 
-    /**
-     * Enum representing the supported cheque sizes.
-     */
-    size: ChequesAPI.ChequeSize;
+  /**
+   * A publicly accessible URL for the logo to print on the cheque. Set to `null` to
+   * remove during update.
+   */
+  logo?: string | null;
 
-    /**
-     * Timestamp when the profile was last updated.
-     */
-    updatedAt: string;
+  /**
+   * Mailing class. Generally must be first class (or equivalent for destination
+   * country) for cheques.
+   */
+  mailingClass?: BoxesAPI.OrderMailingClass;
 
-    /**
-     * An optional description for the profile. Set to `null` to remove during update.
-     */
-    description?: string | null;
+  /**
+   * Memo line text for the cheque. Set to `null` to remove during update.
+   */
+  memo?: string | null;
 
-    /**
-     * ID of a template for an optional attached letter. Cannot be used with
-     * `letterHTML` or `letterPDF`.
-     */
-    letterTemplate?: string;
+  /**
+   * Default merge variables for orders created using this profile.
+   */
+  mergeVariables?: { [key: string]: unknown } | null;
 
-    /**
-     * A temporary, signed URL to view the attached letter PDF, if any. Output only.
-     */
-    letterUploadedPDF?: string;
+  /**
+   * Message included on the cheque stub. Set to `null` to remove during update.
+   */
+  message?: string | null;
 
-    /**
-     * A publicly accessible URL for the logo to print on the cheque. Set to `null` to
-     * remove during update.
-     */
-    logo?: string | null;
-
-    /**
-     * Mailing class. Generally must be first class (or equivalent for destination
-     * country) for cheques.
-     */
-    mailingClass?: BoxesAPI.OrderMailingClass;
-
-    /**
-     * Memo line text for the cheque. Set to `null` to remove during update.
-     */
-    memo?: string | null;
-
-    /**
-     * Default merge variables for orders created using this profile.
-     */
-    mergeVariables?: { [key: string]: unknown } | null;
-
-    /**
-     * Message included on the cheque stub. Set to `null` to remove during update.
-     */
-    message?: string | null;
-
-    /**
-     * Optional key-value metadata.
-     */
-    metadata?: { [key: string]: string } | null;
-  }
+  /**
+   * Optional key-value metadata.
+   */
+  metadata?: { [key: string]: string } | null;
 }
 
 export interface ChequeDeleteResponse {
@@ -469,9 +460,7 @@ export interface ChequeUpdateParams {
   metadata?: { [key: string]: string } | null;
 }
 
-export interface ChequeListParams {
-  limit?: number;
-
+export interface ChequeListParams extends SkipLimitParams {
   /**
    * You can supply any string to help narrow down the list of resources. For
    * example, if you pass `"New York"` (quoted), it will return resources that have
@@ -480,8 +469,6 @@ export interface ChequeListParams {
    * more details.
    */
   search?: string;
-
-  skip?: number;
 }
 
 export declare namespace Cheques {
@@ -490,6 +477,7 @@ export declare namespace Cheques {
     type CurrencyCode as CurrencyCode,
     type ChequeListResponse as ChequeListResponse,
     type ChequeDeleteResponse as ChequeDeleteResponse,
+    type ChequeListResponsesSkipLimit as ChequeListResponsesSkipLimit,
     type ChequeCreateParams as ChequeCreateParams,
     type ChequeRetrieveParams as ChequeRetrieveParams,
     type ChequeUpdateParams as ChequeUpdateParams,

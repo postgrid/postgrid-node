@@ -3,6 +3,7 @@
 import { APIResource } from '../../core/resource';
 import * as PrintMailAPI from './print-mail';
 import { APIPromise } from '../../core/api-promise';
+import { PagePromise, SkipLimit, type SkipLimitParams } from '../../core/pagination';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
@@ -55,14 +56,17 @@ export class Contacts extends APIResource {
    *
    * @example
    * ```ts
-   * const contacts = await client.printMail.contacts.list();
+   * // Automatically fetches more pages as needed.
+   * for await (const contact of client.printMail.contacts.list()) {
+   *   // ...
+   * }
    * ```
    */
   list(
     query: ContactListParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<ContactListResponse> {
-    return this._client.get('/print-mail/v1/contacts', { query, ...options });
+  ): PagePromise<ContactsSkipLimit, Contact> {
+    return this._client.getAPIList('/print-mail/v1/contacts', SkipLimit<Contact>, { query, ...options });
   }
 
   /**
@@ -80,6 +84,8 @@ export class Contacts extends APIResource {
     return this._client.delete(path`/print-mail/v1/contacts/${id}`, options);
   }
 }
+
+export type ContactsSkipLimit = SkipLimit<Contact>;
 
 export interface Contact {
   /**
@@ -205,18 +211,6 @@ export interface Contact {
 export type ContactCreate =
   | PrintMailAPI.ContactCreateWithFirstName
   | PrintMailAPI.ContactCreateWithCompanyName;
-
-export interface ContactListResponse {
-  data: Array<Contact>;
-
-  limit: number;
-
-  object: 'list';
-
-  skip: number;
-
-  totalCount: number;
-}
 
 export interface ContactDeleteResponse {
   /**
@@ -402,9 +396,7 @@ export declare namespace ContactCreateParams {
   }
 }
 
-export interface ContactListParams {
-  limit?: number;
-
+export interface ContactListParams extends SkipLimitParams {
   /**
    * You can supply any string to help narrow down the list of resources. For
    * example, if you pass `"New York"` (quoted), it will return resources that have
@@ -413,16 +405,14 @@ export interface ContactListParams {
    * more details.
    */
   search?: string;
-
-  skip?: number;
 }
 
 export declare namespace Contacts {
   export {
     type Contact as Contact,
     type ContactCreate as ContactCreate,
-    type ContactListResponse as ContactListResponse,
     type ContactDeleteResponse as ContactDeleteResponse,
+    type ContactsSkipLimit as ContactsSkipLimit,
     type ContactCreateParams as ContactCreateParams,
     type ContactListParams as ContactListParams,
   };

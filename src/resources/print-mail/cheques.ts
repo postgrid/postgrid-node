@@ -5,6 +5,7 @@ import * as BoxesAPI from './boxes';
 import * as ContactsAPI from './contacts';
 import * as PrintMailAPI from './print-mail';
 import { APIPromise } from '../../core/api-promise';
+import { PagePromise, SkipLimit, type SkipLimitParams } from '../../core/pagination';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
@@ -70,14 +71,17 @@ export class Cheques extends APIResource {
    *
    * @example
    * ```ts
-   * const cheques = await client.printMail.cheques.list();
+   * // Automatically fetches more pages as needed.
+   * for await (const cheque of client.printMail.cheques.list()) {
+   *   // ...
+   * }
    * ```
    */
   list(
     query: ChequeListParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<ChequeListResponse> {
-    return this._client.get('/print-mail/v1/cheques', { query, ...options });
+  ): PagePromise<ChequesSkipLimit, Cheque> {
+    return this._client.getAPIList('/print-mail/v1/cheques', SkipLimit<Cheque>, { query, ...options });
   }
 
   /**
@@ -129,6 +133,8 @@ export class Cheques extends APIResource {
     return this._client.get(path`/print-mail/v1/cheques/${id}/with_deposit_ready_pdf`, options);
   }
 }
+
+export type ChequesSkipLimit = SkipLimit<Cheque>;
 
 export interface Cheque {
   /**
@@ -323,18 +329,6 @@ export interface DigitalOnly {
   watermark: string;
 }
 
-export interface ChequeListResponse {
-  data: Array<Cheque>;
-
-  limit: number;
-
-  object: 'list';
-
-  skip: number;
-
-  totalCount: number;
-}
-
 export interface ChequeRetrieveURLResponse {
   /**
    * A unique ID prefixed with cheque\_
@@ -465,9 +459,7 @@ export interface ChequeCreateParams {
   size?: ChequeSize;
 }
 
-export interface ChequeListParams {
-  limit?: number;
-
+export interface ChequeListParams extends SkipLimitParams {
   /**
    * You can supply any string to help narrow down the list of resources. For
    * example, if you pass `"New York"` (quoted), it will return resources that have
@@ -476,8 +468,6 @@ export interface ChequeListParams {
    * more details.
    */
   search?: string;
-
-  skip?: number;
 }
 
 export declare namespace Cheques {
@@ -485,8 +475,8 @@ export declare namespace Cheques {
     type Cheque as Cheque,
     type ChequeSize as ChequeSize,
     type DigitalOnly as DigitalOnly,
-    type ChequeListResponse as ChequeListResponse,
     type ChequeRetrieveURLResponse as ChequeRetrieveURLResponse,
+    type ChequesSkipLimit as ChequesSkipLimit,
     type ChequeCreateParams as ChequeCreateParams,
     type ChequeListParams as ChequeListParams,
   };

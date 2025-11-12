@@ -2,6 +2,7 @@
 
 import { APIResource } from '../../core/resource';
 import { APIPromise } from '../../core/api-promise';
+import { PagePromise, SkipLimit, type SkipLimitParams } from '../../core/pagination';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
@@ -59,14 +60,17 @@ export class Templates extends APIResource {
    *
    * @example
    * ```ts
-   * const templates = await client.printMail.templates.list();
+   * // Automatically fetches more pages as needed.
+   * for await (const template of client.printMail.templates.list()) {
+   *   // ...
+   * }
    * ```
    */
   list(
     query: TemplateListParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<TemplateListResponse> {
-    return this._client.get('/print-mail/v1/templates', { query, ...options });
+  ): PagePromise<TemplatesSkipLimit, Template> {
+    return this._client.getAPIList('/print-mail/v1/templates', SkipLimit<Template>, { query, ...options });
   }
 
   /**
@@ -83,6 +87,8 @@ export class Templates extends APIResource {
     return this._client.delete(path`/print-mail/v1/templates/${id}`, options);
   }
 }
+
+export type TemplatesSkipLimit = SkipLimit<Template>;
 
 export interface Template {
   /**
@@ -125,18 +131,6 @@ export interface Template {
    * See the section on Metadata.
    */
   metadata?: { [key: string]: unknown };
-}
-
-export interface TemplateListResponse {
-  data: Array<Template>;
-
-  limit: number;
-
-  object: 'list';
-
-  skip: number;
-
-  totalCount: number;
 }
 
 export interface TemplateDeleteResponse {
@@ -189,9 +183,7 @@ export interface TemplateUpdateParams {
   metadata?: { [key: string]: unknown };
 }
 
-export interface TemplateListParams {
-  limit?: number;
-
+export interface TemplateListParams extends SkipLimitParams {
   /**
    * You can supply any string to help narrow down the list of resources. For
    * example, if you pass `"New York"` (quoted), it will return resources that have
@@ -200,15 +192,13 @@ export interface TemplateListParams {
    * more details.
    */
   search?: string;
-
-  skip?: number;
 }
 
 export declare namespace Templates {
   export {
     type Template as Template,
-    type TemplateListResponse as TemplateListResponse,
     type TemplateDeleteResponse as TemplateDeleteResponse,
+    type TemplatesSkipLimit as TemplatesSkipLimit,
     type TemplateCreateParams as TemplateCreateParams,
     type TemplateUpdateParams as TemplateUpdateParams,
     type TemplateListParams as TemplateListParams,
