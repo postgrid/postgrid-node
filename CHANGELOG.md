@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.1 (2025-11-12)
+
+Full Changelog: [v0.4.0...v0.4.1](https://github.com/postgrid/postgrid-node/compare/v0.4.0...v0.4.1)
+
+### Bug Fixes
+
+* **api:** small readme updates ([2a166c7](https://github.com/postgrid/postgrid-node/commit/2a166c7e2577102958777f3e9b921f5772a7ad12))
+
 ## 0.4.0 (2025-11-12)
 
 Full Changelog: [v0.3.0...v0.4.0](https://github.com/postgrid/postgrid-node/compare/v0.3.0...v0.4.0)
