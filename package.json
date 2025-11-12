@@ -1,6 +1,6 @@
 {
   "name": "postgrid-node",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "The official TypeScript library for the Post Grid API",
   "author": "Post Grid <support@postgrid.com>",
   "types": "dist/index.d.ts",
