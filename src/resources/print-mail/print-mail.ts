@@ -11,19 +11,6 @@ import {
   BankAccounts,
   BankAccountsSkipLimit,
 } from './bank-accounts';
-import * as BoxesAPI from './boxes';
-import {
-  Box,
-  BoxChequeBase,
-  BoxCreateParams,
-  BoxListParams,
-  Boxes,
-  BoxesSkipLimit,
-  Cancellation,
-  OrderImbStatus,
-  OrderMailingClass,
-  OrderStatus,
-} from './boxes';
 import * as CampaignsAPI from './campaigns';
 import {
   Campaign,
@@ -149,7 +136,6 @@ import {
 
 export class PrintMail extends APIResource {
   bankAccounts: BankAccountsAPI.BankAccounts = new BankAccountsAPI.BankAccounts(this._client);
-  boxes: BoxesAPI.Boxes = new BoxesAPI.Boxes(this._client);
   campaigns: CampaignsAPI.Campaigns = new CampaignsAPI.Campaigns(this._client);
   cheques: ChequesAPI.Cheques = new ChequesAPI.Cheques(this._client);
   contacts: ContactsAPI.Contacts = new ContactsAPI.Contacts(this._client);
@@ -333,7 +319,6 @@ export interface ContactCreateWithFirstName {
 }
 
 PrintMail.BankAccounts = BankAccounts;
-PrintMail.Boxes = Boxes;
 PrintMail.Campaigns = Campaigns;
 PrintMail.Cheques = Cheques;
 PrintMail.Contacts = Contacts;
@@ -361,19 +346,6 @@ export declare namespace PrintMail {
     type BankAccountsSkipLimit as BankAccountsSkipLimit,
     type BankAccountCreateParams as BankAccountCreateParams,
     type BankAccountListParams as BankAccountListParams,
-  };
-
-  export {
-    Boxes as Boxes,
-    type Box as Box,
-    type BoxChequeBase as BoxChequeBase,
-    type Cancellation as Cancellation,
-    type OrderImbStatus as OrderImbStatus,
-    type OrderMailingClass as OrderMailingClass,
-    type OrderStatus as OrderStatus,
-    type BoxesSkipLimit as BoxesSkipLimit,
-    type BoxCreateParams as BoxCreateParams,
-    type BoxListParams as BoxListParams,
   };
 
   export {
