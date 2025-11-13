@@ -1,4 +1,4 @@
-configured_endpoints: 91
+configured_endpoints: 87
 openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/postgrid%2Fpostgrid-be6a47768faf3612d1dc9c8a108edb10a6c5a4e52b78cc7f4768e1d497e11e08.yml
 openapi_spec_hash: a3ed2b74031c834a724b67db9ab6b23d
-config_hash: 371afa1c13a4b49cacbe76aaa665a8aa
+config_hash: 3e6912e5fb40d06f5dc19a10e7b4e703

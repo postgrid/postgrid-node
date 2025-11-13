@@ -42,24 +42,6 @@ Methods:
 - <code title="get /print-mail/v1/bank_accounts">client.printMail.bankAccounts.<a href="./src/resources/print-mail/bank-accounts.ts">list</a>({ ...params }) -> BankAccountsSkipLimit</code>
 - <code title="delete /print-mail/v1/bank_accounts/{id}">client.printMail.bankAccounts.<a href="./src/resources/print-mail/bank-accounts.ts">delete</a>(id) -> BankAccountDeleteResponse</code>
 
-## Boxes
-
-Types:
-
-- <code><a href="./src/resources/print-mail/boxes.ts">Box</a></code>
-- <code><a href="./src/resources/print-mail/boxes.ts">BoxChequeBase</a></code>
-- <code><a href="./src/resources/print-mail/boxes.ts">Cancellation</a></code>
-- <code><a href="./src/resources/print-mail/boxes.ts">OrderImbStatus</a></code>
-- <code><a href="./src/resources/print-mail/boxes.ts">OrderMailingClass</a></code>
-- <code><a href="./src/resources/print-mail/boxes.ts">OrderStatus</a></code>
-
-Methods:
-
-- <code title="post /print-mail/v1/boxes">client.printMail.boxes.<a href="./src/resources/print-mail/boxes.ts">create</a>({ ...params }) -> Box</code>
-- <code title="get /print-mail/v1/boxes/{id}">client.printMail.boxes.<a href="./src/resources/print-mail/boxes.ts">retrieve</a>(id) -> Box</code>
-- <code title="get /print-mail/v1/boxes">client.printMail.boxes.<a href="./src/resources/print-mail/boxes.ts">list</a>({ ...params }) -> BoxesSkipLimit</code>
-- <code title="delete /print-mail/v1/boxes/{id}">client.printMail.boxes.<a href="./src/resources/print-mail/boxes.ts">delete</a>(id) -> Box</code>
-
 ## Campaigns
 
 Types:
