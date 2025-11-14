@@ -10,18 +10,6 @@ export {
   type BankAccountsSkipLimit,
 } from './bank-accounts';
 export {
-  Boxes,
-  type Box,
-  type BoxChequeBase,
-  type Cancellation,
-  type OrderImbStatus,
-  type OrderMailingClass,
-  type OrderStatus,
-  type BoxCreateParams,
-  type BoxListParams,
-  type BoxesSkipLimit,
-} from './boxes';
-export {
   Campaigns,
   type Campaign,
   type CampaignDeleteResponse,

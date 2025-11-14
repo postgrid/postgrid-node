@@ -2,7 +2,7 @@
 
 [![NPM version](<https://img.shields.io/npm/v/postgrid-node.svg?label=npm%20(stable)>)](https://npmjs.org/package/postgrid-node) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/postgrid-node)
 
-This library provides convenient access to the Post Grid REST API from server-side TypeScript or JavaScript.
+This library provides convenient access to the PostGrid REST API from server-side TypeScript or JavaScript.
 
 The REST API documentation can be found on [docs.postgrid.com](https://docs.postgrid.com). The full API of this library can be found in [api.md](api.md).
 
@@ -191,7 +191,7 @@ console.log(response.data);
 
 The log level can be configured in two ways:
 
-1. Via the `POST_GRID_LOG` environment variable
+1. Via the `POSTGRID_LOG` environment variable
 2. Using the `logLevel` client option (overrides the environment variable if set)
 
 ```ts

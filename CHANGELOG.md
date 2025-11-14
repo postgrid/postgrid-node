@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.5.0 (2025-11-14)
+
+Full Changelog: [v0.4.2...v0.5.0](https://github.com/postgrid/postgrid-node/compare/v0.4.2...v0.5.0)
+
+### Bug Fixes
+
+* **api:** remove unsupported collaterals ([9bdd969](https://github.com/postgrid/postgrid-node/commit/9bdd969ce3c15a11b20420df6651e56697a03171))
+* **readme:** rename PostGrid ([9493829](https://github.com/postgrid/postgrid-node/commit/949382910924c7dc8c5f191038103ae73572d933))
+
 ## 0.4.2 (2025-11-12)
 
 Full Changelog: [v0.4.1...v0.4.2](https://github.com/postgrid/postgrid-node/compare/v0.4.1...v0.4.2)
