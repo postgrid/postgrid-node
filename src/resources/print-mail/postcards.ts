@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
-import * as BoxesAPI from './boxes';
 import * as ContactsAPI from './contacts';
 import * as PrintMailAPI from './print-mail';
 import * as OrderProfilesPostcardsAPI from './order-profiles/postcards';
@@ -122,7 +121,33 @@ export interface Postcard {
    * The mailing class of this order. This determines the speed and cost of delivery.
    * See `OrderMailingClass` for more details.
    */
-  mailingClass: BoxesAPI.OrderMailingClass;
+  mailingClass:
+    | 'first_class'
+    | 'standard_class'
+    | 'express'
+    | 'certified'
+    | 'certified_return_receipt'
+    | 'registered'
+    | 'usps_first_class'
+    | 'usps_standard_class'
+    | 'usps_eddm'
+    | 'usps_express_2_day'
+    | 'usps_express_3_day'
+    | 'usps_first_class_certified'
+    | 'usps_first_class_certified_return_receipt'
+    | 'usps_first_class_registered'
+    | 'usps_express_3_day_signature_confirmation'
+    | 'usps_express_3_day_certified'
+    | 'usps_express_3_day_certified_return_receipt'
+    | 'ca_post_lettermail'
+    | 'ca_post_personalized'
+    | 'ca_post_neighbourhood_mail'
+    | 'ups_express_overnight'
+    | 'ups_express_2_day'
+    | 'ups_express_3_day'
+    | 'royal_mail_first_class'
+    | 'royal_mail_second_class'
+    | 'au_post_second_class';
 
   /**
    * Always `postcard`.
@@ -144,7 +169,7 @@ export interface Postcard {
   /**
    * See `OrderStatus` for more details on the status of this order.
    */
-  status: BoxesAPI.OrderStatus;
+  status: 'ready' | 'printing' | 'processed_for_delivery' | 'completed' | 'cancelled';
 
   /**
    * The recipient of this order. This will be provided even if you delete the
@@ -161,7 +186,7 @@ export interface Postcard {
    * The cancellation details of this order. Populated if the order has been
    * cancelled.
    */
-  cancellation?: BoxesAPI.Cancellation;
+  cancellation?: Postcard.Cancellation;
 
   /**
    * An optional string describing this resource. Will be visible in the API and the
@@ -184,7 +209,7 @@ export interface Postcard {
    * US-printed and US-destined orders. This is the most detailed way to track
    * non-express/certified orders.
    */
-  imbStatus?: BoxesAPI.OrderImbStatus;
+  imbStatus?: 'entered_mail_stream' | 'out_for_delivery' | 'returned_to_sender';
 
   /**
    * The most recent ZIP code of the USPS facility that the order has been processed
@@ -222,6 +247,29 @@ export interface Postcard {
    * regenerate it by calling the `GET` endpoint again.
    */
   url?: string;
+}
+
+export namespace Postcard {
+  /**
+   * The cancellation details of this order. Populated if the order has been
+   * cancelled.
+   */
+  export interface Cancellation {
+    /**
+     * The reason for the cancellation.
+     */
+    reason: 'user_initiated' | 'invalid_content' | 'invalid_order_mailing_class';
+
+    /**
+     * The user ID who cancelled the order.
+     */
+    cancelledByUser?: string;
+
+    /**
+     * An optional note provided by the user who cancelled the order.
+     */
+    note?: string;
+  }
 }
 
 export interface PostcardRetrieveURLResponse {
@@ -289,7 +337,33 @@ export declare namespace PostcardCreateParams {
      * The mailing class of this order. If not provided, automatically set to
      * `first_class`.
      */
-    mailingClass?: BoxesAPI.OrderMailingClass;
+    mailingClass?:
+      | 'first_class'
+      | 'standard_class'
+      | 'express'
+      | 'certified'
+      | 'certified_return_receipt'
+      | 'registered'
+      | 'usps_first_class'
+      | 'usps_standard_class'
+      | 'usps_eddm'
+      | 'usps_express_2_day'
+      | 'usps_express_3_day'
+      | 'usps_first_class_certified'
+      | 'usps_first_class_certified_return_receipt'
+      | 'usps_first_class_registered'
+      | 'usps_express_3_day_signature_confirmation'
+      | 'usps_express_3_day_certified'
+      | 'usps_express_3_day_certified_return_receipt'
+      | 'ca_post_lettermail'
+      | 'ca_post_personalized'
+      | 'ca_post_neighbourhood_mail'
+      | 'ups_express_overnight'
+      | 'ups_express_2_day'
+      | 'ups_express_3_day'
+      | 'royal_mail_first_class'
+      | 'royal_mail_second_class'
+      | 'au_post_second_class';
 
     /**
      * These will be merged with the variables in the template or HTML you create this
@@ -362,7 +436,33 @@ export declare namespace PostcardCreateParams {
      * The mailing class of this order. If not provided, automatically set to
      * `first_class`.
      */
-    mailingClass?: BoxesAPI.OrderMailingClass;
+    mailingClass?:
+      | 'first_class'
+      | 'standard_class'
+      | 'express'
+      | 'certified'
+      | 'certified_return_receipt'
+      | 'registered'
+      | 'usps_first_class'
+      | 'usps_standard_class'
+      | 'usps_eddm'
+      | 'usps_express_2_day'
+      | 'usps_express_3_day'
+      | 'usps_first_class_certified'
+      | 'usps_first_class_certified_return_receipt'
+      | 'usps_first_class_registered'
+      | 'usps_express_3_day_signature_confirmation'
+      | 'usps_express_3_day_certified'
+      | 'usps_express_3_day_certified_return_receipt'
+      | 'ca_post_lettermail'
+      | 'ca_post_personalized'
+      | 'ca_post_neighbourhood_mail'
+      | 'ups_express_overnight'
+      | 'ups_express_2_day'
+      | 'ups_express_3_day'
+      | 'royal_mail_first_class'
+      | 'royal_mail_second_class'
+      | 'au_post_second_class';
 
     /**
      * These will be merged with the variables in the template or HTML you create this
@@ -421,7 +521,33 @@ export declare namespace PostcardCreateParams {
      * The mailing class of this order. If not provided, automatically set to
      * `first_class`.
      */
-    mailingClass?: BoxesAPI.OrderMailingClass;
+    mailingClass?:
+      | 'first_class'
+      | 'standard_class'
+      | 'express'
+      | 'certified'
+      | 'certified_return_receipt'
+      | 'registered'
+      | 'usps_first_class'
+      | 'usps_standard_class'
+      | 'usps_eddm'
+      | 'usps_express_2_day'
+      | 'usps_express_3_day'
+      | 'usps_first_class_certified'
+      | 'usps_first_class_certified_return_receipt'
+      | 'usps_first_class_registered'
+      | 'usps_express_3_day_signature_confirmation'
+      | 'usps_express_3_day_certified'
+      | 'usps_express_3_day_certified_return_receipt'
+      | 'ca_post_lettermail'
+      | 'ca_post_personalized'
+      | 'ca_post_neighbourhood_mail'
+      | 'ups_express_overnight'
+      | 'ups_express_2_day'
+      | 'ups_express_3_day'
+      | 'royal_mail_first_class'
+      | 'royal_mail_second_class'
+      | 'au_post_second_class';
 
     /**
      * These will be merged with the variables in the template or HTML you create this
