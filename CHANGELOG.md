@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.5.1 (2025-12-12)
+
+Full Changelog: [v0.5.0...v0.5.1](https://github.com/postgrid/postgrid-node/compare/v0.5.0...v0.5.1)
+
+### Bug Fixes
+
+* **docs:** remove extraneous example object fields ([71d6fdf](https://github.com/postgrid/postgrid-node/commit/71d6fdf04c36d6c86a07da4779c5a96ccada0f1d))
+* **mcp:** correct code tool API endpoint ([a69fda5](https://github.com/postgrid/postgrid-node/commit/a69fda59f36bdab6b0189a492a8fb8053939f412))
+* **mcp:** return correct lines on typescript errors ([81982d6](https://github.com/postgrid/postgrid-node/commit/81982d6d50b27ef9a5580f7d0e178fc096e8ff4d))
+
+
+### Chores
+
+* **client:** fix logger property type ([c1592ab](https://github.com/postgrid/postgrid-node/commit/c1592ab37ba7aa9a1c3da022b42ba98b5aa189d0))
+* **internal:** codegen related update ([5c3a9b7](https://github.com/postgrid/postgrid-node/commit/5c3a9b79198ef3bc912462e1fb524819ffa8ef91))
+* **internal:** codegen related update ([b90ade6](https://github.com/postgrid/postgrid-node/commit/b90ade6630f6f254eebe74ee16ca365a96759f87))
+* **internal:** configure pnpm minimumReleaseAge to 1 day ([28aacd5](https://github.com/postgrid/postgrid-node/commit/28aacd557705eba61ee5ced975c1828d6f08f801))
+* **internal:** upgrade eslint ([d4721a3](https://github.com/postgrid/postgrid-node/commit/d4721a3f0feeffa66fdcc698998d8714d208f6d4))
+
 ## 0.5.0 (2025-11-14)
 
 Full Changelog: [v0.4.2...v0.5.0](https://github.com/postgrid/postgrid-node/compare/v0.4.2...v0.5.0)
