@@ -18,33 +18,7 @@ export class IntlAddressVerification extends APIResource {
    * ```ts
    * const response =
    *   await client.intlAddressVerification.verify({
-   *     address: {
-   *       '0': '3',
-   *       '1': '1',
-   *       '2': ' ',
-   *       '3': 'F',
-   *       '4': 'l',
-   *       '5': ' ',
-   *       '6': 'S',
-   *       '7': 'c',
-   *       '8': 'a',
-   *       '9': 'r',
-   *       '10': 'b',
-   *       '11': 'o',
-   *       '12': 'r',
-   *       '13': 'o',
-   *       '14': 'u',
-   *       '15': 'g',
-   *       '16': 'h',
-   *       '17': ',',
-   *       '18': ' ',
-   *       '19': 'C',
-   *       '20': 'a',
-   *       '21': 'n',
-   *       '22': 'a',
-   *       '23': 'd',
-   *       '24': 'a',
-   *     },
+   *     address: {},
    *   });
    * ```
    */
