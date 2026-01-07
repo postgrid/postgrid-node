@@ -76,7 +76,11 @@ describe('resource contacts', () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.printMail.contacts.list(
-        { limit: 0, search: 'search', skip: 0 },
+        {
+          limit: 0,
+          search: 'search',
+          skip: 0,
+        },
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(PostGrid.NotFoundError);

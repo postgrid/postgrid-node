@@ -46,7 +46,8 @@ const client = new PostGrid({
 });
 
 const params: PostGrid.AddressVerificationVerifyParams = { address: 'address' };
-const response: PostGrid.AddressVerificationVerifyResponse = await client.addressVerification.verify(params);
+const response: PostGrid.AddressVerificationVerifyResponse =
+  await client.addressVerification.verify(params);
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -59,15 +60,17 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-const response = await client.addressVerification.verify({ address: 'address' }).catch(async (err) => {
-  if (err instanceof PostGrid.APIError) {
-    console.log(err.status); // 400
-    console.log(err.name); // BadRequestError
-    console.log(err.headers); // {server: 'nginx', ...}
-  } else {
-    throw err;
-  }
-});
+const response = await client.addressVerification
+  .verify({ address: 'address' })
+  .catch(async (err) => {
+    if (err instanceof PostGrid.APIError) {
+      console.log(err.status); // 400
+      console.log(err.name); // BadRequestError
+      console.log(err.headers); // {server: 'nginx', ...}
+    } else {
+      throw err;
+    }
+  });
 ```
 
 Error codes are as follows:
