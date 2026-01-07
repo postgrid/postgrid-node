@@ -12,11 +12,19 @@ describe('resource selfMailers', () => {
   // Prism tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.printMail.selfMailers.create({
-      from: { addressLine1: 'addressLine1', countryCode: 'countryCode', firstName: 'firstName' },
+      from: {
+        addressLine1: 'addressLine1',
+        countryCode: 'countryCode',
+        firstName: 'firstName',
+      },
       insideHTML: 'insideHTML',
       outsideHTML: 'outsideHTML',
       size: '8.5x11_bifold',
-      to: { addressLine1: 'addressLine1', countryCode: 'countryCode', firstName: 'firstName' },
+      to: {
+        addressLine1: 'addressLine1',
+        countryCode: 'countryCode',
+        firstName: 'firstName',
+      },
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -106,7 +114,11 @@ describe('resource selfMailers', () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.printMail.selfMailers.list(
-        { limit: 0, search: 'search', skip: 0 },
+        {
+          limit: 0,
+          search: 'search',
+          skip: 0,
+        },
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(PostGrid.NotFoundError);
