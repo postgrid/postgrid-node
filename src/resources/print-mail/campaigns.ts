@@ -310,7 +310,7 @@ export interface CampaignCreateParams {
   sendDate?: string;
 
   /**
-   * Header param:
+   * Header param
    */
   'idempotency-key'?: string;
 }

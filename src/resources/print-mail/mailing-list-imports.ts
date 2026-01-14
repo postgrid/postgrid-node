@@ -379,7 +379,7 @@ export interface MailingListImportCreateParams {
   senderMergeVariableMapping?: { [key: string]: string };
 
   /**
-   * Header param:
+   * Header param
    */
   'idempotency-key'?: string;
 }
