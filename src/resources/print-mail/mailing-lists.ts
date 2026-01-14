@@ -236,7 +236,7 @@ export interface MailingListCreateParams {
   metadata?: { [key: string]: unknown };
 
   /**
-   * Header param:
+   * Header param
    */
   'idempotency-key'?: string;
 }

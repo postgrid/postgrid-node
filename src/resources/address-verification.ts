@@ -455,39 +455,39 @@ export declare namespace AddressVerificationVerifyParams {
     address: string;
 
     /**
-     * Query param:
+     * Query param
      */
     geocode?: boolean;
 
     /**
-     * Query param:
+     * Query param
      */
     includeDetails?: boolean;
 
     /**
-     * Query param:
+     * Query param
      */
     properCase?: boolean;
   }
 
   export interface StandardStructuredAddressInput {
     /**
-     * Body param:
+     * Body param
      */
     address: StandardStructuredAddressInput.Address;
 
     /**
-     * Query param:
+     * Query param
      */
     geocode?: boolean;
 
     /**
-     * Query param:
+     * Query param
      */
     includeDetails?: boolean;
 
     /**
-     * Query param:
+     * Query param
      */
     properCase?: boolean;
   }
