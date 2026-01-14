@@ -384,22 +384,22 @@ export type IntlAddressVerificationVerifyParams =
 export declare namespace IntlAddressVerificationVerifyParams {
   export interface StructuredAddressInput {
     /**
-     * Body param:
+     * Body param
      */
     address: StructuredAddressInput.Address;
 
     /**
-     * Query param:
+     * Query param
      */
     geoData?: boolean;
 
     /**
-     * Query param:
+     * Query param
      */
     includeDetails?: boolean;
 
     /**
-     * Query param:
+     * Query param
      */
     properCase?: boolean;
   }
@@ -455,17 +455,17 @@ export declare namespace IntlAddressVerificationVerifyParams {
     address: string;
 
     /**
-     * Query param:
+     * Query param
      */
     geoData?: boolean;
 
     /**
-     * Query param:
+     * Query param
      */
     includeDetails?: boolean;
 
     /**
-     * Query param:
+     * Query param
      */
     properCase?: boolean;
   }
