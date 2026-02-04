@@ -1,6 +1,7 @@
 import fs from 'fs';
 import type { ResponseLike } from 'postgrid-node/internal/to-file';
 import { toFile } from 'postgrid-node/core/uploads';
+import { maybeMultipartFormRequestOptions } from 'postgrid-node/internal/uploads';
 import { File } from 'node:buffer';
 
 class MyClass {
@@ -103,5 +104,58 @@ describe('missing File error message', () => {
     ).rejects.toMatchInlineSnapshot(
       `[Error: \`File\` is not defined as a global, which is required for file uploads.]`,
     );
+  });
+});
+
+describe('maybeMultipartFormRequestOptions', () => {
+  it('returns opts unchanged when body has no uploadable value', async () => {
+    const body = {
+      from: 'contact_1',
+      to: 'contact_2',
+      pdf: 'https://example.com/letter.pdf',
+    };
+    const opts = { body };
+    const result = await maybeMultipartFormRequestOptions(opts, fetch);
+    expect(result).toBe(opts);
+    expect(result.body).toBe(body);
+  });
+
+  it('returns new opts with FormData body when body contains a File', async () => {
+    const pdfFile = new File(['fake content'], 'letter.pdf', { type: 'application/pdf' });
+    const body = {
+      from: 'contact_1',
+      to: 'contact_2',
+      pdf: pdfFile,
+    };
+    const opts = { body };
+    const result = await maybeMultipartFormRequestOptions(opts, fetch);
+    expect(result).not.toBe(opts);
+    expect(result.body).toBeInstanceOf(FormData);
+    const form = result.body as FormData;
+    expect(form.get('from')).toBe('contact_1');
+    expect(form.get('to')).toBe('contact_2');
+    const pdfPart = form.get('pdf');
+    expect(pdfPart).toBeInstanceOf(Blob);
+    expect((pdfPart as File).name).toBe('letter.pdf');
+  });
+
+  it('works with toFile(Buffer) for PDF upload path', async () => {
+    const buffer = Buffer.from('fake content');
+    const pdfFile = await toFile(buffer, 'letter.pdf');
+    const body = {
+      from: 'contact_1',
+      to: 'contact_2',
+      pdf: pdfFile,
+    };
+    const opts = { body };
+    const result = await maybeMultipartFormRequestOptions(opts, fetch);
+    expect(result).not.toBe(opts);
+    expect(result.body).toBeInstanceOf(FormData);
+    const form = result.body as FormData;
+    expect(form.get('from')).toBe('contact_1');
+    expect(form.get('to')).toBe('contact_2');
+    const pdfPart = form.get('pdf');
+    expect(pdfPart).toBeInstanceOf(Blob);
+    expect((pdfPart as File).name).toBe('letter.pdf');
   });
 });

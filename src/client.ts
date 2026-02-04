@@ -394,7 +394,7 @@ export class PostGrid {
 
     await this.prepareOptions(options);
 
-    // if body contains file uploads, convert to multipart/form-data
+    // if body contains file uploads, convert to multipart/form-data (fastest way and making compiler happy)
     const withMultipart = await maybeMultipartFormRequestOptions(options, this);
     if (withMultipart.body !== options.body) {
       options.body = withMultipart.body;
