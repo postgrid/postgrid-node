@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
+import type { Uploadable } from '../../core/uploads';
 import * as ContactsAPI from './contacts';
 import * as PrintMailAPI from './print-mail';
 import { APIPromise } from '../../core/api-promise';
@@ -108,7 +109,7 @@ export interface AttachedPdf {
   /**
    * The file (multipart form upload) or URL pointing to a PDF for the attached PDF.
    */
-  file: string;
+  file: string | Uploadable;
 
   /**
    * Enum representing the placement of the attached PDF.
@@ -405,7 +406,7 @@ export namespace PlasticCard {
      * A URL pointing to a PDF file for the double-sided plastic card or the file
      * itself.
      */
-    pdf?: string;
+    pdf?: string | Uploadable;
   }
 
   /**
@@ -422,7 +423,7 @@ export namespace PlasticCard {
      * A URL pointing to a PDF file for the single-sided plastic card or the PDF file
      * itself.
      */
-    pdf?: string;
+    pdf?: string | Uploadable;
 
     /**
      * The template ID for the single-sided plastic card.
@@ -596,7 +597,7 @@ export declare namespace LetterCreateParams {
     /**
      * A URL pointing to a PDF file for the letter or the PDF file itself.
      */
-    pdf: string;
+    pdf: string | Uploadable;
 
     /**
      * The recipient of this order. You can either supply the contact information

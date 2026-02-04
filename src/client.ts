@@ -17,6 +17,7 @@ import * as Errors from './core/error';
 import * as Pagination from './core/pagination';
 import { AbstractPage, type SkipLimitParams, SkipLimitResponse } from './core/pagination';
 import * as Uploads from './core/uploads';
+import { maybeMultipartFormRequestOptions } from './internal/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import {
@@ -392,6 +393,12 @@ export class PostGrid {
     }
 
     await this.prepareOptions(options);
+
+    // if body contains file uploads, convert to multipart/form-data
+    const withMultipart = await maybeMultipartFormRequestOptions(options, this);
+    if (withMultipart.body !== options.body) {
+      options.body = withMultipart.body;
+    }
 
     const { req, url, timeout } = await this.buildRequest(options, {
       retryCount: maxRetries - retriesRemaining,

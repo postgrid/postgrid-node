@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../../core/resource';
+import type { Uploadable } from '../../../core/uploads';
 import { APIPromise } from '../../../core/api-promise';
 import { PagePromise, SkipLimit, type SkipLimitParams } from '../../../core/pagination';
 import { RequestOptions } from '../../../internal/request-options';
@@ -303,7 +304,7 @@ export interface SelfMailerCreateParams {
    * Body param: A 2-page PDF file containing the self-mailer content (inside and
    * outside). Cannot be used with `insideTemplate`/`outsideTemplate`.
    */
-  pdf?: string;
+  pdf?: string | Uploadable;
 }
 
 export interface SelfMailerRetrieveParams {
@@ -387,7 +388,7 @@ export interface SelfMailerUpdateParams {
    * Body param: A 2-page PDF file containing the self-mailer content (inside and
    * outside). Cannot be used with `insideTemplate`/`outsideTemplate`.
    */
-  pdf?: string;
+  pdf?: string | Uploadable;
 }
 
 export interface SelfMailerListParams extends SkipLimitParams {

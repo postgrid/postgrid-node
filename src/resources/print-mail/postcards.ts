@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
+import type { Uploadable } from '../../core/uploads';
 import * as ContactsAPI from './contacts';
 import * as PrintMailAPI from './print-mail';
 import * as OrderProfilesPostcardsAPI from './order-profiles/postcards';
@@ -404,7 +405,7 @@ export declare namespace PostcardCreateParams {
      * A URL pointing to a 2 page PDF file. The first page is the front of the postcard
      * and the second page is the back (where the address will be stamped on).
      */
-    pdf: string;
+    pdf: string | Uploadable;
 
     /**
      * Enum representing the supported postcard sizes.
@@ -489,7 +490,7 @@ export declare namespace PostcardCreateParams {
      * A 2 page PDF file. The first page is the front of the postcard and the second
      * page is the back (where the address will be stamped on).
      */
-    pdf: string;
+    pdf: string | Uploadable;
 
     /**
      * Enum representing the supported postcard sizes.

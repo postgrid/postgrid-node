@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../../core/resource';
+import type { Uploadable } from '../../../core/uploads';
 import * as LettersAPI from '../letters';
 import { APIPromise } from '../../../core/api-promise';
 import { PagePromise, SkipLimit, type SkipLimitParams } from '../../../core/pagination';
@@ -337,7 +338,7 @@ export interface LetterCreateParams {
    * Body param: A PDF file containing the letter content. Cannot be used with
    * `template`.
    */
-  pdf?: string;
+  pdf?: string | Uploadable;
 
   /**
    * Body param: Specifies which page number should be perforated (if any).
@@ -446,7 +447,7 @@ export interface LetterUpdateParams {
    * Body param: A PDF file containing the letter content. Cannot be used with
    * `template`.
    */
-  pdf?: string;
+  pdf?: string | Uploadable;
 
   /**
    * Body param: Specifies which page number should be perforated (if any).

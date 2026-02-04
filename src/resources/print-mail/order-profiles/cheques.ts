@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../../core/resource';
+import type { Uploadable } from '../../../core/uploads';
 import * as ChequesAPI from '../cheques';
 import { APIPromise } from '../../../core/api-promise';
 import { PagePromise, SkipLimit, type SkipLimitParams } from '../../../core/pagination';
@@ -387,7 +388,7 @@ export interface ChequeCreateParams {
    * Body param: PDF file for an optional attached letter. Cannot be used with
    * `letterHTML` or `letterTemplate`. Input only.
    */
-  letterPDF?: string;
+  letterPDF?: string | Uploadable;
 
   /**
    * Body param: ID of a template for an optional attached letter. Cannot be used
@@ -494,7 +495,7 @@ export interface ChequeUpdateParams {
    * Body param: PDF file for an optional attached letter. Cannot be used with
    * `letterHTML` or `letterTemplate`. Input only.
    */
-  letterPDF?: string;
+  letterPDF?: string | Uploadable;
 
   /**
    * Body param: ID of a template for an optional attached letter. Cannot be used
