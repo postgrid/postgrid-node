@@ -9,7 +9,7 @@ const client = new PostGrid({
 });
 
 describe('resource samples', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create', async () => {
     const responsePromise = client.printMail.reports.samples.create('id', {});
     const rawResponse = await responsePromise.asResponse();

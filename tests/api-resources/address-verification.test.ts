@@ -9,7 +9,7 @@ const client = new PostGrid({
 });
 
 describe('resource addressVerification', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('verify: only required params', async () => {
     const responsePromise = client.addressVerification.verify({ address: 'address' });
     const rawResponse = await responsePromise.asResponse();
@@ -21,7 +21,7 @@ describe('resource addressVerification', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('verify: required and optional params', async () => {
     const response = await client.addressVerification.verify({
       address: 'address',
