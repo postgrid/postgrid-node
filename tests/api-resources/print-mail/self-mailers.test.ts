@@ -9,7 +9,7 @@ const client = new PostGrid({
 });
 
 describe('resource selfMailers', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.printMail.selfMailers.create({
       from: {
@@ -35,7 +35,7 @@ describe('resource selfMailers', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.printMail.selfMailers.create({
       from: {
@@ -85,7 +85,7 @@ describe('resource selfMailers', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('retrieve', async () => {
     const responsePromise = client.printMail.selfMailers.retrieve('id');
     const rawResponse = await responsePromise.asResponse();
@@ -97,7 +97,7 @@ describe('resource selfMailers', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.printMail.selfMailers.list();
     const rawResponse = await responsePromise.asResponse();
@@ -109,7 +109,7 @@ describe('resource selfMailers', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -124,7 +124,7 @@ describe('resource selfMailers', () => {
     ).rejects.toThrow(PostGrid.NotFoundError);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete', async () => {
     const responsePromise = client.printMail.selfMailers.delete('id');
     const rawResponse = await responsePromise.asResponse();
@@ -136,7 +136,7 @@ describe('resource selfMailers', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('retrieveURL', async () => {
     const responsePromise = client.printMail.selfMailers.retrieveURL('id');
     const rawResponse = await responsePromise.asResponse();
