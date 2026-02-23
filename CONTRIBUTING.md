@@ -60,7 +60,7 @@ $ yarn link postgrid-node
 # With pnpm
 $ pnpm link --global
 $ cd ../my-package
-$ pnpm link -—global postgrid-node
+$ pnpm link --global postgrid-node
 ```
 
 ## Running tests
