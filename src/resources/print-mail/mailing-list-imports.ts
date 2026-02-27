@@ -8,6 +8,10 @@ import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ *  The mailing list imports API enables you to import contact lists from files
+ *  and validate them for use in campaigns.
+ */
 export class MailingListImports extends APIResource {
   /**
    * Create a new mailing list import.

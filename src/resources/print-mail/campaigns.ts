@@ -7,6 +7,10 @@ import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ *  The campaigns API enables you to send out large volumes of fully
+ *  personalized mail to a mailing list.
+ */
 export class Campaigns extends APIResource {
   /**
    * Create a new campaign.

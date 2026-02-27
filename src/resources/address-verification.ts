@@ -5,6 +5,14 @@ import * as AddressVerificationAPI from './address-verification';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 
+/**
+ *  Standard Address Verification API.
+ *
+ *  Provides endpoints to verify and standardize addresses across US and Canada,
+ *  supporting both structured and freeform inputs.
+ *
+ *  Note that this uses a different set of lookups than our international API.
+ */
 export class AddressVerification extends APIResource {
   /**
    * 1. **Structured Address** — Verify and standardize a structured address (e.g.,

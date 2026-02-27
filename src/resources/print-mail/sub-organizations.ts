@@ -7,6 +7,18 @@ import { PagePromise, SkipLimit, type SkipLimitParams } from '../../core/paginat
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ *  Sub-organizations enable you to create isolated PostGrid accounts
+ *  ("sub-organizations") under your PostGrid account (the "parent organization").
+ *  Each sub-organization has fully isolated resources
+ *  and users, and can act independently.
+ *
+ *  This allows you to isolate different departments or even re-sell PostGrid
+ *  entirely.
+ *
+ *  You can request access to this feature by reaching out to
+ *  support@postgrid.com
+ */
 export class SubOrganizations extends APIResource {
   /**
    * Get a sub-organization.

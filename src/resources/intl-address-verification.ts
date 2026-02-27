@@ -5,6 +5,12 @@ import * as AddressVerificationAPI from './address-verification';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 
+/**
+ *  International Address Verification API.
+ *
+ *  Provides endpoints to verify and standardize international addresses,
+ *  supporting both structured and freeform inputs.
+ */
 export class IntlAddressVerification extends APIResource {
   /**
    * Verify and standardize an international address.
