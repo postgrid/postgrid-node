@@ -7,6 +7,13 @@ import { PagePromise, SkipLimit, type SkipLimitParams } from '../../../core/pagi
 import { RequestOptions } from '../../../internal/request-options';
 import { path } from '../../../internal/utils/path';
 
+/**
+ *  Order Profiles are reusable blueprints for creating print and mail orders (Letters, Postcards, Cheques, Self-Mailers).
+ *  They define common properties like size, content (via templates or uploaded PDFs), mailing class, and metadata.
+ *  Using profiles simplifies order creation, especially for recurring mailings or campaigns, by pre-filling many parameters.
+ *
+ *  Profiles are environment-specific (live vs. test).
+ */
 export class Cheques extends APIResource {
   /**
    * Creates a new Cheque Profile. Requires a `bankAccount` ID. Can optionally

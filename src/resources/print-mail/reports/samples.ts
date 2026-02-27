@@ -5,6 +5,13 @@ import { APIPromise } from '../../../core/api-promise';
 import { RequestOptions } from '../../../internal/request-options';
 import { path } from '../../../internal/utils/path';
 
+/**
+ *  The reports API lets you run SQL queries against a data lake with all of your PostGrid data. You can use this to run ad-hoc SQL queries or save them as reports. You can bulk export data from these reports to fit all of your reporting needs.
+ *  Note that the data this API provides may be up to 2 hours behind your current PostGrid environment.
+ *  Your test and live data lakes are fully segregated, so you'll need a live API key to run queries against your live data.
+ *
+ *  You can request access to this to this feature by reaching out to support@postgrid.com
+ */
 export class Samples extends APIResource {
   /**
    * Run the query associated with a saved report and get a sample of the results.
