@@ -808,7 +808,23 @@ export class PostGrid {
 
   static toFile = Uploads.toFile;
 
+  /**
+   *  Standard Address Verification API.
+   *
+   *  Provides endpoints to verify and standardize addresses across US and Canada,
+   *  supporting both structured and freeform inputs.
+   *
+   *  Note that this uses a different set of lookups than our international API.
+   *
+   */
   addressVerification: API.AddressVerification = new API.AddressVerification(this);
+  /**
+   *  International Address Verification API.
+   *
+   *  Provides endpoints to verify and standardize international addresses,
+   *  supporting both structured and freeform inputs.
+   *
+   */
   intlAddressVerification: API.IntlAddressVerification = new API.IntlAddressVerification(this);
   printMail: API.PrintMail = new API.PrintMail(this);
 }
