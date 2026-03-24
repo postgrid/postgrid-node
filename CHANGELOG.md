@@ -1,5 +1,53 @@
 # Changelog
 
+## 0.5.1 (2026-03-24)
+
+Full Changelog: [v0.5.0...v0.5.1](https://github.com/postgrid/postgrid-node/compare/v0.5.0...v0.5.1)
+
+### Bug Fixes
+
+* **client:** avoid memory leak with abort signals ([c27adce](https://github.com/postgrid/postgrid-node/commit/c27adced033eb5a2fcda3a2998f75edcdd7400a2))
+* **client:** avoid removing abort listener too early ([b5b7d6e](https://github.com/postgrid/postgrid-node/commit/b5b7d6e89b3c118b2bb79cc58b357bc880a3ad54))
+* **client:** preserve URL params already embedded in path ([24c231e](https://github.com/postgrid/postgrid-node/commit/24c231ed84c1e49315002c8e02fc14fa1d9b9a09))
+* **docs/contributing:** correct pnpm link command ([6dbc868](https://github.com/postgrid/postgrid-node/commit/6dbc86804e251b99dcf2d8ccc951043a1e2cb71e))
+* **docs:** remove extraneous example object fields ([71d6fdf](https://github.com/postgrid/postgrid-node/commit/71d6fdf04c36d6c86a07da4779c5a96ccada0f1d))
+* fix request delays for retrying to be more respectful of high requested delays ([2949209](https://github.com/postgrid/postgrid-node/commit/29492093772c6e99d1e0d7454b94a9a78070e6ce))
+* **mcp:** correct code tool API endpoint ([a69fda5](https://github.com/postgrid/postgrid-node/commit/a69fda59f36bdab6b0189a492a8fb8053939f412))
+* **mcp:** return correct lines on typescript errors ([81982d6](https://github.com/postgrid/postgrid-node/commit/81982d6d50b27ef9a5580f7d0e178fc096e8ff4d))
+
+
+### Chores
+
+* break long lines in snippets into multiline ([f66b5c2](https://github.com/postgrid/postgrid-node/commit/f66b5c28b18bb506d4cbed6667215af5a6eaa799))
+* **ci:** skip lint on metadata-only changes ([ed86a3a](https://github.com/postgrid/postgrid-node/commit/ed86a3aa624697655e16cce359a3e1baae999777))
+* **ci:** skip uploading artifacts on stainless-internal branches ([1164e40](https://github.com/postgrid/postgrid-node/commit/1164e4053e2fa237daa11f4df3113447c0455a5e))
+* **ci:** upgrade `actions/github-script` ([ff6b463](https://github.com/postgrid/postgrid-node/commit/ff6b4638495611a098d8b035442944f2484d44fc))
+* **client:** do not parse responses with empty content-length ([d619307](https://github.com/postgrid/postgrid-node/commit/d61930741f51c62e583f31074c1aa465c1e18207))
+* **client:** fix logger property type ([c1592ab](https://github.com/postgrid/postgrid-node/commit/c1592ab37ba7aa9a1c3da022b42ba98b5aa189d0))
+* **client:** restructure abort controller binding ([7f5512d](https://github.com/postgrid/postgrid-node/commit/7f5512d60ff37c68a839f80ef7d4df0bc363fb50))
+* **docs:** add missing descriptions ([4df4baf](https://github.com/postgrid/postgrid-node/commit/4df4bafab42048bd31eb55ef5a6499f73925264f))
+* fix typo in descriptions ([00cac03](https://github.com/postgrid/postgrid-node/commit/00cac03fae7750b0f627c2f15442de2d92711025))
+* **internal/client:** fix form-urlencoded requests ([bc3444a](https://github.com/postgrid/postgrid-node/commit/bc3444a04024c65778a2611ea102e288665d40d5))
+* **internal:** avoid type checking errors with ts-reset ([5457196](https://github.com/postgrid/postgrid-node/commit/5457196acf1411e4e2044338c74a8769f92abaaf))
+* **internal:** codegen related update ([22d0aec](https://github.com/postgrid/postgrid-node/commit/22d0aec76590e53ab5da540e3f73406342a950ac))
+* **internal:** codegen related update ([5c3a9b7](https://github.com/postgrid/postgrid-node/commit/5c3a9b79198ef3bc912462e1fb524819ffa8ef91))
+* **internal:** codegen related update ([b90ade6](https://github.com/postgrid/postgrid-node/commit/b90ade6630f6f254eebe74ee16ca365a96759f87))
+* **internal:** configure pnpm minimumReleaseAge to 1 day ([28aacd5](https://github.com/postgrid/postgrid-node/commit/28aacd557705eba61ee5ced975c1828d6f08f801))
+* **internal:** fix pagination internals not accepting option promises ([69e80b4](https://github.com/postgrid/postgrid-node/commit/69e80b4dfe3447ec5a705c0e3f3f42f74c817bba))
+* **internal:** move stringifyQuery implementation to internal function ([51e05e6](https://github.com/postgrid/postgrid-node/commit/51e05e6462aa5d1d14756495cb515b00a64fa84c))
+* **internal:** remove mock server code ([cc0bca1](https://github.com/postgrid/postgrid-node/commit/cc0bca11e774882e65c8d5d8f9cbe0e12e76c7a6))
+* **internal:** tweak CI branches ([2c3fddb](https://github.com/postgrid/postgrid-node/commit/2c3fddb40341708e5b84e9f6b56c51ad4facda22))
+* **internal:** update `actions/checkout` version ([ec11eeb](https://github.com/postgrid/postgrid-node/commit/ec11eeb0c7c2332a07c7c88775e5b22305755abb))
+* **internal:** update dependencies to address dependabot vulnerabilities ([b831c88](https://github.com/postgrid/postgrid-node/commit/b831c88574eed47b1f92a64a62a05bdf22036be2))
+* **internal:** update gitignore ([ec3c14a](https://github.com/postgrid/postgrid-node/commit/ec3c14afa8bad62fa6b57d93763ee985cd975821))
+* **internal:** update lock file ([e0ccd78](https://github.com/postgrid/postgrid-node/commit/e0ccd783e74a12ff4f48bee59ffb9119dfe69dfd))
+* **internal:** upgrade babel, qs, js-yaml ([82d5417](https://github.com/postgrid/postgrid-node/commit/82d54171f2b0e60f84d8ce931df0dfcaa5b716a1))
+* **internal:** upgrade brace-expansion and @babel/helpers ([c2e9be4](https://github.com/postgrid/postgrid-node/commit/c2e9be4f690eacaea859716658e99e53ea898d68))
+* **internal:** upgrade eslint ([d4721a3](https://github.com/postgrid/postgrid-node/commit/d4721a3f0feeffa66fdcc698998d8714d208f6d4))
+* **internal:** upgrade pnpm ([83c6be7](https://github.com/postgrid/postgrid-node/commit/83c6be7abe9b9d61d341fd8bb6f7d2b66bc9eb28))
+* **internal:** upgrade pnpm version ([a425792](https://github.com/postgrid/postgrid-node/commit/a425792362a6a88464aa6ab49963fdac1a7f95dc))
+* update mock server docs ([7fc0707](https://github.com/postgrid/postgrid-node/commit/7fc0707639e12f9915aaecd5b659ea3086e3f105))
+
 ## 0.5.0 (2025-11-14)
 
 Full Changelog: [v0.4.2...v0.5.0](https://github.com/postgrid/postgrid-node/compare/v0.4.2...v0.5.0)
