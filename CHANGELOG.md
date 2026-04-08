@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.5.2 (2026-04-08)
+
+Full Changelog: [v0.5.1...v0.5.2](https://github.com/postgrid/postgrid-node/compare/v0.5.1...v0.5.2)
+
+### Chores
+
+* **internal:** codegen related update ([07b2754](https://github.com/postgrid/postgrid-node/commit/07b2754b6c9de728e5f5d54bb8e156911bbbd640))
+
 ## 0.5.1 (2026-03-24)
 
 Full Changelog: [v0.5.0...v0.5.1](https://github.com/postgrid/postgrid-node/compare/v0.5.0...v0.5.1)
