@@ -59,10 +59,7 @@ export class Postcards extends APIResource {
    * }
    * ```
    */
-  list(
-    query: PostcardListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): PagePromise<PostcardsSkipLimit, Postcard> {
+  list(query: PostcardListParams | null | undefined = {}, options?: RequestOptions): PagePromise<PostcardsSkipLimit, Postcard> {
     return this._client.getAPIList('/print-mail/v1/postcards', SkipLimit<Postcard>, { query, ...options });
   }
 
@@ -99,7 +96,7 @@ export class Postcards extends APIResource {
   }
 }
 
-export type PostcardsSkipLimit = SkipLimit<Postcard>;
+export type PostcardsSkipLimit = SkipLimit<Postcard>
 
 export interface Postcard {
   /**
@@ -121,33 +118,7 @@ export interface Postcard {
    * The mailing class of this order. This determines the speed and cost of delivery.
    * See `OrderMailingClass` for more details.
    */
-  mailingClass:
-    | 'first_class'
-    | 'standard_class'
-    | 'express'
-    | 'certified'
-    | 'certified_return_receipt'
-    | 'registered'
-    | 'usps_first_class'
-    | 'usps_standard_class'
-    | 'usps_eddm'
-    | 'usps_express_2_day'
-    | 'usps_express_3_day'
-    | 'usps_first_class_certified'
-    | 'usps_first_class_certified_return_receipt'
-    | 'usps_first_class_registered'
-    | 'usps_express_3_day_signature_confirmation'
-    | 'usps_express_3_day_certified'
-    | 'usps_express_3_day_certified_return_receipt'
-    | 'ca_post_lettermail'
-    | 'ca_post_personalized'
-    | 'ca_post_neighbourhood_mail'
-    | 'ups_express_overnight'
-    | 'ups_express_2_day'
-    | 'ups_express_3_day'
-    | 'royal_mail_first_class'
-    | 'royal_mail_second_class'
-    | 'au_post_second_class';
+  mailingClass: 'first_class' | 'standard_class' | 'express' | 'certified' | 'certified_return_receipt' | 'registered' | 'usps_first_class' | 'usps_standard_class' | 'usps_eddm' | 'usps_express_2_day' | 'usps_express_3_day' | 'usps_first_class_certified' | 'usps_first_class_certified_return_receipt' | 'usps_first_class_registered' | 'usps_express_3_day_signature_confirmation' | 'usps_express_3_day_certified' | 'usps_express_3_day_certified_return_receipt' | 'ca_post_lettermail' | 'ca_post_personalized' | 'ca_post_neighbourhood_mail' | 'ups_express_overnight' | 'ups_express_2_day' | 'ups_express_3_day' | 'royal_mail_first_class' | 'royal_mail_second_class' | 'au_post_second_class';
 
   /**
    * Always `postcard`.
@@ -287,11 +258,7 @@ export interface PostcardRetrieveURLResponse {
   url: string;
 }
 
-export type PostcardCreateParams =
-  | PostcardCreateParams.PostcardCreateWithHTML
-  | PostcardCreateParams.PostcardCreateWithTemplate
-  | PostcardCreateParams.PostcardCreateWithPdfurl
-  | PostcardCreateParams.PostcardCreateWithPdfFile;
+export type PostcardCreateParams = PostcardCreateParams.PostcardCreateWithHTML | PostcardCreateParams.PostcardCreateWithTemplate | PostcardCreateParams.PostcardCreateWithPdfurl | PostcardCreateParams.PostcardCreateWithPdfFile
 
 export declare namespace PostcardCreateParams {
   export interface PostcardCreateWithHTML {
@@ -337,33 +304,7 @@ export declare namespace PostcardCreateParams {
      * The mailing class of this order. If not provided, automatically set to
      * `first_class`.
      */
-    mailingClass?:
-      | 'first_class'
-      | 'standard_class'
-      | 'express'
-      | 'certified'
-      | 'certified_return_receipt'
-      | 'registered'
-      | 'usps_first_class'
-      | 'usps_standard_class'
-      | 'usps_eddm'
-      | 'usps_express_2_day'
-      | 'usps_express_3_day'
-      | 'usps_first_class_certified'
-      | 'usps_first_class_certified_return_receipt'
-      | 'usps_first_class_registered'
-      | 'usps_express_3_day_signature_confirmation'
-      | 'usps_express_3_day_certified'
-      | 'usps_express_3_day_certified_return_receipt'
-      | 'ca_post_lettermail'
-      | 'ca_post_personalized'
-      | 'ca_post_neighbourhood_mail'
-      | 'ups_express_overnight'
-      | 'ups_express_2_day'
-      | 'ups_express_3_day'
-      | 'royal_mail_first_class'
-      | 'royal_mail_second_class'
-      | 'au_post_second_class';
+    mailingClass?: 'first_class' | 'standard_class' | 'express' | 'certified' | 'certified_return_receipt' | 'registered' | 'usps_first_class' | 'usps_standard_class' | 'usps_eddm' | 'usps_express_2_day' | 'usps_express_3_day' | 'usps_first_class_certified' | 'usps_first_class_certified_return_receipt' | 'usps_first_class_registered' | 'usps_express_3_day_signature_confirmation' | 'usps_express_3_day_certified' | 'usps_express_3_day_certified_return_receipt' | 'ca_post_lettermail' | 'ca_post_personalized' | 'ca_post_neighbourhood_mail' | 'ups_express_overnight' | 'ups_express_2_day' | 'ups_express_3_day' | 'royal_mail_first_class' | 'royal_mail_second_class' | 'au_post_second_class';
 
     /**
      * These will be merged with the variables in the template or HTML you create this
@@ -436,33 +377,7 @@ export declare namespace PostcardCreateParams {
      * The mailing class of this order. If not provided, automatically set to
      * `first_class`.
      */
-    mailingClass?:
-      | 'first_class'
-      | 'standard_class'
-      | 'express'
-      | 'certified'
-      | 'certified_return_receipt'
-      | 'registered'
-      | 'usps_first_class'
-      | 'usps_standard_class'
-      | 'usps_eddm'
-      | 'usps_express_2_day'
-      | 'usps_express_3_day'
-      | 'usps_first_class_certified'
-      | 'usps_first_class_certified_return_receipt'
-      | 'usps_first_class_registered'
-      | 'usps_express_3_day_signature_confirmation'
-      | 'usps_express_3_day_certified'
-      | 'usps_express_3_day_certified_return_receipt'
-      | 'ca_post_lettermail'
-      | 'ca_post_personalized'
-      | 'ca_post_neighbourhood_mail'
-      | 'ups_express_overnight'
-      | 'ups_express_2_day'
-      | 'ups_express_3_day'
-      | 'royal_mail_first_class'
-      | 'royal_mail_second_class'
-      | 'au_post_second_class';
+    mailingClass?: 'first_class' | 'standard_class' | 'express' | 'certified' | 'certified_return_receipt' | 'registered' | 'usps_first_class' | 'usps_standard_class' | 'usps_eddm' | 'usps_express_2_day' | 'usps_express_3_day' | 'usps_first_class_certified' | 'usps_first_class_certified_return_receipt' | 'usps_first_class_registered' | 'usps_express_3_day_signature_confirmation' | 'usps_express_3_day_certified' | 'usps_express_3_day_certified_return_receipt' | 'ca_post_lettermail' | 'ca_post_personalized' | 'ca_post_neighbourhood_mail' | 'ups_express_overnight' | 'ups_express_2_day' | 'ups_express_3_day' | 'royal_mail_first_class' | 'royal_mail_second_class' | 'au_post_second_class';
 
     /**
      * These will be merged with the variables in the template or HTML you create this
@@ -521,33 +436,7 @@ export declare namespace PostcardCreateParams {
      * The mailing class of this order. If not provided, automatically set to
      * `first_class`.
      */
-    mailingClass?:
-      | 'first_class'
-      | 'standard_class'
-      | 'express'
-      | 'certified'
-      | 'certified_return_receipt'
-      | 'registered'
-      | 'usps_first_class'
-      | 'usps_standard_class'
-      | 'usps_eddm'
-      | 'usps_express_2_day'
-      | 'usps_express_3_day'
-      | 'usps_first_class_certified'
-      | 'usps_first_class_certified_return_receipt'
-      | 'usps_first_class_registered'
-      | 'usps_express_3_day_signature_confirmation'
-      | 'usps_express_3_day_certified'
-      | 'usps_express_3_day_certified_return_receipt'
-      | 'ca_post_lettermail'
-      | 'ca_post_personalized'
-      | 'ca_post_neighbourhood_mail'
-      | 'ups_express_overnight'
-      | 'ups_express_2_day'
-      | 'ups_express_3_day'
-      | 'royal_mail_first_class'
-      | 'royal_mail_second_class'
-      | 'au_post_second_class';
+    mailingClass?: 'first_class' | 'standard_class' | 'express' | 'certified' | 'certified_return_receipt' | 'registered' | 'usps_first_class' | 'usps_standard_class' | 'usps_eddm' | 'usps_express_2_day' | 'usps_express_3_day' | 'usps_first_class_certified' | 'usps_first_class_certified_return_receipt' | 'usps_first_class_registered' | 'usps_express_3_day_signature_confirmation' | 'usps_express_3_day_certified' | 'usps_express_3_day_certified_return_receipt' | 'ca_post_lettermail' | 'ca_post_personalized' | 'ca_post_neighbourhood_mail' | 'ups_express_overnight' | 'ups_express_2_day' | 'ups_express_3_day' | 'royal_mail_first_class' | 'royal_mail_second_class' | 'au_post_second_class';
 
     /**
      * These will be merged with the variables in the template or HTML you create this
@@ -587,6 +476,6 @@ export declare namespace Postcards {
     type PostcardRetrieveURLResponse as PostcardRetrieveURLResponse,
     type PostcardsSkipLimit as PostcardsSkipLimit,
     type PostcardCreateParams as PostcardCreateParams,
-    type PostcardListParams as PostcardListParams,
+    type PostcardListParams as PostcardListParams
   };
 }

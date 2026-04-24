@@ -2,137 +2,31 @@
 
 import { APIResource } from '../../core/resource';
 import * as BankAccountsAPI from './bank-accounts';
-import {
-  BankAccount,
-  BankAccountCountryCode,
-  BankAccountCreateParams,
-  BankAccountDeleteResponse,
-  BankAccountListParams,
-  BankAccounts,
-  BankAccountsSkipLimit,
-} from './bank-accounts';
+import { BankAccount, BankAccountCountryCode, BankAccountCreateParams, BankAccountDeleteResponse, BankAccountListParams, BankAccounts, BankAccountsSkipLimit } from './bank-accounts';
 import * as CampaignsAPI from './campaigns';
-import {
-  Campaign,
-  CampaignCreateParams,
-  CampaignDeleteResponse,
-  CampaignListParams,
-  CampaignSendParams,
-  CampaignUpdateParams,
-  Campaigns,
-  CampaignsSkipLimit,
-} from './campaigns';
+import { Campaign, CampaignCreateParams, CampaignDeleteResponse, CampaignListParams, CampaignSendParams, CampaignUpdateParams, Campaigns, CampaignsSkipLimit } from './campaigns';
 import * as ChequesAPI from './cheques';
-import {
-  Cheque,
-  ChequeCreateParams,
-  ChequeListParams,
-  ChequeRetrieveURLResponse,
-  ChequeSize,
-  Cheques,
-  ChequesSkipLimit,
-  DigitalOnly,
-} from './cheques';
+import { Cheque, ChequeCreateParams, ChequeListParams, ChequeRetrieveURLResponse, ChequeSize, Cheques, ChequesSkipLimit, DigitalOnly } from './cheques';
 import * as ContactsAPI from './contacts';
-import {
-  Contact,
-  ContactCreate,
-  ContactCreateParams,
-  ContactDeleteResponse,
-  ContactListParams,
-  Contacts,
-  ContactsSkipLimit,
-} from './contacts';
+import { Contact, ContactCreate, ContactCreateParams, ContactDeleteResponse, ContactListParams, Contacts, ContactsSkipLimit } from './contacts';
 import * as LettersAPI from './letters';
-import {
-  AddressPlacement,
-  AttachedPdf,
-  Letter,
-  LetterCreateParams,
-  LetterListParams,
-  LetterRetrieveURLResponse,
-  LetterSize,
-  Letters,
-  LettersSkipLimit,
-  PlasticCard,
-} from './letters';
+import { AddressPlacement, AttachedPdf, Letter, LetterCreateParams, LetterListParams, LetterRetrieveURLResponse, LetterSize, Letters, LettersSkipLimit, PlasticCard } from './letters';
 import * as MailingListImportsAPI from './mailing-list-imports';
-import {
-  FileType,
-  MailingListImportCreateParams,
-  MailingListImportDeleteResponse,
-  MailingListImportListParams,
-  MailingListImportResponse,
-  MailingListImportResponsesSkipLimit,
-  MailingListImportUpdateParams,
-  MailingListImports,
-  VerificationStatusCount,
-} from './mailing-list-imports';
+import { FileType, MailingListImportCreateParams, MailingListImportDeleteResponse, MailingListImportListParams, MailingListImportResponse, MailingListImportResponsesSkipLimit, MailingListImportUpdateParams, MailingListImports, VerificationStatusCount } from './mailing-list-imports';
 import * as MailingListsAPI from './mailing-lists';
-import {
-  MailingList,
-  MailingListCreateParams,
-  MailingListDeleteResponse,
-  MailingListJobsParams,
-  MailingListListParams,
-  MailingListUpdate,
-  MailingListUpdateParams,
-  MailingLists,
-  MailingListsSkipLimit,
-} from './mailing-lists';
+import { MailingList, MailingListCreateParams, MailingListDeleteResponse, MailingListJobsParams, MailingListListParams, MailingListUpdate, MailingListUpdateParams, MailingLists, MailingListsSkipLimit } from './mailing-lists';
 import * as PostcardsAPI from './postcards';
-import {
-  Postcard,
-  PostcardCreateParams,
-  PostcardListParams,
-  PostcardRetrieveURLResponse,
-  Postcards,
-  PostcardsSkipLimit,
-} from './postcards';
+import { Postcard, PostcardCreateParams, PostcardListParams, PostcardRetrieveURLResponse, Postcards, PostcardsSkipLimit } from './postcards';
 import * as SelfMailersAPI from './self-mailers';
-import {
-  SelfMailer,
-  SelfMailerCreateParams,
-  SelfMailerListParams,
-  SelfMailerRetrieveURLResponse,
-  SelfMailers,
-  SelfMailersSkipLimit,
-} from './self-mailers';
+import { SelfMailer, SelfMailerCreateParams, SelfMailerListParams, SelfMailerRetrieveURLResponse, SelfMailers, SelfMailersSkipLimit } from './self-mailers';
 import * as SubOrganizationsAPI from './sub-organizations';
-import {
-  EmailPreferences,
-  SubOrganization,
-  SubOrganizationListParams,
-  SubOrganizationRetrieveUsersParams,
-  SubOrganizationRetrieveUsersResponse,
-  SubOrganizationUpdateParams,
-  SubOrganizationUpdateResponse,
-  SubOrganizations,
-  SubOrganizationsSkipLimit,
-} from './sub-organizations';
+import { EmailPreferences, SubOrganization, SubOrganizationListParams, SubOrganizationRetrieveUsersParams, SubOrganizationRetrieveUsersResponse, SubOrganizationUpdateParams, SubOrganizationUpdateResponse, SubOrganizations, SubOrganizationsSkipLimit } from './sub-organizations';
 import * as TemplatesAPI from './templates';
-import {
-  Template,
-  TemplateCreateParams,
-  TemplateDeleteResponse,
-  TemplateListParams,
-  TemplateUpdateParams,
-  Templates,
-  TemplatesSkipLimit,
-} from './templates';
+import { Template, TemplateCreateParams, TemplateDeleteResponse, TemplateListParams, TemplateUpdateParams, Templates, TemplatesSkipLimit } from './templates';
 import * as OrderProfilesAPI from './order-profiles/order-profiles';
 import { OrderProfiles } from './order-profiles/order-profiles';
 import * as ReportsAPI from './reports/reports';
-import {
-  DeletedResponse,
-  Report,
-  ReportCreateParams,
-  ReportListParams,
-  ReportSampleParams,
-  ReportUpdateParams,
-  Reports,
-  ReportsSkipLimit,
-} from './reports/reports';
+import { DeletedResponse, Report, ReportCreateParams, ReportListParams, ReportSampleParams, ReportUpdateParams, Reports, ReportsSkipLimit } from './reports/reports';
 
 export class PrintMail extends APIResource {
   bankAccounts: BankAccountsAPI.BankAccounts = new BankAccountsAPI.BankAccounts(this._client);
@@ -140,17 +34,13 @@ export class PrintMail extends APIResource {
   cheques: ChequesAPI.Cheques = new ChequesAPI.Cheques(this._client);
   contacts: ContactsAPI.Contacts = new ContactsAPI.Contacts(this._client);
   letters: LettersAPI.Letters = new LettersAPI.Letters(this._client);
-  mailingListImports: MailingListImportsAPI.MailingListImports = new MailingListImportsAPI.MailingListImports(
-    this._client,
-  );
+  mailingListImports: MailingListImportsAPI.MailingListImports = new MailingListImportsAPI.MailingListImports(this._client);
   mailingLists: MailingListsAPI.MailingLists = new MailingListsAPI.MailingLists(this._client);
   orderProfiles: OrderProfilesAPI.OrderProfiles = new OrderProfilesAPI.OrderProfiles(this._client);
   postcards: PostcardsAPI.Postcards = new PostcardsAPI.Postcards(this._client);
   reports: ReportsAPI.Reports = new ReportsAPI.Reports(this._client);
   selfMailers: SelfMailersAPI.SelfMailers = new SelfMailersAPI.SelfMailers(this._client);
-  subOrganizations: SubOrganizationsAPI.SubOrganizations = new SubOrganizationsAPI.SubOrganizations(
-    this._client,
-  );
+  subOrganizations: SubOrganizationsAPI.SubOrganizations = new SubOrganizationsAPI.SubOrganizations(this._client);
   templates: TemplatesAPI.Templates = new TemplatesAPI.Templates(this._client);
 }
 
@@ -335,7 +225,7 @@ PrintMail.Templates = Templates;
 export declare namespace PrintMail {
   export {
     type ContactCreateWithCompanyName as ContactCreateWithCompanyName,
-    type ContactCreateWithFirstName as ContactCreateWithFirstName,
+    type ContactCreateWithFirstName as ContactCreateWithFirstName
   };
 
   export {
@@ -345,7 +235,7 @@ export declare namespace PrintMail {
     type BankAccountDeleteResponse as BankAccountDeleteResponse,
     type BankAccountsSkipLimit as BankAccountsSkipLimit,
     type BankAccountCreateParams as BankAccountCreateParams,
-    type BankAccountListParams as BankAccountListParams,
+    type BankAccountListParams as BankAccountListParams
   };
 
   export {
@@ -356,7 +246,7 @@ export declare namespace PrintMail {
     type CampaignCreateParams as CampaignCreateParams,
     type CampaignUpdateParams as CampaignUpdateParams,
     type CampaignListParams as CampaignListParams,
-    type CampaignSendParams as CampaignSendParams,
+    type CampaignSendParams as CampaignSendParams
   };
 
   export {
@@ -367,7 +257,7 @@ export declare namespace PrintMail {
     type ChequeRetrieveURLResponse as ChequeRetrieveURLResponse,
     type ChequesSkipLimit as ChequesSkipLimit,
     type ChequeCreateParams as ChequeCreateParams,
-    type ChequeListParams as ChequeListParams,
+    type ChequeListParams as ChequeListParams
   };
 
   export {
@@ -377,7 +267,7 @@ export declare namespace PrintMail {
     type ContactDeleteResponse as ContactDeleteResponse,
     type ContactsSkipLimit as ContactsSkipLimit,
     type ContactCreateParams as ContactCreateParams,
-    type ContactListParams as ContactListParams,
+    type ContactListParams as ContactListParams
   };
 
   export {
@@ -390,7 +280,7 @@ export declare namespace PrintMail {
     type LetterRetrieveURLResponse as LetterRetrieveURLResponse,
     type LettersSkipLimit as LettersSkipLimit,
     type LetterCreateParams as LetterCreateParams,
-    type LetterListParams as LetterListParams,
+    type LetterListParams as LetterListParams
   };
 
   export {
@@ -402,7 +292,7 @@ export declare namespace PrintMail {
     type MailingListImportResponsesSkipLimit as MailingListImportResponsesSkipLimit,
     type MailingListImportCreateParams as MailingListImportCreateParams,
     type MailingListImportUpdateParams as MailingListImportUpdateParams,
-    type MailingListImportListParams as MailingListImportListParams,
+    type MailingListImportListParams as MailingListImportListParams
   };
 
   export {
@@ -414,10 +304,12 @@ export declare namespace PrintMail {
     type MailingListCreateParams as MailingListCreateParams,
     type MailingListUpdateParams as MailingListUpdateParams,
     type MailingListListParams as MailingListListParams,
-    type MailingListJobsParams as MailingListJobsParams,
+    type MailingListJobsParams as MailingListJobsParams
   };
 
-  export { OrderProfiles as OrderProfiles };
+  export {
+    OrderProfiles as OrderProfiles
+  };
 
   export {
     Postcards as Postcards,
@@ -425,7 +317,7 @@ export declare namespace PrintMail {
     type PostcardRetrieveURLResponse as PostcardRetrieveURLResponse,
     type PostcardsSkipLimit as PostcardsSkipLimit,
     type PostcardCreateParams as PostcardCreateParams,
-    type PostcardListParams as PostcardListParams,
+    type PostcardListParams as PostcardListParams
   };
 
   export {
@@ -436,7 +328,7 @@ export declare namespace PrintMail {
     type ReportCreateParams as ReportCreateParams,
     type ReportUpdateParams as ReportUpdateParams,
     type ReportListParams as ReportListParams,
-    type ReportSampleParams as ReportSampleParams,
+    type ReportSampleParams as ReportSampleParams
   };
 
   export {
@@ -445,7 +337,7 @@ export declare namespace PrintMail {
     type SelfMailerRetrieveURLResponse as SelfMailerRetrieveURLResponse,
     type SelfMailersSkipLimit as SelfMailersSkipLimit,
     type SelfMailerCreateParams as SelfMailerCreateParams,
-    type SelfMailerListParams as SelfMailerListParams,
+    type SelfMailerListParams as SelfMailerListParams
   };
 
   export {
@@ -457,7 +349,7 @@ export declare namespace PrintMail {
     type SubOrganizationsSkipLimit as SubOrganizationsSkipLimit,
     type SubOrganizationUpdateParams as SubOrganizationUpdateParams,
     type SubOrganizationListParams as SubOrganizationListParams,
-    type SubOrganizationRetrieveUsersParams as SubOrganizationRetrieveUsersParams,
+    type SubOrganizationRetrieveUsersParams as SubOrganizationRetrieveUsersParams
   };
 
   export {
@@ -467,6 +359,6 @@ export declare namespace PrintMail {
     type TemplatesSkipLimit as TemplatesSkipLimit,
     type TemplateCreateParams as TemplateCreateParams,
     type TemplateUpdateParams as TemplateUpdateParams,
-    type TemplateListParams as TemplateListParams,
+    type TemplateListParams as TemplateListParams
   };
 }

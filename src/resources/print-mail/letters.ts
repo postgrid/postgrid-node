@@ -55,10 +55,7 @@ export class Letters extends APIResource {
    * }
    * ```
    */
-  list(
-    query: LetterListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): PagePromise<LettersSkipLimit, Letter> {
+  list(query: LetterListParams | null | undefined = {}, options?: RequestOptions): PagePromise<LettersSkipLimit, Letter> {
     return this._client.getAPIList('/print-mail/v1/letters', SkipLimit<Letter>, { query, ...options });
   }
 
@@ -94,12 +91,12 @@ export class Letters extends APIResource {
   }
 }
 
-export type LettersSkipLimit = SkipLimit<Letter>;
+export type LettersSkipLimit = SkipLimit<Letter>
 
 /**
  * Enum representing the placement of the address on the letter.
  */
-export type AddressPlacement = 'top_first_page' | 'insert_blank_page';
+export type AddressPlacement = 'top_first_page' | 'insert_blank_page'
 
 /**
  * Model representing an attached PDF.
@@ -161,33 +158,7 @@ export interface Letter {
    * The mailing class of this order. This determines the speed and cost of delivery.
    * See `OrderMailingClass` for more details.
    */
-  mailingClass:
-    | 'first_class'
-    | 'standard_class'
-    | 'express'
-    | 'certified'
-    | 'certified_return_receipt'
-    | 'registered'
-    | 'usps_first_class'
-    | 'usps_standard_class'
-    | 'usps_eddm'
-    | 'usps_express_2_day'
-    | 'usps_express_3_day'
-    | 'usps_first_class_certified'
-    | 'usps_first_class_certified_return_receipt'
-    | 'usps_first_class_registered'
-    | 'usps_express_3_day_signature_confirmation'
-    | 'usps_express_3_day_certified'
-    | 'usps_express_3_day_certified_return_receipt'
-    | 'ca_post_lettermail'
-    | 'ca_post_personalized'
-    | 'ca_post_neighbourhood_mail'
-    | 'ups_express_overnight'
-    | 'ups_express_2_day'
-    | 'ups_express_3_day'
-    | 'royal_mail_first_class'
-    | 'royal_mail_second_class'
-    | 'au_post_second_class';
+  mailingClass: 'first_class' | 'standard_class' | 'express' | 'certified' | 'certified_return_receipt' | 'registered' | 'usps_first_class' | 'usps_standard_class' | 'usps_eddm' | 'usps_express_2_day' | 'usps_express_3_day' | 'usps_first_class_certified' | 'usps_first_class_certified_return_receipt' | 'usps_first_class_registered' | 'usps_express_3_day_signature_confirmation' | 'usps_express_3_day_certified' | 'usps_express_3_day_certified_return_receipt' | 'ca_post_lettermail' | 'ca_post_personalized' | 'ca_post_neighbourhood_mail' | 'ups_express_overnight' | 'ups_express_2_day' | 'ups_express_3_day' | 'royal_mail_first_class' | 'royal_mail_second_class' | 'au_post_second_class';
 
   /**
    * Always `letter`.
@@ -354,7 +325,7 @@ export namespace Letter {
 /**
  * Enum representing the supported letter sizes.
  */
-export type LetterSize = 'us_letter' | 'a4';
+export type LetterSize = 'us_letter' | 'a4'
 
 /**
  * Model representing a plastic card.
@@ -446,10 +417,7 @@ export interface LetterRetrieveURLResponse {
   url: string;
 }
 
-export type LetterCreateParams =
-  | LetterCreateParams.LetterCreateWithHTML
-  | LetterCreateParams.LetterCreateWithTemplate
-  | LetterCreateParams.LetterCreateWithPdf;
+export type LetterCreateParams = LetterCreateParams.LetterCreateWithHTML | LetterCreateParams.LetterCreateWithTemplate | LetterCreateParams.LetterCreateWithPdf
 
 export declare namespace LetterCreateParams {
   export interface LetterCreateWithHTML {
@@ -509,33 +477,7 @@ export declare namespace LetterCreateParams {
      * The mailing class of this order. If not provided, automatically set to
      * `first_class`.
      */
-    mailingClass?:
-      | 'first_class'
-      | 'standard_class'
-      | 'express'
-      | 'certified'
-      | 'certified_return_receipt'
-      | 'registered'
-      | 'usps_first_class'
-      | 'usps_standard_class'
-      | 'usps_eddm'
-      | 'usps_express_2_day'
-      | 'usps_express_3_day'
-      | 'usps_first_class_certified'
-      | 'usps_first_class_certified_return_receipt'
-      | 'usps_first_class_registered'
-      | 'usps_express_3_day_signature_confirmation'
-      | 'usps_express_3_day_certified'
-      | 'usps_express_3_day_certified_return_receipt'
-      | 'ca_post_lettermail'
-      | 'ca_post_personalized'
-      | 'ca_post_neighbourhood_mail'
-      | 'ups_express_overnight'
-      | 'ups_express_2_day'
-      | 'ups_express_3_day'
-      | 'royal_mail_first_class'
-      | 'royal_mail_second_class'
-      | 'au_post_second_class';
+    mailingClass?: 'first_class' | 'standard_class' | 'express' | 'certified' | 'certified_return_receipt' | 'registered' | 'usps_first_class' | 'usps_standard_class' | 'usps_eddm' | 'usps_express_2_day' | 'usps_express_3_day' | 'usps_first_class_certified' | 'usps_first_class_certified_return_receipt' | 'usps_first_class_registered' | 'usps_express_3_day_signature_confirmation' | 'usps_express_3_day_certified' | 'usps_express_3_day_certified_return_receipt' | 'ca_post_lettermail' | 'ca_post_personalized' | 'ca_post_neighbourhood_mail' | 'ups_express_overnight' | 'ups_express_2_day' | 'ups_express_3_day' | 'royal_mail_first_class' | 'royal_mail_second_class' | 'au_post_second_class';
 
     /**
      * These will be merged with the variables in the template or HTML you create this
@@ -642,33 +584,7 @@ export declare namespace LetterCreateParams {
      * The mailing class of this order. If not provided, automatically set to
      * `first_class`.
      */
-    mailingClass?:
-      | 'first_class'
-      | 'standard_class'
-      | 'express'
-      | 'certified'
-      | 'certified_return_receipt'
-      | 'registered'
-      | 'usps_first_class'
-      | 'usps_standard_class'
-      | 'usps_eddm'
-      | 'usps_express_2_day'
-      | 'usps_express_3_day'
-      | 'usps_first_class_certified'
-      | 'usps_first_class_certified_return_receipt'
-      | 'usps_first_class_registered'
-      | 'usps_express_3_day_signature_confirmation'
-      | 'usps_express_3_day_certified'
-      | 'usps_express_3_day_certified_return_receipt'
-      | 'ca_post_lettermail'
-      | 'ca_post_personalized'
-      | 'ca_post_neighbourhood_mail'
-      | 'ups_express_overnight'
-      | 'ups_express_2_day'
-      | 'ups_express_3_day'
-      | 'royal_mail_first_class'
-      | 'royal_mail_second_class'
-      | 'au_post_second_class';
+    mailingClass?: 'first_class' | 'standard_class' | 'express' | 'certified' | 'certified_return_receipt' | 'registered' | 'usps_first_class' | 'usps_standard_class' | 'usps_eddm' | 'usps_express_2_day' | 'usps_express_3_day' | 'usps_first_class_certified' | 'usps_first_class_certified_return_receipt' | 'usps_first_class_registered' | 'usps_express_3_day_signature_confirmation' | 'usps_express_3_day_certified' | 'usps_express_3_day_certified_return_receipt' | 'ca_post_lettermail' | 'ca_post_personalized' | 'ca_post_neighbourhood_mail' | 'ups_express_overnight' | 'ups_express_2_day' | 'ups_express_3_day' | 'royal_mail_first_class' | 'royal_mail_second_class' | 'au_post_second_class';
 
     /**
      * These will be merged with the variables in the template or HTML you create this
@@ -733,6 +649,6 @@ export declare namespace Letters {
     type LetterRetrieveURLResponse as LetterRetrieveURLResponse,
     type LettersSkipLimit as LettersSkipLimit,
     type LetterCreateParams as LetterCreateParams,
-    type LetterListParams as LetterListParams,
+    type LetterListParams as LetterListParams
   };
 }

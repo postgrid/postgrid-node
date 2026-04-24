@@ -28,16 +28,9 @@ export class IntlAddressVerification extends APIResource {
    *   });
    * ```
    */
-  verify(
-    params: IntlAddressVerificationVerifyParams,
-    options?: RequestOptions,
-  ): APIPromise<IntlAddressVerificationVerifyResponse> {
-    const { geoData, includeDetails, properCase, ...body } = params;
-    return this._client.post('/v1/intl_addver/verifications', {
-      query: { geoData, includeDetails, properCase },
-      body,
-      ...options,
-    });
+  verify(params: IntlAddressVerificationVerifyParams, options?: RequestOptions): APIPromise<IntlAddressVerificationVerifyResponse> {
+    const { geoData, includeDetails, properCase, ...body } = params
+    return this._client.post('/v1/intl_addver/verifications', { query: { geoData, includeDetails, properCase }, body, ...options });
   }
 }
 
@@ -383,9 +376,7 @@ export namespace IntlAddressVerificationVerifyResponse {
   }
 }
 
-export type IntlAddressVerificationVerifyParams =
-  | IntlAddressVerificationVerifyParams.StructuredAddressInput
-  | IntlAddressVerificationVerifyParams.FreeformAddressInput;
+export type IntlAddressVerificationVerifyParams = IntlAddressVerificationVerifyParams.StructuredAddressInput | IntlAddressVerificationVerifyParams.FreeformAddressInput
 
 export declare namespace IntlAddressVerificationVerifyParams {
   export interface StructuredAddressInput {
@@ -480,6 +471,6 @@ export declare namespace IntlAddressVerificationVerifyParams {
 export declare namespace IntlAddressVerification {
   export {
     type IntlAddressVerificationVerifyResponse as IntlAddressVerificationVerifyResponse,
-    type IntlAddressVerificationVerifyParams as IntlAddressVerificationVerifyParams,
+    type IntlAddressVerificationVerifyParams as IntlAddressVerificationVerifyParams
   };
 }

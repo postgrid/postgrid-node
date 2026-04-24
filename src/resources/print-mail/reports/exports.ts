@@ -49,12 +49,8 @@ export class Exports extends APIResource {
    *   );
    * ```
    */
-  retrieve(
-    exportID: string,
-    params: ExportRetrieveParams,
-    options?: RequestOptions,
-  ): APIPromise<ReportExport> {
-    const { reportID } = params;
+  retrieve(exportID: string, params: ExportRetrieveParams, options?: RequestOptions): APIPromise<ReportExport> {
+    const { reportID } = params
     return this._client.get(path`/print-mail/v1/reports/${reportID}/exports/${exportID}`, options);
   }
 
@@ -72,12 +68,8 @@ export class Exports extends APIResource {
    *   );
    * ```
    */
-  delete(
-    exportID: string,
-    params: ExportDeleteParams,
-    options?: RequestOptions,
-  ): APIPromise<ReportsAPI.DeletedResponse> {
-    const { reportID } = params;
+  delete(exportID: string, params: ExportDeleteParams, options?: RequestOptions): APIPromise<ReportsAPI.DeletedResponse> {
+    const { reportID } = params
     return this._client.delete(path`/print-mail/v1/reports/${reportID}/exports/${exportID}`, options);
   }
 }
@@ -211,6 +203,6 @@ export declare namespace Exports {
     type ReportExport as ReportExport,
     type ExportCreateParams as ExportCreateParams,
     type ExportRetrieveParams as ExportRetrieveParams,
-    type ExportDeleteParams as ExportDeleteParams,
+    type ExportDeleteParams as ExportDeleteParams
   };
 }

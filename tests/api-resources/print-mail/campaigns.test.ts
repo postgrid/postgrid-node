@@ -5,7 +5,7 @@ import PostGrid from 'postgrid-node';
 const client = new PostGrid({
   addressVerificationAPIKey: 'My Address Verification API Key',
   printMailAPIKey: 'My Print Mail API Key',
-  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
+  baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010',
 });
 
 describe('resource campaigns', () => {
@@ -24,17 +24,17 @@ describe('resource campaigns', () => {
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.printMail.campaigns.create({
-      mailingList: 'mailingList',
-      chequeProfile: 'chequeProfile',
-      defaultSenderContact: 'defaultSenderContact',
-      description: 'description',
-      letterProfile: 'letterProfile',
-      metadata: { foo: 'bar' },
-      postcardProfile: 'postcardProfile',
-      selfMailerProfile: 'selfMailerProfile',
-      sendDate: '2019-12-27T18:11:19.117Z',
-      'idempotency-key': 'idempotency-key',
-    });
+    mailingList: 'mailingList',
+    chequeProfile: 'chequeProfile',
+    defaultSenderContact: 'defaultSenderContact',
+    description: 'description',
+    letterProfile: 'letterProfile',
+    metadata: { foo: 'bar' },
+    postcardProfile: 'postcardProfile',
+    selfMailerProfile: 'selfMailerProfile',
+    sendDate: '2019-12-27T18:11:19.117Z',
+    'idempotency-key': 'idempotency-key',
+  });
   });
 
   // Mock server tests are disabled
@@ -76,16 +76,13 @@ describe('resource campaigns', () => {
   // Mock server tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.printMail.campaigns.list(
-        {
-          limit: 0,
-          search: 'search',
-          skip: 0,
-        },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(PostGrid.NotFoundError);
+    await expect(client.printMail.campaigns.list({
+    limit: 0,
+    search: 'search',
+    skip: 0,
+  }, { path: '/_stainless_unknown_path' }))
+      .rejects
+      .toThrow(PostGrid.NotFoundError);
   });
 
   // Mock server tests are disabled
