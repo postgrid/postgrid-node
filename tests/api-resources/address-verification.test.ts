@@ -5,7 +5,7 @@ import PostGrid from 'postgrid-node';
 const client = new PostGrid({
   addressVerificationAPIKey: 'My Address Verification API Key',
   printMailAPIKey: 'My Print Mail API Key',
-  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
+  baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010',
 });
 
 describe('resource addressVerification', () => {
@@ -24,10 +24,10 @@ describe('resource addressVerification', () => {
   // Mock server tests are disabled
   test.skip('verify: required and optional params', async () => {
     const response = await client.addressVerification.verify({
-      address: 'address',
-      geocode: true,
-      includeDetails: true,
-      properCase: true,
-    });
+    address: 'address',
+    geocode: true,
+    includeDetails: true,
+    properCase: true,
+  });
   });
 });

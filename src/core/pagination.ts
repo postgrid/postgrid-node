@@ -87,8 +87,7 @@ export class PagePromise<
     super(
       client,
       request,
-      async (client, props) =>
-        new Page(client, props.response, await defaultParseResponse(client, props), props.options),
+      async (client, props) => new Page(client, props.response, await defaultParseResponse(client, props), props.options)
     );
   }
 
@@ -130,12 +129,7 @@ export class SkipLimit<Item> extends AbstractPage<Item> implements SkipLimitResp
 
   totalCount: number;
 
-  constructor(
-    client: PostGrid,
-    response: Response,
-    body: SkipLimitResponse<Item>,
-    options: FinalRequestOptions,
-  ) {
+  constructor(client: PostGrid, response: Response, body: SkipLimitResponse<Item>, options: FinalRequestOptions) {
     super(client, response, body, options);
 
     this.data = body.data || [];
@@ -158,14 +152,14 @@ export class SkipLimit<Item> extends AbstractPage<Item> implements SkipLimitResp
 
     if (currentCount < totalCount) {
       return {
-        ...this.options,
-        query: {
-          ...maybeObj(this.options.query),
-          skip: currentCount,
-        },
-      };
+      ...this.options,
+      query: {
+        ...maybeObj(this.options.query),
+        skip: currentCount,
+      },
+    };
     }
 
-    return null;
+    return null
   }
 }

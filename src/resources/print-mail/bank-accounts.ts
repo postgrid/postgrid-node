@@ -58,14 +58,8 @@ export class BankAccounts extends APIResource {
    * }
    * ```
    */
-  list(
-    query: BankAccountListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): PagePromise<BankAccountsSkipLimit, BankAccount> {
-    return this._client.getAPIList('/print-mail/v1/bank_accounts', SkipLimit<BankAccount>, {
-      query,
-      ...options,
-    });
+  list(query: BankAccountListParams | null | undefined = {}, options?: RequestOptions): PagePromise<BankAccountsSkipLimit, BankAccount> {
+    return this._client.getAPIList('/print-mail/v1/bank_accounts', SkipLimit<BankAccount>, { query, ...options });
   }
 
   /**
@@ -82,7 +76,7 @@ export class BankAccounts extends APIResource {
   }
 }
 
-export type BankAccountsSkipLimit = SkipLimit<BankAccount>;
+export type BankAccountsSkipLimit = SkipLimit<BankAccount>
 
 export interface BankAccount {
   /**
@@ -184,7 +178,7 @@ export interface BankAccount {
  * Countries typically have different bank account formats and standards. These are
  * the countries which PostGrid's bank accounts API supports.
  */
-export type BankAccountCountryCode = 'CA' | 'US';
+export type BankAccountCountryCode = 'CA' | 'US'
 
 export interface BankAccountDeleteResponse {
   /**
@@ -200,10 +194,7 @@ export interface BankAccountDeleteResponse {
   object: 'bank_account';
 }
 
-export type BankAccountCreateParams =
-  | BankAccountCreateParams.BankAccountCreateSignatureText
-  | BankAccountCreateParams.BankAccountCreateSignatureImageURL
-  | BankAccountCreateParams.BankAccountCreateSignatureImageFile;
+export type BankAccountCreateParams = BankAccountCreateParams.BankAccountCreateSignatureText | BankAccountCreateParams.BankAccountCreateSignatureImageURL | BankAccountCreateParams.BankAccountCreateSignatureImageFile
 
 export declare namespace BankAccountCreateParams {
   export interface BankAccountCreateSignatureText {
@@ -419,6 +410,6 @@ export declare namespace BankAccounts {
     type BankAccountDeleteResponse as BankAccountDeleteResponse,
     type BankAccountsSkipLimit as BankAccountsSkipLimit,
     type BankAccountCreateParams as BankAccountCreateParams,
-    type BankAccountListParams as BankAccountListParams,
+    type BankAccountListParams as BankAccountListParams
   };
 }

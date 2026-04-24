@@ -59,14 +59,8 @@ export class SelfMailers extends APIResource {
    * }
    * ```
    */
-  list(
-    query: SelfMailerListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): PagePromise<SelfMailersSkipLimit, SelfMailer> {
-    return this._client.getAPIList('/print-mail/v1/self_mailers', SkipLimit<SelfMailer>, {
-      query,
-      ...options,
-    });
+  list(query: SelfMailerListParams | null | undefined = {}, options?: RequestOptions): PagePromise<SelfMailersSkipLimit, SelfMailer> {
+    return this._client.getAPIList('/print-mail/v1/self_mailers', SkipLimit<SelfMailer>, { query, ...options });
   }
 
   /**
@@ -101,7 +95,7 @@ export class SelfMailers extends APIResource {
   }
 }
 
-export type SelfMailersSkipLimit = SkipLimit<SelfMailer>;
+export type SelfMailersSkipLimit = SkipLimit<SelfMailer>
 
 export interface SelfMailer {
   /**
@@ -128,33 +122,7 @@ export interface SelfMailer {
    * The mailing class of this order. This determines the speed and cost of delivery.
    * See `OrderMailingClass` for more details.
    */
-  mailingClass:
-    | 'first_class'
-    | 'standard_class'
-    | 'express'
-    | 'certified'
-    | 'certified_return_receipt'
-    | 'registered'
-    | 'usps_first_class'
-    | 'usps_standard_class'
-    | 'usps_eddm'
-    | 'usps_express_2_day'
-    | 'usps_express_3_day'
-    | 'usps_first_class_certified'
-    | 'usps_first_class_certified_return_receipt'
-    | 'usps_first_class_registered'
-    | 'usps_express_3_day_signature_confirmation'
-    | 'usps_express_3_day_certified'
-    | 'usps_express_3_day_certified_return_receipt'
-    | 'ca_post_lettermail'
-    | 'ca_post_personalized'
-    | 'ca_post_neighbourhood_mail'
-    | 'ups_express_overnight'
-    | 'ups_express_2_day'
-    | 'ups_express_3_day'
-    | 'royal_mail_first_class'
-    | 'royal_mail_second_class'
-    | 'au_post_second_class';
+  mailingClass: 'first_class' | 'standard_class' | 'express' | 'certified' | 'certified_return_receipt' | 'registered' | 'usps_first_class' | 'usps_standard_class' | 'usps_eddm' | 'usps_express_2_day' | 'usps_express_3_day' | 'usps_first_class_certified' | 'usps_first_class_certified_return_receipt' | 'usps_first_class_registered' | 'usps_express_3_day_signature_confirmation' | 'usps_express_3_day_certified' | 'usps_express_3_day_certified_return_receipt' | 'ca_post_lettermail' | 'ca_post_personalized' | 'ca_post_neighbourhood_mail' | 'ups_express_overnight' | 'ups_express_2_day' | 'ups_express_3_day' | 'royal_mail_first_class' | 'royal_mail_second_class' | 'au_post_second_class';
 
   /**
    * Always `self_mailer`.
@@ -289,11 +257,7 @@ export interface SelfMailerRetrieveURLResponse {
   url: string;
 }
 
-export type SelfMailerCreateParams =
-  | SelfMailerCreateParams.SelfMailerCreateWithHTML
-  | SelfMailerCreateParams.SelfMailerCreateWithTemplate
-  | SelfMailerCreateParams.SelfMailerCreateWithPdfurl
-  | SelfMailerCreateParams.SelfMailerCreateWithPdfFile;
+export type SelfMailerCreateParams = SelfMailerCreateParams.SelfMailerCreateWithHTML | SelfMailerCreateParams.SelfMailerCreateWithTemplate | SelfMailerCreateParams.SelfMailerCreateWithPdfurl | SelfMailerCreateParams.SelfMailerCreateWithPdfFile
 
 export declare namespace SelfMailerCreateParams {
   export interface SelfMailerCreateWithHTML {
@@ -338,33 +302,7 @@ export declare namespace SelfMailerCreateParams {
      * The mailing class of this order. If not provided, automatically set to
      * `first_class`.
      */
-    mailingClass?:
-      | 'first_class'
-      | 'standard_class'
-      | 'express'
-      | 'certified'
-      | 'certified_return_receipt'
-      | 'registered'
-      | 'usps_first_class'
-      | 'usps_standard_class'
-      | 'usps_eddm'
-      | 'usps_express_2_day'
-      | 'usps_express_3_day'
-      | 'usps_first_class_certified'
-      | 'usps_first_class_certified_return_receipt'
-      | 'usps_first_class_registered'
-      | 'usps_express_3_day_signature_confirmation'
-      | 'usps_express_3_day_certified'
-      | 'usps_express_3_day_certified_return_receipt'
-      | 'ca_post_lettermail'
-      | 'ca_post_personalized'
-      | 'ca_post_neighbourhood_mail'
-      | 'ups_express_overnight'
-      | 'ups_express_2_day'
-      | 'ups_express_3_day'
-      | 'royal_mail_first_class'
-      | 'royal_mail_second_class'
-      | 'au_post_second_class';
+    mailingClass?: 'first_class' | 'standard_class' | 'express' | 'certified' | 'certified_return_receipt' | 'registered' | 'usps_first_class' | 'usps_standard_class' | 'usps_eddm' | 'usps_express_2_day' | 'usps_express_3_day' | 'usps_first_class_certified' | 'usps_first_class_certified_return_receipt' | 'usps_first_class_registered' | 'usps_express_3_day_signature_confirmation' | 'usps_express_3_day_certified' | 'usps_express_3_day_certified_return_receipt' | 'ca_post_lettermail' | 'ca_post_personalized' | 'ca_post_neighbourhood_mail' | 'ups_express_overnight' | 'ups_express_2_day' | 'ups_express_3_day' | 'royal_mail_first_class' | 'royal_mail_second_class' | 'au_post_second_class';
 
     /**
      * These will be merged with the variables in the template or HTML you create this
@@ -437,33 +375,7 @@ export declare namespace SelfMailerCreateParams {
      * The mailing class of this order. If not provided, automatically set to
      * `first_class`.
      */
-    mailingClass?:
-      | 'first_class'
-      | 'standard_class'
-      | 'express'
-      | 'certified'
-      | 'certified_return_receipt'
-      | 'registered'
-      | 'usps_first_class'
-      | 'usps_standard_class'
-      | 'usps_eddm'
-      | 'usps_express_2_day'
-      | 'usps_express_3_day'
-      | 'usps_first_class_certified'
-      | 'usps_first_class_certified_return_receipt'
-      | 'usps_first_class_registered'
-      | 'usps_express_3_day_signature_confirmation'
-      | 'usps_express_3_day_certified'
-      | 'usps_express_3_day_certified_return_receipt'
-      | 'ca_post_lettermail'
-      | 'ca_post_personalized'
-      | 'ca_post_neighbourhood_mail'
-      | 'ups_express_overnight'
-      | 'ups_express_2_day'
-      | 'ups_express_3_day'
-      | 'royal_mail_first_class'
-      | 'royal_mail_second_class'
-      | 'au_post_second_class';
+    mailingClass?: 'first_class' | 'standard_class' | 'express' | 'certified' | 'certified_return_receipt' | 'registered' | 'usps_first_class' | 'usps_standard_class' | 'usps_eddm' | 'usps_express_2_day' | 'usps_express_3_day' | 'usps_first_class_certified' | 'usps_first_class_certified_return_receipt' | 'usps_first_class_registered' | 'usps_express_3_day_signature_confirmation' | 'usps_express_3_day_certified' | 'usps_express_3_day_certified_return_receipt' | 'ca_post_lettermail' | 'ca_post_personalized' | 'ca_post_neighbourhood_mail' | 'ups_express_overnight' | 'ups_express_2_day' | 'ups_express_3_day' | 'royal_mail_first_class' | 'royal_mail_second_class' | 'au_post_second_class';
 
     /**
      * These will be merged with the variables in the template or HTML you create this
@@ -521,33 +433,7 @@ export declare namespace SelfMailerCreateParams {
      * The mailing class of this order. If not provided, automatically set to
      * `first_class`.
      */
-    mailingClass?:
-      | 'first_class'
-      | 'standard_class'
-      | 'express'
-      | 'certified'
-      | 'certified_return_receipt'
-      | 'registered'
-      | 'usps_first_class'
-      | 'usps_standard_class'
-      | 'usps_eddm'
-      | 'usps_express_2_day'
-      | 'usps_express_3_day'
-      | 'usps_first_class_certified'
-      | 'usps_first_class_certified_return_receipt'
-      | 'usps_first_class_registered'
-      | 'usps_express_3_day_signature_confirmation'
-      | 'usps_express_3_day_certified'
-      | 'usps_express_3_day_certified_return_receipt'
-      | 'ca_post_lettermail'
-      | 'ca_post_personalized'
-      | 'ca_post_neighbourhood_mail'
-      | 'ups_express_overnight'
-      | 'ups_express_2_day'
-      | 'ups_express_3_day'
-      | 'royal_mail_first_class'
-      | 'royal_mail_second_class'
-      | 'au_post_second_class';
+    mailingClass?: 'first_class' | 'standard_class' | 'express' | 'certified' | 'certified_return_receipt' | 'registered' | 'usps_first_class' | 'usps_standard_class' | 'usps_eddm' | 'usps_express_2_day' | 'usps_express_3_day' | 'usps_first_class_certified' | 'usps_first_class_certified_return_receipt' | 'usps_first_class_registered' | 'usps_express_3_day_signature_confirmation' | 'usps_express_3_day_certified' | 'usps_express_3_day_certified_return_receipt' | 'ca_post_lettermail' | 'ca_post_personalized' | 'ca_post_neighbourhood_mail' | 'ups_express_overnight' | 'ups_express_2_day' | 'ups_express_3_day' | 'royal_mail_first_class' | 'royal_mail_second_class' | 'au_post_second_class';
 
     /**
      * These will be merged with the variables in the template or HTML you create this
@@ -587,6 +473,6 @@ export declare namespace SelfMailers {
     type SelfMailerRetrieveURLResponse as SelfMailerRetrieveURLResponse,
     type SelfMailersSkipLimit as SelfMailersSkipLimit,
     type SelfMailerCreateParams as SelfMailerCreateParams,
-    type SelfMailerListParams as SelfMailerListParams,
+    type SelfMailerListParams as SelfMailerListParams
   };
 }

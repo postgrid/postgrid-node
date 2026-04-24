@@ -5,22 +5,22 @@ import PostGrid from 'postgrid-node';
 const client = new PostGrid({
   addressVerificationAPIKey: 'My Address Verification API Key',
   printMailAPIKey: 'My Print Mail API Key',
-  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
+  baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010',
 });
 
 describe('resource postcards', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.printMail.postcards.create({
-      backHTML: 'backHTML',
-      frontHTML: 'frontHTML',
-      size: '6x4',
-      to: {
-        addressLine1: 'addressLine1',
-        countryCode: 'countryCode',
-        firstName: 'firstName',
-      },
-    });
+    backHTML: 'backHTML',
+    frontHTML: 'frontHTML',
+    size: '6x4',
+    to: {
+    addressLine1: 'addressLine1',
+    countryCode: 'countryCode',
+    firstName: 'firstName',
+  },
+  });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -33,51 +33,51 @@ describe('resource postcards', () => {
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.printMail.postcards.create({
-      backHTML: 'backHTML',
-      frontHTML: 'frontHTML',
-      size: '6x4',
-      to: {
-        addressLine1: 'addressLine1',
-        countryCode: 'countryCode',
-        firstName: 'firstName',
-        addressLine2: 'addressLine2',
-        city: 'city',
-        companyName: 'companyName',
-        description: 'description',
-        email: 'email',
-        forceVerifiedStatus: true,
-        jobTitle: 'jobTitle',
-        lastName: 'lastName',
-        metadata: { foo: 'bar' },
-        phoneNumber: 'phoneNumber',
-        postalOrZip: 'postalOrZip',
-        provinceOrState: 'provinceOrState',
-        skipVerification: true,
-      },
-      description: 'description',
-      from: {
-        addressLine1: 'addressLine1',
-        countryCode: 'countryCode',
-        firstName: 'firstName',
-        addressLine2: 'addressLine2',
-        city: 'city',
-        companyName: 'companyName',
-        description: 'description',
-        email: 'email',
-        forceVerifiedStatus: true,
-        jobTitle: 'jobTitle',
-        lastName: 'lastName',
-        metadata: { foo: 'bar' },
-        phoneNumber: 'phoneNumber',
-        postalOrZip: 'postalOrZip',
-        provinceOrState: 'provinceOrState',
-        skipVerification: true,
-      },
-      mailingClass: 'first_class',
-      mergeVariables: { foo: 'bar' },
-      metadata: { foo: 'bar' },
-      sendDate: '2019-12-27T18:11:19.117Z',
-    });
+    backHTML: 'backHTML',
+    frontHTML: 'frontHTML',
+    size: '6x4',
+    to: {
+    addressLine1: 'addressLine1',
+    countryCode: 'countryCode',
+    firstName: 'firstName',
+    addressLine2: 'addressLine2',
+    city: 'city',
+    companyName: 'companyName',
+    description: 'description',
+    email: 'email',
+    forceVerifiedStatus: true,
+    jobTitle: 'jobTitle',
+    lastName: 'lastName',
+    metadata: { foo: 'bar' },
+    phoneNumber: 'phoneNumber',
+    postalOrZip: 'postalOrZip',
+    provinceOrState: 'provinceOrState',
+    skipVerification: true,
+  },
+    description: 'description',
+    from: {
+    addressLine1: 'addressLine1',
+    countryCode: 'countryCode',
+    firstName: 'firstName',
+    addressLine2: 'addressLine2',
+    city: 'city',
+    companyName: 'companyName',
+    description: 'description',
+    email: 'email',
+    forceVerifiedStatus: true,
+    jobTitle: 'jobTitle',
+    lastName: 'lastName',
+    metadata: { foo: 'bar' },
+    phoneNumber: 'phoneNumber',
+    postalOrZip: 'postalOrZip',
+    provinceOrState: 'provinceOrState',
+    skipVerification: true,
+  },
+    mailingClass: 'first_class',
+    mergeVariables: { foo: 'bar' },
+    metadata: { foo: 'bar' },
+    sendDate: '2019-12-27T18:11:19.117Z',
+  });
   });
 
   // Mock server tests are disabled
@@ -107,16 +107,13 @@ describe('resource postcards', () => {
   // Mock server tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.printMail.postcards.list(
-        {
-          limit: 0,
-          search: 'search',
-          skip: 0,
-        },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(PostGrid.NotFoundError);
+    await expect(client.printMail.postcards.list({
+    limit: 0,
+    search: 'search',
+    skip: 0,
+  }, { path: '/_stainless_unknown_path' }))
+      .rejects
+      .toThrow(PostGrid.NotFoundError);
   });
 
   // Mock server tests are disabled

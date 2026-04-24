@@ -62,10 +62,7 @@ export class Contacts extends APIResource {
    * }
    * ```
    */
-  list(
-    query: ContactListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): PagePromise<ContactsSkipLimit, Contact> {
+  list(query: ContactListParams | null | undefined = {}, options?: RequestOptions): PagePromise<ContactsSkipLimit, Contact> {
     return this._client.getAPIList('/print-mail/v1/contacts', SkipLimit<Contact>, { query, ...options });
   }
 
@@ -85,7 +82,7 @@ export class Contacts extends APIResource {
   }
 }
 
-export type ContactsSkipLimit = SkipLimit<Contact>;
+export type ContactsSkipLimit = SkipLimit<Contact>
 
 export interface Contact {
   /**
@@ -208,9 +205,7 @@ export interface Contact {
   skipVerification?: boolean;
 }
 
-export type ContactCreate =
-  | PrintMailAPI.ContactCreateWithFirstName
-  | PrintMailAPI.ContactCreateWithCompanyName;
+export type ContactCreate = PrintMailAPI.ContactCreateWithFirstName | PrintMailAPI.ContactCreateWithCompanyName
 
 export interface ContactDeleteResponse {
   /**
@@ -226,9 +221,7 @@ export interface ContactDeleteResponse {
   object: 'contact';
 }
 
-export type ContactCreateParams =
-  | ContactCreateParams.ContactCreateWithFirstName
-  | ContactCreateParams.ContactCreateWithCompanyName;
+export type ContactCreateParams = ContactCreateParams.ContactCreateWithFirstName | ContactCreateParams.ContactCreateWithCompanyName
 
 export declare namespace ContactCreateParams {
   export interface ContactCreateWithFirstName {
@@ -414,6 +407,6 @@ export declare namespace Contacts {
     type ContactDeleteResponse as ContactDeleteResponse,
     type ContactsSkipLimit as ContactsSkipLimit,
     type ContactCreateParams as ContactCreateParams,
-    type ContactListParams as ContactListParams,
+    type ContactListParams as ContactListParams
   };
 }
