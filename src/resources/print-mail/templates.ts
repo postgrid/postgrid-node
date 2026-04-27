@@ -66,7 +66,10 @@ export class Templates extends APIResource {
    * }
    * ```
    */
-  list(query: TemplateListParams | null | undefined = {}, options?: RequestOptions): PagePromise<TemplatesSkipLimit, Template> {
+  list(
+    query: TemplateListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<TemplatesSkipLimit, Template> {
     return this._client.getAPIList('/print-mail/v1/templates', SkipLimit<Template>, { query, ...options });
   }
 
@@ -85,7 +88,7 @@ export class Templates extends APIResource {
   }
 }
 
-export type TemplatesSkipLimit = SkipLimit<Template>
+export type TemplatesSkipLimit = SkipLimit<Template>;
 
 export interface Template {
   /**
@@ -198,6 +201,6 @@ export declare namespace Templates {
     type TemplatesSkipLimit as TemplatesSkipLimit,
     type TemplateCreateParams as TemplateCreateParams,
     type TemplateUpdateParams as TemplateUpdateParams,
-    type TemplateListParams as TemplateListParams
+    type TemplateListParams as TemplateListParams,
   };
 }

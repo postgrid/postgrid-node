@@ -86,6 +86,6 @@ export declare namespace Samples {
   export {
     type ReportSample as ReportSample,
     type ReportSampleCreateBase as ReportSampleCreateBase,
-    type SampleCreateParams as SampleCreateParams
+    type SampleCreateParams as SampleCreateParams,
   };
 }

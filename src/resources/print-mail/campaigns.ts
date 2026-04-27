@@ -27,8 +27,15 @@ export class Campaigns extends APIResource {
    * ```
    */
   create(params: CampaignCreateParams, options?: RequestOptions): APIPromise<Campaign> {
-    const { 'idempotency-key': idempotencyKey, ...body } = params
-    return this._client.post('/print-mail/v1/campaigns', { body, ...options, headers: buildHeaders([{...(idempotencyKey != null ? { 'idempotency-key': idempotencyKey } : undefined)}, options?.headers]) });
+    const { 'idempotency-key': idempotencyKey, ...body } = params;
+    return this._client.post('/print-mail/v1/campaigns', {
+      body,
+      ...options,
+      headers: buildHeaders([
+        { ...(idempotencyKey != null ? { 'idempotency-key': idempotencyKey } : undefined) },
+        options?.headers,
+      ]),
+    });
   }
 
   /**
@@ -77,7 +84,10 @@ export class Campaigns extends APIResource {
    * }
    * ```
    */
-  list(query: CampaignListParams | null | undefined = {}, options?: RequestOptions): PagePromise<CampaignsSkipLimit, Campaign> {
+  list(
+    query: CampaignListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<CampaignsSkipLimit, Campaign> {
     return this._client.getAPIList('/print-mail/v1/campaigns', SkipLimit<Campaign>, { query, ...options });
   }
 
@@ -118,7 +128,7 @@ export class Campaigns extends APIResource {
   }
 }
 
-export type CampaignsSkipLimit = SkipLimit<Campaign>
+export type CampaignsSkipLimit = SkipLimit<Campaign>;
 
 /**
  * Represents a bulk mail campaign.
@@ -152,7 +162,14 @@ export interface Campaign {
   /**
    * Status of the campaign lifecycle.
    */
-  status: 'drafting' | 'changes_required' | 'creating_orders' | 'draft' | 'ready' | 'printing' | 'processed_for_delivery';
+  status:
+    | 'drafting'
+    | 'changes_required'
+    | 'creating_orders'
+    | 'draft'
+    | 'ready'
+    | 'printing'
+    | 'processed_for_delivery';
 
   /**
    * The UTC time at which this resource was last updated.
@@ -377,6 +394,6 @@ export declare namespace Campaigns {
     type CampaignCreateParams as CampaignCreateParams,
     type CampaignUpdateParams as CampaignUpdateParams,
     type CampaignListParams as CampaignListParams,
-    type CampaignSendParams as CampaignSendParams
+    type CampaignSendParams as CampaignSendParams,
   };
 }

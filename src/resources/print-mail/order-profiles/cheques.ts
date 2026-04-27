@@ -31,8 +31,12 @@ export class Cheques extends APIResource {
    * ```
    */
   create(params: ChequeCreateParams, options?: RequestOptions): APIPromise<ChequeProfile> {
-    const { expand, ...body } = params
-    return this._client.post('/print-mail/v1/order_profiles/cheques', { query: { expand }, body, ...options });
+    const { expand, ...body } = params;
+    return this._client.post('/print-mail/v1/order_profiles/cheques', {
+      query: { expand },
+      body,
+      ...options,
+    });
   }
 
   /**
@@ -46,7 +50,11 @@ export class Cheques extends APIResource {
    *   );
    * ```
    */
-  retrieve(id: string, query: ChequeRetrieveParams | null | undefined = {}, options?: RequestOptions): APIPromise<ChequeProfile> {
+  retrieve(
+    id: string,
+    query: ChequeRetrieveParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<ChequeProfile> {
     return this._client.get(path`/print-mail/v1/order_profiles/cheques/${id}`, { query, ...options });
   }
 
@@ -64,8 +72,12 @@ export class Cheques extends APIResource {
    * ```
    */
   update(id: string, params: ChequeUpdateParams, options?: RequestOptions): APIPromise<ChequeProfile> {
-    const { expand, ...body } = params
-    return this._client.post(path`/print-mail/v1/order_profiles/cheques/${id}`, { query: { expand }, body, ...options });
+    const { expand, ...body } = params;
+    return this._client.post(path`/print-mail/v1/order_profiles/cheques/${id}`, {
+      query: { expand },
+      body,
+      ...options,
+    });
   }
 
   /**
@@ -79,8 +91,14 @@ export class Cheques extends APIResource {
    * }
    * ```
    */
-  list(query: ChequeListParams | null | undefined = {}, options?: RequestOptions): PagePromise<ChequeListResponsesSkipLimit, ChequeListResponse> {
-    return this._client.getAPIList('/print-mail/v1/order_profiles/cheques', SkipLimit<ChequeListResponse>, { query, ...options });
+  list(
+    query: ChequeListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<ChequeListResponsesSkipLimit, ChequeListResponse> {
+    return this._client.getAPIList('/print-mail/v1/order_profiles/cheques', SkipLimit<ChequeListResponse>, {
+      query,
+      ...options,
+    });
   }
 
   /**
@@ -97,7 +115,7 @@ export class Cheques extends APIResource {
   }
 }
 
-export type ChequeListResponsesSkipLimit = SkipLimit<ChequeListResponse>
+export type ChequeListResponsesSkipLimit = SkipLimit<ChequeListResponse>;
 
 export interface ChequeProfile {
   /**
@@ -166,7 +184,33 @@ export interface ChequeProfile {
    * Mailing class. Generally must be first class (or equivalent for destination
    * country) for cheques.
    */
-  mailingClass?: 'first_class' | 'standard_class' | 'express' | 'certified' | 'certified_return_receipt' | 'registered' | 'usps_first_class' | 'usps_standard_class' | 'usps_eddm' | 'usps_express_2_day' | 'usps_express_3_day' | 'usps_first_class_certified' | 'usps_first_class_certified_return_receipt' | 'usps_first_class_registered' | 'usps_express_3_day_signature_confirmation' | 'usps_express_3_day_certified' | 'usps_express_3_day_certified_return_receipt' | 'ca_post_lettermail' | 'ca_post_personalized' | 'ca_post_neighbourhood_mail' | 'ups_express_overnight' | 'ups_express_2_day' | 'ups_express_3_day' | 'royal_mail_first_class' | 'royal_mail_second_class' | 'au_post_second_class';
+  mailingClass?:
+    | 'first_class'
+    | 'standard_class'
+    | 'express'
+    | 'certified'
+    | 'certified_return_receipt'
+    | 'registered'
+    | 'usps_first_class'
+    | 'usps_standard_class'
+    | 'usps_eddm'
+    | 'usps_express_2_day'
+    | 'usps_express_3_day'
+    | 'usps_first_class_certified'
+    | 'usps_first_class_certified_return_receipt'
+    | 'usps_first_class_registered'
+    | 'usps_express_3_day_signature_confirmation'
+    | 'usps_express_3_day_certified'
+    | 'usps_express_3_day_certified_return_receipt'
+    | 'ca_post_lettermail'
+    | 'ca_post_personalized'
+    | 'ca_post_neighbourhood_mail'
+    | 'ups_express_overnight'
+    | 'ups_express_2_day'
+    | 'ups_express_3_day'
+    | 'royal_mail_first_class'
+    | 'royal_mail_second_class'
+    | 'au_post_second_class';
 
   /**
    * Memo line text for the cheque. Set to `null` to remove during update.
@@ -192,7 +236,7 @@ export interface ChequeProfile {
 /**
  * Enum representing the supported currency codes.
  */
-export type CurrencyCode = 'CAD' | 'USD'
+export type CurrencyCode = 'CAD' | 'USD';
 
 export interface ChequeListResponse {
   /**
@@ -256,7 +300,33 @@ export interface ChequeListResponse {
    * Mailing class. Generally must be first class (or equivalent for destination
    * country) for cheques.
    */
-  mailingClass?: 'first_class' | 'standard_class' | 'express' | 'certified' | 'certified_return_receipt' | 'registered' | 'usps_first_class' | 'usps_standard_class' | 'usps_eddm' | 'usps_express_2_day' | 'usps_express_3_day' | 'usps_first_class_certified' | 'usps_first_class_certified_return_receipt' | 'usps_first_class_registered' | 'usps_express_3_day_signature_confirmation' | 'usps_express_3_day_certified' | 'usps_express_3_day_certified_return_receipt' | 'ca_post_lettermail' | 'ca_post_personalized' | 'ca_post_neighbourhood_mail' | 'ups_express_overnight' | 'ups_express_2_day' | 'ups_express_3_day' | 'royal_mail_first_class' | 'royal_mail_second_class' | 'au_post_second_class';
+  mailingClass?:
+    | 'first_class'
+    | 'standard_class'
+    | 'express'
+    | 'certified'
+    | 'certified_return_receipt'
+    | 'registered'
+    | 'usps_first_class'
+    | 'usps_standard_class'
+    | 'usps_eddm'
+    | 'usps_express_2_day'
+    | 'usps_express_3_day'
+    | 'usps_first_class_certified'
+    | 'usps_first_class_certified_return_receipt'
+    | 'usps_first_class_registered'
+    | 'usps_express_3_day_signature_confirmation'
+    | 'usps_express_3_day_certified'
+    | 'usps_express_3_day_certified_return_receipt'
+    | 'ca_post_lettermail'
+    | 'ca_post_personalized'
+    | 'ca_post_neighbourhood_mail'
+    | 'ups_express_overnight'
+    | 'ups_express_2_day'
+    | 'ups_express_3_day'
+    | 'royal_mail_first_class'
+    | 'royal_mail_second_class'
+    | 'au_post_second_class';
 
   /**
    * Memo line text for the cheque. Set to `null` to remove during update.
@@ -342,7 +412,33 @@ export interface ChequeCreateParams {
    * Body param: Mailing class. Generally must be first class (or equivalent for
    * destination country) for cheques.
    */
-  mailingClass?: 'first_class' | 'standard_class' | 'express' | 'certified' | 'certified_return_receipt' | 'registered' | 'usps_first_class' | 'usps_standard_class' | 'usps_eddm' | 'usps_express_2_day' | 'usps_express_3_day' | 'usps_first_class_certified' | 'usps_first_class_certified_return_receipt' | 'usps_first_class_registered' | 'usps_express_3_day_signature_confirmation' | 'usps_express_3_day_certified' | 'usps_express_3_day_certified_return_receipt' | 'ca_post_lettermail' | 'ca_post_personalized' | 'ca_post_neighbourhood_mail' | 'ups_express_overnight' | 'ups_express_2_day' | 'ups_express_3_day' | 'royal_mail_first_class' | 'royal_mail_second_class' | 'au_post_second_class';
+  mailingClass?:
+    | 'first_class'
+    | 'standard_class'
+    | 'express'
+    | 'certified'
+    | 'certified_return_receipt'
+    | 'registered'
+    | 'usps_first_class'
+    | 'usps_standard_class'
+    | 'usps_eddm'
+    | 'usps_express_2_day'
+    | 'usps_express_3_day'
+    | 'usps_first_class_certified'
+    | 'usps_first_class_certified_return_receipt'
+    | 'usps_first_class_registered'
+    | 'usps_express_3_day_signature_confirmation'
+    | 'usps_express_3_day_certified'
+    | 'usps_express_3_day_certified_return_receipt'
+    | 'ca_post_lettermail'
+    | 'ca_post_personalized'
+    | 'ca_post_neighbourhood_mail'
+    | 'ups_express_overnight'
+    | 'ups_express_2_day'
+    | 'ups_express_3_day'
+    | 'royal_mail_first_class'
+    | 'royal_mail_second_class'
+    | 'au_post_second_class';
 
   /**
    * Body param: Memo line text for the cheque. Set to `null` to remove during
@@ -423,7 +519,33 @@ export interface ChequeUpdateParams {
    * Body param: Mailing class. Generally must be first class (or equivalent for
    * destination country) for cheques.
    */
-  mailingClass?: 'first_class' | 'standard_class' | 'express' | 'certified' | 'certified_return_receipt' | 'registered' | 'usps_first_class' | 'usps_standard_class' | 'usps_eddm' | 'usps_express_2_day' | 'usps_express_3_day' | 'usps_first_class_certified' | 'usps_first_class_certified_return_receipt' | 'usps_first_class_registered' | 'usps_express_3_day_signature_confirmation' | 'usps_express_3_day_certified' | 'usps_express_3_day_certified_return_receipt' | 'ca_post_lettermail' | 'ca_post_personalized' | 'ca_post_neighbourhood_mail' | 'ups_express_overnight' | 'ups_express_2_day' | 'ups_express_3_day' | 'royal_mail_first_class' | 'royal_mail_second_class' | 'au_post_second_class';
+  mailingClass?:
+    | 'first_class'
+    | 'standard_class'
+    | 'express'
+    | 'certified'
+    | 'certified_return_receipt'
+    | 'registered'
+    | 'usps_first_class'
+    | 'usps_standard_class'
+    | 'usps_eddm'
+    | 'usps_express_2_day'
+    | 'usps_express_3_day'
+    | 'usps_first_class_certified'
+    | 'usps_first_class_certified_return_receipt'
+    | 'usps_first_class_registered'
+    | 'usps_express_3_day_signature_confirmation'
+    | 'usps_express_3_day_certified'
+    | 'usps_express_3_day_certified_return_receipt'
+    | 'ca_post_lettermail'
+    | 'ca_post_personalized'
+    | 'ca_post_neighbourhood_mail'
+    | 'ups_express_overnight'
+    | 'ups_express_2_day'
+    | 'ups_express_3_day'
+    | 'royal_mail_first_class'
+    | 'royal_mail_second_class'
+    | 'au_post_second_class';
 
   /**
    * Body param: Memo line text for the cheque. Set to `null` to remove during
@@ -469,6 +591,6 @@ export declare namespace Cheques {
     type ChequeCreateParams as ChequeCreateParams,
     type ChequeRetrieveParams as ChequeRetrieveParams,
     type ChequeUpdateParams as ChequeUpdateParams,
-    type ChequeListParams as ChequeListParams
+    type ChequeListParams as ChequeListParams,
   };
 }

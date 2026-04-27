@@ -5,7 +5,7 @@ import PostGrid from 'postgrid-node';
 const client = new PostGrid({
   addressVerificationAPIKey: 'My Address Verification API Key',
   printMailAPIKey: 'My Print Mail API Key',
-  baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010',
+  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
 describe('resource letters', () => {
@@ -24,22 +24,22 @@ describe('resource letters', () => {
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.printMail.orderProfiles.letters.create({
-    size: 'us_letter',
-    expand: ['string'],
-    addressPlacement: 'top_first_page',
-    attachedPDF: { file: 'https://example.com', placement: 'before_template' },
-    color: true,
-    description: 'Monthly Newsletter Profile',
-    doubleSided: true,
-    envelope: 'envelope',
-    mailingClass: 'first_class',
-    mergeVariables: { salutation: 'bar' },
-    metadata: { campaign: 'Q1 Newsletter' },
-    pdf: 'https://example.com',
-    perforatedPage: 1,
-    returnEnvelope: 'returnEnvelope',
-    template: 'template_abc',
-  });
+      size: 'us_letter',
+      expand: ['string'],
+      addressPlacement: 'top_first_page',
+      attachedPDF: { file: 'https://example.com', placement: 'before_template' },
+      color: true,
+      description: 'Monthly Newsletter Profile',
+      doubleSided: true,
+      envelope: 'envelope',
+      mailingClass: 'first_class',
+      mergeVariables: { salutation: 'bar' },
+      metadata: { campaign: 'Q1 Newsletter' },
+      pdf: 'https://example.com',
+      perforatedPage: 1,
+      returnEnvelope: 'returnEnvelope',
+      template: 'template_abc',
+    });
   });
 
   // Mock server tests are disabled
@@ -57,9 +57,13 @@ describe('resource letters', () => {
   // Mock server tests are disabled
   test.skip('retrieve: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(client.printMail.orderProfiles.letters.retrieve('id', { expand: ['string'] }, { path: '/_stainless_unknown_path' }))
-      .rejects
-      .toThrow(PostGrid.NotFoundError);
+    await expect(
+      client.printMail.orderProfiles.letters.retrieve(
+        'id',
+        { expand: ['string'] },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(PostGrid.NotFoundError);
   });
 
   // Mock server tests are disabled
@@ -89,13 +93,16 @@ describe('resource letters', () => {
   // Mock server tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(client.printMail.orderProfiles.letters.list({
-    limit: 0,
-    search: 'search',
-    skip: 0,
-  }, { path: '/_stainless_unknown_path' }))
-      .rejects
-      .toThrow(PostGrid.NotFoundError);
+    await expect(
+      client.printMail.orderProfiles.letters.list(
+        {
+          limit: 0,
+          search: 'search',
+          skip: 0,
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(PostGrid.NotFoundError);
   });
 
   // Mock server tests are disabled
