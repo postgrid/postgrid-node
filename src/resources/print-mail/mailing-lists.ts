@@ -21,8 +21,15 @@ export class MailingLists extends APIResource {
    * ```
    */
   create(params: MailingListCreateParams, options?: RequestOptions): APIPromise<MailingList> {
-    const { 'idempotency-key': idempotencyKey, ...body } = params
-    return this._client.post('/print-mail/v1/mailing_lists', { body, ...options, headers: buildHeaders([{...(idempotencyKey != null ? { 'idempotency-key': idempotencyKey } : undefined)}, options?.headers]) });
+    const { 'idempotency-key': idempotencyKey, ...body } = params;
+    return this._client.post('/print-mail/v1/mailing_lists', {
+      body,
+      ...options,
+      headers: buildHeaders([
+        { ...(idempotencyKey != null ? { 'idempotency-key': idempotencyKey } : undefined) },
+        options?.headers,
+      ]),
+    });
   }
 
   /**
@@ -67,8 +74,14 @@ export class MailingLists extends APIResource {
    * }
    * ```
    */
-  list(query: MailingListListParams | null | undefined = {}, options?: RequestOptions): PagePromise<MailingListsSkipLimit, MailingList> {
-    return this._client.getAPIList('/print-mail/v1/mailing_lists', SkipLimit<MailingList>, { query, ...options });
+  list(
+    query: MailingListListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<MailingListsSkipLimit, MailingList> {
+    return this._client.getAPIList('/print-mail/v1/mailing_lists', SkipLimit<MailingList>, {
+      query,
+      ...options,
+    });
   }
 
   /**
@@ -116,7 +129,7 @@ export class MailingLists extends APIResource {
   }
 }
 
-export type MailingListsSkipLimit = SkipLimit<MailingList>
+export type MailingListsSkipLimit = SkipLimit<MailingList>;
 
 /**
  * Represents a mailing list.
@@ -177,7 +190,11 @@ export namespace MailingList {
     /**
      * Type of error encountered during mailing list processing.
      */
-    type: 'mailing_list_imports_not_found_error' | 'download_file_error' | 'operational_error' | 'internal_service_error';
+    type:
+      | 'mailing_list_imports_not_found_error'
+      | 'download_file_error'
+      | 'operational_error'
+      | 'internal_service_error';
   }
 }
 
@@ -283,6 +300,6 @@ export declare namespace MailingLists {
     type MailingListCreateParams as MailingListCreateParams,
     type MailingListUpdateParams as MailingListUpdateParams,
     type MailingListListParams as MailingListListParams,
-    type MailingListJobsParams as MailingListJobsParams
+    type MailingListJobsParams as MailingListJobsParams,
   };
 }

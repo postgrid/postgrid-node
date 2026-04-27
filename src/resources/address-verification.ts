@@ -33,9 +33,16 @@ export class AddressVerification extends APIResource {
    * });
    * ```
    */
-  verify(params: AddressVerificationVerifyParams, options?: RequestOptions): APIPromise<AddressVerificationVerifyResponse> {
-    const { geocode, includeDetails, properCase, ...body } = params
-    return this._client.post('/v1/addver/verifications', { query: { geocode, includeDetails, properCase }, body, ...options });
+  verify(
+    params: AddressVerificationVerifyParams,
+    options?: RequestOptions,
+  ): APIPromise<AddressVerificationVerifyResponse> {
+    const { geocode, includeDetails, properCase, ...body } = params;
+    return this._client.post('/v1/addver/verifications', {
+      query: { geocode, includeDetails, properCase },
+      body,
+      ...options,
+    });
   }
 }
 
@@ -72,7 +79,7 @@ export interface Errors {
 /**
  * The verification status of an address.
  */
-export type Status = 'verified' | 'corrected' | 'failed'
+export type Status = 'verified' | 'corrected' | 'failed';
 
 export interface AddressVerificationVerifyResponse {
   data: AddressVerificationVerifyResponse.Data;
@@ -415,7 +422,15 @@ export namespace AddressVerificationVerifyResponse {
        * A string representing the
        * [accuracy type](https://avdocs.postgrid.com/#accuracy-type)
        */
-      accuracyType: 'rooftop' | 'point' | 'range_interpolation' | 'nearest_rooftop_match' | 'intersection' | 'street_center' | 'place' | 'state';
+      accuracyType:
+        | 'rooftop'
+        | 'point'
+        | 'range_interpolation'
+        | 'nearest_rooftop_match'
+        | 'intersection'
+        | 'street_center'
+        | 'place'
+        | 'state';
 
       /**
        * Object that contains `lat`, `lng` properties with number values
@@ -436,7 +451,9 @@ export namespace AddressVerificationVerifyResponse {
   }
 }
 
-export type AddressVerificationVerifyParams = AddressVerificationVerifyParams.StandardFreeformAddressInput | AddressVerificationVerifyParams.StandardStructuredAddressInput
+export type AddressVerificationVerifyParams =
+  | AddressVerificationVerifyParams.StandardFreeformAddressInput
+  | AddressVerificationVerifyParams.StandardStructuredAddressInput;
 
 export declare namespace AddressVerificationVerifyParams {
   export interface StandardFreeformAddressInput {
@@ -528,6 +545,6 @@ export declare namespace AddressVerification {
     type Errors as Errors,
     type Status as Status,
     type AddressVerificationVerifyResponse as AddressVerificationVerifyResponse,
-    type AddressVerificationVerifyParams as AddressVerificationVerifyParams
+    type AddressVerificationVerifyParams as AddressVerificationVerifyParams,
   };
 }

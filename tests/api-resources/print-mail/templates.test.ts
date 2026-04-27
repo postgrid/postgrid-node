@@ -5,7 +5,7 @@ import PostGrid from 'postgrid-node';
 const client = new PostGrid({
   addressVerificationAPIKey: 'My Address Verification API Key',
   printMailAPIKey: 'My Print Mail API Key',
-  baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010',
+  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
 describe('resource templates', () => {
@@ -60,13 +60,16 @@ describe('resource templates', () => {
   // Mock server tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(client.printMail.templates.list({
-    limit: 0,
-    search: 'search',
-    skip: 0,
-  }, { path: '/_stainless_unknown_path' }))
-      .rejects
-      .toThrow(PostGrid.NotFoundError);
+    await expect(
+      client.printMail.templates.list(
+        {
+          limit: 0,
+          search: 'search',
+          skip: 0,
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(PostGrid.NotFoundError);
   });
 
   // Mock server tests are disabled

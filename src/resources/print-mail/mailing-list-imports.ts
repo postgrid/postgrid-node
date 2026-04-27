@@ -39,9 +39,19 @@ export class MailingListImports extends APIResource {
    *   });
    * ```
    */
-  create(params: MailingListImportCreateParams, options?: RequestOptions): APIPromise<MailingListImportResponse> {
-    const { 'idempotency-key': idempotencyKey, ...body } = params
-    return this._client.post('/print-mail/v1/mailing_list_imports', { body, ...options, headers: buildHeaders([{...(idempotencyKey != null ? { 'idempotency-key': idempotencyKey } : undefined)}, options?.headers]) });
+  create(
+    params: MailingListImportCreateParams,
+    options?: RequestOptions,
+  ): APIPromise<MailingListImportResponse> {
+    const { 'idempotency-key': idempotencyKey, ...body } = params;
+    return this._client.post('/print-mail/v1/mailing_list_imports', {
+      body,
+      ...options,
+      headers: buildHeaders([
+        { ...(idempotencyKey != null ? { 'idempotency-key': idempotencyKey } : undefined) },
+        options?.headers,
+      ]),
+    });
   }
 
   /**
@@ -69,7 +79,11 @@ export class MailingListImports extends APIResource {
    *   });
    * ```
    */
-  update(id: string, body: MailingListImportUpdateParams, options?: RequestOptions): APIPromise<MailingListImportResponse> {
+  update(
+    id: string,
+    body: MailingListImportUpdateParams,
+    options?: RequestOptions,
+  ): APIPromise<MailingListImportResponse> {
     return this._client.post(path`/print-mail/v1/mailing_list_imports/${id}`, { body, ...options });
   }
 
@@ -87,8 +101,15 @@ export class MailingListImports extends APIResource {
    * }
    * ```
    */
-  list(query: MailingListImportListParams | null | undefined = {}, options?: RequestOptions): PagePromise<MailingListImportResponsesSkipLimit, MailingListImportResponse> {
-    return this._client.getAPIList('/print-mail/v1/mailing_list_imports', SkipLimit<MailingListImportResponse>, { query, ...options });
+  list(
+    query: MailingListImportListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<MailingListImportResponsesSkipLimit, MailingListImportResponse> {
+    return this._client.getAPIList(
+      '/print-mail/v1/mailing_list_imports',
+      SkipLimit<MailingListImportResponse>,
+      { query, ...options },
+    );
   }
 
   /**
@@ -108,12 +129,12 @@ export class MailingListImports extends APIResource {
   }
 }
 
-export type MailingListImportResponsesSkipLimit = SkipLimit<MailingListImportResponse>
+export type MailingListImportResponsesSkipLimit = SkipLimit<MailingListImportResponse>;
 
 /**
  * Type of file supported for mailing list imports.
  */
-export type FileType = 'csv'
+export type FileType = 'csv';
 
 /**
  * Read-only view of a MailingListImport
@@ -216,7 +237,11 @@ export namespace MailingListImportResponse {
     /**
      * Type of error encountered during import processing.
      */
-    type: 'no_valid_contacts_error' | 'multiple_countries_error' | 'invalid_contact_count_error' | 'internal_service_error';
+    type:
+      | 'no_valid_contacts_error'
+      | 'multiple_countries_error'
+      | 'invalid_contact_count_error'
+      | 'internal_service_error';
   }
 
   /**
@@ -397,6 +422,6 @@ export declare namespace MailingListImports {
     type MailingListImportResponsesSkipLimit as MailingListImportResponsesSkipLimit,
     type MailingListImportCreateParams as MailingListImportCreateParams,
     type MailingListImportUpdateParams as MailingListImportUpdateParams,
-    type MailingListImportListParams as MailingListImportListParams
+    type MailingListImportListParams as MailingListImportListParams,
   };
 }

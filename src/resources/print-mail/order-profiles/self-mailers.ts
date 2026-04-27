@@ -28,8 +28,12 @@ export class SelfMailers extends APIResource {
    * ```
    */
   create(params: SelfMailerCreateParams, options?: RequestOptions): APIPromise<SelfMailerProfile> {
-    const { expand, ...body } = params
-    return this._client.post('/print-mail/v1/order_profiles/self_mailers', { query: { expand }, body, ...options });
+    const { expand, ...body } = params;
+    return this._client.post('/print-mail/v1/order_profiles/self_mailers', {
+      query: { expand },
+      body,
+      ...options,
+    });
   }
 
   /**
@@ -43,7 +47,11 @@ export class SelfMailers extends APIResource {
    *   );
    * ```
    */
-  retrieve(id: string, query: SelfMailerRetrieveParams | null | undefined = {}, options?: RequestOptions): APIPromise<SelfMailerProfile> {
+  retrieve(
+    id: string,
+    query: SelfMailerRetrieveParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<SelfMailerProfile> {
     return this._client.get(path`/print-mail/v1/order_profiles/self_mailers/${id}`, { query, ...options });
   }
 
@@ -60,9 +68,17 @@ export class SelfMailers extends APIResource {
    *   );
    * ```
    */
-  update(id: string, params: SelfMailerUpdateParams, options?: RequestOptions): APIPromise<SelfMailerProfile> {
-    const { expand, ...body } = params
-    return this._client.post(path`/print-mail/v1/order_profiles/self_mailers/${id}`, { query: { expand }, body, ...options });
+  update(
+    id: string,
+    params: SelfMailerUpdateParams,
+    options?: RequestOptions,
+  ): APIPromise<SelfMailerProfile> {
+    const { expand, ...body } = params;
+    return this._client.post(path`/print-mail/v1/order_profiles/self_mailers/${id}`, {
+      query: { expand },
+      body,
+      ...options,
+    });
   }
 
   /**
@@ -76,8 +92,15 @@ export class SelfMailers extends APIResource {
    * }
    * ```
    */
-  list(query: SelfMailerListParams | null | undefined = {}, options?: RequestOptions): PagePromise<SelfMailerProfilesSkipLimit, SelfMailerProfile> {
-    return this._client.getAPIList('/print-mail/v1/order_profiles/self_mailers', SkipLimit<SelfMailerProfile>, { query, ...options });
+  list(
+    query: SelfMailerListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<SelfMailerProfilesSkipLimit, SelfMailerProfile> {
+    return this._client.getAPIList(
+      '/print-mail/v1/order_profiles/self_mailers',
+      SkipLimit<SelfMailerProfile>,
+      { query, ...options },
+    );
   }
 
   /**
@@ -96,7 +119,7 @@ export class SelfMailers extends APIResource {
   }
 }
 
-export type SelfMailerProfilesSkipLimit = SkipLimit<SelfMailerProfile>
+export type SelfMailerProfilesSkipLimit = SkipLimit<SelfMailerProfile>;
 
 /**
  * Represents a Self-Mailer Profile resource.
@@ -145,7 +168,33 @@ export interface SelfMailerProfile {
   /**
    * Mailing class (cannot include extra services for self-mailers).
    */
-  mailingClass?: 'first_class' | 'standard_class' | 'express' | 'certified' | 'certified_return_receipt' | 'registered' | 'usps_first_class' | 'usps_standard_class' | 'usps_eddm' | 'usps_express_2_day' | 'usps_express_3_day' | 'usps_first_class_certified' | 'usps_first_class_certified_return_receipt' | 'usps_first_class_registered' | 'usps_express_3_day_signature_confirmation' | 'usps_express_3_day_certified' | 'usps_express_3_day_certified_return_receipt' | 'ca_post_lettermail' | 'ca_post_personalized' | 'ca_post_neighbourhood_mail' | 'ups_express_overnight' | 'ups_express_2_day' | 'ups_express_3_day' | 'royal_mail_first_class' | 'royal_mail_second_class' | 'au_post_second_class';
+  mailingClass?:
+    | 'first_class'
+    | 'standard_class'
+    | 'express'
+    | 'certified'
+    | 'certified_return_receipt'
+    | 'registered'
+    | 'usps_first_class'
+    | 'usps_standard_class'
+    | 'usps_eddm'
+    | 'usps_express_2_day'
+    | 'usps_express_3_day'
+    | 'usps_first_class_certified'
+    | 'usps_first_class_certified_return_receipt'
+    | 'usps_first_class_registered'
+    | 'usps_express_3_day_signature_confirmation'
+    | 'usps_express_3_day_certified'
+    | 'usps_express_3_day_certified_return_receipt'
+    | 'ca_post_lettermail'
+    | 'ca_post_personalized'
+    | 'ca_post_neighbourhood_mail'
+    | 'ups_express_overnight'
+    | 'ups_express_2_day'
+    | 'ups_express_3_day'
+    | 'royal_mail_first_class'
+    | 'royal_mail_second_class'
+    | 'au_post_second_class';
 
   /**
    * Default merge variables for orders created using this profile.
@@ -171,7 +220,7 @@ export interface SelfMailerProfile {
 /**
  * Enum representing the supported self-mailer sizes.
  */
-export type SelfMailerSize = '8.5x11_bifold' | '8.5x11_trifold' | '9.5x16_trifold'
+export type SelfMailerSize = '8.5x11_bifold' | '8.5x11_trifold' | '9.5x16_trifold';
 
 export interface SelfMailerDeleteResponse {
   /**
@@ -213,7 +262,33 @@ export interface SelfMailerCreateParams {
   /**
    * Body param: Mailing class (cannot include extra services for self-mailers).
    */
-  mailingClass?: 'first_class' | 'standard_class' | 'express' | 'certified' | 'certified_return_receipt' | 'registered' | 'usps_first_class' | 'usps_standard_class' | 'usps_eddm' | 'usps_express_2_day' | 'usps_express_3_day' | 'usps_first_class_certified' | 'usps_first_class_certified_return_receipt' | 'usps_first_class_registered' | 'usps_express_3_day_signature_confirmation' | 'usps_express_3_day_certified' | 'usps_express_3_day_certified_return_receipt' | 'ca_post_lettermail' | 'ca_post_personalized' | 'ca_post_neighbourhood_mail' | 'ups_express_overnight' | 'ups_express_2_day' | 'ups_express_3_day' | 'royal_mail_first_class' | 'royal_mail_second_class' | 'au_post_second_class';
+  mailingClass?:
+    | 'first_class'
+    | 'standard_class'
+    | 'express'
+    | 'certified'
+    | 'certified_return_receipt'
+    | 'registered'
+    | 'usps_first_class'
+    | 'usps_standard_class'
+    | 'usps_eddm'
+    | 'usps_express_2_day'
+    | 'usps_express_3_day'
+    | 'usps_first_class_certified'
+    | 'usps_first_class_certified_return_receipt'
+    | 'usps_first_class_registered'
+    | 'usps_express_3_day_signature_confirmation'
+    | 'usps_express_3_day_certified'
+    | 'usps_express_3_day_certified_return_receipt'
+    | 'ca_post_lettermail'
+    | 'ca_post_personalized'
+    | 'ca_post_neighbourhood_mail'
+    | 'ups_express_overnight'
+    | 'ups_express_2_day'
+    | 'ups_express_3_day'
+    | 'royal_mail_first_class'
+    | 'royal_mail_second_class'
+    | 'au_post_second_class';
 
   /**
    * Body param: Default merge variables for orders created using this profile.
@@ -271,7 +346,33 @@ export interface SelfMailerUpdateParams {
   /**
    * Body param: Mailing class (cannot include extra services for self-mailers).
    */
-  mailingClass?: 'first_class' | 'standard_class' | 'express' | 'certified' | 'certified_return_receipt' | 'registered' | 'usps_first_class' | 'usps_standard_class' | 'usps_eddm' | 'usps_express_2_day' | 'usps_express_3_day' | 'usps_first_class_certified' | 'usps_first_class_certified_return_receipt' | 'usps_first_class_registered' | 'usps_express_3_day_signature_confirmation' | 'usps_express_3_day_certified' | 'usps_express_3_day_certified_return_receipt' | 'ca_post_lettermail' | 'ca_post_personalized' | 'ca_post_neighbourhood_mail' | 'ups_express_overnight' | 'ups_express_2_day' | 'ups_express_3_day' | 'royal_mail_first_class' | 'royal_mail_second_class' | 'au_post_second_class';
+  mailingClass?:
+    | 'first_class'
+    | 'standard_class'
+    | 'express'
+    | 'certified'
+    | 'certified_return_receipt'
+    | 'registered'
+    | 'usps_first_class'
+    | 'usps_standard_class'
+    | 'usps_eddm'
+    | 'usps_express_2_day'
+    | 'usps_express_3_day'
+    | 'usps_first_class_certified'
+    | 'usps_first_class_certified_return_receipt'
+    | 'usps_first_class_registered'
+    | 'usps_express_3_day_signature_confirmation'
+    | 'usps_express_3_day_certified'
+    | 'usps_express_3_day_certified_return_receipt'
+    | 'ca_post_lettermail'
+    | 'ca_post_personalized'
+    | 'ca_post_neighbourhood_mail'
+    | 'ups_express_overnight'
+    | 'ups_express_2_day'
+    | 'ups_express_3_day'
+    | 'royal_mail_first_class'
+    | 'royal_mail_second_class'
+    | 'au_post_second_class';
 
   /**
    * Body param: Default merge variables for orders created using this profile.
@@ -316,6 +417,6 @@ export declare namespace SelfMailers {
     type SelfMailerCreateParams as SelfMailerCreateParams,
     type SelfMailerRetrieveParams as SelfMailerRetrieveParams,
     type SelfMailerUpdateParams as SelfMailerUpdateParams,
-    type SelfMailerListParams as SelfMailerListParams
+    type SelfMailerListParams as SelfMailerListParams,
   };
 }

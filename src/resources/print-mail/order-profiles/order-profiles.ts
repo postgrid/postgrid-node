@@ -2,13 +2,53 @@
 
 import { APIResource } from '../../../core/resource';
 import * as ChequesAPI from './cheques';
-import { ChequeCreateParams, ChequeDeleteResponse, ChequeListParams, ChequeListResponse, ChequeListResponsesSkipLimit, ChequeProfile, ChequeRetrieveParams, ChequeUpdateParams, Cheques, CurrencyCode } from './cheques';
+import {
+  ChequeCreateParams,
+  ChequeDeleteResponse,
+  ChequeListParams,
+  ChequeListResponse,
+  ChequeListResponsesSkipLimit,
+  ChequeProfile,
+  ChequeRetrieveParams,
+  ChequeUpdateParams,
+  Cheques,
+  CurrencyCode,
+} from './cheques';
 import * as LettersAPI from './letters';
-import { LetterCreateParams, LetterDeleteResponse, LetterListParams, LetterProfile, LetterProfilesSkipLimit, LetterRetrieveParams, LetterUpdateParams, Letters } from './letters';
+import {
+  LetterCreateParams,
+  LetterDeleteResponse,
+  LetterListParams,
+  LetterProfile,
+  LetterProfilesSkipLimit,
+  LetterRetrieveParams,
+  LetterUpdateParams,
+  Letters,
+} from './letters';
 import * as PostcardsAPI from './postcards';
-import { PostcardCreateParams, PostcardDeleteResponse, PostcardListParams, PostcardProfile, PostcardProfilesSkipLimit, PostcardRetrieveParams, PostcardSize, PostcardUpdateParams, Postcards } from './postcards';
+import {
+  PostcardCreateParams,
+  PostcardDeleteResponse,
+  PostcardListParams,
+  PostcardProfile,
+  PostcardProfilesSkipLimit,
+  PostcardRetrieveParams,
+  PostcardSize,
+  PostcardUpdateParams,
+  Postcards,
+} from './postcards';
 import * as SelfMailersAPI from './self-mailers';
-import { SelfMailerCreateParams, SelfMailerDeleteResponse, SelfMailerListParams, SelfMailerProfile, SelfMailerProfilesSkipLimit, SelfMailerRetrieveParams, SelfMailerSize, SelfMailerUpdateParams, SelfMailers } from './self-mailers';
+import {
+  SelfMailerCreateParams,
+  SelfMailerDeleteResponse,
+  SelfMailerListParams,
+  SelfMailerProfile,
+  SelfMailerProfilesSkipLimit,
+  SelfMailerRetrieveParams,
+  SelfMailerSize,
+  SelfMailerUpdateParams,
+  SelfMailers,
+} from './self-mailers';
 
 export class OrderProfiles extends APIResource {
   cheques: ChequesAPI.Cheques = new ChequesAPI.Cheques(this._client);
@@ -33,7 +73,7 @@ export declare namespace OrderProfiles {
     type ChequeCreateParams as ChequeCreateParams,
     type ChequeRetrieveParams as ChequeRetrieveParams,
     type ChequeUpdateParams as ChequeUpdateParams,
-    type ChequeListParams as ChequeListParams
+    type ChequeListParams as ChequeListParams,
   };
 
   export {
@@ -44,7 +84,7 @@ export declare namespace OrderProfiles {
     type LetterCreateParams as LetterCreateParams,
     type LetterRetrieveParams as LetterRetrieveParams,
     type LetterUpdateParams as LetterUpdateParams,
-    type LetterListParams as LetterListParams
+    type LetterListParams as LetterListParams,
   };
 
   export {
@@ -56,7 +96,7 @@ export declare namespace OrderProfiles {
     type PostcardCreateParams as PostcardCreateParams,
     type PostcardRetrieveParams as PostcardRetrieveParams,
     type PostcardUpdateParams as PostcardUpdateParams,
-    type PostcardListParams as PostcardListParams
+    type PostcardListParams as PostcardListParams,
   };
 
   export {
@@ -68,6 +108,6 @@ export declare namespace OrderProfiles {
     type SelfMailerCreateParams as SelfMailerCreateParams,
     type SelfMailerRetrieveParams as SelfMailerRetrieveParams,
     type SelfMailerUpdateParams as SelfMailerUpdateParams,
-    type SelfMailerListParams as SelfMailerListParams
+    type SelfMailerListParams as SelfMailerListParams,
   };
 }

@@ -51,7 +51,10 @@ export class SubOrganizations extends APIResource {
    *   });
    * ```
    */
-  update(body: SubOrganizationUpdateParams, options?: RequestOptions): APIPromise<SubOrganizationUpdateResponse> {
+  update(
+    body: SubOrganizationUpdateParams,
+    options?: RequestOptions,
+  ): APIPromise<SubOrganizationUpdateResponse> {
     return this._client.post('/print-mail/v1/sub_organizations', { body, ...options });
   }
 
@@ -66,8 +69,14 @@ export class SubOrganizations extends APIResource {
    * }
    * ```
    */
-  list(query: SubOrganizationListParams | null | undefined = {}, options?: RequestOptions): PagePromise<SubOrganizationsSkipLimit, SubOrganization> {
-    return this._client.getAPIList('/print-mail/v1/sub_organizations', SkipLimit<SubOrganization>, { query, ...options });
+  list(
+    query: SubOrganizationListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<SubOrganizationsSkipLimit, SubOrganization> {
+    return this._client.getAPIList('/print-mail/v1/sub_organizations', SkipLimit<SubOrganization>, {
+      query,
+      ...options,
+    });
   }
 
   /**
@@ -81,12 +90,16 @@ export class SubOrganizations extends APIResource {
    *   );
    * ```
    */
-  retrieveUsers(id: string, query: SubOrganizationRetrieveUsersParams | null | undefined = {}, options?: RequestOptions): APIPromise<SubOrganizationRetrieveUsersResponse> {
+  retrieveUsers(
+    id: string,
+    query: SubOrganizationRetrieveUsersParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<SubOrganizationRetrieveUsersResponse> {
     return this._client.get(path`/print-mail/v1/sub_organizations/${id}/users`, { query, ...options });
   }
 }
 
-export type SubOrganizationsSkipLimit = SkipLimit<SubOrganization>
+export type SubOrganizationsSkipLimit = SkipLimit<SubOrganization>;
 
 /**
  * A set of preferences for how a user should receive emails.
@@ -247,7 +260,8 @@ export namespace SubOrganizationUpdateResponse {
   }
 }
 
-export type SubOrganizationRetrieveUsersResponse = Array<SubOrganizationRetrieveUsersResponse.SubOrganizationRetrieveUsersResponseItem>
+export type SubOrganizationRetrieveUsersResponse =
+  Array<SubOrganizationRetrieveUsersResponse.SubOrganizationRetrieveUsersResponseItem>;
 
 export namespace SubOrganizationRetrieveUsersResponse {
   /**
@@ -379,6 +393,6 @@ export declare namespace SubOrganizations {
     type SubOrganizationsSkipLimit as SubOrganizationsSkipLimit,
     type SubOrganizationUpdateParams as SubOrganizationUpdateParams,
     type SubOrganizationListParams as SubOrganizationListParams,
-    type SubOrganizationRetrieveUsersParams as SubOrganizationRetrieveUsersParams
+    type SubOrganizationRetrieveUsersParams as SubOrganizationRetrieveUsersParams,
   };
 }

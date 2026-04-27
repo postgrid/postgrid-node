@@ -2,7 +2,13 @@
 
 import { APIResource } from '../../../core/resource';
 import * as ExportsAPI from './exports';
-import { ExportCreateParams, ExportDeleteParams, ExportRetrieveParams, Exports, ReportExport } from './exports';
+import {
+  ExportCreateParams,
+  ExportDeleteParams,
+  ExportRetrieveParams,
+  Exports,
+  ReportExport,
+} from './exports';
 import * as SamplesAPI from './samples';
 import { ReportSample, ReportSampleCreateBase, SampleCreateParams, Samples } from './samples';
 import { APIPromise } from '../../../core/api-promise';
@@ -82,7 +88,10 @@ export class Reports extends APIResource {
    * }
    * ```
    */
-  list(query: ReportListParams | null | undefined = {}, options?: RequestOptions): PagePromise<ReportsSkipLimit, Report> {
+  list(
+    query: ReportListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<ReportsSkipLimit, Report> {
     return this._client.getAPIList('/print-mail/v1/reports', SkipLimit<Report>, { query, ...options });
   }
 
@@ -119,7 +128,7 @@ export class Reports extends APIResource {
   }
 }
 
-export type ReportsSkipLimit = SkipLimit<Report>
+export type ReportsSkipLimit = SkipLimit<Report>;
 
 /**
  * Generic response for delete operations.
@@ -255,14 +264,14 @@ export declare namespace Reports {
     type ReportCreateParams as ReportCreateParams,
     type ReportUpdateParams as ReportUpdateParams,
     type ReportListParams as ReportListParams,
-    type ReportSampleParams as ReportSampleParams
+    type ReportSampleParams as ReportSampleParams,
   };
 
   export {
     Samples as Samples,
     type ReportSample as ReportSample,
     type ReportSampleCreateBase as ReportSampleCreateBase,
-    type SampleCreateParams as SampleCreateParams
+    type SampleCreateParams as SampleCreateParams,
   };
 
   export {
@@ -270,6 +279,6 @@ export declare namespace Reports {
     type ReportExport as ReportExport,
     type ExportCreateParams as ExportCreateParams,
     type ExportRetrieveParams as ExportRetrieveParams,
-    type ExportDeleteParams as ExportDeleteParams
+    type ExportDeleteParams as ExportDeleteParams,
   };
 }
