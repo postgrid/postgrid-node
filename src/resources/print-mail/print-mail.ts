@@ -120,8 +120,6 @@ import {
   Templates,
   TemplatesSkipLimit,
 } from './templates';
-import * as OrderProfilesAPI from './order-profiles/order-profiles';
-import { OrderProfiles } from './order-profiles/order-profiles';
 import * as ReportsAPI from './reports/reports';
 import {
   DeletedResponse,
@@ -144,7 +142,6 @@ export class PrintMail extends APIResource {
     this._client,
   );
   mailingLists: MailingListsAPI.MailingLists = new MailingListsAPI.MailingLists(this._client);
-  orderProfiles: OrderProfilesAPI.OrderProfiles = new OrderProfilesAPI.OrderProfiles(this._client);
   postcards: PostcardsAPI.Postcards = new PostcardsAPI.Postcards(this._client);
   reports: ReportsAPI.Reports = new ReportsAPI.Reports(this._client);
   selfMailers: SelfMailersAPI.SelfMailers = new SelfMailersAPI.SelfMailers(this._client);
@@ -325,7 +322,6 @@ PrintMail.Contacts = Contacts;
 PrintMail.Letters = Letters;
 PrintMail.MailingListImports = MailingListImports;
 PrintMail.MailingLists = MailingLists;
-PrintMail.OrderProfiles = OrderProfiles;
 PrintMail.Postcards = Postcards;
 PrintMail.Reports = Reports;
 PrintMail.SelfMailers = SelfMailers;
@@ -416,8 +412,6 @@ export declare namespace PrintMail {
     type MailingListListParams as MailingListListParams,
     type MailingListJobsParams as MailingListJobsParams,
   };
-
-  export { OrderProfiles as OrderProfiles };
 
   export {
     Postcards as Postcards,

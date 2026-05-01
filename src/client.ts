@@ -21,6 +21,21 @@ import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import {
   AddressVerification,
+  AddressVerificationAutocompleteParams,
+  AddressVerificationAutocompleteResponse,
+  AddressVerificationBatchVerificationParams,
+  AddressVerificationBatchVerificationResponse,
+  AddressVerificationGetAutocompletePreviewsParams,
+  AddressVerificationGetAutocompletePreviewsResponse,
+  AddressVerificationGetLookupInfoResponse,
+  AddressVerificationLookupCityOrStateFromPostalOrZipCodeParams,
+  AddressVerificationLookupCityOrStateFromPostalOrZipCodeResponse,
+  AddressVerificationLookupZipCodeFromCityOrStateParams,
+  AddressVerificationLookupZipCodeFromCityOrStateResponse,
+  AddressVerificationParseAnAddressParams,
+  AddressVerificationParseAnAddressResponse,
+  AddressVerificationSuggestAddressesParams,
+  AddressVerificationSuggestAddressesResponse,
   AddressVerificationVerifyParams,
   AddressVerificationVerifyResponse,
   Errors as AddressVerificationAPIErrors,
@@ -28,6 +43,14 @@ import {
 } from './resources/address-verification';
 import {
   IntlAddressVerification,
+  IntlAddressVerificationAutocompleteParams,
+  IntlAddressVerificationAutocompleteResponse,
+  IntlAddressVerificationBatchVerificationParams,
+  IntlAddressVerificationBatchVerificationResponse,
+  IntlAddressVerificationGetAutocompleteAdvancedPreviewsParams,
+  IntlAddressVerificationGetAutocompleteAdvancedPreviewsResponse,
+  IntlAddressVerificationGetAutocompletePreviewsParams,
+  IntlAddressVerificationGetAutocompletePreviewsResponse,
   IntlAddressVerificationVerifyParams,
   IntlAddressVerificationVerifyResponse,
 } from './resources/intl-address-verification';
@@ -281,6 +304,9 @@ export class PostGrid {
     return buildHeaders([{ 'X-API-Key': this.printMailAPIKey }]);
   }
 
+  /**
+   * Basic re-implementation of `qs.stringify` for primitive types.
+   */
   protected stringifyQuery(query: object | Record<string, unknown>): string {
     return stringifyQuery(query);
   }
@@ -856,13 +882,36 @@ export declare namespace PostGrid {
     AddressVerification as AddressVerification,
     type AddressVerificationAPIErrors as Errors,
     type Status as Status,
+    type AddressVerificationAutocompleteResponse as AddressVerificationAutocompleteResponse,
+    type AddressVerificationBatchVerificationResponse as AddressVerificationBatchVerificationResponse,
+    type AddressVerificationGetAutocompletePreviewsResponse as AddressVerificationGetAutocompletePreviewsResponse,
+    type AddressVerificationGetLookupInfoResponse as AddressVerificationGetLookupInfoResponse,
+    type AddressVerificationLookupCityOrStateFromPostalOrZipCodeResponse as AddressVerificationLookupCityOrStateFromPostalOrZipCodeResponse,
+    type AddressVerificationLookupZipCodeFromCityOrStateResponse as AddressVerificationLookupZipCodeFromCityOrStateResponse,
+    type AddressVerificationParseAnAddressResponse as AddressVerificationParseAnAddressResponse,
+    type AddressVerificationSuggestAddressesResponse as AddressVerificationSuggestAddressesResponse,
     type AddressVerificationVerifyResponse as AddressVerificationVerifyResponse,
+    type AddressVerificationAutocompleteParams as AddressVerificationAutocompleteParams,
+    type AddressVerificationBatchVerificationParams as AddressVerificationBatchVerificationParams,
+    type AddressVerificationGetAutocompletePreviewsParams as AddressVerificationGetAutocompletePreviewsParams,
+    type AddressVerificationLookupCityOrStateFromPostalOrZipCodeParams as AddressVerificationLookupCityOrStateFromPostalOrZipCodeParams,
+    type AddressVerificationLookupZipCodeFromCityOrStateParams as AddressVerificationLookupZipCodeFromCityOrStateParams,
+    type AddressVerificationParseAnAddressParams as AddressVerificationParseAnAddressParams,
+    type AddressVerificationSuggestAddressesParams as AddressVerificationSuggestAddressesParams,
     type AddressVerificationVerifyParams as AddressVerificationVerifyParams,
   };
 
   export {
     IntlAddressVerification as IntlAddressVerification,
+    type IntlAddressVerificationAutocompleteResponse as IntlAddressVerificationAutocompleteResponse,
+    type IntlAddressVerificationBatchVerificationResponse as IntlAddressVerificationBatchVerificationResponse,
+    type IntlAddressVerificationGetAutocompleteAdvancedPreviewsResponse as IntlAddressVerificationGetAutocompleteAdvancedPreviewsResponse,
+    type IntlAddressVerificationGetAutocompletePreviewsResponse as IntlAddressVerificationGetAutocompletePreviewsResponse,
     type IntlAddressVerificationVerifyResponse as IntlAddressVerificationVerifyResponse,
+    type IntlAddressVerificationAutocompleteParams as IntlAddressVerificationAutocompleteParams,
+    type IntlAddressVerificationBatchVerificationParams as IntlAddressVerificationBatchVerificationParams,
+    type IntlAddressVerificationGetAutocompleteAdvancedPreviewsParams as IntlAddressVerificationGetAutocompleteAdvancedPreviewsParams,
+    type IntlAddressVerificationGetAutocompletePreviewsParams as IntlAddressVerificationGetAutocompletePreviewsParams,
     type IntlAddressVerificationVerifyParams as IntlAddressVerificationVerifyParams,
   };
 
