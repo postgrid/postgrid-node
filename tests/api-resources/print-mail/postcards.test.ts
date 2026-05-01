@@ -76,6 +76,7 @@ describe('resource postcards', () => {
       mailingClass: 'first_class',
       mergeVariables: { foo: 'bar' },
       metadata: { foo: 'bar' },
+      paper: 'premium_paper_L6fw2k_N_j',
       sendDate: '2019-12-27T18:11:19.117Z',
     });
   });

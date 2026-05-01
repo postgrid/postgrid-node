@@ -4,20 +4,44 @@ Types:
 
 - <code><a href="./src/resources/address-verification.ts">Errors</a></code>
 - <code><a href="./src/resources/address-verification.ts">Status</a></code>
+- <code><a href="./src/resources/address-verification.ts">AddressVerificationAutocompleteResponse</a></code>
+- <code><a href="./src/resources/address-verification.ts">AddressVerificationBatchVerificationResponse</a></code>
+- <code><a href="./src/resources/address-verification.ts">AddressVerificationGetAutocompletePreviewsResponse</a></code>
+- <code><a href="./src/resources/address-verification.ts">AddressVerificationGetLookupInfoResponse</a></code>
+- <code><a href="./src/resources/address-verification.ts">AddressVerificationLookupCityOrStateFromPostalOrZipCodeResponse</a></code>
+- <code><a href="./src/resources/address-verification.ts">AddressVerificationLookupZipCodeFromCityOrStateResponse</a></code>
+- <code><a href="./src/resources/address-verification.ts">AddressVerificationParseAnAddressResponse</a></code>
+- <code><a href="./src/resources/address-verification.ts">AddressVerificationSuggestAddressesResponse</a></code>
 - <code><a href="./src/resources/address-verification.ts">AddressVerificationVerifyResponse</a></code>
 
 Methods:
 
+- <code title="post /v1/addver/completions">client.addressVerification.<a href="./src/resources/address-verification.ts">autocomplete</a>({ ...params }) -> AddressVerificationAutocompleteResponse</code>
+- <code title="post /v1/addver/verifications/batch">client.addressVerification.<a href="./src/resources/address-verification.ts">batchVerification</a>({ ...params }) -> AddressVerificationBatchVerificationResponse</code>
+- <code title="get /v1/addver/completions">client.addressVerification.<a href="./src/resources/address-verification.ts">getAutocompletePreviews</a>({ ...params }) -> AddressVerificationGetAutocompletePreviewsResponse</code>
+- <code title="get /v1/addver/">client.addressVerification.<a href="./src/resources/address-verification.ts">getLookupInfo</a>() -> AddressVerificationGetLookupInfoResponse</code>
+- <code title="post /v1/addver/city_states">client.addressVerification.<a href="./src/resources/address-verification.ts">lookupCityOrStateFromPostalOrZipCode</a>({ ...params }) -> AddressVerificationLookupCityOrStateFromPostalOrZipCodeResponse</code>
+- <code title="post /v1/addver/zip_codes">client.addressVerification.<a href="./src/resources/address-verification.ts">lookupZipCodeFromCityOrState</a>({ ...params }) -> AddressVerificationLookupZipCodeFromCityOrStateResponse</code>
+- <code title="post /v1/addver/parses">client.addressVerification.<a href="./src/resources/address-verification.ts">parseAnAddress</a>({ ...params }) -> AddressVerificationParseAnAddressResponse</code>
+- <code title="post /v1/addver/suggestions">client.addressVerification.<a href="./src/resources/address-verification.ts">suggestAddresses</a>({ ...params }) -> AddressVerificationSuggestAddressesResponse</code>
 - <code title="post /v1/addver/verifications">client.addressVerification.<a href="./src/resources/address-verification.ts">verify</a>({ ...params }) -> AddressVerificationVerifyResponse</code>
 
 # IntlAddressVerification
 
 Types:
 
+- <code><a href="./src/resources/intl-address-verification.ts">IntlAddressVerificationAutocompleteResponse</a></code>
+- <code><a href="./src/resources/intl-address-verification.ts">IntlAddressVerificationBatchVerificationResponse</a></code>
+- <code><a href="./src/resources/intl-address-verification.ts">IntlAddressVerificationGetAutocompleteAdvancedPreviewsResponse</a></code>
+- <code><a href="./src/resources/intl-address-verification.ts">IntlAddressVerificationGetAutocompletePreviewsResponse</a></code>
 - <code><a href="./src/resources/intl-address-verification.ts">IntlAddressVerificationVerifyResponse</a></code>
 
 Methods:
 
+- <code title="post /v1/intl_addver/completions">client.intlAddressVerification.<a href="./src/resources/intl-address-verification.ts">autocomplete</a>({ ...params }) -> IntlAddressVerificationAutocompleteResponse</code>
+- <code title="post /v1/intl_addver/verifications/batch">client.intlAddressVerification.<a href="./src/resources/intl-address-verification.ts">batchVerification</a>({ ...params }) -> IntlAddressVerificationBatchVerificationResponse</code>
+- <code title="get /v1/intl_addver/completions">client.intlAddressVerification.<a href="./src/resources/intl-address-verification.ts">getAutocompleteAdvancedPreviews</a>({ ...params }) -> IntlAddressVerificationGetAutocompleteAdvancedPreviewsResponse</code>
+- <code title="get /v1/intl_addver/completions">client.intlAddressVerification.<a href="./src/resources/intl-address-verification.ts">getAutocompletePreviews</a>({ ...params }) -> IntlAddressVerificationGetAutocompletePreviewsResponse</code>
 - <code title="post /v1/intl_addver/verifications">client.intlAddressVerification.<a href="./src/resources/intl-address-verification.ts">verify</a>({ ...params }) -> IntlAddressVerificationVerifyResponse</code>
 
 # PrintMail
@@ -143,72 +167,6 @@ Methods:
 - <code title="get /print-mail/v1/mailing_lists">client.printMail.mailingLists.<a href="./src/resources/print-mail/mailing-lists.ts">list</a>({ ...params }) -> MailingListsSkipLimit</code>
 - <code title="delete /print-mail/v1/mailing_lists/{id}">client.printMail.mailingLists.<a href="./src/resources/print-mail/mailing-lists.ts">delete</a>(id) -> MailingListDeleteResponse</code>
 - <code title="post /print-mail/v1/mailing_lists/{id}/jobs">client.printMail.mailingLists.<a href="./src/resources/print-mail/mailing-lists.ts">jobs</a>(id, { ...params }) -> MailingList</code>
-
-## OrderProfiles
-
-### Cheques
-
-Types:
-
-- <code><a href="./src/resources/print-mail/order-profiles/cheques.ts">ChequeProfile</a></code>
-- <code><a href="./src/resources/print-mail/order-profiles/cheques.ts">CurrencyCode</a></code>
-- <code><a href="./src/resources/print-mail/order-profiles/cheques.ts">ChequeListResponse</a></code>
-- <code><a href="./src/resources/print-mail/order-profiles/cheques.ts">ChequeDeleteResponse</a></code>
-
-Methods:
-
-- <code title="post /print-mail/v1/order_profiles/cheques">client.printMail.orderProfiles.cheques.<a href="./src/resources/print-mail/order-profiles/cheques.ts">create</a>({ ...params }) -> ChequeProfile</code>
-- <code title="get /print-mail/v1/order_profiles/cheques/{id}">client.printMail.orderProfiles.cheques.<a href="./src/resources/print-mail/order-profiles/cheques.ts">retrieve</a>(id, { ...params }) -> ChequeProfile</code>
-- <code title="post /print-mail/v1/order_profiles/cheques/{id}">client.printMail.orderProfiles.cheques.<a href="./src/resources/print-mail/order-profiles/cheques.ts">update</a>(id, { ...params }) -> ChequeProfile</code>
-- <code title="get /print-mail/v1/order_profiles/cheques">client.printMail.orderProfiles.cheques.<a href="./src/resources/print-mail/order-profiles/cheques.ts">list</a>({ ...params }) -> ChequeListResponsesSkipLimit</code>
-- <code title="delete /print-mail/v1/order_profiles/cheques/{id}">client.printMail.orderProfiles.cheques.<a href="./src/resources/print-mail/order-profiles/cheques.ts">delete</a>(id) -> ChequeDeleteResponse</code>
-
-### Letters
-
-Types:
-
-- <code><a href="./src/resources/print-mail/order-profiles/letters.ts">LetterProfile</a></code>
-- <code><a href="./src/resources/print-mail/order-profiles/letters.ts">LetterDeleteResponse</a></code>
-
-Methods:
-
-- <code title="post /print-mail/v1/order_profiles/letters">client.printMail.orderProfiles.letters.<a href="./src/resources/print-mail/order-profiles/letters.ts">create</a>({ ...params }) -> LetterProfile</code>
-- <code title="get /print-mail/v1/order_profiles/letters/{id}">client.printMail.orderProfiles.letters.<a href="./src/resources/print-mail/order-profiles/letters.ts">retrieve</a>(id, { ...params }) -> LetterProfile</code>
-- <code title="post /print-mail/v1/order_profiles/letters/{id}">client.printMail.orderProfiles.letters.<a href="./src/resources/print-mail/order-profiles/letters.ts">update</a>(id, { ...params }) -> LetterProfile</code>
-- <code title="get /print-mail/v1/order_profiles/letters">client.printMail.orderProfiles.letters.<a href="./src/resources/print-mail/order-profiles/letters.ts">list</a>({ ...params }) -> LetterProfilesSkipLimit</code>
-- <code title="delete /print-mail/v1/order_profiles/letters/{id}">client.printMail.orderProfiles.letters.<a href="./src/resources/print-mail/order-profiles/letters.ts">delete</a>(id) -> LetterDeleteResponse</code>
-
-### Postcards
-
-Types:
-
-- <code><a href="./src/resources/print-mail/order-profiles/postcards.ts">PostcardProfile</a></code>
-- <code><a href="./src/resources/print-mail/order-profiles/postcards.ts">PostcardSize</a></code>
-- <code><a href="./src/resources/print-mail/order-profiles/postcards.ts">PostcardDeleteResponse</a></code>
-
-Methods:
-
-- <code title="post /print-mail/v1/order_profiles/postcards">client.printMail.orderProfiles.postcards.<a href="./src/resources/print-mail/order-profiles/postcards.ts">create</a>({ ...params }) -> PostcardProfile</code>
-- <code title="get /print-mail/v1/order_profiles/postcards/{id}">client.printMail.orderProfiles.postcards.<a href="./src/resources/print-mail/order-profiles/postcards.ts">retrieve</a>(id, { ...params }) -> PostcardProfile</code>
-- <code title="post /print-mail/v1/order_profiles/postcards/{id}">client.printMail.orderProfiles.postcards.<a href="./src/resources/print-mail/order-profiles/postcards.ts">update</a>(id, { ...params }) -> PostcardProfile</code>
-- <code title="get /print-mail/v1/order_profiles/postcards">client.printMail.orderProfiles.postcards.<a href="./src/resources/print-mail/order-profiles/postcards.ts">list</a>({ ...params }) -> PostcardProfilesSkipLimit</code>
-- <code title="delete /print-mail/v1/order_profiles/postcards/{id}">client.printMail.orderProfiles.postcards.<a href="./src/resources/print-mail/order-profiles/postcards.ts">delete</a>(id) -> PostcardDeleteResponse</code>
-
-### SelfMailers
-
-Types:
-
-- <code><a href="./src/resources/print-mail/order-profiles/self-mailers.ts">SelfMailerProfile</a></code>
-- <code><a href="./src/resources/print-mail/order-profiles/self-mailers.ts">SelfMailerSize</a></code>
-- <code><a href="./src/resources/print-mail/order-profiles/self-mailers.ts">SelfMailerDeleteResponse</a></code>
-
-Methods:
-
-- <code title="post /print-mail/v1/order_profiles/self_mailers">client.printMail.orderProfiles.selfMailers.<a href="./src/resources/print-mail/order-profiles/self-mailers.ts">create</a>({ ...params }) -> SelfMailerProfile</code>
-- <code title="get /print-mail/v1/order_profiles/self_mailers/{id}">client.printMail.orderProfiles.selfMailers.<a href="./src/resources/print-mail/order-profiles/self-mailers.ts">retrieve</a>(id, { ...params }) -> SelfMailerProfile</code>
-- <code title="post /print-mail/v1/order_profiles/self_mailers/{id}">client.printMail.orderProfiles.selfMailers.<a href="./src/resources/print-mail/order-profiles/self-mailers.ts">update</a>(id, { ...params }) -> SelfMailerProfile</code>
-- <code title="get /print-mail/v1/order_profiles/self_mailers">client.printMail.orderProfiles.selfMailers.<a href="./src/resources/print-mail/order-profiles/self-mailers.ts">list</a>({ ...params }) -> SelfMailerProfilesSkipLimit</code>
-- <code title="delete /print-mail/v1/order_profiles/self_mailers/{id}">client.printMail.orderProfiles.selfMailers.<a href="./src/resources/print-mail/order-profiles/self-mailers.ts">delete</a>(id) -> SelfMailerDeleteResponse</code>
 
 ## Postcards
 

@@ -3,7 +3,6 @@
 import { APIResource } from '../../core/resource';
 import * as ContactsAPI from './contacts';
 import * as PrintMailAPI from './print-mail';
-import * as OrderProfilesPostcardsAPI from './order-profiles/postcards';
 import { APIPromise } from '../../core/api-promise';
 import { PagePromise, SkipLimit, type SkipLimitParams } from '../../core/pagination';
 import { RequestOptions } from '../../internal/request-options';
@@ -164,7 +163,7 @@ export interface Postcard {
   /**
    * Enum representing the supported postcard sizes.
    */
-  size: OrderProfilesPostcardsAPI.PostcardSize;
+  size: '6x4' | '9x6' | '11x6';
 
   /**
    * See `OrderStatus` for more details on the status of this order.
@@ -229,6 +228,12 @@ export interface Postcard {
    * See the section on Metadata.
    */
   metadata?: { [key: string]: unknown };
+
+  /**
+   * Premium paper identifier. Use "standard" for regular stock or a premium*paper*\*
+   * ID.
+   */
+  paper?: string;
 
   /**
    * The tracking number of this order. Populated after an express/certified order
@@ -310,7 +315,7 @@ export declare namespace PostcardCreateParams {
     /**
      * Enum representing the supported postcard sizes.
      */
-    size: OrderProfilesPostcardsAPI.PostcardSize;
+    size: '6x4' | '9x6' | '11x6';
 
     /**
      * The recipient of this order. You can either supply the contact information
@@ -377,6 +382,12 @@ export declare namespace PostcardCreateParams {
      * See the section on Metadata.
      */
     metadata?: { [key: string]: unknown };
+
+    /**
+     * Premium paper identifier. Use "standard" for regular stock or a premium*paper*\*
+     * ID.
+     */
+    paper?: string;
 
     /**
      * This order will transition from `ready` to `printing` on the day after this
@@ -409,7 +420,7 @@ export declare namespace PostcardCreateParams {
     /**
      * Enum representing the supported postcard sizes.
      */
-    size: OrderProfilesPostcardsAPI.PostcardSize;
+    size: '6x4' | '9x6' | '11x6';
 
     /**
      * The recipient of this order. You can either supply the contact information
@@ -476,6 +487,12 @@ export declare namespace PostcardCreateParams {
      * See the section on Metadata.
      */
     metadata?: { [key: string]: unknown };
+
+    /**
+     * Premium paper identifier. Use "standard" for regular stock or a premium*paper*\*
+     * ID.
+     */
+    paper?: string;
 
     /**
      * This order will transition from `ready` to `printing` on the day after this
@@ -494,7 +511,7 @@ export declare namespace PostcardCreateParams {
     /**
      * Enum representing the supported postcard sizes.
      */
-    size: OrderProfilesPostcardsAPI.PostcardSize;
+    size: '6x4' | '9x6' | '11x6';
 
     /**
      * The recipient of this order. You can either supply the contact information
@@ -561,6 +578,12 @@ export declare namespace PostcardCreateParams {
      * See the section on Metadata.
      */
     metadata?: { [key: string]: unknown };
+
+    /**
+     * Premium paper identifier. Use "standard" for regular stock or a premium*paper*\*
+     * ID.
+     */
+    paper?: string;
 
     /**
      * This order will transition from `ready` to `printing` on the day after this

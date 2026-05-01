@@ -72,7 +72,6 @@ export {
   type MailingListJobsParams,
   type MailingListsSkipLimit,
 } from './mailing-lists';
-export { OrderProfiles } from './order-profiles/index';
 export {
   Postcards,
   type Postcard,

@@ -3,7 +3,6 @@
 import { APIResource } from '../../core/resource';
 import * as ContactsAPI from './contacts';
 import * as PrintMailAPI from './print-mail';
-import * as OrderProfilesSelfMailersAPI from './order-profiles/self-mailers';
 import { APIPromise } from '../../core/api-promise';
 import { PagePromise, SkipLimit, type SkipLimitParams } from '../../core/pagination';
 import { RequestOptions } from '../../internal/request-options';
@@ -171,7 +170,7 @@ export interface SelfMailer {
   /**
    * Enum representing the supported self-mailer sizes.
    */
-  size: OrderProfilesSelfMailersAPI.SelfMailerSize;
+  size: '8.5x11_bifold' | '8.5x11_trifold' | '9.5x16_trifold';
 
   /**
    * See `OrderStatus` for more details on the status of this order.
@@ -318,7 +317,7 @@ export declare namespace SelfMailerCreateParams {
     /**
      * Enum representing the supported self-mailer sizes.
      */
-    size: OrderProfilesSelfMailersAPI.SelfMailerSize;
+    size: '8.5x11_bifold' | '8.5x11_trifold' | '9.5x16_trifold';
 
     /**
      * The recipient of this order. You can either supply the contact information
@@ -417,7 +416,7 @@ export declare namespace SelfMailerCreateParams {
     /**
      * Enum representing the supported self-mailer sizes.
      */
-    size: OrderProfilesSelfMailersAPI.SelfMailerSize;
+    size: '8.5x11_bifold' | '8.5x11_trifold' | '9.5x16_trifold';
 
     /**
      * The recipient of this order. You can either supply the contact information
@@ -501,7 +500,7 @@ export declare namespace SelfMailerCreateParams {
     /**
      * Enum representing the supported self-mailer sizes.
      */
-    size: OrderProfilesSelfMailersAPI.SelfMailerSize;
+    size: '8.5x11_bifold' | '8.5x11_trifold' | '9.5x16_trifold';
 
     /**
      * The recipient of this order. You can either supply the contact information
