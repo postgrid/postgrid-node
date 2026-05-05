@@ -7,6 +7,10 @@ import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ *  The mailing lists API enables you to manage collections of contacts
+ *  that can be used for bulk mail campaigns.
+ */
 export class MailingLists extends APIResource {
   /**
    * Create a new mailing list.

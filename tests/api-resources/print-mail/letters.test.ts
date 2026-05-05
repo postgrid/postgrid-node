@@ -156,6 +156,35 @@ describe('resource letters', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('cancel: only required params', async () => {
+    const responsePromise = client.printMail.letters.cancel('id', { note: 'Cancelling this letter' });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('cancel: required and optional params', async () => {
+    const response = await client.printMail.letters.cancel('id', { note: 'Cancelling this letter' });
+  });
+
+  // Mock server tests are disabled
+  test.skip('progress', async () => {
+    const responsePromise = client.printMail.letters.progress('id');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
   test.skip('retrieveURL', async () => {
     const responsePromise = client.printMail.letters.retrieveURL('id');
     const rawResponse = await responsePromise.asResponse();

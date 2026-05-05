@@ -35,8 +35,4 @@ export {
   type IntlAddressVerificationGetAutocompletePreviewsParams,
   type IntlAddressVerificationVerifyParams,
 } from './intl-address-verification';
-export {
-  PrintMail,
-  type ContactCreateWithCompanyName,
-  type ContactCreateWithFirstName,
-} from './print-mail/print-mail';
+export { PrintMail } from './print-mail/print-mail';

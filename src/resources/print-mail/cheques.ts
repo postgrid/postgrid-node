@@ -2,7 +2,6 @@
 
 import { APIResource } from '../../core/resource';
 import * as ContactsAPI from './contacts';
-import * as PrintMailAPI from './print-mail';
 import { APIPromise } from '../../core/api-promise';
 import { PagePromise, SkipLimit, type SkipLimitParams } from '../../core/pagination';
 import { RequestOptions } from '../../internal/request-options';
@@ -93,6 +92,40 @@ export class Cheques extends APIResource {
    */
   delete(id: string, options?: RequestOptions): APIPromise<Cheque> {
     return this._client.delete(path`/print-mail/v1/cheques/${id}`, options);
+  }
+
+  /**
+   * Cancel a cheque by ID with a note. Note that this operation cannot be undone and
+   * that only cheques with a status of `ready` can be cancelled.
+   *
+   * @example
+   * ```ts
+   * const cheque = await client.printMail.cheques.cancel('id', {
+   *   note: 'Cancelling this cheque',
+   * });
+   * ```
+   */
+  cancel(id: string, body: ChequeCancelParams, options?: RequestOptions): APIPromise<Cheque> {
+    return this._client.post(path`/print-mail/v1/cheques/${id}/cancellation`, { body, ...options });
+  }
+
+  /**
+   * Progresses a cheque's `status` to the next stage. This is only available in test
+   * mode and can be used to simulate how a live order would progress through the
+   * different statuses.
+   *
+   * Note: this will fail with an `invalid_progression_error` if the status is one of
+   * `completed` or `cancelled`.
+   *
+   * @example
+   * ```ts
+   * const cheque = await client.printMail.cheques.progress(
+   *   'id',
+   * );
+   * ```
+   */
+  progress(id: string, options?: RequestOptions): APIPromise<Cheque> {
+    return this._client.post(path`/print-mail/v1/cheques/${id}/progressions`, options);
   }
 
   /**
@@ -407,7 +440,7 @@ export interface ChequeCreateParams {
    * The contact information of the sender. You can pass contact information inline
    * here just like you can for the `to`.
    */
-  from: PrintMailAPI.ContactCreateWithFirstName | PrintMailAPI.ContactCreateWithCompanyName | string;
+  from: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
   /**
    * The recipient of this order. You can either supply the contact information
@@ -415,7 +448,7 @@ export interface ChequeCreateParams {
    * contacts regardless of whether you provide the information inline here or call
    * the contact creation endpoint.
    */
-  to: PrintMailAPI.ContactCreateWithFirstName | PrintMailAPI.ContactCreateWithCompanyName | string;
+  to: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
   /**
    * The currency code of the cheque. This will be set to the default currency of the
@@ -519,7 +552,7 @@ export interface ChequeCreateParams {
    * mail it forward to the final recipient yourself. One use case for this is
    * signing cheques at your office before mailing them out yourself.
    */
-  redirectTo?: PrintMailAPI.ContactCreateWithFirstName | PrintMailAPI.ContactCreateWithCompanyName | string;
+  redirectTo?: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
   /**
    * This order will transition from `ready` to `printing` on the day after this
@@ -544,6 +577,10 @@ export interface ChequeListParams extends SkipLimitParams {
   search?: string;
 }
 
+export interface ChequeCancelParams {
+  note: string;
+}
+
 export declare namespace Cheques {
   export {
     type Cheque as Cheque,
@@ -553,5 +590,6 @@ export declare namespace Cheques {
     type ChequesSkipLimit as ChequesSkipLimit,
     type ChequeCreateParams as ChequeCreateParams,
     type ChequeListParams as ChequeListParams,
+    type ChequeCancelParams as ChequeCancelParams,
   };
 }

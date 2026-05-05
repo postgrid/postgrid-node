@@ -10,6 +10,17 @@ export {
   type BankAccountsSkipLimit,
 } from './bank-accounts';
 export {
+  Boxes,
+  type BoxCreateResponse,
+  type BoxRetrieveResponse,
+  type BoxListResponse,
+  type BoxDeleteResponse,
+  type BoxProgressionsResponse,
+  type BoxCreateParams,
+  type BoxListParams,
+  type BoxListResponsesSkipLimit,
+} from './boxes';
+export {
   Campaigns,
   type Campaign,
   type CampaignDeleteResponse,
@@ -27,12 +38,15 @@ export {
   type ChequeRetrieveURLResponse,
   type ChequeCreateParams,
   type ChequeListParams,
+  type ChequeCancelParams,
   type ChequesSkipLimit,
 } from './cheques';
 export {
   Contacts,
   type Contact,
   type ContactCreate,
+  type ContactCreateWithCompanyName,
+  type ContactCreateWithFirstName,
   type ContactDeleteResponse,
   type ContactCreateParams,
   type ContactListParams,
@@ -48,6 +62,7 @@ export {
   type LetterRetrieveURLResponse,
   type LetterCreateParams,
   type LetterListParams,
+  type LetterCancelParams,
   type LettersSkipLimit,
 } from './letters';
 export {
@@ -78,9 +93,10 @@ export {
   type PostcardRetrieveURLResponse,
   type PostcardCreateParams,
   type PostcardListParams,
+  type PostcardCancelParams,
   type PostcardsSkipLimit,
 } from './postcards';
-export { PrintMail, type ContactCreateWithCompanyName, type ContactCreateWithFirstName } from './print-mail';
+export { PrintMail } from './print-mail';
 export {
   Reports,
   type DeletedResponse,
@@ -100,6 +116,19 @@ export {
   type SelfMailersSkipLimit,
 } from './self-mailers';
 export {
+  SnapPacks,
+  type SnapPackCreateResponse,
+  type SnapPackRetrieveResponse,
+  type SnapPackListResponse,
+  type SnapPackDeleteResponse,
+  type SnapPackProgressionsResponse,
+  type SnapPackRetrieveCapabilitiesResponse,
+  type SnapPackCreateParams,
+  type SnapPackListParams,
+  type SnapPackRetrieveCapabilitiesParams,
+  type SnapPackListResponsesSkipLimit,
+} from './snap-packs';
+export {
   SubOrganizations,
   type EmailPreferences,
   type SubOrganization,
@@ -111,6 +140,28 @@ export {
   type SubOrganizationsSkipLimit,
 } from './sub-organizations';
 export {
+  TargetedListBuilds,
+  type TargetedListBuildCreateResponse,
+  type TargetedListBuildRetrieveResponse,
+  type TargetedListBuildUpdateResponse,
+  type TargetedListBuildListResponse,
+  type TargetedListBuildDeleteResponse,
+  type TargetedListBuildConfirmResponse,
+  type TargetedListBuildCreateParams,
+  type TargetedListBuildUpdateParams,
+  type TargetedListBuildListParams,
+  type TargetedListBuildListResponsesSkipLimit,
+} from './targeted-list-builds/index';
+export {
+  TemplateEditorSessions,
+  type TemplateEditorSessionCreateResponse,
+  type TemplateEditorSessionListResponse,
+  type TemplateEditorSessionDeleteResponse,
+  type TemplateEditorSessionCreateParams,
+  type TemplateEditorSessionListParams,
+  type TemplateEditorSessionListResponsesSkipLimit,
+} from './template-editor-sessions';
+export {
   Templates,
   type Template,
   type TemplateDeleteResponse,
@@ -119,3 +170,28 @@ export {
   type TemplateListParams,
   type TemplatesSkipLimit,
 } from './templates';
+export {
+  Trackers,
+  type TrackerCreateResponse,
+  type TrackerRetrieveResponse,
+  type TrackerUpdateResponse,
+  type TrackerListResponse,
+  type TrackerDeleteResponse,
+  type TrackerRetrieveVisitsResponse,
+  type TrackerCreateParams,
+  type TrackerUpdateParams,
+  type TrackerListParams,
+  type TrackerRetrieveVisitsParams,
+  type TrackerListResponsesSkipLimit,
+  type TrackerRetrieveVisitsResponsesSkipLimit,
+} from './trackers';
+export {
+  VirtualMailboxes,
+  type VirtualMailboxCreateResponse,
+  type VirtualMailboxRetrieveResponse,
+  type VirtualMailboxListResponse,
+  type VirtualMailboxRetrieveAddressResponse,
+  type VirtualMailboxCreateParams,
+  type VirtualMailboxListParams,
+  type VirtualMailboxListResponsesSkipLimit,
+} from './virtual-mailboxes/index';
