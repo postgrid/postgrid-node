@@ -2,7 +2,6 @@
 
 import { APIResource } from '../../core/resource';
 import * as ContactsAPI from './contacts';
-import * as PrintMailAPI from './print-mail';
 import { APIPromise } from '../../core/api-promise';
 import { PagePromise, SkipLimit, type SkipLimitParams } from '../../core/pagination';
 import { RequestOptions } from '../../internal/request-options';
@@ -77,6 +76,41 @@ export class Postcards extends APIResource {
    */
   delete(id: string, options?: RequestOptions): APIPromise<Postcard> {
     return this._client.delete(path`/print-mail/v1/postcards/${id}`, options);
+  }
+
+  /**
+   * Cancel a postcard by ID with a note. Note that this operation cannot be undone
+   * and that only postcards with a status of `ready` can be cancelled.
+   *
+   * @example
+   * ```ts
+   * const postcard = await client.printMail.postcards.cancel(
+   *   'id',
+   *   { note: 'Cancelling this postcard' },
+   * );
+   * ```
+   */
+  cancel(id: string, body: PostcardCancelParams, options?: RequestOptions): APIPromise<Postcard> {
+    return this._client.post(path`/print-mail/v1/postcards/${id}/cancellation`, { body, ...options });
+  }
+
+  /**
+   * Progresses a postcard's `status` to the next stage. This is only available in
+   * test mode and can be used to simulate how a live order would progress through
+   * the different statuses.
+   *
+   * Note: this will fail with an `invalid_progression_error` if the status is one of
+   * `completed` or `cancelled`.
+   *
+   * @example
+   * ```ts
+   * const postcard = await client.printMail.postcards.progress(
+   *   'id',
+   * );
+   * ```
+   */
+  progress(id: string, options?: RequestOptions): APIPromise<Postcard> {
+    return this._client.post(path`/print-mail/v1/postcards/${id}/progressions`, options);
   }
 
   /**
@@ -323,7 +357,7 @@ export declare namespace PostcardCreateParams {
      * contacts regardless of whether you provide the information inline here or call
      * the contact creation endpoint.
      */
-    to: PrintMailAPI.ContactCreateWithFirstName | PrintMailAPI.ContactCreateWithCompanyName | string;
+    to: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
     /**
      * An optional string describing this resource. Will be visible in the API and the
@@ -336,7 +370,7 @@ export declare namespace PostcardCreateParams {
      * here just like you can for the `to`. Unlike other order types, the sender
      * address is optional for postcards.
      */
-    from?: PrintMailAPI.ContactCreateWithFirstName | PrintMailAPI.ContactCreateWithCompanyName | string;
+    from?: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
     /**
      * The mailing class of this order. If not provided, automatically set to
@@ -428,7 +462,7 @@ export declare namespace PostcardCreateParams {
      * contacts regardless of whether you provide the information inline here or call
      * the contact creation endpoint.
      */
-    to: PrintMailAPI.ContactCreateWithFirstName | PrintMailAPI.ContactCreateWithCompanyName | string;
+    to: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
     /**
      * An optional string describing this resource. Will be visible in the API and the
@@ -441,7 +475,7 @@ export declare namespace PostcardCreateParams {
      * here just like you can for the `to`. Unlike other order types, the sender
      * address is optional for postcards.
      */
-    from?: PrintMailAPI.ContactCreateWithFirstName | PrintMailAPI.ContactCreateWithCompanyName | string;
+    from?: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
     /**
      * The mailing class of this order. If not provided, automatically set to
@@ -519,7 +553,7 @@ export declare namespace PostcardCreateParams {
      * contacts regardless of whether you provide the information inline here or call
      * the contact creation endpoint.
      */
-    to: PrintMailAPI.ContactCreateWithFirstName | PrintMailAPI.ContactCreateWithCompanyName | string;
+    to: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
     /**
      * An optional string describing this resource. Will be visible in the API and the
@@ -532,7 +566,7 @@ export declare namespace PostcardCreateParams {
      * here just like you can for the `to`. Unlike other order types, the sender
      * address is optional for postcards.
      */
-    from?: PrintMailAPI.ContactCreateWithFirstName | PrintMailAPI.ContactCreateWithCompanyName | string;
+    from?: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
     /**
      * The mailing class of this order. If not provided, automatically set to
@@ -604,6 +638,10 @@ export interface PostcardListParams extends SkipLimitParams {
   search?: string;
 }
 
+export interface PostcardCancelParams {
+  note: string;
+}
+
 export declare namespace Postcards {
   export {
     type Postcard as Postcard,
@@ -611,5 +649,6 @@ export declare namespace Postcards {
     type PostcardsSkipLimit as PostcardsSkipLimit,
     type PostcardCreateParams as PostcardCreateParams,
     type PostcardListParams as PostcardListParams,
+    type PostcardCancelParams as PostcardCancelParams,
   };
 }

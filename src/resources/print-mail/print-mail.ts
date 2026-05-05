@@ -11,6 +11,18 @@ import {
   BankAccounts,
   BankAccountsSkipLimit,
 } from './bank-accounts';
+import * as BoxesAPI from './boxes';
+import {
+  BoxCreateParams,
+  BoxCreateResponse,
+  BoxDeleteResponse,
+  BoxListParams,
+  BoxListResponse,
+  BoxListResponsesSkipLimit,
+  BoxProgressionsResponse,
+  BoxRetrieveResponse,
+  Boxes,
+} from './boxes';
 import * as CampaignsAPI from './campaigns';
 import {
   Campaign,
@@ -25,6 +37,7 @@ import {
 import * as ChequesAPI from './cheques';
 import {
   Cheque,
+  ChequeCancelParams,
   ChequeCreateParams,
   ChequeListParams,
   ChequeRetrieveURLResponse,
@@ -38,6 +51,8 @@ import {
   Contact,
   ContactCreate,
   ContactCreateParams,
+  ContactCreateWithCompanyName,
+  ContactCreateWithFirstName,
   ContactDeleteResponse,
   ContactListParams,
   Contacts,
@@ -48,6 +63,7 @@ import {
   AddressPlacement,
   AttachedPdf,
   Letter,
+  LetterCancelParams,
   LetterCreateParams,
   LetterListParams,
   LetterRetrieveURLResponse,
@@ -83,6 +99,7 @@ import {
 import * as PostcardsAPI from './postcards';
 import {
   Postcard,
+  PostcardCancelParams,
   PostcardCreateParams,
   PostcardListParams,
   PostcardRetrieveURLResponse,
@@ -98,6 +115,20 @@ import {
   SelfMailers,
   SelfMailersSkipLimit,
 } from './self-mailers';
+import * as SnapPacksAPI from './snap-packs';
+import {
+  SnapPackCreateParams,
+  SnapPackCreateResponse,
+  SnapPackDeleteResponse,
+  SnapPackListParams,
+  SnapPackListResponse,
+  SnapPackListResponsesSkipLimit,
+  SnapPackProgressionsResponse,
+  SnapPackRetrieveCapabilitiesParams,
+  SnapPackRetrieveCapabilitiesResponse,
+  SnapPackRetrieveResponse,
+  SnapPacks,
+} from './snap-packs';
 import * as SubOrganizationsAPI from './sub-organizations';
 import {
   EmailPreferences,
@@ -110,6 +141,16 @@ import {
   SubOrganizations,
   SubOrganizationsSkipLimit,
 } from './sub-organizations';
+import * as TemplateEditorSessionsAPI from './template-editor-sessions';
+import {
+  TemplateEditorSessionCreateParams,
+  TemplateEditorSessionCreateResponse,
+  TemplateEditorSessionDeleteResponse,
+  TemplateEditorSessionListParams,
+  TemplateEditorSessionListResponse,
+  TemplateEditorSessionListResponsesSkipLimit,
+  TemplateEditorSessions,
+} from './template-editor-sessions';
 import * as TemplatesAPI from './templates';
 import {
   Template,
@@ -120,6 +161,22 @@ import {
   Templates,
   TemplatesSkipLimit,
 } from './templates';
+import * as TrackersAPI from './trackers';
+import {
+  TrackerCreateParams,
+  TrackerCreateResponse,
+  TrackerDeleteResponse,
+  TrackerListParams,
+  TrackerListResponse,
+  TrackerListResponsesSkipLimit,
+  TrackerRetrieveResponse,
+  TrackerRetrieveVisitsParams,
+  TrackerRetrieveVisitsResponse,
+  TrackerRetrieveVisitsResponsesSkipLimit,
+  TrackerUpdateParams,
+  TrackerUpdateResponse,
+  Trackers,
+} from './trackers';
 import * as ReportsAPI from './reports/reports';
 import {
   DeletedResponse,
@@ -131,249 +188,118 @@ import {
   Reports,
   ReportsSkipLimit,
 } from './reports/reports';
+import * as TargetedListBuildsAPI from './targeted-list-builds/targeted-list-builds';
+import {
+  TargetedListBuildConfirmResponse,
+  TargetedListBuildCreateParams,
+  TargetedListBuildCreateResponse,
+  TargetedListBuildDeleteResponse,
+  TargetedListBuildListParams,
+  TargetedListBuildListResponse,
+  TargetedListBuildListResponsesSkipLimit,
+  TargetedListBuildRetrieveResponse,
+  TargetedListBuildUpdateParams,
+  TargetedListBuildUpdateResponse,
+  TargetedListBuilds,
+} from './targeted-list-builds/targeted-list-builds';
+import * as VirtualMailboxesAPI from './virtual-mailboxes/virtual-mailboxes';
+import {
+  VirtualMailboxCreateParams,
+  VirtualMailboxCreateResponse,
+  VirtualMailboxListParams,
+  VirtualMailboxListResponse,
+  VirtualMailboxListResponsesSkipLimit,
+  VirtualMailboxRetrieveAddressResponse,
+  VirtualMailboxRetrieveResponse,
+  VirtualMailboxes,
+} from './virtual-mailboxes/virtual-mailboxes';
 
 export class PrintMail extends APIResource {
-  bankAccounts: BankAccountsAPI.BankAccounts = new BankAccountsAPI.BankAccounts(this._client);
-  campaigns: CampaignsAPI.Campaigns = new CampaignsAPI.Campaigns(this._client);
-  cheques: ChequesAPI.Cheques = new ChequesAPI.Cheques(this._client);
   contacts: ContactsAPI.Contacts = new ContactsAPI.Contacts(this._client);
+  templates: TemplatesAPI.Templates = new TemplatesAPI.Templates(this._client);
+  trackers: TrackersAPI.Trackers = new TrackersAPI.Trackers(this._client);
   letters: LettersAPI.Letters = new LettersAPI.Letters(this._client);
+  postcards: PostcardsAPI.Postcards = new PostcardsAPI.Postcards(this._client);
+  bankAccounts: BankAccountsAPI.BankAccounts = new BankAccountsAPI.BankAccounts(this._client);
+  cheques: ChequesAPI.Cheques = new ChequesAPI.Cheques(this._client);
+  selfMailers: SelfMailersAPI.SelfMailers = new SelfMailersAPI.SelfMailers(this._client);
+  campaigns: CampaignsAPI.Campaigns = new CampaignsAPI.Campaigns(this._client);
   mailingListImports: MailingListImportsAPI.MailingListImports = new MailingListImportsAPI.MailingListImports(
     this._client,
   );
   mailingLists: MailingListsAPI.MailingLists = new MailingListsAPI.MailingLists(this._client);
-  postcards: PostcardsAPI.Postcards = new PostcardsAPI.Postcards(this._client);
   reports: ReportsAPI.Reports = new ReportsAPI.Reports(this._client);
-  selfMailers: SelfMailersAPI.SelfMailers = new SelfMailersAPI.SelfMailers(this._client);
   subOrganizations: SubOrganizationsAPI.SubOrganizations = new SubOrganizationsAPI.SubOrganizations(
     this._client,
   );
-  templates: TemplatesAPI.Templates = new TemplatesAPI.Templates(this._client);
+  boxes: BoxesAPI.Boxes = new BoxesAPI.Boxes(this._client);
+  snapPacks: SnapPacksAPI.SnapPacks = new SnapPacksAPI.SnapPacks(this._client);
+  targetedListBuilds: TargetedListBuildsAPI.TargetedListBuilds = new TargetedListBuildsAPI.TargetedListBuilds(
+    this._client,
+  );
+  templateEditorSessions: TemplateEditorSessionsAPI.TemplateEditorSessions =
+    new TemplateEditorSessionsAPI.TemplateEditorSessions(this._client);
+  virtualMailboxes: VirtualMailboxesAPI.VirtualMailboxes = new VirtualMailboxesAPI.VirtualMailboxes(
+    this._client,
+  );
 }
 
-export interface ContactCreateWithCompanyName {
-  /**
-   * The first line of the contact's address.
-   */
-  addressLine1: string;
-
-  companyName: string;
-
-  /**
-   * The ISO 3611-1 country code of the contact's address.
-   */
-  countryCode: string;
-
-  /**
-   * Second line of the contact's address, if applicable.
-   */
-  addressLine2?: string;
-
-  /**
-   * The city of the contact's address.
-   */
-  city?: string;
-
-  /**
-   * An optional string describing this resource. Will be visible in the API and the
-   * dashboard.
-   */
-  description?: string;
-
-  /**
-   * Email of the contact.
-   */
-  email?: string;
-
-  /**
-   * First name of the contact.
-   */
-  firstName?: string;
-
-  /**
-   * If `true`, PostGrid will force this contact to have an `addressStatus` of
-   * `verified` even if our address verification system says otherwise.
-   */
-  forceVerifiedStatus?: boolean;
-
-  /**
-   * Job title of the contact.
-   */
-  jobTitle?: string;
-
-  /**
-   * Last name of the contact.
-   */
-  lastName?: string;
-
-  /**
-   * See the section on Metadata.
-   */
-  metadata?: { [key: string]: unknown };
-
-  /**
-   * Phone number of the contact.
-   */
-  phoneNumber?: string;
-
-  /**
-   * The postal or ZIP code of the contact's address.
-   */
-  postalOrZip?: string;
-
-  /**
-   * Province or state of the contact's address.
-   */
-  provinceOrState?: string;
-
-  /**
-   * If `true`, PostGrid will skip running this contact's address through our address
-   * verification system.
-   */
-  skipVerification?: boolean;
-}
-
-export interface ContactCreateWithFirstName {
-  /**
-   * The first line of the contact's address.
-   */
-  addressLine1: string;
-
-  /**
-   * The ISO 3611-1 country code of the contact's address.
-   */
-  countryCode: string;
-
-  firstName: string;
-
-  /**
-   * Second line of the contact's address, if applicable.
-   */
-  addressLine2?: string;
-
-  /**
-   * The city of the contact's address.
-   */
-  city?: string;
-
-  /**
-   * Company name of the contact.
-   */
-  companyName?: string;
-
-  /**
-   * An optional string describing this resource. Will be visible in the API and the
-   * dashboard.
-   */
-  description?: string;
-
-  /**
-   * Email of the contact.
-   */
-  email?: string;
-
-  /**
-   * If `true`, PostGrid will force this contact to have an `addressStatus` of
-   * `verified` even if our address verification system says otherwise.
-   */
-  forceVerifiedStatus?: boolean;
-
-  /**
-   * Job title of the contact.
-   */
-  jobTitle?: string;
-
-  /**
-   * Last name of the contact.
-   */
-  lastName?: string;
-
-  /**
-   * See the section on Metadata.
-   */
-  metadata?: { [key: string]: unknown };
-
-  /**
-   * Phone number of the contact.
-   */
-  phoneNumber?: string;
-
-  /**
-   * The postal or ZIP code of the contact's address.
-   */
-  postalOrZip?: string;
-
-  /**
-   * Province or state of the contact's address.
-   */
-  provinceOrState?: string;
-
-  /**
-   * If `true`, PostGrid will skip running this contact's address through our address
-   * verification system.
-   */
-  skipVerification?: boolean;
-}
-
-PrintMail.BankAccounts = BankAccounts;
-PrintMail.Campaigns = Campaigns;
-PrintMail.Cheques = Cheques;
 PrintMail.Contacts = Contacts;
+PrintMail.Templates = Templates;
+PrintMail.Trackers = Trackers;
 PrintMail.Letters = Letters;
+PrintMail.Postcards = Postcards;
+PrintMail.BankAccounts = BankAccounts;
+PrintMail.Cheques = Cheques;
+PrintMail.SelfMailers = SelfMailers;
+PrintMail.Campaigns = Campaigns;
 PrintMail.MailingListImports = MailingListImports;
 PrintMail.MailingLists = MailingLists;
-PrintMail.Postcards = Postcards;
 PrintMail.Reports = Reports;
-PrintMail.SelfMailers = SelfMailers;
 PrintMail.SubOrganizations = SubOrganizations;
-PrintMail.Templates = Templates;
+PrintMail.Boxes = Boxes;
+PrintMail.SnapPacks = SnapPacks;
+PrintMail.TargetedListBuilds = TargetedListBuilds;
+PrintMail.TemplateEditorSessions = TemplateEditorSessions;
+PrintMail.VirtualMailboxes = VirtualMailboxes;
 
 export declare namespace PrintMail {
-  export {
-    type ContactCreateWithCompanyName as ContactCreateWithCompanyName,
-    type ContactCreateWithFirstName as ContactCreateWithFirstName,
-  };
-
-  export {
-    BankAccounts as BankAccounts,
-    type BankAccount as BankAccount,
-    type BankAccountCountryCode as BankAccountCountryCode,
-    type BankAccountDeleteResponse as BankAccountDeleteResponse,
-    type BankAccountsSkipLimit as BankAccountsSkipLimit,
-    type BankAccountCreateParams as BankAccountCreateParams,
-    type BankAccountListParams as BankAccountListParams,
-  };
-
-  export {
-    Campaigns as Campaigns,
-    type Campaign as Campaign,
-    type CampaignDeleteResponse as CampaignDeleteResponse,
-    type CampaignsSkipLimit as CampaignsSkipLimit,
-    type CampaignCreateParams as CampaignCreateParams,
-    type CampaignUpdateParams as CampaignUpdateParams,
-    type CampaignListParams as CampaignListParams,
-    type CampaignSendParams as CampaignSendParams,
-  };
-
-  export {
-    Cheques as Cheques,
-    type Cheque as Cheque,
-    type ChequeSize as ChequeSize,
-    type DigitalOnly as DigitalOnly,
-    type ChequeRetrieveURLResponse as ChequeRetrieveURLResponse,
-    type ChequesSkipLimit as ChequesSkipLimit,
-    type ChequeCreateParams as ChequeCreateParams,
-    type ChequeListParams as ChequeListParams,
-  };
-
   export {
     Contacts as Contacts,
     type Contact as Contact,
     type ContactCreate as ContactCreate,
+    type ContactCreateWithCompanyName as ContactCreateWithCompanyName,
+    type ContactCreateWithFirstName as ContactCreateWithFirstName,
     type ContactDeleteResponse as ContactDeleteResponse,
     type ContactsSkipLimit as ContactsSkipLimit,
     type ContactCreateParams as ContactCreateParams,
     type ContactListParams as ContactListParams,
+  };
+
+  export {
+    Templates as Templates,
+    type Template as Template,
+    type TemplateDeleteResponse as TemplateDeleteResponse,
+    type TemplatesSkipLimit as TemplatesSkipLimit,
+    type TemplateCreateParams as TemplateCreateParams,
+    type TemplateUpdateParams as TemplateUpdateParams,
+    type TemplateListParams as TemplateListParams,
+  };
+
+  export {
+    Trackers as Trackers,
+    type TrackerCreateResponse as TrackerCreateResponse,
+    type TrackerRetrieveResponse as TrackerRetrieveResponse,
+    type TrackerUpdateResponse as TrackerUpdateResponse,
+    type TrackerListResponse as TrackerListResponse,
+    type TrackerDeleteResponse as TrackerDeleteResponse,
+    type TrackerRetrieveVisitsResponse as TrackerRetrieveVisitsResponse,
+    type TrackerListResponsesSkipLimit as TrackerListResponsesSkipLimit,
+    type TrackerRetrieveVisitsResponsesSkipLimit as TrackerRetrieveVisitsResponsesSkipLimit,
+    type TrackerCreateParams as TrackerCreateParams,
+    type TrackerUpdateParams as TrackerUpdateParams,
+    type TrackerListParams as TrackerListParams,
+    type TrackerRetrieveVisitsParams as TrackerRetrieveVisitsParams,
   };
 
   export {
@@ -387,6 +313,59 @@ export declare namespace PrintMail {
     type LettersSkipLimit as LettersSkipLimit,
     type LetterCreateParams as LetterCreateParams,
     type LetterListParams as LetterListParams,
+    type LetterCancelParams as LetterCancelParams,
+  };
+
+  export {
+    Postcards as Postcards,
+    type Postcard as Postcard,
+    type PostcardRetrieveURLResponse as PostcardRetrieveURLResponse,
+    type PostcardsSkipLimit as PostcardsSkipLimit,
+    type PostcardCreateParams as PostcardCreateParams,
+    type PostcardListParams as PostcardListParams,
+    type PostcardCancelParams as PostcardCancelParams,
+  };
+
+  export {
+    BankAccounts as BankAccounts,
+    type BankAccount as BankAccount,
+    type BankAccountCountryCode as BankAccountCountryCode,
+    type BankAccountDeleteResponse as BankAccountDeleteResponse,
+    type BankAccountsSkipLimit as BankAccountsSkipLimit,
+    type BankAccountCreateParams as BankAccountCreateParams,
+    type BankAccountListParams as BankAccountListParams,
+  };
+
+  export {
+    Cheques as Cheques,
+    type Cheque as Cheque,
+    type ChequeSize as ChequeSize,
+    type DigitalOnly as DigitalOnly,
+    type ChequeRetrieveURLResponse as ChequeRetrieveURLResponse,
+    type ChequesSkipLimit as ChequesSkipLimit,
+    type ChequeCreateParams as ChequeCreateParams,
+    type ChequeListParams as ChequeListParams,
+    type ChequeCancelParams as ChequeCancelParams,
+  };
+
+  export {
+    SelfMailers as SelfMailers,
+    type SelfMailer as SelfMailer,
+    type SelfMailerRetrieveURLResponse as SelfMailerRetrieveURLResponse,
+    type SelfMailersSkipLimit as SelfMailersSkipLimit,
+    type SelfMailerCreateParams as SelfMailerCreateParams,
+    type SelfMailerListParams as SelfMailerListParams,
+  };
+
+  export {
+    Campaigns as Campaigns,
+    type Campaign as Campaign,
+    type CampaignDeleteResponse as CampaignDeleteResponse,
+    type CampaignsSkipLimit as CampaignsSkipLimit,
+    type CampaignCreateParams as CampaignCreateParams,
+    type CampaignUpdateParams as CampaignUpdateParams,
+    type CampaignListParams as CampaignListParams,
+    type CampaignSendParams as CampaignSendParams,
   };
 
   export {
@@ -414,15 +393,6 @@ export declare namespace PrintMail {
   };
 
   export {
-    Postcards as Postcards,
-    type Postcard as Postcard,
-    type PostcardRetrieveURLResponse as PostcardRetrieveURLResponse,
-    type PostcardsSkipLimit as PostcardsSkipLimit,
-    type PostcardCreateParams as PostcardCreateParams,
-    type PostcardListParams as PostcardListParams,
-  };
-
-  export {
     Reports as Reports,
     type DeletedResponse as DeletedResponse,
     type Report as Report,
@@ -431,15 +401,6 @@ export declare namespace PrintMail {
     type ReportUpdateParams as ReportUpdateParams,
     type ReportListParams as ReportListParams,
     type ReportSampleParams as ReportSampleParams,
-  };
-
-  export {
-    SelfMailers as SelfMailers,
-    type SelfMailer as SelfMailer,
-    type SelfMailerRetrieveURLResponse as SelfMailerRetrieveURLResponse,
-    type SelfMailersSkipLimit as SelfMailersSkipLimit,
-    type SelfMailerCreateParams as SelfMailerCreateParams,
-    type SelfMailerListParams as SelfMailerListParams,
   };
 
   export {
@@ -455,12 +416,63 @@ export declare namespace PrintMail {
   };
 
   export {
-    Templates as Templates,
-    type Template as Template,
-    type TemplateDeleteResponse as TemplateDeleteResponse,
-    type TemplatesSkipLimit as TemplatesSkipLimit,
-    type TemplateCreateParams as TemplateCreateParams,
-    type TemplateUpdateParams as TemplateUpdateParams,
-    type TemplateListParams as TemplateListParams,
+    Boxes as Boxes,
+    type BoxCreateResponse as BoxCreateResponse,
+    type BoxRetrieveResponse as BoxRetrieveResponse,
+    type BoxListResponse as BoxListResponse,
+    type BoxDeleteResponse as BoxDeleteResponse,
+    type BoxProgressionsResponse as BoxProgressionsResponse,
+    type BoxListResponsesSkipLimit as BoxListResponsesSkipLimit,
+    type BoxCreateParams as BoxCreateParams,
+    type BoxListParams as BoxListParams,
+  };
+
+  export {
+    SnapPacks as SnapPacks,
+    type SnapPackCreateResponse as SnapPackCreateResponse,
+    type SnapPackRetrieveResponse as SnapPackRetrieveResponse,
+    type SnapPackListResponse as SnapPackListResponse,
+    type SnapPackDeleteResponse as SnapPackDeleteResponse,
+    type SnapPackProgressionsResponse as SnapPackProgressionsResponse,
+    type SnapPackRetrieveCapabilitiesResponse as SnapPackRetrieveCapabilitiesResponse,
+    type SnapPackListResponsesSkipLimit as SnapPackListResponsesSkipLimit,
+    type SnapPackCreateParams as SnapPackCreateParams,
+    type SnapPackListParams as SnapPackListParams,
+    type SnapPackRetrieveCapabilitiesParams as SnapPackRetrieveCapabilitiesParams,
+  };
+
+  export {
+    TargetedListBuilds as TargetedListBuilds,
+    type TargetedListBuildCreateResponse as TargetedListBuildCreateResponse,
+    type TargetedListBuildRetrieveResponse as TargetedListBuildRetrieveResponse,
+    type TargetedListBuildUpdateResponse as TargetedListBuildUpdateResponse,
+    type TargetedListBuildListResponse as TargetedListBuildListResponse,
+    type TargetedListBuildDeleteResponse as TargetedListBuildDeleteResponse,
+    type TargetedListBuildConfirmResponse as TargetedListBuildConfirmResponse,
+    type TargetedListBuildListResponsesSkipLimit as TargetedListBuildListResponsesSkipLimit,
+    type TargetedListBuildCreateParams as TargetedListBuildCreateParams,
+    type TargetedListBuildUpdateParams as TargetedListBuildUpdateParams,
+    type TargetedListBuildListParams as TargetedListBuildListParams,
+  };
+
+  export {
+    TemplateEditorSessions as TemplateEditorSessions,
+    type TemplateEditorSessionCreateResponse as TemplateEditorSessionCreateResponse,
+    type TemplateEditorSessionListResponse as TemplateEditorSessionListResponse,
+    type TemplateEditorSessionDeleteResponse as TemplateEditorSessionDeleteResponse,
+    type TemplateEditorSessionListResponsesSkipLimit as TemplateEditorSessionListResponsesSkipLimit,
+    type TemplateEditorSessionCreateParams as TemplateEditorSessionCreateParams,
+    type TemplateEditorSessionListParams as TemplateEditorSessionListParams,
+  };
+
+  export {
+    VirtualMailboxes as VirtualMailboxes,
+    type VirtualMailboxCreateResponse as VirtualMailboxCreateResponse,
+    type VirtualMailboxRetrieveResponse as VirtualMailboxRetrieveResponse,
+    type VirtualMailboxListResponse as VirtualMailboxListResponse,
+    type VirtualMailboxRetrieveAddressResponse as VirtualMailboxRetrieveAddressResponse,
+    type VirtualMailboxListResponsesSkipLimit as VirtualMailboxListResponsesSkipLimit,
+    type VirtualMailboxCreateParams as VirtualMailboxCreateParams,
+    type VirtualMailboxListParams as VirtualMailboxListParams,
   };
 }

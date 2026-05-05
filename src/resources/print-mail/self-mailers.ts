@@ -2,7 +2,6 @@
 
 import { APIResource } from '../../core/resource';
 import * as ContactsAPI from './contacts';
-import * as PrintMailAPI from './print-mail';
 import { APIPromise } from '../../core/api-promise';
 import { PagePromise, SkipLimit, type SkipLimitParams } from '../../core/pagination';
 import { RequestOptions } from '../../internal/request-options';
@@ -79,6 +78,24 @@ export class SelfMailers extends APIResource {
    */
   delete(id: string, options?: RequestOptions): APIPromise<SelfMailer> {
     return this._client.delete(path`/print-mail/v1/self_mailers/${id}`, options);
+  }
+
+  /**
+   * Progresses a self-mailer's `status` to the next stage. This is only available in
+   * test mode and can be used to simulate how a live order would progress through
+   * the different statuses.
+   *
+   * Note: this will fail with an `invalid_progression_error` if the status is one of
+   * `completed` or `cancelled`.
+   *
+   * @example
+   * ```ts
+   * const selfMailer =
+   *   await client.printMail.selfMailers.progress('id');
+   * ```
+   */
+  progress(id: string, options?: RequestOptions): APIPromise<SelfMailer> {
+    return this._client.post(path`/print-mail/v1/self_mailers/${id}/progressions`, options);
   }
 
   /**
@@ -300,7 +317,7 @@ export declare namespace SelfMailerCreateParams {
      * The contact information of the sender. You can pass contact information inline
      * here just like you can for the `to`.
      */
-    from: PrintMailAPI.ContactCreateWithFirstName | PrintMailAPI.ContactCreateWithCompanyName | string;
+    from: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
     /**
      * The HTML content for the inside of the self-mailer. You can supply _either_ this
@@ -325,7 +342,7 @@ export declare namespace SelfMailerCreateParams {
      * contacts regardless of whether you provide the information inline here or call
      * the contact creation endpoint.
      */
-    to: PrintMailAPI.ContactCreateWithFirstName | PrintMailAPI.ContactCreateWithCompanyName | string;
+    to: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
     /**
      * An optional string describing this resource. Will be visible in the API and the
@@ -404,7 +421,7 @@ export declare namespace SelfMailerCreateParams {
      * The contact information of the sender. You can pass contact information inline
      * here just like you can for the `to`.
      */
-    from: PrintMailAPI.ContactCreateWithFirstName | PrintMailAPI.ContactCreateWithCompanyName | string;
+    from: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
     /**
      * A URL pointing to a 2 page PDF file. The first page is the inside of the
@@ -424,7 +441,7 @@ export declare namespace SelfMailerCreateParams {
      * contacts regardless of whether you provide the information inline here or call
      * the contact creation endpoint.
      */
-    to: PrintMailAPI.ContactCreateWithFirstName | PrintMailAPI.ContactCreateWithCompanyName | string;
+    to: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
     /**
      * An optional string describing this resource. Will be visible in the API and the
@@ -489,7 +506,7 @@ export declare namespace SelfMailerCreateParams {
      * The contact information of the sender. You can pass contact information inline
      * here just like you can for the `to`.
      */
-    from: PrintMailAPI.ContactCreateWithFirstName | PrintMailAPI.ContactCreateWithCompanyName | string;
+    from: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
     /**
      * A 2 page PDF file. The first page is the inside of the self-mailer and the
@@ -508,7 +525,7 @@ export declare namespace SelfMailerCreateParams {
      * contacts regardless of whether you provide the information inline here or call
      * the contact creation endpoint.
      */
-    to: PrintMailAPI.ContactCreateWithFirstName | PrintMailAPI.ContactCreateWithCompanyName | string;
+    to: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
     /**
      * An optional string describing this resource. Will be visible in the API and the
