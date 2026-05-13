@@ -282,13 +282,13 @@ Types:
 
 - <code><a href="./src/resources/print-mail/sub-organizations.ts">EmailPreferences</a></code>
 - <code><a href="./src/resources/print-mail/sub-organizations.ts">SubOrganization</a></code>
-- <code><a href="./src/resources/print-mail/sub-organizations.ts">SubOrganizationUpdateResponse</a></code>
+- <code><a href="./src/resources/print-mail/sub-organizations.ts">SubOrganizationCreateResponse</a></code>
 - <code><a href="./src/resources/print-mail/sub-organizations.ts">SubOrganizationRetrieveUsersResponse</a></code>
 
 Methods:
 
+- <code title="post /print-mail/v1/sub_organizations">client.printMail.subOrganizations.<a href="./src/resources/print-mail/sub-organizations.ts">create</a>({ ...params }) -> SubOrganizationCreateResponse</code>
 - <code title="get /print-mail/v1/sub_organizations/{id}">client.printMail.subOrganizations.<a href="./src/resources/print-mail/sub-organizations.ts">retrieve</a>(id) -> SubOrganization</code>
-- <code title="post /print-mail/v1/sub_organizations">client.printMail.subOrganizations.<a href="./src/resources/print-mail/sub-organizations.ts">update</a>({ ...params }) -> SubOrganizationUpdateResponse</code>
 - <code title="get /print-mail/v1/sub_organizations">client.printMail.subOrganizations.<a href="./src/resources/print-mail/sub-organizations.ts">list</a>({ ...params }) -> SubOrganizationsSkipLimit</code>
 - <code title="get /print-mail/v1/sub_organizations/{id}/users">client.printMail.subOrganizations.<a href="./src/resources/print-mail/sub-organizations.ts">retrieveUsers</a>(id, { ...params }) -> SubOrganizationRetrieveUsersResponse</code>
 

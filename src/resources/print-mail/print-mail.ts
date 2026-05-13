@@ -133,11 +133,11 @@ import * as SubOrganizationsAPI from './sub-organizations';
 import {
   EmailPreferences,
   SubOrganization,
+  SubOrganizationCreateParams,
+  SubOrganizationCreateResponse,
   SubOrganizationListParams,
   SubOrganizationRetrieveUsersParams,
   SubOrganizationRetrieveUsersResponse,
-  SubOrganizationUpdateParams,
-  SubOrganizationUpdateResponse,
   SubOrganizations,
   SubOrganizationsSkipLimit,
 } from './sub-organizations';
@@ -407,10 +407,10 @@ export declare namespace PrintMail {
     SubOrganizations as SubOrganizations,
     type EmailPreferences as EmailPreferences,
     type SubOrganization as SubOrganization,
-    type SubOrganizationUpdateResponse as SubOrganizationUpdateResponse,
+    type SubOrganizationCreateResponse as SubOrganizationCreateResponse,
     type SubOrganizationRetrieveUsersResponse as SubOrganizationRetrieveUsersResponse,
     type SubOrganizationsSkipLimit as SubOrganizationsSkipLimit,
-    type SubOrganizationUpdateParams as SubOrganizationUpdateParams,
+    type SubOrganizationCreateParams as SubOrganizationCreateParams,
     type SubOrganizationListParams as SubOrganizationListParams,
     type SubOrganizationRetrieveUsersParams as SubOrganizationRetrieveUsersParams,
   };

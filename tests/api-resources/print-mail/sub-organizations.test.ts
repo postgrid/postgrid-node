@@ -10,6 +10,36 @@ const client = new PostGrid({
 
 describe('resource subOrganizations', () => {
   // Mock server tests are disabled
+  test.skip('create: only required params', async () => {
+    const responsePromise = client.printMail.subOrganizations.create({
+      countryCode: 'CA',
+      email: 'suborg@postgrid.com',
+      name: 'Calvin',
+      organizationName: 'PostGrid',
+      password: 'very-strong-password',
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('create: required and optional params', async () => {
+    const response = await client.printMail.subOrganizations.create({
+      countryCode: 'CA',
+      email: 'suborg@postgrid.com',
+      name: 'Calvin',
+      organizationName: 'PostGrid',
+      password: 'very-strong-password',
+      phoneNumber: '9059059059',
+    });
+  });
+
+  // Mock server tests are disabled
   test.skip('retrieve', async () => {
     const responsePromise = client.printMail.subOrganizations.retrieve('id');
     const rawResponse = await responsePromise.asResponse();
@@ -19,36 +49,6 @@ describe('resource subOrganizations', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
-  test.skip('update: only required params', async () => {
-    const responsePromise = client.printMail.subOrganizations.update({
-      countryCode: 'CA',
-      email: 'suborg@postgrid.com',
-      name: 'Calvin',
-      organizationName: 'PostGrid',
-      password: 'very-strong-password',
-    });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
-  test.skip('update: required and optional params', async () => {
-    const response = await client.printMail.subOrganizations.update({
-      countryCode: 'CA',
-      email: 'suborg@postgrid.com',
-      name: 'Calvin',
-      organizationName: 'PostGrid',
-      password: 'very-strong-password',
-      phoneNumber: '9059059059',
-    });
   });
 
   // Mock server tests are disabled
