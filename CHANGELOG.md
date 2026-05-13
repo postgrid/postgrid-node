@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.6.0 (2026-05-13)
+
+Full Changelog: [v0.5.2...v0.6.0](https://github.com/postgrid/postgrid-node/compare/v0.5.2...v0.6.0)
+
+### Features
+
+* **api:** Generate OpenAPI spec from master, Complete AV endpoints, Deprecate order profiles ([67bb8b7](https://github.com/postgrid/postgrid-node/commit/67bb8b7333288443ffbf34c6de27d086affde747))
+* **api:** sheikh's updates ([1fc2ef8](https://github.com/postgrid/postgrid-node/commit/1fc2ef827f76271263dacb177f3decaae8952f65))
+* support setting headers via env ([4db92ef](https://github.com/postgrid/postgrid-node/commit/4db92ef57767c45c53cef4550eea6677e36b4bf7))
+* Testing new GHA workflow ([08e8358](https://github.com/postgrid/postgrid-node/commit/08e8358dcd5e65f39d0f6d7271351af5211bd23f))
+
+
+### Chores
+
+* **format:** run eslint and prettier separately ([cdad39f](https://github.com/postgrid/postgrid-node/commit/cdad39f28d68b35eabe04d8c0b5a6a186aa1e3b4))
+* **formatter:** run prettier and eslint separately ([0e9df35](https://github.com/postgrid/postgrid-node/commit/0e9df3511c18468aa53b59d868a24f7d541a09d1))
+* **internal:** codegen related update ([7fe5def](https://github.com/postgrid/postgrid-node/commit/7fe5def69f1a20ca7a915e4b489ae315d3816478))
+* **internal:** more robust bootstrap script ([c8c6500](https://github.com/postgrid/postgrid-node/commit/c8c6500182176ce3706350b3d10ea47dd0c75f5d))
+* redact api-key headers in debug logs ([0db98d1](https://github.com/postgrid/postgrid-node/commit/0db98d1fb30abbecca2a22afee2a44c397837f32))
+
 ## 0.5.2 (2026-04-08)
 
 Full Changelog: [v0.5.1...v0.5.2](https://github.com/postgrid/postgrid-node/compare/v0.5.1...v0.5.2)
