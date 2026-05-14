@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.6.1 (2026-05-14)
+
+Full Changelog: [v0.6.0...v0.6.1](https://github.com/postgrid/postgrid-node/compare/v0.6.0...v0.6.1)
+
+### Chores
+
+* update SDK settings ([de6da44](https://github.com/postgrid/postgrid-node/commit/de6da449bf818f26da3d68bde705fa9d850c63f3))
+
 ## 0.6.0 (2026-05-13)
 
 Full Changelog: [v0.5.2...v0.6.0](https://github.com/postgrid/postgrid-node/compare/v0.5.2...v0.6.0)
