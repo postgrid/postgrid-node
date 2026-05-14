@@ -1,6 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
+import * as ChequesAPI from './cheques';
+import * as LettersAPI from './letters';
 import { APIPromise } from '../../core/api-promise';
 import { PagePromise, SkipLimit, type SkipLimitParams } from '../../core/pagination';
 import { buildHeaders } from '../../internal/headers';
@@ -15,9 +17,12 @@ export class Campaigns extends APIResource {
   /**
    * Create a new campaign.
    *
-   * A campaign links a mailing list with a specific mail piece profile (letter,
-   * postcard, cheque, or self-mailer) to send bulk mail. Upon creation, the campaign
-   * enters the `drafting` status while assets are validated.
+   * A campaign links a mailing list with a specific mail piece configuration
+   * (letter, postcard, cheque, self-mailer, or snap pack) to send bulk mail. Only
+   * one collateral type can be set per campaign.
+   *
+   * Upon creation, the campaign enters the `drafting` status while assets are
+   * validated.
    *
    * @example
    * ```ts
@@ -177,9 +182,10 @@ export interface Campaign {
   updatedAt: string;
 
   /**
-   * The ID of the cheque profile used for this campaign, if applicable.
+   * Inline cheque configuration for a campaign. All fields are optional since
+   * campaigns may be in a partial state during drafting.
    */
-  chequeProfile?: string;
+  cheque?: Campaign.Cheque;
 
   /**
    * The ID of the default sender contact to use for orders if not specified per
@@ -200,9 +206,10 @@ export interface Campaign {
   errors?: Array<Campaign.Error>;
 
   /**
-   * The ID of the letter profile used for this campaign, if applicable.
+   * Inline letter configuration for a campaign. All fields are optional since
+   * campaigns may be in a partial state during drafting.
    */
-  letterProfile?: string;
+  letter?: Campaign.Letter;
 
   /**
    * See the section on Metadata.
@@ -216,9 +223,10 @@ export interface Campaign {
   orderPreviewURL?: string;
 
   /**
-   * The ID of the postcard profile used for this campaign, if applicable.
+   * Inline postcard configuration for a campaign. All fields are optional since
+   * campaigns may be in a partial state during drafting.
    */
-  postcardProfile?: string;
+  postcard?: Campaign.Postcard;
 
   /**
    * A temporary URL to download the processing report, available once the campaign
@@ -227,17 +235,144 @@ export interface Campaign {
   reportURL?: string;
 
   /**
-   * The ID of the self-mailer profile used for this campaign, if applicable.
+   * Inline self-mailer configuration for a campaign. All fields are optional since
+   * campaigns may be in a partial state during drafting.
    */
-  selfMailerProfile?: string;
+  selfMailer?: Campaign.SelfMailer;
 
   /**
    * The scheduled date and time for the campaign to be sent.
    */
   sendDate?: string;
+
+  /**
+   * Inline snap pack configuration for a campaign. All fields are optional since
+   * campaigns may be in a partial state during drafting.
+   */
+  snapPack?: Campaign.SnapPack;
 }
 
 export namespace Campaign {
+  /**
+   * Inline cheque configuration for a campaign. All fields are optional since
+   * campaigns may be in a partial state during drafting.
+   */
+  export interface Cheque {
+    /**
+     * ID of the bank account to use for the cheque.
+     */
+    bankAccount?: string;
+
+    /**
+     * Enum representing the supported currency codes.
+     */
+    currencyCode?: 'CAD' | 'USD';
+
+    /**
+     * An optional description.
+     */
+    description?: string;
+
+    /**
+     * The custom envelope ID or `"standard"`.
+     */
+    envelope?: string;
+
+    /**
+     * Settings for the attached letter (e.g., color printing).
+     */
+    letterSettings?: Cheque.LetterSettings;
+
+    /**
+     * ID of a template for an optional attached letter. Cannot be used with
+     * `letterPDF`.
+     */
+    letterTemplate?: string;
+
+    /**
+     * A signed URL to the attached letter PDF, if any.
+     */
+    letterUploadedPDF?: string;
+
+    /**
+     * A publicly accessible URL for the logo to print on the cheque.
+     */
+    logo?: string;
+
+    /**
+     * Mailing class for the cheque.
+     */
+    mailingClass?:
+      | 'first_class'
+      | 'standard_class'
+      | 'express'
+      | 'certified'
+      | 'certified_return_receipt'
+      | 'registered'
+      | 'usps_first_class'
+      | 'usps_standard_class'
+      | 'usps_eddm'
+      | 'usps_express_2_day'
+      | 'usps_express_3_day'
+      | 'usps_first_class_certified'
+      | 'usps_first_class_certified_return_receipt'
+      | 'usps_first_class_registered'
+      | 'usps_express_3_day_signature_confirmation'
+      | 'usps_express_3_day_certified'
+      | 'usps_express_3_day_certified_return_receipt'
+      | 'ca_post_lettermail'
+      | 'ca_post_personalized'
+      | 'ca_post_neighbourhood_mail'
+      | 'ups_express_overnight'
+      | 'ups_express_2_day'
+      | 'ups_express_3_day'
+      | 'royal_mail_first_class'
+      | 'royal_mail_second_class'
+      | 'au_post_second_class';
+
+    /**
+     * Memo line text for the cheque.
+     */
+    memo?: string;
+
+    /**
+     * Default merge variables for the cheque.
+     */
+    mergeVariables?: { [key: string]: unknown };
+
+    /**
+     * Message included on the cheque stub.
+     */
+    message?: string;
+
+    /**
+     * Optional key-value metadata.
+     */
+    metadata?: { [key: string]: string };
+
+    /**
+     * ID of a return envelope to include.
+     */
+    returnEnvelope?: string;
+
+    /**
+     * Enum representing the supported cheque sizes.
+     */
+    size?: ChequesAPI.ChequeSize;
+  }
+
+  export namespace Cheque {
+    /**
+     * Settings for the attached letter (e.g., color printing).
+     */
+    export interface LetterSettings {
+      /**
+       * Whether to print the attached letter in color.
+       */
+      color?: boolean;
+    }
+  }
+
   /**
    * Details of a specific error encountered during campaign processing.
    */
@@ -251,6 +386,335 @@ export namespace Campaign {
      * Type of error encountered during campaign processing.
      */
     type: 'processing_error' | 'internal_error';
+  }
+
+  /**
+   * Inline letter configuration for a campaign. All fields are optional since
+   * campaigns may be in a partial state during drafting.
+   */
+  export interface Letter {
+    /**
+     * Enum representing the placement of the address on the letter.
+     */
+    addressPlacement?: LettersAPI.AddressPlacement;
+
+    /**
+     * Model representing an attached PDF.
+     */
+    attachedPDF?: LettersAPI.AttachedPdf;
+
+    /**
+     * Whether to print in color.
+     */
+    color?: boolean;
+
+    /**
+     * An optional description.
+     */
+    description?: string;
+
+    /**
+     * Whether to print on both sides of the paper.
+     */
+    doubleSided?: boolean;
+
+    /**
+     * The custom envelope ID or `"standard"`.
+     */
+    envelope?: string;
+
+    /**
+     * The type of envelope used for the letter.
+     */
+    envelopeType?: 'standard_double_window' | 'flat';
+
+    /**
+     * Mailing class for the letter.
+     */
+    mailingClass?:
+      | 'first_class'
+      | 'standard_class'
+      | 'express'
+      | 'certified'
+      | 'certified_return_receipt'
+      | 'registered'
+      | 'usps_first_class'
+      | 'usps_standard_class'
+      | 'usps_eddm'
+      | 'usps_express_2_day'
+      | 'usps_express_3_day'
+      | 'usps_first_class_certified'
+      | 'usps_first_class_certified_return_receipt'
+      | 'usps_first_class_registered'
+      | 'usps_express_3_day_signature_confirmation'
+      | 'usps_express_3_day_certified'
+      | 'usps_express_3_day_certified_return_receipt'
+      | 'ca_post_lettermail'
+      | 'ca_post_personalized'
+      | 'ca_post_neighbourhood_mail'
+      | 'ups_express_overnight'
+      | 'ups_express_2_day'
+      | 'ups_express_3_day'
+      | 'royal_mail_first_class'
+      | 'royal_mail_second_class'
+      | 'au_post_second_class';
+
+    /**
+     * Default merge variables for the letter.
+     */
+    mergeVariables?: { [key: string]: unknown };
+
+    /**
+     * Optional key-value metadata.
+     */
+    metadata?: { [key: string]: string };
+
+    /**
+     * Which page number should be perforated (if any).
+     */
+    perforatedPage?: 1;
+
+    /**
+     * ID of a return envelope to include.
+     */
+    returnEnvelope?: string;
+
+    /**
+     * Enum representing the supported letter sizes.
+     */
+    size?: LettersAPI.LetterSize;
+
+    /**
+     * ID of a template for the letter content. Cannot be used with `pdf`.
+     */
+    template?: string;
+
+    /**
+     * A signed URL to the uploaded PDF, if any.
+     */
+    uploadedPDF?: string;
+  }
+
+  /**
+   * Inline postcard configuration for a campaign. All fields are optional since
+   * campaigns may be in a partial state during drafting.
+   */
+  export interface Postcard {
+    /**
+     * ID of the template for the back side. Cannot be used with `pdf`.
+     */
+    backTemplate?: string;
+
+    /**
+     * An optional description.
+     */
+    description?: string;
+
+    /**
+     * ID of the template for the front side. Cannot be used with `pdf`.
+     */
+    frontTemplate?: string;
+
+    /**
+     * Mailing class for the postcard.
+     */
+    mailingClass?:
+      | 'first_class'
+      | 'standard_class'
+      | 'express'
+      | 'certified'
+      | 'certified_return_receipt'
+      | 'registered'
+      | 'usps_first_class'
+      | 'usps_standard_class'
+      | 'usps_eddm'
+      | 'usps_express_2_day'
+      | 'usps_express_3_day'
+      | 'usps_first_class_certified'
+      | 'usps_first_class_certified_return_receipt'
+      | 'usps_first_class_registered'
+      | 'usps_express_3_day_signature_confirmation'
+      | 'usps_express_3_day_certified'
+      | 'usps_express_3_day_certified_return_receipt'
+      | 'ca_post_lettermail'
+      | 'ca_post_personalized'
+      | 'ca_post_neighbourhood_mail'
+      | 'ups_express_overnight'
+      | 'ups_express_2_day'
+      | 'ups_express_3_day'
+      | 'royal_mail_first_class'
+      | 'royal_mail_second_class'
+      | 'au_post_second_class';
+
+    /**
+     * Default merge variables for the postcard.
+     */
+    mergeVariables?: { [key: string]: unknown };
+
+    /**
+     * Optional key-value metadata.
+     */
+    metadata?: { [key: string]: string };
+
+    /**
+     * Premium paper identifier. Use "standard" for regular stock or a premium*paper*\*
+     * ID.
+     */
+    paper?: string;
+
+    /**
+     * Enum representing the supported postcard sizes.
+     */
+    size?: '6x4' | '9x6' | '11x6';
+
+    /**
+     * A signed URL to the uploaded PDF, if any.
+     */
+    uploadedPDF?: string;
+  }
+
+  /**
+   * Inline self-mailer configuration for a campaign. All fields are optional since
+   * campaigns may be in a partial state during drafting.
+   */
+  export interface SelfMailer {
+    /**
+     * An optional description.
+     */
+    description?: string;
+
+    /**
+     * ID of the template for the inside. Cannot be used with `pdf`.
+     */
+    insideTemplate?: string;
+
+    /**
+     * Mailing class for the self-mailer.
+     */
+    mailingClass?:
+      | 'first_class'
+      | 'standard_class'
+      | 'express'
+      | 'certified'
+      | 'certified_return_receipt'
+      | 'registered'
+      | 'usps_first_class'
+      | 'usps_standard_class'
+      | 'usps_eddm'
+      | 'usps_express_2_day'
+      | 'usps_express_3_day'
+      | 'usps_first_class_certified'
+      | 'usps_first_class_certified_return_receipt'
+      | 'usps_first_class_registered'
+      | 'usps_express_3_day_signature_confirmation'
+      | 'usps_express_3_day_certified'
+      | 'usps_express_3_day_certified_return_receipt'
+      | 'ca_post_lettermail'
+      | 'ca_post_personalized'
+      | 'ca_post_neighbourhood_mail'
+      | 'ups_express_overnight'
+      | 'ups_express_2_day'
+      | 'ups_express_3_day'
+      | 'royal_mail_first_class'
+      | 'royal_mail_second_class'
+      | 'au_post_second_class';
+
+    /**
+     * Default merge variables for the self-mailer.
+     */
+    mergeVariables?: { [key: string]: unknown };
+
+    /**
+     * Optional key-value metadata.
+     */
+    metadata?: { [key: string]: string };
+
+    /**
+     * ID of the template for the outside. Cannot be used with `pdf`.
+     */
+    outsideTemplate?: string;
+
+    /**
+     * Enum representing the supported self-mailer sizes.
+     */
+    size?: '8.5x11_bifold' | '8.5x11_trifold' | '9.5x16_trifold';
+
+    /**
+     * A signed URL to the uploaded PDF, if any.
+     */
+    uploadedPDF?: string;
+  }
+
+  /**
+   * Inline snap pack configuration for a campaign. All fields are optional since
+   * campaigns may be in a partial state during drafting.
+   */
+  export interface SnapPack {
+    /**
+     * An optional description.
+     */
+    description?: string;
+
+    /**
+     * ID of the template for the inside. Cannot be used with `pdf`.
+     */
+    insideTemplate?: string;
+
+    /**
+     * Mailing class for the snap pack.
+     */
+    mailingClass?:
+      | 'first_class'
+      | 'standard_class'
+      | 'express'
+      | 'certified'
+      | 'certified_return_receipt'
+      | 'registered'
+      | 'usps_first_class'
+      | 'usps_standard_class'
+      | 'usps_eddm'
+      | 'usps_express_2_day'
+      | 'usps_express_3_day'
+      | 'usps_first_class_certified'
+      | 'usps_first_class_certified_return_receipt'
+      | 'usps_first_class_registered'
+      | 'usps_express_3_day_signature_confirmation'
+      | 'usps_express_3_day_certified'
+      | 'usps_express_3_day_certified_return_receipt'
+      | 'ca_post_lettermail'
+      | 'ca_post_personalized'
+      | 'ca_post_neighbourhood_mail'
+      | 'ups_express_overnight'
+      | 'ups_express_2_day'
+      | 'ups_express_3_day'
+      | 'royal_mail_first_class'
+      | 'royal_mail_second_class'
+      | 'au_post_second_class';
+
+    /**
+     * Default merge variables for the snap pack.
+     */
+    mergeVariables?: { [key: string]: unknown };
+
+    /**
+     * Optional key-value metadata.
+     */
+    metadata?: { [key: string]: string };
+
+    /**
+     * ID of the template for the outside. Cannot be used with `pdf`.
+     */
+    outsideTemplate?: string;
+
+    /**
+     * Enum representing the supported snap pack sizes.
+     */
+    size?: '8.5x11_bifold_v';
+
+    /**
+     * A signed URL to the uploaded PDF, if any.
+     */
+    uploadedPDF?: string;
   }
 }
 
@@ -270,9 +734,10 @@ export interface CampaignCreateParams {
   mailingList: string;
 
   /**
-   * Body param: The ID of the cheque profile used for this campaign, if applicable.
+   * Body param: Inline cheque configuration for a campaign. All fields are optional
+   * since campaigns may be in a partial state during drafting.
    */
-  chequeProfile?: string;
+  cheque?: CampaignCreateParams.Cheque;
 
   /**
    * Body param: The ID of the default sender contact to use for orders if not
@@ -287,9 +752,10 @@ export interface CampaignCreateParams {
   description?: string;
 
   /**
-   * Body param: The ID of the letter profile used for this campaign, if applicable.
+   * Body param: Inline letter configuration for a campaign. All fields are optional
+   * since campaigns may be in a partial state during drafting.
    */
-  letterProfile?: string;
+  letter?: CampaignCreateParams.Letter;
 
   /**
    * Body param: See the section on Metadata.
@@ -297,16 +763,16 @@ export interface CampaignCreateParams {
   metadata?: { [key: string]: unknown };
 
   /**
-   * Body param: The ID of the postcard profile used for this campaign, if
-   * applicable.
+   * Body param: Inline postcard configuration for a campaign. All fields are
+   * optional since campaigns may be in a partial state during drafting.
    */
-  postcardProfile?: string;
+  postcard?: CampaignCreateParams.Postcard;
 
   /**
-   * Body param: The ID of the self-mailer profile used for this campaign, if
-   * applicable.
+   * Body param: Inline self-mailer configuration for a campaign. All fields are
+   * optional since campaigns may be in a partial state during drafting.
    */
-  selfMailerProfile?: string;
+  selfMailer?: CampaignCreateParams.SelfMailer;
 
   /**
    * Body param: The scheduled date and time for the campaign to be sent.
@@ -314,17 +780,477 @@ export interface CampaignCreateParams {
   sendDate?: string;
 
   /**
+   * Body param: Inline snap pack configuration for a campaign. All fields are
+   * optional since campaigns may be in a partial state during drafting.
+   */
+  snapPack?: CampaignCreateParams.SnapPack;
+
+  /**
    * Header param
    */
   'idempotency-key'?: string;
 }
 
+export namespace CampaignCreateParams {
+  /**
+   * Inline cheque configuration for a campaign. All fields are optional since
+   * campaigns may be in a partial state during drafting.
+   */
+  export interface Cheque {
+    /**
+     * ID of the bank account to use for the cheque.
+     */
+    bankAccount?: string;
+
+    /**
+     * Enum representing the supported currency codes.
+     */
+    currencyCode?: 'CAD' | 'USD';
+
+    /**
+     * An optional description.
+     */
+    description?: string;
+
+    /**
+     * The custom envelope ID or `"standard"`.
+     */
+    envelope?: string;
+
+    /**
+     * PDF file for an optional attached letter. Cannot be used with `letterTemplate`.
+     */
+    letterPDF?: string;
+
+    /**
+     * Settings for the attached letter (e.g., color printing).
+     */
+    letterSettings?: Cheque.LetterSettings;
+
+    /**
+     * ID of a template for an optional attached letter. Cannot be used with
+     * `letterPDF`.
+     */
+    letterTemplate?: string;
+
+    /**
+     * A publicly accessible URL for the logo to print on the cheque.
+     */
+    logo?: string;
+
+    /**
+     * Mailing class for the cheque.
+     */
+    mailingClass?:
+      | 'first_class'
+      | 'standard_class'
+      | 'express'
+      | 'certified'
+      | 'certified_return_receipt'
+      | 'registered'
+      | 'usps_first_class'
+      | 'usps_standard_class'
+      | 'usps_eddm'
+      | 'usps_express_2_day'
+      | 'usps_express_3_day'
+      | 'usps_first_class_certified'
+      | 'usps_first_class_certified_return_receipt'
+      | 'usps_first_class_registered'
+      | 'usps_express_3_day_signature_confirmation'
+      | 'usps_express_3_day_certified'
+      | 'usps_express_3_day_certified_return_receipt'
+      | 'ca_post_lettermail'
+      | 'ca_post_personalized'
+      | 'ca_post_neighbourhood_mail'
+      | 'ups_express_overnight'
+      | 'ups_express_2_day'
+      | 'ups_express_3_day'
+      | 'royal_mail_first_class'
+      | 'royal_mail_second_class'
+      | 'au_post_second_class';
+
+    /**
+     * Memo line text for the cheque.
+     */
+    memo?: string;
+
+    /**
+     * Default merge variables for the cheque.
+     */
+    mergeVariables?: { [key: string]: unknown };
+
+    /**
+     * Message included on the cheque stub.
+     */
+    message?: string;
+
+    /**
+     * Optional key-value metadata.
+     */
+    metadata?: { [key: string]: string };
+
+    /**
+     * ID of a return envelope to include.
+     */
+    returnEnvelope?: string;
+
+    /**
+     * Enum representing the supported cheque sizes.
+     */
+    size?: ChequesAPI.ChequeSize;
+  }
+
+  export namespace Cheque {
+    /**
+     * Settings for the attached letter (e.g., color printing).
+     */
+    export interface LetterSettings {
+      /**
+       * Whether to print the attached letter in color.
+       */
+      color?: boolean;
+    }
+  }
+
+  /**
+   * Inline letter configuration for a campaign. All fields are optional since
+   * campaigns may be in a partial state during drafting.
+   */
+  export interface Letter {
+    /**
+     * Enum representing the placement of the address on the letter.
+     */
+    addressPlacement?: LettersAPI.AddressPlacement;
+
+    /**
+     * Model representing an attached PDF.
+     */
+    attachedPDF?: LettersAPI.AttachedPdf;
+
+    /**
+     * Whether to print in color.
+     */
+    color?: boolean;
+
+    /**
+     * An optional description.
+     */
+    description?: string;
+
+    /**
+     * Whether to print on both sides of the paper.
+     */
+    doubleSided?: boolean;
+
+    /**
+     * The custom envelope ID or `"standard"`.
+     */
+    envelope?: string;
+
+    /**
+     * The type of envelope used for the letter.
+     */
+    envelopeType?: 'standard_double_window' | 'flat';
+
+    /**
+     * Mailing class for the letter.
+     */
+    mailingClass?:
+      | 'first_class'
+      | 'standard_class'
+      | 'express'
+      | 'certified'
+      | 'certified_return_receipt'
+      | 'registered'
+      | 'usps_first_class'
+      | 'usps_standard_class'
+      | 'usps_eddm'
+      | 'usps_express_2_day'
+      | 'usps_express_3_day'
+      | 'usps_first_class_certified'
+      | 'usps_first_class_certified_return_receipt'
+      | 'usps_first_class_registered'
+      | 'usps_express_3_day_signature_confirmation'
+      | 'usps_express_3_day_certified'
+      | 'usps_express_3_day_certified_return_receipt'
+      | 'ca_post_lettermail'
+      | 'ca_post_personalized'
+      | 'ca_post_neighbourhood_mail'
+      | 'ups_express_overnight'
+      | 'ups_express_2_day'
+      | 'ups_express_3_day'
+      | 'royal_mail_first_class'
+      | 'royal_mail_second_class'
+      | 'au_post_second_class';
+
+    /**
+     * Default merge variables for the letter.
+     */
+    mergeVariables?: { [key: string]: unknown };
+
+    /**
+     * Optional key-value metadata.
+     */
+    metadata?: { [key: string]: string };
+
+    /**
+     * A PDF file or URL for the letter content. Cannot be used with `template`.
+     */
+    pdf?: string;
+
+    /**
+     * Which page number should be perforated (if any).
+     */
+    perforatedPage?: 1;
+
+    /**
+     * ID of a return envelope to include.
+     */
+    returnEnvelope?: string;
+
+    /**
+     * Enum representing the supported letter sizes.
+     */
+    size?: LettersAPI.LetterSize;
+
+    /**
+     * ID of a template for the letter content. Cannot be used with `pdf`.
+     */
+    template?: string;
+  }
+
+  /**
+   * Inline postcard configuration for a campaign. All fields are optional since
+   * campaigns may be in a partial state during drafting.
+   */
+  export interface Postcard {
+    /**
+     * ID of the template for the back side. Cannot be used with `pdf`.
+     */
+    backTemplate?: string;
+
+    /**
+     * An optional description.
+     */
+    description?: string;
+
+    /**
+     * ID of the template for the front side. Cannot be used with `pdf`.
+     */
+    frontTemplate?: string;
+
+    /**
+     * Mailing class for the postcard.
+     */
+    mailingClass?:
+      | 'first_class'
+      | 'standard_class'
+      | 'express'
+      | 'certified'
+      | 'certified_return_receipt'
+      | 'registered'
+      | 'usps_first_class'
+      | 'usps_standard_class'
+      | 'usps_eddm'
+      | 'usps_express_2_day'
+      | 'usps_express_3_day'
+      | 'usps_first_class_certified'
+      | 'usps_first_class_certified_return_receipt'
+      | 'usps_first_class_registered'
+      | 'usps_express_3_day_signature_confirmation'
+      | 'usps_express_3_day_certified'
+      | 'usps_express_3_day_certified_return_receipt'
+      | 'ca_post_lettermail'
+      | 'ca_post_personalized'
+      | 'ca_post_neighbourhood_mail'
+      | 'ups_express_overnight'
+      | 'ups_express_2_day'
+      | 'ups_express_3_day'
+      | 'royal_mail_first_class'
+      | 'royal_mail_second_class'
+      | 'au_post_second_class';
+
+    /**
+     * Default merge variables for the postcard.
+     */
+    mergeVariables?: { [key: string]: unknown };
+
+    /**
+     * Optional key-value metadata.
+     */
+    metadata?: { [key: string]: string };
+
+    /**
+     * Premium paper identifier. Use "standard" for regular stock or a premium*paper*\*
+     * ID.
+     */
+    paper?: string;
+
+    /**
+     * A 2-page PDF file for the postcard content (front and back). Cannot be used with
+     * `frontTemplate`/`backTemplate`.
+     */
+    pdf?: string;
+
+    /**
+     * Enum representing the supported postcard sizes.
+     */
+    size?: '6x4' | '9x6' | '11x6';
+  }
+
+  /**
+   * Inline self-mailer configuration for a campaign. All fields are optional since
+   * campaigns may be in a partial state during drafting.
+   */
+  export interface SelfMailer {
+    /**
+     * An optional description.
+     */
+    description?: string;
+
+    /**
+     * ID of the template for the inside. Cannot be used with `pdf`.
+     */
+    insideTemplate?: string;
+
+    /**
+     * Mailing class for the self-mailer.
+     */
+    mailingClass?:
+      | 'first_class'
+      | 'standard_class'
+      | 'express'
+      | 'certified'
+      | 'certified_return_receipt'
+      | 'registered'
+      | 'usps_first_class'
+      | 'usps_standard_class'
+      | 'usps_eddm'
+      | 'usps_express_2_day'
+      | 'usps_express_3_day'
+      | 'usps_first_class_certified'
+      | 'usps_first_class_certified_return_receipt'
+      | 'usps_first_class_registered'
+      | 'usps_express_3_day_signature_confirmation'
+      | 'usps_express_3_day_certified'
+      | 'usps_express_3_day_certified_return_receipt'
+      | 'ca_post_lettermail'
+      | 'ca_post_personalized'
+      | 'ca_post_neighbourhood_mail'
+      | 'ups_express_overnight'
+      | 'ups_express_2_day'
+      | 'ups_express_3_day'
+      | 'royal_mail_first_class'
+      | 'royal_mail_second_class'
+      | 'au_post_second_class';
+
+    /**
+     * Default merge variables for the self-mailer.
+     */
+    mergeVariables?: { [key: string]: unknown };
+
+    /**
+     * Optional key-value metadata.
+     */
+    metadata?: { [key: string]: string };
+
+    /**
+     * ID of the template for the outside. Cannot be used with `pdf`.
+     */
+    outsideTemplate?: string;
+
+    /**
+     * A 2-page PDF file for the self-mailer content. Cannot be used with
+     * `insideTemplate`/`outsideTemplate`.
+     */
+    pdf?: string;
+
+    /**
+     * Enum representing the supported self-mailer sizes.
+     */
+    size?: '8.5x11_bifold' | '8.5x11_trifold' | '9.5x16_trifold';
+  }
+
+  /**
+   * Inline snap pack configuration for a campaign. All fields are optional since
+   * campaigns may be in a partial state during drafting.
+   */
+  export interface SnapPack {
+    /**
+     * An optional description.
+     */
+    description?: string;
+
+    /**
+     * ID of the template for the inside. Cannot be used with `pdf`.
+     */
+    insideTemplate?: string;
+
+    /**
+     * Mailing class for the snap pack.
+     */
+    mailingClass?:
+      | 'first_class'
+      | 'standard_class'
+      | 'express'
+      | 'certified'
+      | 'certified_return_receipt'
+      | 'registered'
+      | 'usps_first_class'
+      | 'usps_standard_class'
+      | 'usps_eddm'
+      | 'usps_express_2_day'
+      | 'usps_express_3_day'
+      | 'usps_first_class_certified'
+      | 'usps_first_class_certified_return_receipt'
+      | 'usps_first_class_registered'
+      | 'usps_express_3_day_signature_confirmation'
+      | 'usps_express_3_day_certified'
+      | 'usps_express_3_day_certified_return_receipt'
+      | 'ca_post_lettermail'
+      | 'ca_post_personalized'
+      | 'ca_post_neighbourhood_mail'
+      | 'ups_express_overnight'
+      | 'ups_express_2_day'
+      | 'ups_express_3_day'
+      | 'royal_mail_first_class'
+      | 'royal_mail_second_class'
+      | 'au_post_second_class';
+
+    /**
+     * Default merge variables for the snap pack.
+     */
+    mergeVariables?: { [key: string]: unknown };
+
+    /**
+     * Optional key-value metadata.
+     */
+    metadata?: { [key: string]: string };
+
+    /**
+     * ID of the template for the outside. Cannot be used with `pdf`.
+     */
+    outsideTemplate?: string;
+
+    /**
+     * A 2-page PDF file for the snap pack content. Cannot be used with
+     * `insideTemplate`/`outsideTemplate`.
+     */
+    pdf?: string;
+
+    /**
+     * Enum representing the supported snap pack sizes.
+     */
+    size?: '8.5x11_bifold_v';
+  }
+}
+
 export interface CampaignUpdateParams {
   /**
-   * The ID of the cheque profile to use. Setting this will remove other profile
-   * types. Set to `null` to remove.
+   * Inline cheque configuration for a campaign. All fields are optional since
+   * campaigns may be in a partial state during drafting.
    */
-  chequeProfile?: string | null;
+  cheque?: CampaignUpdateParams.Cheque | null;
 
   /**
    * The ID of the default sender contact. Set to `null` to remove.
@@ -338,10 +1264,10 @@ export interface CampaignUpdateParams {
   description?: string | null;
 
   /**
-   * The ID of the letter profile to use. Setting this will remove other profile
-   * types. Set to `null` to remove.
+   * Inline letter configuration for a campaign. All fields are optional since
+   * campaigns may be in a partial state during drafting.
    */
-  letterProfile?: string | null;
+  letter?: CampaignUpdateParams.Letter | null;
 
   /**
    * The ID of the mailing list to associate with this campaign.
@@ -355,16 +1281,476 @@ export interface CampaignUpdateParams {
   metadata?: { [key: string]: string } | null;
 
   /**
-   * The ID of the postcard profile to use. Setting this will remove other profile
-   * types. Set to `null` to remove.
+   * Inline postcard configuration for a campaign. All fields are optional since
+   * campaigns may be in a partial state during drafting.
    */
-  postcardProfile?: string | null;
+  postcard?: CampaignUpdateParams.Postcard | null;
 
   /**
-   * The ID of the self-mailer profile to use. Setting this will remove other profile
-   * types. Set to `null` to remove.
+   * Inline self-mailer configuration for a campaign. All fields are optional since
+   * campaigns may be in a partial state during drafting.
    */
-  selfMailerProfile?: string | null;
+  selfMailer?: CampaignUpdateParams.SelfMailer | null;
+
+  /**
+   * Inline snap pack configuration for a campaign. All fields are optional since
+   * campaigns may be in a partial state during drafting.
+   */
+  snapPack?: CampaignUpdateParams.SnapPack | null;
+}
+
+export namespace CampaignUpdateParams {
+  /**
+   * Inline cheque configuration for a campaign. All fields are optional since
+   * campaigns may be in a partial state during drafting.
+   */
+  export interface Cheque {
+    /**
+     * ID of the bank account to use for the cheque.
+     */
+    bankAccount?: string;
+
+    /**
+     * Enum representing the supported currency codes.
+     */
+    currencyCode?: 'CAD' | 'USD';
+
+    /**
+     * An optional description.
+     */
+    description?: string;
+
+    /**
+     * The custom envelope ID or `"standard"`.
+     */
+    envelope?: string;
+
+    /**
+     * PDF file for an optional attached letter. Cannot be used with `letterTemplate`.
+     */
+    letterPDF?: string;
+
+    /**
+     * Settings for the attached letter (e.g., color printing).
+     */
+    letterSettings?: Cheque.LetterSettings;
+
+    /**
+     * ID of a template for an optional attached letter. Cannot be used with
+     * `letterPDF`.
+     */
+    letterTemplate?: string;
+
+    /**
+     * A publicly accessible URL for the logo to print on the cheque.
+     */
+    logo?: string;
+
+    /**
+     * Mailing class for the cheque.
+     */
+    mailingClass?:
+      | 'first_class'
+      | 'standard_class'
+      | 'express'
+      | 'certified'
+      | 'certified_return_receipt'
+      | 'registered'
+      | 'usps_first_class'
+      | 'usps_standard_class'
+      | 'usps_eddm'
+      | 'usps_express_2_day'
+      | 'usps_express_3_day'
+      | 'usps_first_class_certified'
+      | 'usps_first_class_certified_return_receipt'
+      | 'usps_first_class_registered'
+      | 'usps_express_3_day_signature_confirmation'
+      | 'usps_express_3_day_certified'
+      | 'usps_express_3_day_certified_return_receipt'
+      | 'ca_post_lettermail'
+      | 'ca_post_personalized'
+      | 'ca_post_neighbourhood_mail'
+      | 'ups_express_overnight'
+      | 'ups_express_2_day'
+      | 'ups_express_3_day'
+      | 'royal_mail_first_class'
+      | 'royal_mail_second_class'
+      | 'au_post_second_class';
+
+    /**
+     * Memo line text for the cheque.
+     */
+    memo?: string;
+
+    /**
+     * Default merge variables for the cheque.
+     */
+    mergeVariables?: { [key: string]: unknown };
+
+    /**
+     * Message included on the cheque stub.
+     */
+    message?: string;
+
+    /**
+     * Optional key-value metadata.
+     */
+    metadata?: { [key: string]: string };
+
+    /**
+     * ID of a return envelope to include.
+     */
+    returnEnvelope?: string;
+
+    /**
+     * Enum representing the supported cheque sizes.
+     */
+    size?: ChequesAPI.ChequeSize;
+  }
+
+  export namespace Cheque {
+    /**
+     * Settings for the attached letter (e.g., color printing).
+     */
+    export interface LetterSettings {
+      /**
+       * Whether to print the attached letter in color.
+       */
+      color?: boolean;
+    }
+  }
+
+  /**
+   * Inline letter configuration for a campaign. All fields are optional since
+   * campaigns may be in a partial state during drafting.
+   */
+  export interface Letter {
+    /**
+     * Enum representing the placement of the address on the letter.
+     */
+    addressPlacement?: LettersAPI.AddressPlacement;
+
+    /**
+     * Model representing an attached PDF.
+     */
+    attachedPDF?: LettersAPI.AttachedPdf;
+
+    /**
+     * Whether to print in color.
+     */
+    color?: boolean;
+
+    /**
+     * An optional description.
+     */
+    description?: string;
+
+    /**
+     * Whether to print on both sides of the paper.
+     */
+    doubleSided?: boolean;
+
+    /**
+     * The custom envelope ID or `"standard"`.
+     */
+    envelope?: string;
+
+    /**
+     * The type of envelope used for the letter.
+     */
+    envelopeType?: 'standard_double_window' | 'flat';
+
+    /**
+     * Mailing class for the letter.
+     */
+    mailingClass?:
+      | 'first_class'
+      | 'standard_class'
+      | 'express'
+      | 'certified'
+      | 'certified_return_receipt'
+      | 'registered'
+      | 'usps_first_class'
+      | 'usps_standard_class'
+      | 'usps_eddm'
+      | 'usps_express_2_day'
+      | 'usps_express_3_day'
+      | 'usps_first_class_certified'
+      | 'usps_first_class_certified_return_receipt'
+      | 'usps_first_class_registered'
+      | 'usps_express_3_day_signature_confirmation'
+      | 'usps_express_3_day_certified'
+      | 'usps_express_3_day_certified_return_receipt'
+      | 'ca_post_lettermail'
+      | 'ca_post_personalized'
+      | 'ca_post_neighbourhood_mail'
+      | 'ups_express_overnight'
+      | 'ups_express_2_day'
+      | 'ups_express_3_day'
+      | 'royal_mail_first_class'
+      | 'royal_mail_second_class'
+      | 'au_post_second_class';
+
+    /**
+     * Default merge variables for the letter.
+     */
+    mergeVariables?: { [key: string]: unknown };
+
+    /**
+     * Optional key-value metadata.
+     */
+    metadata?: { [key: string]: string };
+
+    /**
+     * A PDF file or URL for the letter content. Cannot be used with `template`.
+     */
+    pdf?: string;
+
+    /**
+     * Which page number should be perforated (if any).
+     */
+    perforatedPage?: 1;
+
+    /**
+     * ID of a return envelope to include.
+     */
+    returnEnvelope?: string;
+
+    /**
+     * Enum representing the supported letter sizes.
+     */
+    size?: LettersAPI.LetterSize;
+
+    /**
+     * ID of a template for the letter content. Cannot be used with `pdf`.
+     */
+    template?: string;
+  }
+
+  /**
+   * Inline postcard configuration for a campaign. All fields are optional since
+   * campaigns may be in a partial state during drafting.
+   */
+  export interface Postcard {
+    /**
+     * ID of the template for the back side. Cannot be used with `pdf`.
+     */
+    backTemplate?: string;
+
+    /**
+     * An optional description.
+     */
+    description?: string;
+
+    /**
+     * ID of the template for the front side. Cannot be used with `pdf`.
+     */
+    frontTemplate?: string;
+
+    /**
+     * Mailing class for the postcard.
+     */
+    mailingClass?:
+      | 'first_class'
+      | 'standard_class'
+      | 'express'
+      | 'certified'
+      | 'certified_return_receipt'
+      | 'registered'
+      | 'usps_first_class'
+      | 'usps_standard_class'
+      | 'usps_eddm'
+      | 'usps_express_2_day'
+      | 'usps_express_3_day'
+      | 'usps_first_class_certified'
+      | 'usps_first_class_certified_return_receipt'
+      | 'usps_first_class_registered'
+      | 'usps_express_3_day_signature_confirmation'
+      | 'usps_express_3_day_certified'
+      | 'usps_express_3_day_certified_return_receipt'
+      | 'ca_post_lettermail'
+      | 'ca_post_personalized'
+      | 'ca_post_neighbourhood_mail'
+      | 'ups_express_overnight'
+      | 'ups_express_2_day'
+      | 'ups_express_3_day'
+      | 'royal_mail_first_class'
+      | 'royal_mail_second_class'
+      | 'au_post_second_class';
+
+    /**
+     * Default merge variables for the postcard.
+     */
+    mergeVariables?: { [key: string]: unknown };
+
+    /**
+     * Optional key-value metadata.
+     */
+    metadata?: { [key: string]: string };
+
+    /**
+     * Premium paper identifier. Use "standard" for regular stock or a premium*paper*\*
+     * ID.
+     */
+    paper?: string;
+
+    /**
+     * A 2-page PDF file for the postcard content (front and back). Cannot be used with
+     * `frontTemplate`/`backTemplate`.
+     */
+    pdf?: string;
+
+    /**
+     * Enum representing the supported postcard sizes.
+     */
+    size?: '6x4' | '9x6' | '11x6';
+  }
+
+  /**
+   * Inline self-mailer configuration for a campaign. All fields are optional since
+   * campaigns may be in a partial state during drafting.
+   */
+  export interface SelfMailer {
+    /**
+     * An optional description.
+     */
+    description?: string;
+
+    /**
+     * ID of the template for the inside. Cannot be used with `pdf`.
+     */
+    insideTemplate?: string;
+
+    /**
+     * Mailing class for the self-mailer.
+     */
+    mailingClass?:
+      | 'first_class'
+      | 'standard_class'
+      | 'express'
+      | 'certified'
+      | 'certified_return_receipt'
+      | 'registered'
+      | 'usps_first_class'
+      | 'usps_standard_class'
+      | 'usps_eddm'
+      | 'usps_express_2_day'
+      | 'usps_express_3_day'
+      | 'usps_first_class_certified'
+      | 'usps_first_class_certified_return_receipt'
+      | 'usps_first_class_registered'
+      | 'usps_express_3_day_signature_confirmation'
+      | 'usps_express_3_day_certified'
+      | 'usps_express_3_day_certified_return_receipt'
+      | 'ca_post_lettermail'
+      | 'ca_post_personalized'
+      | 'ca_post_neighbourhood_mail'
+      | 'ups_express_overnight'
+      | 'ups_express_2_day'
+      | 'ups_express_3_day'
+      | 'royal_mail_first_class'
+      | 'royal_mail_second_class'
+      | 'au_post_second_class';
+
+    /**
+     * Default merge variables for the self-mailer.
+     */
+    mergeVariables?: { [key: string]: unknown };
+
+    /**
+     * Optional key-value metadata.
+     */
+    metadata?: { [key: string]: string };
+
+    /**
+     * ID of the template for the outside. Cannot be used with `pdf`.
+     */
+    outsideTemplate?: string;
+
+    /**
+     * A 2-page PDF file for the self-mailer content. Cannot be used with
+     * `insideTemplate`/`outsideTemplate`.
+     */
+    pdf?: string;
+
+    /**
+     * Enum representing the supported self-mailer sizes.
+     */
+    size?: '8.5x11_bifold' | '8.5x11_trifold' | '9.5x16_trifold';
+  }
+
+  /**
+   * Inline snap pack configuration for a campaign. All fields are optional since
+   * campaigns may be in a partial state during drafting.
+   */
+  export interface SnapPack {
+    /**
+     * An optional description.
+     */
+    description?: string;
+
+    /**
+     * ID of the template for the inside. Cannot be used with `pdf`.
+     */
+    insideTemplate?: string;
+
+    /**
+     * Mailing class for the snap pack.
+     */
+    mailingClass?:
+      | 'first_class'
+      | 'standard_class'
+      | 'express'
+      | 'certified'
+      | 'certified_return_receipt'
+      | 'registered'
+      | 'usps_first_class'
+      | 'usps_standard_class'
+      | 'usps_eddm'
+      | 'usps_express_2_day'
+      | 'usps_express_3_day'
+      | 'usps_first_class_certified'
+      | 'usps_first_class_certified_return_receipt'
+      | 'usps_first_class_registered'
+      | 'usps_express_3_day_signature_confirmation'
+      | 'usps_express_3_day_certified'
+      | 'usps_express_3_day_certified_return_receipt'
+      | 'ca_post_lettermail'
+      | 'ca_post_personalized'
+      | 'ca_post_neighbourhood_mail'
+      | 'ups_express_overnight'
+      | 'ups_express_2_day'
+      | 'ups_express_3_day'
+      | 'royal_mail_first_class'
+      | 'royal_mail_second_class'
+      | 'au_post_second_class';
+
+    /**
+     * Default merge variables for the snap pack.
+     */
+    mergeVariables?: { [key: string]: unknown };
+
+    /**
+     * Optional key-value metadata.
+     */
+    metadata?: { [key: string]: string };
+
+    /**
+     * ID of the template for the outside. Cannot be used with `pdf`.
+     */
+    outsideTemplate?: string;
+
+    /**
+     * A 2-page PDF file for the snap pack content. Cannot be used with
+     * `insideTemplate`/`outsideTemplate`.
+     */
+    pdf?: string;
+
+    /**
+     * Enum representing the supported snap pack sizes.
+     */
+    size?: '8.5x11_bifold_v';
+  }
 }
 
 export interface CampaignListParams extends SkipLimitParams {

@@ -8,14 +8,23 @@ const client = new PostGrid({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource cheques', () => {
+describe('resource snapPacks', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.printMail.cheques.create({
-      amount: 1000,
-      bankAccount: 'bank_123',
-      from: 'contact_123',
-      to: 'contact_123',
+    const responsePromise = client.printMail.snapPacks.create({
+      from: {
+        addressLine1: 'addressLine1',
+        countryCode: 'countryCode',
+        firstName: 'firstName',
+      },
+      insideHTML: 'insideHTML',
+      outsideHTML: 'outsideHTML',
+      size: '8.5x11_bifold_v',
+      to: {
+        addressLine1: 'addressLine1',
+        countryCode: 'countryCode',
+        firstName: 'firstName',
+      },
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -28,23 +37,8 @@ describe('resource cheques', () => {
 
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
-    const response = await client.printMail.cheques.create({
-      amount: 1000,
-      bankAccount: 'bank_123',
-      from: 'contact_123',
-      to: 'contact_123',
-      currencyCode: 'USD',
-      description: 'description',
-      digitalOnly: { watermark: 'watermark' },
-      envelope: 'standard',
-      logoURL: 'https://example.com',
-      mailingClass: 'first_class',
-      memo: 'memo',
-      mergeVariables: { foo: 'bar' },
-      message: 'message',
-      metadata: { foo: 'bar' },
-      number: 123456,
-      redirectTo: {
+    const response = await client.printMail.snapPacks.create({
+      from: {
         addressLine1: 'addressLine1',
         countryCode: 'countryCode',
         firstName: 'firstName',
@@ -62,14 +56,38 @@ describe('resource cheques', () => {
         provinceOrState: 'provinceOrState',
         skipVerification: true,
       },
+      insideHTML: 'insideHTML',
+      outsideHTML: 'outsideHTML',
+      size: '8.5x11_bifold_v',
+      to: {
+        addressLine1: 'addressLine1',
+        countryCode: 'countryCode',
+        firstName: 'firstName',
+        addressLine2: 'addressLine2',
+        city: 'city',
+        companyName: 'companyName',
+        description: 'description',
+        email: 'email',
+        forceVerifiedStatus: true,
+        jobTitle: 'jobTitle',
+        lastName: 'lastName',
+        metadata: { foo: 'bar' },
+        phoneNumber: 'phoneNumber',
+        postalOrZip: 'postalOrZip',
+        provinceOrState: 'provinceOrState',
+        skipVerification: true,
+      },
+      description: 'description',
+      mailingClass: 'first_class',
+      mergeVariables: { foo: 'bar' },
+      metadata: { foo: 'bar' },
       sendDate: '2019-12-27T18:11:19.117Z',
-      size: 'us_letter',
     });
   });
 
   // Mock server tests are disabled
   test.skip('retrieve', async () => {
-    const responsePromise = client.printMail.cheques.retrieve('id');
+    const responsePromise = client.printMail.snapPacks.retrieve('id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -81,7 +99,7 @@ describe('resource cheques', () => {
 
   // Mock server tests are disabled
   test.skip('list', async () => {
-    const responsePromise = client.printMail.cheques.list();
+    const responsePromise = client.printMail.snapPacks.list();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -95,7 +113,7 @@ describe('resource cheques', () => {
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.printMail.cheques.list(
+      client.printMail.snapPacks.list(
         {
           limit: 0,
           search: 'search',
@@ -108,7 +126,7 @@ describe('resource cheques', () => {
 
   // Mock server tests are disabled
   test.skip('delete', async () => {
-    const responsePromise = client.printMail.cheques.delete('id');
+    const responsePromise = client.printMail.snapPacks.delete('id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -119,8 +137,8 @@ describe('resource cheques', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('cancel: only required params', async () => {
-    const responsePromise = client.printMail.cheques.cancel('id', { note: 'Cancelling this cheque' });
+  test.skip('progressions', async () => {
+    const responsePromise = client.printMail.snapPacks.progressions('id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -131,13 +149,10 @@ describe('resource cheques', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('cancel: required and optional params', async () => {
-    const response = await client.printMail.cheques.cancel('id', { note: 'Cancelling this cheque' });
-  });
-
-  // Mock server tests are disabled
-  test.skip('progress', async () => {
-    const responsePromise = client.printMail.cheques.progress('id');
+  test.skip('retrieveCapabilities: only required params', async () => {
+    const responsePromise = client.printMail.snapPacks.retrieveCapabilities({
+      returnCountryCode: 'returnCountryCode',
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -148,26 +163,11 @@ describe('resource cheques', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('retrieveURL', async () => {
-    const responsePromise = client.printMail.cheques.retrieveURL('id');
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
-  test.skip('retrieveWithDepositReadyPdf', async () => {
-    const responsePromise = client.printMail.cheques.retrieveWithDepositReadyPdf('id');
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
+  test.skip('retrieveCapabilities: required and optional params', async () => {
+    const response = await client.printMail.snapPacks.retrieveCapabilities({
+      returnCountryCode: 'returnCountryCode',
+      destinationCountryCode: 'destinationCountryCode',
+      mailingList: 'mailingList',
+    });
   });
 });

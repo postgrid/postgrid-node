@@ -76,6 +76,7 @@ describe('resource postcards', () => {
       mailingClass: 'first_class',
       mergeVariables: { foo: 'bar' },
       metadata: { foo: 'bar' },
+      paper: 'premium_paper_L6fw2k_N_j',
       sendDate: '2019-12-27T18:11:19.117Z',
     });
   });
@@ -122,6 +123,35 @@ describe('resource postcards', () => {
   // Mock server tests are disabled
   test.skip('delete', async () => {
     const responsePromise = client.printMail.postcards.delete('id');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('cancel: only required params', async () => {
+    const responsePromise = client.printMail.postcards.cancel('id', { note: 'Cancelling this postcard' });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('cancel: required and optional params', async () => {
+    const response = await client.printMail.postcards.cancel('id', { note: 'Cancelling this postcard' });
+  });
+
+  // Mock server tests are disabled
+  test.skip('progress', async () => {
+    const responsePromise = client.printMail.postcards.progress('id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;

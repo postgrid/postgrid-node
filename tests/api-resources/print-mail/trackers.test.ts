@@ -8,12 +8,12 @@ const client = new PostGrid({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource cheques', () => {
+describe('resource trackers', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.printMail.orderProfiles.cheques.create({
-      bankAccount: 'bankAccount',
-      size: 'us_letter',
+    const responsePromise = client.printMail.trackers.create({
+      redirectURLTemplate: 'https://postgrid.com?name={{to.firstName}}',
+      urlExpireAfterDays: 30,
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -26,26 +26,17 @@ describe('resource cheques', () => {
 
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
-    const response = await client.printMail.orderProfiles.cheques.create({
-      bankAccount: 'bankAccount',
-      size: 'us_letter',
-      expand: ['string'],
-      currencyCode: 'CAD',
+    const response = await client.printMail.trackers.create({
+      redirectURLTemplate: 'https://postgrid.com?name={{to.firstName}}',
+      urlExpireAfterDays: 30,
       description: 'description',
-      letterPDF: 'U3RhaW5sZXNzIHJvY2tz',
-      letterTemplate: 'letterTemplate',
-      logo: 'https://example.com',
-      mailingClass: 'first_class',
-      memo: 'memo',
-      mergeVariables: { foo: 'bar' },
-      message: 'message',
-      metadata: { foo: 'string' },
+      metadata: { foo: 'bar' },
     });
   });
 
   // Mock server tests are disabled
   test.skip('retrieve', async () => {
-    const responsePromise = client.printMail.orderProfiles.cheques.retrieve('id');
+    const responsePromise = client.printMail.trackers.retrieve('id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -56,22 +47,10 @@ describe('resource cheques', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('retrieve: request options and params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.printMail.orderProfiles.cheques.retrieve(
-        'id',
-        { expand: ['string'] },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(PostGrid.NotFoundError);
-  });
-
-  // Mock server tests are disabled
   test.skip('update: only required params', async () => {
-    const responsePromise = client.printMail.orderProfiles.cheques.update('id', {
-      bankAccount: 'bankAccount',
-      size: 'us_letter',
+    const responsePromise = client.printMail.trackers.update('id', {
+      redirectURLTemplate: 'https://postgrid.com?firstName={{to.firstName}}',
+      urlExpireAfterDays: 90,
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -84,26 +63,17 @@ describe('resource cheques', () => {
 
   // Mock server tests are disabled
   test.skip('update: required and optional params', async () => {
-    const response = await client.printMail.orderProfiles.cheques.update('id', {
-      bankAccount: 'bankAccount',
-      size: 'us_letter',
-      expand: ['string'],
-      currencyCode: 'CAD',
+    const response = await client.printMail.trackers.update('id', {
+      redirectURLTemplate: 'https://postgrid.com?firstName={{to.firstName}}',
+      urlExpireAfterDays: 90,
       description: 'description',
-      letterPDF: 'U3RhaW5sZXNzIHJvY2tz',
-      letterTemplate: 'letterTemplate',
-      logo: 'https://example.com',
-      mailingClass: 'first_class',
-      memo: 'memo',
-      mergeVariables: { foo: 'bar' },
-      message: 'message',
-      metadata: { foo: 'string' },
+      metadata: { foo: 'bar' },
     });
   });
 
   // Mock server tests are disabled
   test.skip('list', async () => {
-    const responsePromise = client.printMail.orderProfiles.cheques.list();
+    const responsePromise = client.printMail.trackers.list();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -117,7 +87,7 @@ describe('resource cheques', () => {
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.printMail.orderProfiles.cheques.list(
+      client.printMail.trackers.list(
         {
           limit: 0,
           search: 'search',
@@ -130,7 +100,7 @@ describe('resource cheques', () => {
 
   // Mock server tests are disabled
   test.skip('delete', async () => {
-    const responsePromise = client.printMail.orderProfiles.cheques.delete('id');
+    const responsePromise = client.printMail.trackers.delete('id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -138,5 +108,33 @@ describe('resource cheques', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('retrieveVisits', async () => {
+    const responsePromise = client.printMail.trackers.retrieveVisits('id');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('retrieveVisits: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.printMail.trackers.retrieveVisits(
+        'id',
+        {
+          limit: 0,
+          search: 'search',
+          skip: 0,
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(PostGrid.NotFoundError);
   });
 });

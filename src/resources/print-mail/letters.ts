@@ -2,7 +2,6 @@
 
 import { APIResource } from '../../core/resource';
 import * as ContactsAPI from './contacts';
-import * as PrintMailAPI from './print-mail';
 import { APIPromise } from '../../core/api-promise';
 import { PagePromise, SkipLimit, type SkipLimitParams } from '../../core/pagination';
 import { RequestOptions } from '../../internal/request-options';
@@ -72,6 +71,40 @@ export class Letters extends APIResource {
    */
   delete(id: string, options?: RequestOptions): APIPromise<Letter> {
     return this._client.delete(path`/print-mail/v1/letters/${id}`, options);
+  }
+
+  /**
+   * Cancel a letter by ID with a note. Note that this operation cannot be undone and
+   * that only letters with a status of `ready` can be cancelled.
+   *
+   * @example
+   * ```ts
+   * const letter = await client.printMail.letters.cancel('id', {
+   *   note: 'Cancelling this letter',
+   * });
+   * ```
+   */
+  cancel(id: string, body: LetterCancelParams, options?: RequestOptions): APIPromise<Letter> {
+    return this._client.post(path`/print-mail/v1/letters/${id}/cancellation`, { body, ...options });
+  }
+
+  /**
+   * Progresses a letter's `status` to the next stage. This is only available in test
+   * mode and can be used to simulate how a live order would progress through the
+   * different statuses.
+   *
+   * Note: this will fail with an `invalid_progression_error` if the status is one of
+   * `completed` or `cancelled`.
+   *
+   * @example
+   * ```ts
+   * const letter = await client.printMail.letters.progress(
+   *   'id',
+   * );
+   * ```
+   */
+  progress(id: string, options?: RequestOptions): APIPromise<Letter> {
+    return this._client.post(path`/print-mail/v1/letters/${id}/progressions`, options);
   }
 
   /**
@@ -457,7 +490,7 @@ export declare namespace LetterCreateParams {
      * The contact information of the sender. You can pass contact information inline
      * here just like you can for the `to`.
      */
-    from: PrintMailAPI.ContactCreateWithFirstName | PrintMailAPI.ContactCreateWithCompanyName | string;
+    from: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
     /**
      * The HTML content for the letter. You can supply _either_ this or `template` but
@@ -471,7 +504,7 @@ export declare namespace LetterCreateParams {
      * contacts regardless of whether you provide the information inline here or call
      * the contact creation endpoint.
      */
-    to: PrintMailAPI.ContactCreateWithFirstName | PrintMailAPI.ContactCreateWithCompanyName | string;
+    to: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
     /**
      * Enum representing the placement of the address on the letter.
@@ -591,7 +624,7 @@ export declare namespace LetterCreateParams {
      * The contact information of the sender. You can pass contact information inline
      * here just like you can for the `to`.
      */
-    from: PrintMailAPI.ContactCreateWithFirstName | PrintMailAPI.ContactCreateWithCompanyName | string;
+    from: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
     /**
      * A URL pointing to a PDF file for the letter or the PDF file itself.
@@ -604,7 +637,7 @@ export declare namespace LetterCreateParams {
      * contacts regardless of whether you provide the information inline here or call
      * the contact creation endpoint.
      */
-    to: PrintMailAPI.ContactCreateWithFirstName | PrintMailAPI.ContactCreateWithCompanyName | string;
+    to: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
     /**
      * Enum representing the placement of the address on the letter.
@@ -723,6 +756,10 @@ export interface LetterListParams extends SkipLimitParams {
   search?: string;
 }
 
+export interface LetterCancelParams {
+  note: string;
+}
+
 export declare namespace Letters {
   export {
     type AddressPlacement as AddressPlacement,
@@ -734,5 +771,6 @@ export declare namespace Letters {
     type LettersSkipLimit as LettersSkipLimit,
     type LetterCreateParams as LetterCreateParams,
     type LetterListParams as LetterListParams,
+    type LetterCancelParams as LetterCancelParams,
   };
 }

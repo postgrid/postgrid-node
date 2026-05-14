@@ -8,10 +8,10 @@ const client = new PostGrid({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource letters', () => {
+describe('resource virtualMailboxes', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.printMail.orderProfiles.letters.create({ size: 'us_letter' });
+    const responsePromise = client.printMail.virtualMailboxes.create({ countryCode: 'US' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -23,52 +23,15 @@ describe('resource letters', () => {
 
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
-    const response = await client.printMail.orderProfiles.letters.create({
-      size: 'us_letter',
-      expand: ['string'],
-      addressPlacement: 'top_first_page',
-      attachedPDF: { file: 'https://example.com', placement: 'before_template' },
-      color: true,
-      description: 'Monthly Newsletter Profile',
-      doubleSided: true,
-      envelope: 'envelope',
-      mailingClass: 'first_class',
-      mergeVariables: { salutation: 'bar' },
-      metadata: { campaign: 'Q1 Newsletter' },
-      pdf: 'https://example.com',
-      perforatedPage: 1,
-      returnEnvelope: 'returnEnvelope',
-      template: 'template_abc',
+    const response = await client.printMail.virtualMailboxes.create({
+      countryCode: 'US',
+      capabilities: { envelopeScans: true, forwardMailTo: 'contact_pxd7wnnD1xY6H6etKNvjb4' },
     });
   });
 
   // Mock server tests are disabled
   test.skip('retrieve', async () => {
-    const responsePromise = client.printMail.orderProfiles.letters.retrieve('id');
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
-  test.skip('retrieve: request options and params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.printMail.orderProfiles.letters.retrieve(
-        'id',
-        { expand: ['string'] },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(PostGrid.NotFoundError);
-  });
-
-  // Mock server tests are disabled
-  test.skip('update', async () => {
-    const responsePromise = client.printMail.orderProfiles.letters.update('id', {});
+    const responsePromise = client.printMail.virtualMailboxes.retrieve('id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -80,7 +43,7 @@ describe('resource letters', () => {
 
   // Mock server tests are disabled
   test.skip('list', async () => {
-    const responsePromise = client.printMail.orderProfiles.letters.list();
+    const responsePromise = client.printMail.virtualMailboxes.list();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -94,7 +57,7 @@ describe('resource letters', () => {
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.printMail.orderProfiles.letters.list(
+      client.printMail.virtualMailboxes.list(
         {
           limit: 0,
           search: 'search',
@@ -106,8 +69,8 @@ describe('resource letters', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('delete', async () => {
-    const responsePromise = client.printMail.orderProfiles.letters.delete('id');
+  test.skip('retrieveAddress', async () => {
+    const responsePromise = client.printMail.virtualMailboxes.retrieveAddress('id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;

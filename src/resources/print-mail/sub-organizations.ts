@@ -21,6 +21,31 @@ import { path } from '../../internal/utils/path';
  */
 export class SubOrganizations extends APIResource {
   /**
+   * When creating a user through the API, the verifiedEmail field will automatically
+   * be set to true. However, if public signups are used, the email will need to be
+   * verified by the user.
+   *
+   * @example
+   * ```ts
+   * const subOrganization =
+   *   await client.printMail.subOrganizations.create({
+   *     countryCode: 'CA',
+   *     email: 'suborg@postgrid.com',
+   *     name: 'Calvin',
+   *     organizationName: 'PostGrid',
+   *     password: 'very-strong-password',
+   *     phoneNumber: '9059059059',
+   *   });
+   * ```
+   */
+  create(
+    body: SubOrganizationCreateParams,
+    options?: RequestOptions,
+  ): APIPromise<SubOrganizationCreateResponse> {
+    return this._client.post('/print-mail/v1/sub_organizations', { body, ...options });
+  }
+
+  /**
    * Get a sub-organization.
    *
    * @example
@@ -31,31 +56,6 @@ export class SubOrganizations extends APIResource {
    */
   retrieve(id: string, options?: RequestOptions): APIPromise<SubOrganization> {
     return this._client.get(path`/print-mail/v1/sub_organizations/${id}`, options);
-  }
-
-  /**
-   * When creating a user through the API, the verifiedEmail field will automatically
-   * be set to true. However, if public signups are used, the email will need to be
-   * verified by the user.
-   *
-   * @example
-   * ```ts
-   * const subOrganization =
-   *   await client.printMail.subOrganizations.update({
-   *     countryCode: 'CA',
-   *     email: 'suborg@postgrid.com',
-   *     name: 'Calvin',
-   *     organizationName: 'PostGrid',
-   *     password: 'very-strong-password',
-   *     phoneNumber: '9059059059',
-   *   });
-   * ```
-   */
-  update(
-    body: SubOrganizationUpdateParams,
-    options?: RequestOptions,
-  ): APIPromise<SubOrganizationUpdateResponse> {
-    return this._client.post('/print-mail/v1/sub_organizations', { body, ...options });
   }
 
   /**
@@ -162,7 +162,7 @@ export interface SubOrganization {
   usage: number;
 }
 
-export interface SubOrganizationUpdateResponse {
+export interface SubOrganizationCreateResponse {
   /**
    * The Sub-Organization object.
    */
@@ -171,10 +171,10 @@ export interface SubOrganizationUpdateResponse {
   /**
    * The user object.
    */
-  user: SubOrganizationUpdateResponse.User;
+  user: SubOrganizationCreateResponse.User;
 }
 
-export namespace SubOrganizationUpdateResponse {
+export namespace SubOrganizationCreateResponse {
   /**
    * The user object.
    */
@@ -326,7 +326,7 @@ export namespace SubOrganizationRetrieveUsersResponse {
   }
 }
 
-export interface SubOrganizationUpdateParams {
+export interface SubOrganizationCreateParams {
   /**
    * The country code of the sub-organization.
    */
@@ -388,10 +388,10 @@ export declare namespace SubOrganizations {
   export {
     type EmailPreferences as EmailPreferences,
     type SubOrganization as SubOrganization,
-    type SubOrganizationUpdateResponse as SubOrganizationUpdateResponse,
+    type SubOrganizationCreateResponse as SubOrganizationCreateResponse,
     type SubOrganizationRetrieveUsersResponse as SubOrganizationRetrieveUsersResponse,
     type SubOrganizationsSkipLimit as SubOrganizationsSkipLimit,
-    type SubOrganizationUpdateParams as SubOrganizationUpdateParams,
+    type SubOrganizationCreateParams as SubOrganizationCreateParams,
     type SubOrganizationListParams as SubOrganizationListParams,
     type SubOrganizationRetrieveUsersParams as SubOrganizationRetrieveUsersParams,
   };
