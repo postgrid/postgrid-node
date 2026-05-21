@@ -470,6 +470,16 @@ export namespace Campaign {
     metadata?: { [key: string]: string };
 
     /**
+     * Premium paper selection ("standard" or a premium paper ID). If omitted, org
+     * default is used when configured; otherwise "standard".
+     */
+    paper?:
+      | 'standard'
+      | 'premium_paper_letter_standard_white_70lb'
+      | 'premium_paper_letter_standard_white_80lb'
+      | (string & {});
+
+    /**
      * Which page number should be perforated (if any).
      */
     perforatedPage?: 1;
@@ -557,10 +567,16 @@ export namespace Campaign {
     metadata?: { [key: string]: string };
 
     /**
-     * Premium paper identifier. Use "standard" for regular stock or a premium*paper*\*
-     * ID.
+     * Premium paper selection ("standard" or a premium paper ID). If omitted, org
+     * default is used when configured; otherwise "standard".
      */
-    paper?: string;
+    paper?:
+      | 'standard'
+      | 'premium_paper_heavy_1_glossy'
+      | 'premium_paper_postcard_uv_glossy_ss'
+      | 'premium_paper_postcard_uv_glossy_ss_120lb'
+      | 'premium_paper_postcard_satin_ds'
+      | (string & {});
 
     /**
      * Enum representing the supported postcard sizes.
@@ -994,6 +1010,16 @@ export namespace CampaignCreateParams {
     metadata?: { [key: string]: string };
 
     /**
+     * Premium paper selection ("standard" or a premium paper ID). If omitted, org
+     * default is used when configured; otherwise "standard".
+     */
+    paper?:
+      | 'standard'
+      | 'premium_paper_letter_standard_white_70lb'
+      | 'premium_paper_letter_standard_white_80lb'
+      | (string & {});
+
+    /**
      * A PDF file or URL for the letter content. Cannot be used with `template`.
      */
     pdf?: string;
@@ -1081,10 +1107,16 @@ export namespace CampaignCreateParams {
     metadata?: { [key: string]: string };
 
     /**
-     * Premium paper identifier. Use "standard" for regular stock or a premium*paper*\*
-     * ID.
+     * Premium paper selection ("standard" or a premium paper ID). If omitted, org
+     * default is used when configured; otherwise "standard".
      */
-    paper?: string;
+    paper?:
+      | 'standard'
+      | 'premium_paper_heavy_1_glossy'
+      | 'premium_paper_postcard_uv_glossy_ss'
+      | 'premium_paper_postcard_uv_glossy_ss_120lb'
+      | 'premium_paper_postcard_satin_ds'
+      | (string & {});
 
     /**
      * A 2-page PDF file for the postcard content (front and back). Cannot be used with
@@ -1502,6 +1534,16 @@ export namespace CampaignUpdateParams {
     metadata?: { [key: string]: string };
 
     /**
+     * Premium paper selection ("standard" or a premium paper ID). If omitted, org
+     * default is used when configured; otherwise "standard".
+     */
+    paper?:
+      | 'standard'
+      | 'premium_paper_letter_standard_white_70lb'
+      | 'premium_paper_letter_standard_white_80lb'
+      | (string & {});
+
+    /**
      * A PDF file or URL for the letter content. Cannot be used with `template`.
      */
     pdf?: string;
@@ -1589,10 +1631,16 @@ export namespace CampaignUpdateParams {
     metadata?: { [key: string]: string };
 
     /**
-     * Premium paper identifier. Use "standard" for regular stock or a premium*paper*\*
-     * ID.
+     * Premium paper selection ("standard" or a premium paper ID). If omitted, org
+     * default is used when configured; otherwise "standard".
      */
-    paper?: string;
+    paper?:
+      | 'standard'
+      | 'premium_paper_heavy_1_glossy'
+      | 'premium_paper_postcard_uv_glossy_ss'
+      | 'premium_paper_postcard_uv_glossy_ss_120lb'
+      | 'premium_paper_postcard_satin_ds'
+      | (string & {});
 
     /**
      * A 2-page PDF file for the postcard content (front and back). Cannot be used with

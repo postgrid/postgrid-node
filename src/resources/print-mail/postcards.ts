@@ -25,6 +25,7 @@ export class Postcards extends APIResource {
    *   size: '6x4',
    *   to: 'contact_456',
    *   from: 'contact_123',
+   *   paper: 'standard',
    * });
    * ```
    */
@@ -264,10 +265,27 @@ export interface Postcard {
   metadata?: { [key: string]: unknown };
 
   /**
-   * Premium paper identifier. Use "standard" for regular stock or a premium*paper*\*
-   * ID.
+   * Premium paper selection used for this postcard.
+   *
+   * Available values include:
+   *
+   * - `standard`
+   * - `premium_paper_heavy_1_glossy`
+   * - `premium_paper_postcard_uv_glossy_ss`
+   * - `premium_paper_postcard_uv_glossy_ss_120lb`
+   * - `premium_paper_postcard_satin_ds`
+   *
+   * Not all premium paper options are enabled for all organizations. If omitted, the
+   * organization default postcard paper is used when configured; otherwise
+   * `standard`.
    */
-  paper?: string;
+  paper?:
+    | 'standard'
+    | 'premium_paper_heavy_1_glossy'
+    | 'premium_paper_postcard_uv_glossy_ss'
+    | 'premium_paper_postcard_uv_glossy_ss_120lb'
+    | 'premium_paper_postcard_satin_ds'
+    | (string & {});
 
   /**
    * The tracking number of this order. Populated after an express/certified order
@@ -418,10 +436,27 @@ export declare namespace PostcardCreateParams {
     metadata?: { [key: string]: unknown };
 
     /**
-     * Premium paper identifier. Use "standard" for regular stock or a premium*paper*\*
-     * ID.
+     * Premium paper selection used for this postcard.
+     *
+     * Available values include:
+     *
+     * - `standard`
+     * - `premium_paper_heavy_1_glossy`
+     * - `premium_paper_postcard_uv_glossy_ss`
+     * - `premium_paper_postcard_uv_glossy_ss_120lb`
+     * - `premium_paper_postcard_satin_ds`
+     *
+     * Not all premium paper options are enabled for all organizations. If omitted, the
+     * organization default postcard paper is used when configured; otherwise
+     * `standard`.
      */
-    paper?: string;
+    paper?:
+      | 'standard'
+      | 'premium_paper_heavy_1_glossy'
+      | 'premium_paper_postcard_uv_glossy_ss'
+      | 'premium_paper_postcard_uv_glossy_ss_120lb'
+      | 'premium_paper_postcard_satin_ds'
+      | (string & {});
 
     /**
      * This order will transition from `ready` to `printing` on the day after this
@@ -442,6 +477,106 @@ export declare namespace PostcardCreateParams {
      * `frontHTML` but not both.
      */
     frontTemplate: string;
+
+    /**
+     * Enum representing the supported postcard sizes.
+     */
+    size: '6x4' | '9x6' | '11x6';
+
+    /**
+     * The recipient of this order. You can either supply the contact information
+     * inline here or provide a contact ID. PostGrid will automatically deduplicate
+     * contacts regardless of whether you provide the information inline here or call
+     * the contact creation endpoint.
+     */
+    to: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
+
+    /**
+     * An optional string describing this resource. Will be visible in the API and the
+     * dashboard.
+     */
+    description?: string;
+
+    /**
+     * The contact information of the sender. You can pass contact information inline
+     * here just like you can for the `to`. Unlike other order types, the sender
+     * address is optional for postcards.
+     */
+    from?: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
+
+    /**
+     * The mailing class of this order. If not provided, automatically set to
+     * `first_class`.
+     */
+    mailingClass?:
+      | 'first_class'
+      | 'standard_class'
+      | 'express'
+      | 'certified'
+      | 'certified_return_receipt'
+      | 'registered'
+      | 'usps_first_class'
+      | 'usps_standard_class'
+      | 'usps_eddm'
+      | 'usps_express_2_day'
+      | 'usps_express_3_day'
+      | 'usps_first_class_certified'
+      | 'usps_first_class_certified_return_receipt'
+      | 'usps_first_class_registered'
+      | 'usps_express_3_day_signature_confirmation'
+      | 'usps_express_3_day_certified'
+      | 'usps_express_3_day_certified_return_receipt'
+      | 'ca_post_lettermail'
+      | 'ca_post_personalized'
+      | 'ca_post_neighbourhood_mail'
+      | 'ups_express_overnight'
+      | 'ups_express_2_day'
+      | 'ups_express_3_day'
+      | 'royal_mail_first_class'
+      | 'royal_mail_second_class'
+      | 'au_post_second_class';
+
+    /**
+     * These will be merged with the variables in the template or HTML you create this
+     * order with. The keys in this object should match the variable names in the
+     * template _exactly_ as they are case-sensitive. Note that these _do not_ apply to
+     * PDFs uploaded with the order.
+     */
+    mergeVariables?: { [key: string]: unknown };
+
+    /**
+     * See the section on Metadata.
+     */
+    metadata?: { [key: string]: unknown };
+
+    /**
+     * Premium paper selection used for this postcard.
+     *
+     * Available values include:
+     *
+     * - `standard`
+     * - `premium_paper_heavy_1_glossy`
+     * - `premium_paper_postcard_uv_glossy_ss`
+     * - `premium_paper_postcard_uv_glossy_ss_120lb`
+     * - `premium_paper_postcard_satin_ds`
+     *
+     * Not all premium paper options are enabled for all organizations. If omitted, the
+     * organization default postcard paper is used when configured; otherwise
+     * `standard`.
+     */
+    paper?:
+      | 'standard'
+      | 'premium_paper_heavy_1_glossy'
+      | 'premium_paper_postcard_uv_glossy_ss'
+      | 'premium_paper_postcard_uv_glossy_ss_120lb'
+      | 'premium_paper_postcard_satin_ds'
+      | (string & {});
+
+    /**
+     * This order will transition from `ready` to `printing` on the day after this
+     * date. You can use this parameter to schedule orders for a future date.
+     */
+    sendDate?: string;
   }
 
   export interface PostcardCreateWithPdfurl {
@@ -523,10 +658,27 @@ export declare namespace PostcardCreateParams {
     metadata?: { [key: string]: unknown };
 
     /**
-     * Premium paper identifier. Use "standard" for regular stock or a premium*paper*\*
-     * ID.
+     * Premium paper selection used for this postcard.
+     *
+     * Available values include:
+     *
+     * - `standard`
+     * - `premium_paper_heavy_1_glossy`
+     * - `premium_paper_postcard_uv_glossy_ss`
+     * - `premium_paper_postcard_uv_glossy_ss_120lb`
+     * - `premium_paper_postcard_satin_ds`
+     *
+     * Not all premium paper options are enabled for all organizations. If omitted, the
+     * organization default postcard paper is used when configured; otherwise
+     * `standard`.
      */
-    paper?: string;
+    paper?:
+      | 'standard'
+      | 'premium_paper_heavy_1_glossy'
+      | 'premium_paper_postcard_uv_glossy_ss'
+      | 'premium_paper_postcard_uv_glossy_ss_120lb'
+      | 'premium_paper_postcard_satin_ds'
+      | (string & {});
 
     /**
      * This order will transition from `ready` to `printing` on the day after this
@@ -614,10 +766,27 @@ export declare namespace PostcardCreateParams {
     metadata?: { [key: string]: unknown };
 
     /**
-     * Premium paper identifier. Use "standard" for regular stock or a premium*paper*\*
-     * ID.
+     * Premium paper selection used for this postcard.
+     *
+     * Available values include:
+     *
+     * - `standard`
+     * - `premium_paper_heavy_1_glossy`
+     * - `premium_paper_postcard_uv_glossy_ss`
+     * - `premium_paper_postcard_uv_glossy_ss_120lb`
+     * - `premium_paper_postcard_satin_ds`
+     *
+     * Not all premium paper options are enabled for all organizations. If omitted, the
+     * organization default postcard paper is used when configured; otherwise
+     * `standard`.
      */
-    paper?: string;
+    paper?:
+      | 'standard'
+      | 'premium_paper_heavy_1_glossy'
+      | 'premium_paper_postcard_uv_glossy_ss'
+      | 'premium_paper_postcard_uv_glossy_ss_120lb'
+      | 'premium_paper_postcard_satin_ds'
+      | (string & {});
 
     /**
      * This order will transition from `ready` to `printing` on the day after this
