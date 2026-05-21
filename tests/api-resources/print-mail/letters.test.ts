@@ -82,6 +82,7 @@ describe('resource letters', () => {
       mailingClass: 'first_class',
       mergeVariables: { foo: 'bar' },
       metadata: { foo: 'bar' },
+      paper: 'standard',
       perforatedPage: 1,
       plasticCard: {
         size: 'standard',
