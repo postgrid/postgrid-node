@@ -58,6 +58,8 @@ import {
   Contacts,
   ContactsSkipLimit,
 } from './contacts';
+import * as EventsAPI from './events';
+import { Event, EventListParams, Events, EventsSkipLimit } from './events';
 import * as LettersAPI from './letters';
 import {
   AddressPlacement,
@@ -177,6 +179,19 @@ import {
   TrackerUpdateResponse,
   Trackers,
 } from './trackers';
+import * as WebhooksAPI from './webhooks';
+import {
+  Webhook,
+  WebhookCreateParams,
+  WebhookDeleteResponse,
+  WebhookInvocation,
+  WebhookInvocationsSkipLimit,
+  WebhookListInvocationsParams,
+  WebhookListParams,
+  WebhookUpdateParams,
+  Webhooks,
+  WebhooksSkipLimit,
+} from './webhooks';
 import * as ReportsAPI from './reports/reports';
 import {
   DeletedResponse,
@@ -218,6 +233,8 @@ export class PrintMail extends APIResource {
   contacts: ContactsAPI.Contacts = new ContactsAPI.Contacts(this._client);
   templates: TemplatesAPI.Templates = new TemplatesAPI.Templates(this._client);
   trackers: TrackersAPI.Trackers = new TrackersAPI.Trackers(this._client);
+  webhooks: WebhooksAPI.Webhooks = new WebhooksAPI.Webhooks(this._client);
+  events: EventsAPI.Events = new EventsAPI.Events(this._client);
   letters: LettersAPI.Letters = new LettersAPI.Letters(this._client);
   postcards: PostcardsAPI.Postcards = new PostcardsAPI.Postcards(this._client);
   bankAccounts: BankAccountsAPI.BankAccounts = new BankAccountsAPI.BankAccounts(this._client);
@@ -247,6 +264,8 @@ export class PrintMail extends APIResource {
 PrintMail.Contacts = Contacts;
 PrintMail.Templates = Templates;
 PrintMail.Trackers = Trackers;
+PrintMail.Webhooks = Webhooks;
+PrintMail.Events = Events;
 PrintMail.Letters = Letters;
 PrintMail.Postcards = Postcards;
 PrintMail.BankAccounts = BankAccounts;
@@ -300,6 +319,26 @@ export declare namespace PrintMail {
     type TrackerUpdateParams as TrackerUpdateParams,
     type TrackerListParams as TrackerListParams,
     type TrackerRetrieveVisitsParams as TrackerRetrieveVisitsParams,
+  };
+
+  export {
+    Webhooks as Webhooks,
+    type Webhook as Webhook,
+    type WebhookInvocation as WebhookInvocation,
+    type WebhookDeleteResponse as WebhookDeleteResponse,
+    type WebhooksSkipLimit as WebhooksSkipLimit,
+    type WebhookInvocationsSkipLimit as WebhookInvocationsSkipLimit,
+    type WebhookCreateParams as WebhookCreateParams,
+    type WebhookUpdateParams as WebhookUpdateParams,
+    type WebhookListParams as WebhookListParams,
+    type WebhookListInvocationsParams as WebhookListInvocationsParams,
+  };
+
+  export {
+    Events as Events,
+    type Event as Event,
+    type EventsSkipLimit as EventsSkipLimit,
+    type EventListParams as EventListParams,
   };
 
   export {
