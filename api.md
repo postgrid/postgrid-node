@@ -98,6 +98,33 @@ Methods:
 - <code title="delete /print-mail/v1/trackers/{id}">client.printMail.trackers.<a href="./src/resources/print-mail/trackers.ts">delete</a>(id) -> TrackerDeleteResponse</code>
 - <code title="get /print-mail/v1/trackers/{id}/visits">client.printMail.trackers.<a href="./src/resources/print-mail/trackers.ts">retrieveVisits</a>(id, { ...params }) -> TrackerRetrieveVisitsResponsesSkipLimit</code>
 
+## Webhooks
+
+Types:
+
+- <code><a href="./src/resources/print-mail/webhooks.ts">Webhook</a></code>
+- <code><a href="./src/resources/print-mail/webhooks.ts">WebhookInvocation</a></code>
+- <code><a href="./src/resources/print-mail/webhooks.ts">WebhookDeleteResponse</a></code>
+
+Methods:
+
+- <code title="post /print-mail/v1/webhooks">client.printMail.webhooks.<a href="./src/resources/print-mail/webhooks.ts">create</a>({ ...params }) -> Webhook</code>
+- <code title="get /print-mail/v1/webhooks/{id}">client.printMail.webhooks.<a href="./src/resources/print-mail/webhooks.ts">retrieve</a>(id) -> Webhook</code>
+- <code title="post /print-mail/v1/webhooks/{id}">client.printMail.webhooks.<a href="./src/resources/print-mail/webhooks.ts">update</a>(id, { ...params }) -> Webhook</code>
+- <code title="get /print-mail/v1/webhooks">client.printMail.webhooks.<a href="./src/resources/print-mail/webhooks.ts">list</a>({ ...params }) -> WebhooksSkipLimit</code>
+- <code title="delete /print-mail/v1/webhooks/{id}">client.printMail.webhooks.<a href="./src/resources/print-mail/webhooks.ts">delete</a>(id) -> WebhookDeleteResponse</code>
+- <code title="get /print-mail/v1/webhooks/{id}/invocations">client.printMail.webhooks.<a href="./src/resources/print-mail/webhooks.ts">listInvocations</a>(id, { ...params }) -> WebhookInvocationsSkipLimit</code>
+
+## Events
+
+Types:
+
+- <code><a href="./src/resources/print-mail/events.ts">Event</a></code>
+
+Methods:
+
+- <code title="get /print-mail/v1/events">client.printMail.events.<a href="./src/resources/print-mail/events.ts">list</a>({ ...params }) -> EventsSkipLimit</code>
+
 ## Letters
 
 Types:

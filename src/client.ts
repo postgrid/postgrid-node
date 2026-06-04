@@ -300,9 +300,6 @@ export class PostGrid {
     return buildHeaders([{ 'X-API-Key': this.printMailAPIKey }]);
   }
 
-  /**
-   * Basic re-implementation of `qs.stringify` for primitive types.
-   */
   protected stringifyQuery(query: object | Record<string, unknown>): string {
     return stringifyQuery(query);
   }

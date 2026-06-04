@@ -52,6 +52,7 @@ export {
   type ContactListParams,
   type ContactsSkipLimit,
 } from './contacts';
+export { Events, type Event, type EventListParams, type EventsSkipLimit } from './events';
 export {
   Letters,
   type AddressPlacement,
@@ -195,3 +196,15 @@ export {
   type VirtualMailboxListParams,
   type VirtualMailboxListResponsesSkipLimit,
 } from './virtual-mailboxes/index';
+export {
+  Webhooks,
+  type Webhook,
+  type WebhookInvocation,
+  type WebhookDeleteResponse,
+  type WebhookCreateParams,
+  type WebhookUpdateParams,
+  type WebhookListParams,
+  type WebhookListInvocationsParams,
+  type WebhooksSkipLimit,
+  type WebhookInvocationsSkipLimit,
+} from './webhooks';
