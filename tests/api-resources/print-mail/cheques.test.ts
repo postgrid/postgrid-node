@@ -41,7 +41,7 @@ describe('resource cheques', () => {
       },
       envelope: 'standard',
       letterHTML: 'letterHTML',
-      letterPDF: 'U3RhaW5sZXNzIHJvY2tz',
+      letterPDF: 'https://example.com',
       letterSettings: { placement: 'before_cheque' },
       letterTemplate: 'letterTemplate',
       logo: 'https://example.com',
@@ -73,6 +73,7 @@ describe('resource cheques', () => {
       returnEnvelope: 'returnEnvelope',
       sendDate: '2019-12-27T18:11:19.117Z',
       size: 'us_letter',
+      'idempotency-key': 'idempotency-key',
     });
   });
 

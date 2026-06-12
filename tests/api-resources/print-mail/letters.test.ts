@@ -104,6 +104,7 @@ describe('resource letters', () => {
       returnEnvelope: 'returnEnvelope',
       sendDate: '2019-12-27T18:11:19.117Z',
       size: 'us_letter',
+      'idempotency-key': 'idempotency-key',
     });
   });
 

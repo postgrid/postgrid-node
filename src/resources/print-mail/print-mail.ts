@@ -67,6 +67,7 @@ import {
   Letter,
   LetterCancelParams,
   LetterCreateParams,
+  LetterCreateResponse,
   LetterListParams,
   LetterRetrieveURLResponse,
   LetterSize,
@@ -103,6 +104,7 @@ import {
   Postcard,
   PostcardCancelParams,
   PostcardCreateParams,
+  PostcardCreateResponse,
   PostcardListParams,
   PostcardRetrieveURLResponse,
   Postcards,
@@ -112,6 +114,7 @@ import * as SelfMailersAPI from './self-mailers';
 import {
   SelfMailer,
   SelfMailerCreateParams,
+  SelfMailerCreateResponse,
   SelfMailerListParams,
   SelfMailerRetrieveURLResponse,
   SelfMailers,
@@ -119,17 +122,14 @@ import {
 } from './self-mailers';
 import * as SnapPacksAPI from './snap-packs';
 import {
+  SnapPack,
   SnapPackCreateParams,
   SnapPackCreateResponse,
-  SnapPackDeleteResponse,
   SnapPackListParams,
-  SnapPackListResponse,
-  SnapPackListResponsesSkipLimit,
-  SnapPackProgressionsResponse,
   SnapPackRetrieveCapabilitiesParams,
   SnapPackRetrieveCapabilitiesResponse,
-  SnapPackRetrieveResponse,
   SnapPacks,
+  SnapPacksSkipLimit,
 } from './snap-packs';
 import * as SubOrganizationsAPI from './sub-organizations';
 import {
@@ -358,6 +358,7 @@ export declare namespace PrintMail {
     type Letter as Letter,
     type LetterSize as LetterSize,
     type PlasticCard as PlasticCard,
+    type LetterCreateResponse as LetterCreateResponse,
     type LetterRetrieveURLResponse as LetterRetrieveURLResponse,
     type LettersSkipLimit as LettersSkipLimit,
     type LetterCreateParams as LetterCreateParams,
@@ -368,6 +369,7 @@ export declare namespace PrintMail {
   export {
     Postcards as Postcards,
     type Postcard as Postcard,
+    type PostcardCreateResponse as PostcardCreateResponse,
     type PostcardRetrieveURLResponse as PostcardRetrieveURLResponse,
     type PostcardsSkipLimit as PostcardsSkipLimit,
     type PostcardCreateParams as PostcardCreateParams,
@@ -400,6 +402,7 @@ export declare namespace PrintMail {
   export {
     SelfMailers as SelfMailers,
     type SelfMailer as SelfMailer,
+    type SelfMailerCreateResponse as SelfMailerCreateResponse,
     type SelfMailerRetrieveURLResponse as SelfMailerRetrieveURLResponse,
     type SelfMailersSkipLimit as SelfMailersSkipLimit,
     type SelfMailerCreateParams as SelfMailerCreateParams,
@@ -486,13 +489,10 @@ export declare namespace PrintMail {
 
   export {
     SnapPacks as SnapPacks,
+    type SnapPack as SnapPack,
     type SnapPackCreateResponse as SnapPackCreateResponse,
-    type SnapPackRetrieveResponse as SnapPackRetrieveResponse,
-    type SnapPackListResponse as SnapPackListResponse,
-    type SnapPackDeleteResponse as SnapPackDeleteResponse,
-    type SnapPackProgressionsResponse as SnapPackProgressionsResponse,
     type SnapPackRetrieveCapabilitiesResponse as SnapPackRetrieveCapabilitiesResponse,
-    type SnapPackListResponsesSkipLimit as SnapPackListResponsesSkipLimit,
+    type SnapPacksSkipLimit as SnapPacksSkipLimit,
     type SnapPackCreateParams as SnapPackCreateParams,
     type SnapPackListParams as SnapPackListParams,
     type SnapPackRetrieveCapabilitiesParams as SnapPackRetrieveCapabilitiesParams,

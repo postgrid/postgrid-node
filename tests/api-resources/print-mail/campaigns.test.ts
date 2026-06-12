@@ -30,7 +30,7 @@ describe('resource campaigns', () => {
         currencyCode: 'CAD',
         description: 'description',
         envelope: 'envelope',
-        letterPDF: 'U3RhaW5sZXNzIHJvY2tz',
+        letterPDF: 'https://example.com',
         letterSettings: { color: true },
         letterTemplate: 'letterTemplate',
         logo: 'https://example.com',

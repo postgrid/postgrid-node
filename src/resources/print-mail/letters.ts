@@ -4,7 +4,10 @@ import { APIResource } from '../../core/resource';
 import * as ContactsAPI from './contacts';
 import { APIPromise } from '../../core/api-promise';
 import { PagePromise, SkipLimit, type SkipLimitParams } from '../../core/pagination';
+import { type Uploadable } from '../../core/uploads';
+import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
+import { maybeMultipartFormRequestOptions } from '../../internal/uploads';
 import { path } from '../../internal/utils/path';
 
 /**
@@ -16,8 +19,10 @@ export class Letters extends APIResource {
    *
    * - HTML content for the letter
    * - A template ID for the letter
-   * - A URL or file for a PDF for the letter
-   * - Upload the aforementioned PDF file via a multipart form upload request
+   * - A URL for a PDF for the letter Create a letter via a multipart/form-data
+   *   request. Accepts the same fields as the JSON create body (nested objects are
+   *   bracket-encoded form fields, e.g. `to[firstName]`); use this content type to
+   *   upload the PDF file directly.
    *
    * @example
    * ```ts
@@ -29,8 +34,22 @@ export class Letters extends APIResource {
    * });
    * ```
    */
-  create(body: LetterCreateParams, options?: RequestOptions): APIPromise<Letter> {
-    return this._client.post('/print-mail/v1/letters', { body, ...options });
+  create(params: LetterCreateParams, options?: RequestOptions): APIPromise<LetterCreateResponse> {
+    const { 'idempotency-key': idempotencyKey, ...body } = params;
+    return this._client.post(
+      '/print-mail/v1/letters',
+      maybeMultipartFormRequestOptions(
+        {
+          body,
+          ...options,
+          headers: buildHeaders([
+            { ...(idempotencyKey != null ? { 'idempotency-key': idempotencyKey } : undefined) },
+            options?.headers,
+          ]),
+        },
+        this._client,
+      ),
+    );
   }
 
   /**
@@ -145,7 +164,7 @@ export interface AttachedPdf {
   /**
    * The file (multipart form upload) or URL pointing to a PDF for the attached PDF.
    */
-  file: string;
+  file: string | Uploadable;
 
   /**
    * Enum representing the placement of the attached PDF.
@@ -460,7 +479,7 @@ export namespace PlasticCard {
      * A URL pointing to a PDF file for the double-sided plastic card or the file
      * itself.
      */
-    pdf?: string;
+    pdf?: string | Uploadable;
   }
 
   /**
@@ -477,7 +496,7 @@ export namespace PlasticCard {
      * A URL pointing to a PDF file for the single-sided plastic card or the PDF file
      * itself.
      */
-    pdf?: string;
+    pdf?: string | Uploadable;
 
     /**
      * The template ID for the single-sided plastic card.
@@ -485,6 +504,8 @@ export namespace PlasticCard {
     template?: string;
   }
 }
+
+export type LetterCreateResponse = Letter | Letter;
 
 export interface LetterRetrieveURLResponse {
   /**
@@ -509,60 +530,60 @@ export type LetterCreateParams =
 export declare namespace LetterCreateParams {
   export interface LetterCreateWithHTML {
     /**
-     * The contact information of the sender. You can pass contact information inline
-     * here just like you can for the `to`.
+     * Body param: The contact information of the sender. You can pass contact
+     * information inline here just like you can for the `to`.
      */
     from: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
     /**
-     * The HTML content for the letter. You can supply _either_ this or `template` but
-     * not both.
+     * Body param: The HTML content for the letter. You can supply _either_ this or
+     * `template` but not both.
      */
     html: string;
 
     /**
-     * The recipient of this order. You can either supply the contact information
-     * inline here or provide a contact ID. PostGrid will automatically deduplicate
-     * contacts regardless of whether you provide the information inline here or call
-     * the contact creation endpoint.
+     * Body param: The recipient of this order. You can either supply the contact
+     * information inline here or provide a contact ID. PostGrid will automatically
+     * deduplicate contacts regardless of whether you provide the information inline
+     * here or call the contact creation endpoint.
      */
     to: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
     /**
-     * Enum representing the placement of the address on the letter.
+     * Body param: Enum representing the placement of the address on the letter.
      */
     addressPlacement?: AddressPlacement;
 
     /**
-     * Model representing an attached PDF.
+     * Body param: Model representing an attached PDF.
      */
     attachedPDF?: AttachedPdf;
 
     /**
-     * Indicates if the letter is in color.
+     * Body param: Indicates if the letter is in color.
      */
     color?: boolean;
 
     /**
-     * An optional string describing this resource. Will be visible in the API and the
-     * dashboard.
+     * Body param: An optional string describing this resource. Will be visible in the
+     * API and the dashboard.
      */
     description?: string;
 
     /**
-     * Indicates if the letter is double-sided.
+     * Body param: Indicates if the letter is double-sided.
      */
     doubleSided?: boolean;
 
     /**
-     * The envelope (ID) for the letter. You can either specify a custom envelope ID or
-     * use the default `standard` envelope.
+     * Body param: The envelope (ID) for the letter. You can either specify a custom
+     * envelope ID or use the default `standard` envelope.
      */
     envelope?: string;
 
     /**
-     * The mailing class of this order. If not provided, automatically set to
-     * `first_class`.
+     * Body param: The mailing class of this order. If not provided, automatically set
+     * to `first_class`.
      */
     mailingClass?:
       | 'first_class'
@@ -593,20 +614,20 @@ export declare namespace LetterCreateParams {
       | 'au_post_second_class';
 
     /**
-     * These will be merged with the variables in the template or HTML you create this
-     * order with. The keys in this object should match the variable names in the
-     * template _exactly_ as they are case-sensitive. Note that these _do not_ apply to
-     * PDFs uploaded with the order.
+     * Body param: These will be merged with the variables in the template or HTML you
+     * create this order with. The keys in this object should match the variable names
+     * in the template _exactly_ as they are case-sensitive. Note that these _do not_
+     * apply to PDFs uploaded with the order.
      */
     mergeVariables?: { [key: string]: unknown };
 
     /**
-     * See the section on Metadata.
+     * Body param: See the section on Metadata.
      */
     metadata?: { [key: string]: unknown };
 
     /**
-     * Premium paper selection used for this letter.
+     * Body param: Premium paper selection used for this letter.
      *
      * Available values include:
      *
@@ -624,89 +645,95 @@ export declare namespace LetterCreateParams {
       | (string & {});
 
     /**
-     * If specified, indicates which letter page is perforated. Currently, only the
-     * first page can be perforated.
+     * Body param: If specified, indicates which letter page is perforated. Currently,
+     * only the first page can be perforated.
      */
     perforatedPage?: 1;
 
     /**
-     * Model representing a plastic card.
+     * Body param: Model representing a plastic card.
      */
     plasticCard?: PlasticCard;
 
     /**
-     * The return envelope (ID) sent out with the letter, if any.
+     * Body param: The return envelope (ID) sent out with the letter, if any.
      */
     returnEnvelope?: string;
 
     /**
-     * This order will transition from `ready` to `printing` on the day after this
-     * date. You can use this parameter to schedule orders for a future date.
+     * Body param: This order will transition from `ready` to `printing` on the day
+     * after this date. You can use this parameter to schedule orders for a future
+     * date.
      */
     sendDate?: string;
 
     /**
-     * Enum representing the supported letter sizes.
+     * Body param: Enum representing the supported letter sizes.
      */
     size?: LetterSize;
+
+    /**
+     * Header param
+     */
+    'idempotency-key'?: string;
   }
 
   export interface LetterCreateWithTemplate {
     /**
-     * The contact information of the sender. You can pass contact information inline
-     * here just like you can for the `to`.
+     * Body param: The contact information of the sender. You can pass contact
+     * information inline here just like you can for the `to`.
      */
     from: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
     /**
-     * The template ID for the letter. You can supply _either_ this or `html` but not
-     * both.
+     * Body param: The template ID for the letter. You can supply _either_ this or
+     * `html` but not both.
      */
     template: string;
 
     /**
-     * The recipient of this order. You can either supply the contact information
-     * inline here or provide a contact ID. PostGrid will automatically deduplicate
-     * contacts regardless of whether you provide the information inline here or call
-     * the contact creation endpoint.
+     * Body param: The recipient of this order. You can either supply the contact
+     * information inline here or provide a contact ID. PostGrid will automatically
+     * deduplicate contacts regardless of whether you provide the information inline
+     * here or call the contact creation endpoint.
      */
     to: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
     /**
-     * Enum representing the placement of the address on the letter.
+     * Body param: Enum representing the placement of the address on the letter.
      */
     addressPlacement?: AddressPlacement;
 
     /**
-     * Model representing an attached PDF.
+     * Body param: Model representing an attached PDF.
      */
     attachedPDF?: AttachedPdf;
 
     /**
-     * Indicates if the letter is in color.
+     * Body param: Indicates if the letter is in color.
      */
     color?: boolean;
 
     /**
-     * An optional string describing this resource. Will be visible in the API and the
-     * dashboard.
+     * Body param: An optional string describing this resource. Will be visible in the
+     * API and the dashboard.
      */
     description?: string;
 
     /**
-     * Indicates if the letter is double-sided.
+     * Body param: Indicates if the letter is double-sided.
      */
     doubleSided?: boolean;
 
     /**
-     * The envelope (ID) for the letter. You can either specify a custom envelope ID or
-     * use the default `standard` envelope.
+     * Body param: The envelope (ID) for the letter. You can either specify a custom
+     * envelope ID or use the default `standard` envelope.
      */
     envelope?: string;
 
     /**
-     * The mailing class of this order. If not provided, automatically set to
-     * `first_class`.
+     * Body param: The mailing class of this order. If not provided, automatically set
+     * to `first_class`.
      */
     mailingClass?:
       | 'first_class'
@@ -737,20 +764,20 @@ export declare namespace LetterCreateParams {
       | 'au_post_second_class';
 
     /**
-     * These will be merged with the variables in the template or HTML you create this
-     * order with. The keys in this object should match the variable names in the
-     * template _exactly_ as they are case-sensitive. Note that these _do not_ apply to
-     * PDFs uploaded with the order.
+     * Body param: These will be merged with the variables in the template or HTML you
+     * create this order with. The keys in this object should match the variable names
+     * in the template _exactly_ as they are case-sensitive. Note that these _do not_
+     * apply to PDFs uploaded with the order.
      */
     mergeVariables?: { [key: string]: unknown };
 
     /**
-     * See the section on Metadata.
+     * Body param: See the section on Metadata.
      */
     metadata?: { [key: string]: unknown };
 
     /**
-     * Premium paper selection used for this letter.
+     * Body param: Premium paper selection used for this letter.
      *
      * Available values include:
      *
@@ -768,88 +795,94 @@ export declare namespace LetterCreateParams {
       | (string & {});
 
     /**
-     * If specified, indicates which letter page is perforated. Currently, only the
-     * first page can be perforated.
+     * Body param: If specified, indicates which letter page is perforated. Currently,
+     * only the first page can be perforated.
      */
     perforatedPage?: 1;
 
     /**
-     * Model representing a plastic card.
+     * Body param: Model representing a plastic card.
      */
     plasticCard?: PlasticCard;
 
     /**
-     * The return envelope (ID) sent out with the letter, if any.
+     * Body param: The return envelope (ID) sent out with the letter, if any.
      */
     returnEnvelope?: string;
 
     /**
-     * This order will transition from `ready` to `printing` on the day after this
-     * date. You can use this parameter to schedule orders for a future date.
+     * Body param: This order will transition from `ready` to `printing` on the day
+     * after this date. You can use this parameter to schedule orders for a future
+     * date.
      */
     sendDate?: string;
 
     /**
-     * Enum representing the supported letter sizes.
+     * Body param: Enum representing the supported letter sizes.
      */
     size?: LetterSize;
+
+    /**
+     * Header param
+     */
+    'idempotency-key'?: string;
   }
 
   export interface LetterCreateWithPdf {
     /**
-     * The contact information of the sender. You can pass contact information inline
-     * here just like you can for the `to`.
+     * Body param: The contact information of the sender. You can pass contact
+     * information inline here just like you can for the `to`.
      */
     from: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
     /**
-     * A URL pointing to a PDF file for the letter or the PDF file itself.
+     * Body param: A URL pointing to a PDF file for the letter or the PDF file itself.
      */
-    pdf: string;
+    pdf: string | Uploadable;
 
     /**
-     * The recipient of this order. You can either supply the contact information
-     * inline here or provide a contact ID. PostGrid will automatically deduplicate
-     * contacts regardless of whether you provide the information inline here or call
-     * the contact creation endpoint.
+     * Body param: The recipient of this order. You can either supply the contact
+     * information inline here or provide a contact ID. PostGrid will automatically
+     * deduplicate contacts regardless of whether you provide the information inline
+     * here or call the contact creation endpoint.
      */
     to: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
     /**
-     * Enum representing the placement of the address on the letter.
+     * Body param: Enum representing the placement of the address on the letter.
      */
     addressPlacement?: AddressPlacement;
 
     /**
-     * Model representing an attached PDF.
+     * Body param: Model representing an attached PDF.
      */
     attachedPDF?: AttachedPdf;
 
     /**
-     * Indicates if the letter is in color.
+     * Body param: Indicates if the letter is in color.
      */
     color?: boolean;
 
     /**
-     * An optional string describing this resource. Will be visible in the API and the
-     * dashboard.
+     * Body param: An optional string describing this resource. Will be visible in the
+     * API and the dashboard.
      */
     description?: string;
 
     /**
-     * Indicates if the letter is double-sided.
+     * Body param: Indicates if the letter is double-sided.
      */
     doubleSided?: boolean;
 
     /**
-     * The envelope (ID) for the letter. You can either specify a custom envelope ID or
-     * use the default `standard` envelope.
+     * Body param: The envelope (ID) for the letter. You can either specify a custom
+     * envelope ID or use the default `standard` envelope.
      */
     envelope?: string;
 
     /**
-     * The mailing class of this order. If not provided, automatically set to
-     * `first_class`.
+     * Body param: The mailing class of this order. If not provided, automatically set
+     * to `first_class`.
      */
     mailingClass?:
       | 'first_class'
@@ -880,20 +913,20 @@ export declare namespace LetterCreateParams {
       | 'au_post_second_class';
 
     /**
-     * These will be merged with the variables in the template or HTML you create this
-     * order with. The keys in this object should match the variable names in the
-     * template _exactly_ as they are case-sensitive. Note that these _do not_ apply to
-     * PDFs uploaded with the order.
+     * Body param: These will be merged with the variables in the template or HTML you
+     * create this order with. The keys in this object should match the variable names
+     * in the template _exactly_ as they are case-sensitive. Note that these _do not_
+     * apply to PDFs uploaded with the order.
      */
     mergeVariables?: { [key: string]: unknown };
 
     /**
-     * See the section on Metadata.
+     * Body param: See the section on Metadata.
      */
     metadata?: { [key: string]: unknown };
 
     /**
-     * Premium paper selection used for this letter.
+     * Body param: Premium paper selection used for this letter.
      *
      * Available values include:
      *
@@ -911,31 +944,37 @@ export declare namespace LetterCreateParams {
       | (string & {});
 
     /**
-     * If specified, indicates which letter page is perforated. Currently, only the
-     * first page can be perforated.
+     * Body param: If specified, indicates which letter page is perforated. Currently,
+     * only the first page can be perforated.
      */
     perforatedPage?: 1;
 
     /**
-     * Model representing a plastic card.
+     * Body param: Model representing a plastic card.
      */
     plasticCard?: PlasticCard;
 
     /**
-     * The return envelope (ID) sent out with the letter, if any.
+     * Body param: The return envelope (ID) sent out with the letter, if any.
      */
     returnEnvelope?: string;
 
     /**
-     * This order will transition from `ready` to `printing` on the day after this
-     * date. You can use this parameter to schedule orders for a future date.
+     * Body param: This order will transition from `ready` to `printing` on the day
+     * after this date. You can use this parameter to schedule orders for a future
+     * date.
      */
     sendDate?: string;
 
     /**
-     * Enum representing the supported letter sizes.
+     * Body param: Enum representing the supported letter sizes.
      */
     size?: LetterSize;
+
+    /**
+     * Header param
+     */
+    'idempotency-key'?: string;
   }
 }
 
@@ -961,6 +1000,7 @@ export declare namespace Letters {
     type Letter as Letter,
     type LetterSize as LetterSize,
     type PlasticCard as PlasticCard,
+    type LetterCreateResponse as LetterCreateResponse,
     type LetterRetrieveURLResponse as LetterRetrieveURLResponse,
     type LettersSkipLimit as LettersSkipLimit,
     type LetterCreateParams as LetterCreateParams,

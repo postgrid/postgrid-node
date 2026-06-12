@@ -84,6 +84,7 @@ describe('resource snapPacks', () => {
       mergeVariables: { foo: 'bar' },
       metadata: { foo: 'bar' },
       sendDate: '2019-12-27T18:11:19.117Z',
+      'idempotency-key': 'idempotency-key',
     });
   });
 
