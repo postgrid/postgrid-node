@@ -80,6 +80,7 @@ describe('resource postcards', () => {
       metadata: { foo: 'bar' },
       paper: 'standard',
       sendDate: '2019-12-27T18:11:19.117Z',
+      'idempotency-key': 'idempotency-key',
     });
   });
 

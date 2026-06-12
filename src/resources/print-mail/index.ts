@@ -60,6 +60,7 @@ export {
   type Letter,
   type LetterSize,
   type PlasticCard,
+  type LetterCreateResponse,
   type LetterRetrieveURLResponse,
   type LetterCreateParams,
   type LetterListParams,
@@ -91,6 +92,7 @@ export {
 export {
   Postcards,
   type Postcard,
+  type PostcardCreateResponse,
   type PostcardRetrieveURLResponse,
   type PostcardCreateParams,
   type PostcardListParams,
@@ -118,6 +120,7 @@ export {
 export {
   SelfMailers,
   type SelfMailer,
+  type SelfMailerCreateResponse,
   type SelfMailerRetrieveURLResponse,
   type SelfMailerCreateParams,
   type SelfMailerListParams,
@@ -125,16 +128,13 @@ export {
 } from './self-mailers';
 export {
   SnapPacks,
+  type SnapPack,
   type SnapPackCreateResponse,
-  type SnapPackRetrieveResponse,
-  type SnapPackListResponse,
-  type SnapPackDeleteResponse,
-  type SnapPackProgressionsResponse,
   type SnapPackRetrieveCapabilitiesResponse,
   type SnapPackCreateParams,
   type SnapPackListParams,
   type SnapPackRetrieveCapabilitiesParams,
-  type SnapPackListResponsesSkipLimit,
+  type SnapPacksSkipLimit,
 } from './snap-packs';
 export {
   SubOrganizations,

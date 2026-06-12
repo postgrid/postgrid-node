@@ -4,7 +4,10 @@ import { APIResource } from '../../core/resource';
 import * as ContactsAPI from './contacts';
 import { APIPromise } from '../../core/api-promise';
 import { PagePromise, SkipLimit, type SkipLimitParams } from '../../core/pagination';
+import { type Uploadable } from '../../core/uploads';
+import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
+import { maybeMultipartFormRequestOptions } from '../../internal/uploads';
 import { path } from '../../internal/utils/path';
 
 /**
@@ -16,9 +19,11 @@ export class Postcards extends APIResource {
    *
    * - HTML content for the front and back of the postcard
    * - A template ID for the front and back of the postcard
-   * - A URL or file for a 2 page PDF where the first page is the front of the
-   *   postcard and the second page is the back
-   * - Upload the aforementioned PDF file via a multipart form upload request
+   * - A URL for a 2 page PDF where the first page is the front of the postcard and
+   *   the second page is the back Create a postcard via a multipart/form-data
+   *   request. Accepts the same fields as the JSON create body (nested objects are
+   *   bracket-encoded form fields, e.g. `to[firstName]`); use this content type to
+   *   upload the PDF file directly.
    *
    * @example
    * ```ts
@@ -32,8 +37,22 @@ export class Postcards extends APIResource {
    * });
    * ```
    */
-  create(body: PostcardCreateParams, options?: RequestOptions): APIPromise<Postcard> {
-    return this._client.post('/print-mail/v1/postcards', { body, ...options });
+  create(params: PostcardCreateParams, options?: RequestOptions): APIPromise<PostcardCreateResponse> {
+    const { 'idempotency-key': idempotencyKey, ...body } = params;
+    return this._client.post(
+      '/print-mail/v1/postcards',
+      maybeMultipartFormRequestOptions(
+        {
+          body,
+          ...options,
+          headers: buildHeaders([
+            { ...(idempotencyKey != null ? { 'idempotency-key': idempotencyKey } : undefined) },
+            options?.headers,
+          ]),
+        },
+        this._client,
+      ),
+    );
   }
 
   /**
@@ -332,6 +351,8 @@ export namespace Postcard {
   }
 }
 
+export type PostcardCreateResponse = Postcard | Postcard;
+
 export interface PostcardRetrieveURLResponse {
   /**
    * A unique ID prefixed with postcard\_
@@ -356,46 +377,46 @@ export type PostcardCreateParams =
 export declare namespace PostcardCreateParams {
   export interface PostcardCreateWithHTML {
     /**
-     * The HTML content for the back of the postcard. You can supply _either_ this or
-     * `backTemplate` but not both.
+     * Body param: The HTML content for the back of the postcard. You can supply
+     * _either_ this or `backTemplate` but not both.
      */
     backHTML: string;
 
     /**
-     * The HTML content for the front of the postcard. You can supply _either_ this or
-     * `frontTemplate` but not both.
+     * Body param: The HTML content for the front of the postcard. You can supply
+     * _either_ this or `frontTemplate` but not both.
      */
     frontHTML: string;
 
     /**
-     * Enum representing the supported postcard sizes.
+     * Body param: Enum representing the supported postcard sizes.
      */
     size: '6x4' | '9x6' | '11x6';
 
     /**
-     * The recipient of this order. You can either supply the contact information
-     * inline here or provide a contact ID. PostGrid will automatically deduplicate
-     * contacts regardless of whether you provide the information inline here or call
-     * the contact creation endpoint.
+     * Body param: The recipient of this order. You can either supply the contact
+     * information inline here or provide a contact ID. PostGrid will automatically
+     * deduplicate contacts regardless of whether you provide the information inline
+     * here or call the contact creation endpoint.
      */
     to: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
     /**
-     * An optional string describing this resource. Will be visible in the API and the
-     * dashboard.
+     * Body param: An optional string describing this resource. Will be visible in the
+     * API and the dashboard.
      */
     description?: string;
 
     /**
-     * The contact information of the sender. You can pass contact information inline
-     * here just like you can for the `to`. Unlike other order types, the sender
-     * address is optional for postcards.
+     * Body param: The contact information of the sender. You can pass contact
+     * information inline here just like you can for the `to`. Unlike other order
+     * types, the sender address is optional for postcards.
      */
     from?: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
     /**
-     * The mailing class of this order. If not provided, automatically set to
-     * `first_class`.
+     * Body param: The mailing class of this order. If not provided, automatically set
+     * to `first_class`.
      */
     mailingClass?:
       | 'first_class'
@@ -426,20 +447,20 @@ export declare namespace PostcardCreateParams {
       | 'au_post_second_class';
 
     /**
-     * These will be merged with the variables in the template or HTML you create this
-     * order with. The keys in this object should match the variable names in the
-     * template _exactly_ as they are case-sensitive. Note that these _do not_ apply to
-     * PDFs uploaded with the order.
+     * Body param: These will be merged with the variables in the template or HTML you
+     * create this order with. The keys in this object should match the variable names
+     * in the template _exactly_ as they are case-sensitive. Note that these _do not_
+     * apply to PDFs uploaded with the order.
      */
     mergeVariables?: { [key: string]: unknown };
 
     /**
-     * See the section on Metadata.
+     * Body param: See the section on Metadata.
      */
     metadata?: { [key: string]: unknown };
 
     /**
-     * Premium paper selection used for this postcard.
+     * Body param: Premium paper selection used for this postcard.
      *
      * Available values include:
      *
@@ -462,54 +483,60 @@ export declare namespace PostcardCreateParams {
       | (string & {});
 
     /**
-     * This order will transition from `ready` to `printing` on the day after this
-     * date. You can use this parameter to schedule orders for a future date.
+     * Body param: This order will transition from `ready` to `printing` on the day
+     * after this date. You can use this parameter to schedule orders for a future
+     * date.
      */
     sendDate?: string;
+
+    /**
+     * Header param
+     */
+    'idempotency-key'?: string;
   }
 
   export interface PostcardCreateWithTemplate {
     /**
-     * The template ID for the back of the postcard. You can supply _either_ this or
-     * `backHTML` but not both.
+     * Body param: The template ID for the back of the postcard. You can supply
+     * _either_ this or `backHTML` but not both.
      */
     backTemplate: string;
 
     /**
-     * The template ID for the front of the postcard. You can supply _either_ this or
-     * `frontHTML` but not both.
+     * Body param: The template ID for the front of the postcard. You can supply
+     * _either_ this or `frontHTML` but not both.
      */
     frontTemplate: string;
 
     /**
-     * Enum representing the supported postcard sizes.
+     * Body param: Enum representing the supported postcard sizes.
      */
     size: '6x4' | '9x6' | '11x6';
 
     /**
-     * The recipient of this order. You can either supply the contact information
-     * inline here or provide a contact ID. PostGrid will automatically deduplicate
-     * contacts regardless of whether you provide the information inline here or call
-     * the contact creation endpoint.
+     * Body param: The recipient of this order. You can either supply the contact
+     * information inline here or provide a contact ID. PostGrid will automatically
+     * deduplicate contacts regardless of whether you provide the information inline
+     * here or call the contact creation endpoint.
      */
     to: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
     /**
-     * An optional string describing this resource. Will be visible in the API and the
-     * dashboard.
+     * Body param: An optional string describing this resource. Will be visible in the
+     * API and the dashboard.
      */
     description?: string;
 
     /**
-     * The contact information of the sender. You can pass contact information inline
-     * here just like you can for the `to`. Unlike other order types, the sender
-     * address is optional for postcards.
+     * Body param: The contact information of the sender. You can pass contact
+     * information inline here just like you can for the `to`. Unlike other order
+     * types, the sender address is optional for postcards.
      */
     from?: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
     /**
-     * The mailing class of this order. If not provided, automatically set to
-     * `first_class`.
+     * Body param: The mailing class of this order. If not provided, automatically set
+     * to `first_class`.
      */
     mailingClass?:
       | 'first_class'
@@ -540,20 +567,20 @@ export declare namespace PostcardCreateParams {
       | 'au_post_second_class';
 
     /**
-     * These will be merged with the variables in the template or HTML you create this
-     * order with. The keys in this object should match the variable names in the
-     * template _exactly_ as they are case-sensitive. Note that these _do not_ apply to
-     * PDFs uploaded with the order.
+     * Body param: These will be merged with the variables in the template or HTML you
+     * create this order with. The keys in this object should match the variable names
+     * in the template _exactly_ as they are case-sensitive. Note that these _do not_
+     * apply to PDFs uploaded with the order.
      */
     mergeVariables?: { [key: string]: unknown };
 
     /**
-     * See the section on Metadata.
+     * Body param: See the section on Metadata.
      */
     metadata?: { [key: string]: unknown };
 
     /**
-     * Premium paper selection used for this postcard.
+     * Body param: Premium paper selection used for this postcard.
      *
      * Available values include:
      *
@@ -576,48 +603,55 @@ export declare namespace PostcardCreateParams {
       | (string & {});
 
     /**
-     * This order will transition from `ready` to `printing` on the day after this
-     * date. You can use this parameter to schedule orders for a future date.
+     * Body param: This order will transition from `ready` to `printing` on the day
+     * after this date. You can use this parameter to schedule orders for a future
+     * date.
      */
     sendDate?: string;
+
+    /**
+     * Header param
+     */
+    'idempotency-key'?: string;
   }
 
   export interface PostcardCreateWithPdfurl {
     /**
-     * A URL pointing to a 2 page PDF file. The first page is the front of the postcard
-     * and the second page is the back (where the address will be stamped on).
+     * Body param: A URL pointing to a 2 page PDF file. The first page is the front of
+     * the postcard and the second page is the back (where the address will be stamped
+     * on).
      */
     pdf: string;
 
     /**
-     * Enum representing the supported postcard sizes.
+     * Body param: Enum representing the supported postcard sizes.
      */
     size: '6x4' | '9x6' | '11x6';
 
     /**
-     * The recipient of this order. You can either supply the contact information
-     * inline here or provide a contact ID. PostGrid will automatically deduplicate
-     * contacts regardless of whether you provide the information inline here or call
-     * the contact creation endpoint.
+     * Body param: The recipient of this order. You can either supply the contact
+     * information inline here or provide a contact ID. PostGrid will automatically
+     * deduplicate contacts regardless of whether you provide the information inline
+     * here or call the contact creation endpoint.
      */
     to: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
     /**
-     * An optional string describing this resource. Will be visible in the API and the
-     * dashboard.
+     * Body param: An optional string describing this resource. Will be visible in the
+     * API and the dashboard.
      */
     description?: string;
 
     /**
-     * The contact information of the sender. You can pass contact information inline
-     * here just like you can for the `to`. Unlike other order types, the sender
-     * address is optional for postcards.
+     * Body param: The contact information of the sender. You can pass contact
+     * information inline here just like you can for the `to`. Unlike other order
+     * types, the sender address is optional for postcards.
      */
     from?: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
     /**
-     * The mailing class of this order. If not provided, automatically set to
-     * `first_class`.
+     * Body param: The mailing class of this order. If not provided, automatically set
+     * to `first_class`.
      */
     mailingClass?:
       | 'first_class'
@@ -648,20 +682,20 @@ export declare namespace PostcardCreateParams {
       | 'au_post_second_class';
 
     /**
-     * These will be merged with the variables in the template or HTML you create this
-     * order with. The keys in this object should match the variable names in the
-     * template _exactly_ as they are case-sensitive. Note that these _do not_ apply to
-     * PDFs uploaded with the order.
+     * Body param: These will be merged with the variables in the template or HTML you
+     * create this order with. The keys in this object should match the variable names
+     * in the template _exactly_ as they are case-sensitive. Note that these _do not_
+     * apply to PDFs uploaded with the order.
      */
     mergeVariables?: { [key: string]: unknown };
 
     /**
-     * See the section on Metadata.
+     * Body param: See the section on Metadata.
      */
     metadata?: { [key: string]: unknown };
 
     /**
-     * Premium paper selection used for this postcard.
+     * Body param: Premium paper selection used for this postcard.
      *
      * Available values include:
      *
@@ -684,48 +718,55 @@ export declare namespace PostcardCreateParams {
       | (string & {});
 
     /**
-     * This order will transition from `ready` to `printing` on the day after this
-     * date. You can use this parameter to schedule orders for a future date.
+     * Body param: This order will transition from `ready` to `printing` on the day
+     * after this date. You can use this parameter to schedule orders for a future
+     * date.
      */
     sendDate?: string;
+
+    /**
+     * Header param
+     */
+    'idempotency-key'?: string;
   }
 
   export interface PostcardCreateWithPdfFile {
     /**
-     * A 2 page PDF file. The first page is the front of the postcard and the second
-     * page is the back (where the address will be stamped on).
+     * Body param: Represents a raw file upload. Sending the actual file requires a
+     * `multipart/form-data` request; in `application/json` request bodies, supply a
+     * URL instead.
      */
-    pdf: string;
+    pdf: Uploadable;
 
     /**
-     * Enum representing the supported postcard sizes.
+     * Body param: Enum representing the supported postcard sizes.
      */
     size: '6x4' | '9x6' | '11x6';
 
     /**
-     * The recipient of this order. You can either supply the contact information
-     * inline here or provide a contact ID. PostGrid will automatically deduplicate
-     * contacts regardless of whether you provide the information inline here or call
-     * the contact creation endpoint.
+     * Body param: The recipient of this order. You can either supply the contact
+     * information inline here or provide a contact ID. PostGrid will automatically
+     * deduplicate contacts regardless of whether you provide the information inline
+     * here or call the contact creation endpoint.
      */
     to: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
     /**
-     * An optional string describing this resource. Will be visible in the API and the
-     * dashboard.
+     * Body param: An optional string describing this resource. Will be visible in the
+     * API and the dashboard.
      */
     description?: string;
 
     /**
-     * The contact information of the sender. You can pass contact information inline
-     * here just like you can for the `to`. Unlike other order types, the sender
-     * address is optional for postcards.
+     * Body param: The contact information of the sender. You can pass contact
+     * information inline here just like you can for the `to`. Unlike other order
+     * types, the sender address is optional for postcards.
      */
     from?: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
     /**
-     * The mailing class of this order. If not provided, automatically set to
-     * `first_class`.
+     * Body param: The mailing class of this order. If not provided, automatically set
+     * to `first_class`.
      */
     mailingClass?:
       | 'first_class'
@@ -756,20 +797,20 @@ export declare namespace PostcardCreateParams {
       | 'au_post_second_class';
 
     /**
-     * These will be merged with the variables in the template or HTML you create this
-     * order with. The keys in this object should match the variable names in the
-     * template _exactly_ as they are case-sensitive. Note that these _do not_ apply to
-     * PDFs uploaded with the order.
+     * Body param: These will be merged with the variables in the template or HTML you
+     * create this order with. The keys in this object should match the variable names
+     * in the template _exactly_ as they are case-sensitive. Note that these _do not_
+     * apply to PDFs uploaded with the order.
      */
     mergeVariables?: { [key: string]: unknown };
 
     /**
-     * See the section on Metadata.
+     * Body param: See the section on Metadata.
      */
     metadata?: { [key: string]: unknown };
 
     /**
-     * Premium paper selection used for this postcard.
+     * Body param: Premium paper selection used for this postcard.
      *
      * Available values include:
      *
@@ -792,10 +833,16 @@ export declare namespace PostcardCreateParams {
       | (string & {});
 
     /**
-     * This order will transition from `ready` to `printing` on the day after this
-     * date. You can use this parameter to schedule orders for a future date.
+     * Body param: This order will transition from `ready` to `printing` on the day
+     * after this date. You can use this parameter to schedule orders for a future
+     * date.
      */
     sendDate?: string;
+
+    /**
+     * Header param
+     */
+    'idempotency-key'?: string;
   }
 }
 
@@ -817,6 +864,7 @@ export interface PostcardCancelParams {
 export declare namespace Postcards {
   export {
     type Postcard as Postcard,
+    type PostcardCreateResponse as PostcardCreateResponse,
     type PostcardRetrieveURLResponse as PostcardRetrieveURLResponse,
     type PostcardsSkipLimit as PostcardsSkipLimit,
     type PostcardCreateParams as PostcardCreateParams,

@@ -149,11 +149,12 @@ Types:
 - <code><a href="./src/resources/print-mail/letters.ts">Letter</a></code>
 - <code><a href="./src/resources/print-mail/letters.ts">LetterSize</a></code>
 - <code><a href="./src/resources/print-mail/letters.ts">PlasticCard</a></code>
+- <code><a href="./src/resources/print-mail/letters.ts">LetterCreateResponse</a></code>
 - <code><a href="./src/resources/print-mail/letters.ts">LetterRetrieveURLResponse</a></code>
 
 Methods:
 
-- <code title="post /print-mail/v1/letters">client.printMail.letters.<a href="./src/resources/print-mail/letters.ts">create</a>({ ...params }) -> Letter</code>
+- <code title="post /print-mail/v1/letters">client.printMail.letters.<a href="./src/resources/print-mail/letters.ts">create</a>({ ...params }) -> LetterCreateResponse</code>
 - <code title="get /print-mail/v1/letters/{id}">client.printMail.letters.<a href="./src/resources/print-mail/letters.ts">retrieve</a>(id) -> Letter</code>
 - <code title="get /print-mail/v1/letters">client.printMail.letters.<a href="./src/resources/print-mail/letters.ts">list</a>({ ...params }) -> LettersSkipLimit</code>
 - <code title="delete /print-mail/v1/letters/{id}">client.printMail.letters.<a href="./src/resources/print-mail/letters.ts">delete</a>(id) -> Letter</code>
@@ -166,11 +167,12 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/print-mail/postcards.ts">Postcard</a></code>
+- <code><a href="./src/resources/print-mail/postcards.ts">PostcardCreateResponse</a></code>
 - <code><a href="./src/resources/print-mail/postcards.ts">PostcardRetrieveURLResponse</a></code>
 
 Methods:
 
-- <code title="post /print-mail/v1/postcards">client.printMail.postcards.<a href="./src/resources/print-mail/postcards.ts">create</a>({ ...params }) -> Postcard</code>
+- <code title="post /print-mail/v1/postcards">client.printMail.postcards.<a href="./src/resources/print-mail/postcards.ts">create</a>({ ...params }) -> PostcardCreateResponse</code>
 - <code title="get /print-mail/v1/postcards/{id}">client.printMail.postcards.<a href="./src/resources/print-mail/postcards.ts">retrieve</a>(id) -> Postcard</code>
 - <code title="get /print-mail/v1/postcards">client.printMail.postcards.<a href="./src/resources/print-mail/postcards.ts">list</a>({ ...params }) -> PostcardsSkipLimit</code>
 - <code title="delete /print-mail/v1/postcards/{id}">client.printMail.postcards.<a href="./src/resources/print-mail/postcards.ts">delete</a>(id) -> Postcard</code>
@@ -218,11 +220,12 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/print-mail/self-mailers.ts">SelfMailer</a></code>
+- <code><a href="./src/resources/print-mail/self-mailers.ts">SelfMailerCreateResponse</a></code>
 - <code><a href="./src/resources/print-mail/self-mailers.ts">SelfMailerRetrieveURLResponse</a></code>
 
 Methods:
 
-- <code title="post /print-mail/v1/self_mailers">client.printMail.selfMailers.<a href="./src/resources/print-mail/self-mailers.ts">create</a>({ ...params }) -> SelfMailer</code>
+- <code title="post /print-mail/v1/self_mailers">client.printMail.selfMailers.<a href="./src/resources/print-mail/self-mailers.ts">create</a>({ ...params }) -> SelfMailerCreateResponse</code>
 - <code title="get /print-mail/v1/self_mailers/{id}">client.printMail.selfMailers.<a href="./src/resources/print-mail/self-mailers.ts">retrieve</a>(id) -> SelfMailer</code>
 - <code title="get /print-mail/v1/self_mailers">client.printMail.selfMailers.<a href="./src/resources/print-mail/self-mailers.ts">list</a>({ ...params }) -> SelfMailersSkipLimit</code>
 - <code title="delete /print-mail/v1/self_mailers/{id}">client.printMail.selfMailers.<a href="./src/resources/print-mail/self-mailers.ts">delete</a>(id) -> SelfMailer</code>
@@ -382,20 +385,17 @@ Methods:
 
 Types:
 
+- <code><a href="./src/resources/print-mail/snap-packs.ts">SnapPack</a></code>
 - <code><a href="./src/resources/print-mail/snap-packs.ts">SnapPackCreateResponse</a></code>
-- <code><a href="./src/resources/print-mail/snap-packs.ts">SnapPackRetrieveResponse</a></code>
-- <code><a href="./src/resources/print-mail/snap-packs.ts">SnapPackListResponse</a></code>
-- <code><a href="./src/resources/print-mail/snap-packs.ts">SnapPackDeleteResponse</a></code>
-- <code><a href="./src/resources/print-mail/snap-packs.ts">SnapPackProgressionsResponse</a></code>
 - <code><a href="./src/resources/print-mail/snap-packs.ts">SnapPackRetrieveCapabilitiesResponse</a></code>
 
 Methods:
 
 - <code title="post /print-mail/v1/snap_packs">client.printMail.snapPacks.<a href="./src/resources/print-mail/snap-packs.ts">create</a>({ ...params }) -> SnapPackCreateResponse</code>
-- <code title="get /print-mail/v1/snap_packs/{id}">client.printMail.snapPacks.<a href="./src/resources/print-mail/snap-packs.ts">retrieve</a>(id) -> SnapPackRetrieveResponse</code>
-- <code title="get /print-mail/v1/snap_packs">client.printMail.snapPacks.<a href="./src/resources/print-mail/snap-packs.ts">list</a>({ ...params }) -> SnapPackListResponsesSkipLimit</code>
-- <code title="delete /print-mail/v1/snap_packs/{id}">client.printMail.snapPacks.<a href="./src/resources/print-mail/snap-packs.ts">delete</a>(id) -> SnapPackDeleteResponse</code>
-- <code title="post /print-mail/v1/snap_packs/{id}/progressions">client.printMail.snapPacks.<a href="./src/resources/print-mail/snap-packs.ts">progressions</a>(id) -> SnapPackProgressionsResponse</code>
+- <code title="get /print-mail/v1/snap_packs/{id}">client.printMail.snapPacks.<a href="./src/resources/print-mail/snap-packs.ts">retrieve</a>(id) -> SnapPack</code>
+- <code title="get /print-mail/v1/snap_packs">client.printMail.snapPacks.<a href="./src/resources/print-mail/snap-packs.ts">list</a>({ ...params }) -> SnapPacksSkipLimit</code>
+- <code title="delete /print-mail/v1/snap_packs/{id}">client.printMail.snapPacks.<a href="./src/resources/print-mail/snap-packs.ts">delete</a>(id) -> SnapPack</code>
+- <code title="post /print-mail/v1/snap_packs/{id}/progressions">client.printMail.snapPacks.<a href="./src/resources/print-mail/snap-packs.ts">progressions</a>(id) -> SnapPack</code>
 - <code title="get /print-mail/v1/snap_packs/capabilities">client.printMail.snapPacks.<a href="./src/resources/print-mail/snap-packs.ts">retrieveCapabilities</a>({ ...params }) -> SnapPackRetrieveCapabilitiesResponse</code>
 
 ## TargetedListBuilds
