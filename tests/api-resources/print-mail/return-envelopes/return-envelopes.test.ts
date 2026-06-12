@@ -8,14 +8,10 @@ const client = new PostGrid({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource contacts', () => {
+describe('resource returnEnvelopes', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.printMail.contacts.create({
-      addressLine1: 'addressLine1',
-      countryCode: 'countryCode',
-      firstName: 'firstName',
-    });
+    const responsePromise = client.printMail.returnEnvelopes.create({ to: 'contact_kFjQtFqJtRXgahx5vgc9mA' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -27,30 +23,17 @@ describe('resource contacts', () => {
 
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
-    const response = await client.printMail.contacts.create({
-      addressLine1: 'addressLine1',
-      countryCode: 'countryCode',
-      firstName: 'firstName',
-      addressLine2: 'addressLine2',
-      city: 'city',
-      companyName: 'companyName',
+    const response = await client.printMail.returnEnvelopes.create({
+      to: 'contact_kFjQtFqJtRXgahx5vgc9mA',
       description: 'description',
-      email: 'email',
-      forceVerifiedStatus: true,
-      jobTitle: 'jobTitle',
-      lastName: 'lastName',
       metadata: { foo: 'bar' },
-      phoneNumber: 'phoneNumber',
-      postalOrZip: 'postalOrZip',
-      provinceOrState: 'provinceOrState',
-      secret: true,
-      skipVerification: true,
+      'idempotency-key': 'idempotency-key',
     });
   });
 
   // Mock server tests are disabled
   test.skip('retrieve', async () => {
-    const responsePromise = client.printMail.contacts.retrieve('id');
+    const responsePromise = client.printMail.returnEnvelopes.retrieve('id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -62,7 +45,7 @@ describe('resource contacts', () => {
 
   // Mock server tests are disabled
   test.skip('list', async () => {
-    const responsePromise = client.printMail.contacts.list();
+    const responsePromise = client.printMail.returnEnvelopes.list();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -76,7 +59,7 @@ describe('resource contacts', () => {
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.printMail.contacts.list(
+      client.printMail.returnEnvelopes.list(
         {
           limit: 0,
           search: 'search',
@@ -85,17 +68,5 @@ describe('resource contacts', () => {
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(PostGrid.NotFoundError);
-  });
-
-  // Mock server tests are disabled
-  test.skip('delete', async () => {
-    const responsePromise = client.printMail.contacts.delete('id');
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
   });
 });

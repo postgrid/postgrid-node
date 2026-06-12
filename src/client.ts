@@ -42,6 +42,15 @@ import {
   Status,
 } from './resources/address-verification';
 import {
+  AddverList,
+  BulkVerification,
+  BulkVerificationListParams,
+  BulkVerificationListResponse,
+  BulkVerificationRetrieveResponse,
+  BulkVerificationUploadParams,
+  BulkVerificationUploadResponse,
+} from './resources/bulk-verification';
+import {
   IntlAddressVerification,
   IntlAddressVerificationAutocompleteParams,
   IntlAddressVerificationAutocompleteResponse,
@@ -858,11 +867,32 @@ export class PostGrid {
    *
    */
   intlAddressVerification: API.IntlAddressVerification = new API.IntlAddressVerification(this);
+  /**
+   *  **Note: For verifying batches of addresses in real-time via JSON, please use
+   *  the "Batch Verify Addresses" endpoint.**
+   *
+   *  The bulk verification API allows you to submit CSV files to be processed
+   *  through our address verification engine. Each file can contain up to 250,000
+   *  addresses, and the output lines up with what is returned from our batch
+   *  verification API.
+   *
+   *  Note that you will be invoiced for every list that processes successfully.
+   *  You can pre-purchase bulk verification credits from our
+   *  [dashboard](https://app.postgrid.com/dashboard/upgrade) to prevent this.
+   *  However, these cannot be used for geocoded lists, and you must individually
+   *  pay for every list that you process with those flags.
+   *
+   *  **Also note that in order to access bulk geocoding you must contact**
+   *  [support@postgrid.com](mailto:support@postgrid.com) **to enable the feature.**
+   *
+   */
+  bulkVerification: API.BulkVerification = new API.BulkVerification(this);
   printMail: API.PrintMail = new API.PrintMail(this);
 }
 
 PostGrid.AddressVerification = AddressVerification;
 PostGrid.IntlAddressVerification = IntlAddressVerification;
+PostGrid.BulkVerification = BulkVerification;
 PostGrid.PrintMail = PrintMail;
 
 export declare namespace PostGrid {
@@ -906,6 +936,16 @@ export declare namespace PostGrid {
     type IntlAddressVerificationGetAutocompleteAdvancedPreviewsParams as IntlAddressVerificationGetAutocompleteAdvancedPreviewsParams,
     type IntlAddressVerificationGetAutocompletePreviewsParams as IntlAddressVerificationGetAutocompletePreviewsParams,
     type IntlAddressVerificationVerifyParams as IntlAddressVerificationVerifyParams,
+  };
+
+  export {
+    BulkVerification as BulkVerification,
+    type AddverList as AddverList,
+    type BulkVerificationRetrieveResponse as BulkVerificationRetrieveResponse,
+    type BulkVerificationListResponse as BulkVerificationListResponse,
+    type BulkVerificationUploadResponse as BulkVerificationUploadResponse,
+    type BulkVerificationListParams as BulkVerificationListParams,
+    type BulkVerificationUploadParams as BulkVerificationUploadParams,
   };
 
   export { PrintMail as PrintMail };

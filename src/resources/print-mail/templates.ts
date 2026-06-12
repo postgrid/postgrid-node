@@ -6,6 +6,11 @@ import { PagePromise, SkipLimit, type SkipLimitParams } from '../../core/paginat
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ *  Create and manage reusable HTML templates. A template's HTML can include
+ *  merge variables (e.g. `{{firstName}}`) and be referenced by ID when creating
+ *  letters, postcards, cheques, and self mailers.
+ */
 export class Templates extends APIResource {
   /**
    * Create a template. Note that if you want to create a template that works with
