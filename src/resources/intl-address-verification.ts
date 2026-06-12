@@ -47,11 +47,15 @@ export class IntlAddressVerification extends APIResource {
    * be freeform or structured, matching the same input formats accepted by the
    * single verification endpoint.
    *
+   * - Accepts up to 2,000 addresses per request.
    * - Uses 1 lookup per address.
    * - Requires a secret API key.
    * - Returns results in the same order as the input addresses.
    * - If an individual address fails, its result will contain an `error` field
    *   rather than a `verifiedAddress`.
+   * - If you are not subscribed and the batch would exceed your remaining free
+   *   lookups, the entire batch fails (nothing is verified). Size your batch to the
+   *   number of lookups you have left.
    *
    * @example
    * ```ts
@@ -87,16 +91,19 @@ export class IntlAddressVerification extends APIResource {
    * populating an autocomplete dropdown.
    *
    * **Regular mode** — supply `partialStreet` to search by partial street address.
-   * Results may include `Address` types (resolvable directly) and `Container` types
-   * (buildings/complexes that require a follow-up call).
+   * Results may include directly-resolvable `Address` results and non-`Address`
+   * results (e.g. `BuildingNumber`) that represent buildings/complexes requiring a
+   * follow-up call.
    *
-   * **Advanced mode** — supply `advanced=true` and a `container` ID (from a previous
-   * regular call) to drill into a building or complex and retrieve individual unit
-   * addresses.
+   * **Advanced mode** — supply `advanced=true` and a `container` ID (the `id` of a
+   * non-`Address` result from a previous regular call) to drill into a building or
+   * complex and retrieve individual unit addresses.
    *
    * Results with `type: "Address"` can be fully resolved by passing their `id` to
    * `POST /completions`.
    *
+   * - Results are biased by the caller's IP address by default; pass
+   *   `disableIPBiasing=true` to turn this off.
    * - Does not consume a lookup.
    *
    * @example
@@ -117,16 +124,19 @@ export class IntlAddressVerification extends APIResource {
    * populating an autocomplete dropdown.
    *
    * **Regular mode** — supply `partialStreet` to search by partial street address.
-   * Results may include `Address` types (resolvable directly) and `Container` types
-   * (buildings/complexes that require a follow-up call).
+   * Results may include directly-resolvable `Address` results and non-`Address`
+   * results (e.g. `BuildingNumber`) that represent buildings/complexes requiring a
+   * follow-up call.
    *
-   * **Advanced mode** — supply `advanced=true` and a `container` ID (from a previous
-   * regular call) to drill into a building or complex and retrieve individual unit
-   * addresses.
+   * **Advanced mode** — supply `advanced=true` and a `container` ID (the `id` of a
+   * non-`Address` result from a previous regular call) to drill into a building or
+   * complex and retrieve individual unit addresses.
    *
    * Results with `type: "Address"` can be fully resolved by passing their `id` to
    * `POST /completions`.
    *
+   * - Results are biased by the caller's IP address by default; pass
+   *   `disableIPBiasing=true` to turn this off.
    * - Does not consume a lookup.
    *
    * @example
@@ -969,9 +979,10 @@ export namespace IntlAddressVerificationGetAutocompleteAdvancedPreviewsResponse 
    */
   export interface Data {
     /**
-     * The unique identifier for this result. Pass this to `POST /completions` to
-     * retrieve the full address. If the `type` is `Container`, pass it as the
-     * `container` parameter to `GET /completions` to drill down further.
+     * The unique identifier for this result. If the result is a fully resolvable
+     * address (`type` is `Address`), pass this to `POST /completions` to retrieve the
+     * full address. Otherwise, pass it as the `container` query parameter to
+     * `GET /completions` to drill down further.
      */
     id?: string;
 
@@ -1020,9 +1031,10 @@ export namespace IntlAddressVerificationGetAutocompletePreviewsResponse {
    */
   export interface Data {
     /**
-     * The unique identifier for this result. Pass this to `POST /completions` to
-     * retrieve the full address. If the `type` is `Container`, pass it as the
-     * `container` parameter to `GET /completions` to drill down further.
+     * The unique identifier for this result. If the result is a fully resolvable
+     * address (`type` is `Address`), pass this to `POST /completions` to retrieve the
+     * full address. Otherwise, pass it as the `container` query parameter to
+     * `GET /completions` to drill down further.
      */
     id?: string;
 

@@ -109,6 +109,13 @@ export {
   type ReportsSkipLimit,
 } from './reports/index';
 export {
+  ReturnEnvelopes,
+  type ReturnEnvelope,
+  type ReturnEnvelopeCreateParams,
+  type ReturnEnvelopeListParams,
+  type ReturnEnvelopesSkipLimit,
+} from './return-envelopes/index';
+export {
   SelfMailers,
   type SelfMailer,
   type SelfMailerRetrieveURLResponse,

@@ -7,6 +7,9 @@ import { PagePromise, SkipLimit, type SkipLimitParams } from '../../core/paginat
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ *  Create and manage postcard mailings.
+ */
 export class Postcards extends APIResource {
   /**
    * Create a postcard. Note that you can supply one of the following:

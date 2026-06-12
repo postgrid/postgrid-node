@@ -203,6 +203,14 @@ import {
   Reports,
   ReportsSkipLimit,
 } from './reports/reports';
+import * as ReturnEnvelopesAPI from './return-envelopes/return-envelopes';
+import {
+  ReturnEnvelope,
+  ReturnEnvelopeCreateParams,
+  ReturnEnvelopeListParams,
+  ReturnEnvelopes,
+  ReturnEnvelopesSkipLimit,
+} from './return-envelopes/return-envelopes';
 import * as TargetedListBuildsAPI from './targeted-list-builds/targeted-list-builds';
 import {
   TargetedListBuildConfirmResponse,
@@ -240,6 +248,7 @@ export class PrintMail extends APIResource {
   bankAccounts: BankAccountsAPI.BankAccounts = new BankAccountsAPI.BankAccounts(this._client);
   cheques: ChequesAPI.Cheques = new ChequesAPI.Cheques(this._client);
   selfMailers: SelfMailersAPI.SelfMailers = new SelfMailersAPI.SelfMailers(this._client);
+  returnEnvelopes: ReturnEnvelopesAPI.ReturnEnvelopes = new ReturnEnvelopesAPI.ReturnEnvelopes(this._client);
   campaigns: CampaignsAPI.Campaigns = new CampaignsAPI.Campaigns(this._client);
   mailingListImports: MailingListImportsAPI.MailingListImports = new MailingListImportsAPI.MailingListImports(
     this._client,
@@ -271,6 +280,7 @@ PrintMail.Postcards = Postcards;
 PrintMail.BankAccounts = BankAccounts;
 PrintMail.Cheques = Cheques;
 PrintMail.SelfMailers = SelfMailers;
+PrintMail.ReturnEnvelopes = ReturnEnvelopes;
 PrintMail.Campaigns = Campaigns;
 PrintMail.MailingListImports = MailingListImports;
 PrintMail.MailingLists = MailingLists;
@@ -394,6 +404,14 @@ export declare namespace PrintMail {
     type SelfMailersSkipLimit as SelfMailersSkipLimit,
     type SelfMailerCreateParams as SelfMailerCreateParams,
     type SelfMailerListParams as SelfMailerListParams,
+  };
+
+  export {
+    ReturnEnvelopes as ReturnEnvelopes,
+    type ReturnEnvelope as ReturnEnvelope,
+    type ReturnEnvelopesSkipLimit as ReturnEnvelopesSkipLimit,
+    type ReturnEnvelopeCreateParams as ReturnEnvelopeCreateParams,
+    type ReturnEnvelopeListParams as ReturnEnvelopeListParams,
   };
 
   export {

@@ -7,6 +7,9 @@ import { PagePromise, SkipLimit, type SkipLimitParams } from '../../core/paginat
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ *  Create and manage letter orders.
+ */
 export class Letters extends APIResource {
   /**
    * Create a letter. Note that you can supply one of the following:

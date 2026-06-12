@@ -6,6 +6,9 @@ import { PagePromise, SkipLimit, type SkipLimitParams } from '../../core/paginat
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ *  Manage bank accounts that will be used for mailing cheques.
+ */
 export class BankAccounts extends APIResource {
   /**
    * Create a bank account. A US bank account is created by setting `bankCountryCode`
@@ -15,6 +18,10 @@ export class BankAccounts extends APIResource {
    *
    * You must specify _either_ `signatureImage` or `signatureText`. The image can be
    * supplied as either a URL or a multipart file upload.
+   *
+   * Note that the reasonable character limit for `signatureText` is 6 capital
+   * letters or 20 lowercase letters — anything exceeding that will likely overflow
+   * onto a new line.
    *
    * @example
    * ```ts
@@ -37,6 +44,9 @@ export class BankAccounts extends APIResource {
   /**
    * Retrieve a bank account by ID.
    *
+   * Note that we do not return the complete account number or the signature image
+   * for security reasons.
+   *
    * @example
    * ```ts
    * const bankAccount =
@@ -49,6 +59,9 @@ export class BankAccounts extends APIResource {
 
   /**
    * Get a list of bank accounts.
+   *
+   * Note that we do not return the complete account number or the signature image
+   * for security reasons.
    *
    * @example
    * ```ts

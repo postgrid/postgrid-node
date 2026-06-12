@@ -44,6 +44,21 @@ Methods:
 - <code title="get /v1/intl_addver/completions">client.intlAddressVerification.<a href="./src/resources/intl-address-verification.ts">getAutocompletePreviews</a>({ ...params }) -> IntlAddressVerificationGetAutocompletePreviewsResponse</code>
 - <code title="post /v1/intl_addver/verifications">client.intlAddressVerification.<a href="./src/resources/intl-address-verification.ts">verify</a>({ ...params }) -> IntlAddressVerificationVerifyResponse</code>
 
+# BulkVerification
+
+Types:
+
+- <code><a href="./src/resources/bulk-verification.ts">AddverList</a></code>
+- <code><a href="./src/resources/bulk-verification.ts">BulkVerificationRetrieveResponse</a></code>
+- <code><a href="./src/resources/bulk-verification.ts">BulkVerificationListResponse</a></code>
+- <code><a href="./src/resources/bulk-verification.ts">BulkVerificationUploadResponse</a></code>
+
+Methods:
+
+- <code title="get /v1/addver_lists/{id}">client.bulkVerification.<a href="./src/resources/bulk-verification.ts">retrieve</a>(id) -> BulkVerificationRetrieveResponse</code>
+- <code title="get /v1/addver_lists">client.bulkVerification.<a href="./src/resources/bulk-verification.ts">list</a>({ ...params }) -> BulkVerificationListResponse</code>
+- <code title="post /v1/addver_lists">client.bulkVerification.<a href="./src/resources/bulk-verification.ts">upload</a>({ ...params }) -> BulkVerificationUploadResponse</code>
+
 # PrintMail
 
 ## Contacts
@@ -213,6 +228,32 @@ Methods:
 - <code title="delete /print-mail/v1/self_mailers/{id}">client.printMail.selfMailers.<a href="./src/resources/print-mail/self-mailers.ts">delete</a>(id) -> SelfMailer</code>
 - <code title="post /print-mail/v1/self_mailers/{id}/progressions">client.printMail.selfMailers.<a href="./src/resources/print-mail/self-mailers.ts">progress</a>(id) -> SelfMailer</code>
 - <code title="get /print-mail/v1/self_mailers/{id}/url">client.printMail.selfMailers.<a href="./src/resources/print-mail/self-mailers.ts">retrieveURL</a>(id) -> SelfMailerRetrieveURLResponse</code>
+
+## ReturnEnvelopes
+
+Types:
+
+- <code><a href="./src/resources/print-mail/return-envelopes/return-envelopes.ts">ReturnEnvelope</a></code>
+
+Methods:
+
+- <code title="post /print-mail/v1/return_envelopes">client.printMail.returnEnvelopes.<a href="./src/resources/print-mail/return-envelopes/return-envelopes.ts">create</a>({ ...params }) -> ReturnEnvelope</code>
+- <code title="get /print-mail/v1/return_envelopes/{id}">client.printMail.returnEnvelopes.<a href="./src/resources/print-mail/return-envelopes/return-envelopes.ts">retrieve</a>(id) -> ReturnEnvelope</code>
+- <code title="get /print-mail/v1/return_envelopes">client.printMail.returnEnvelopes.<a href="./src/resources/print-mail/return-envelopes/return-envelopes.ts">list</a>({ ...params }) -> ReturnEnvelopesSkipLimit</code>
+
+### Orders
+
+Types:
+
+- <code><a href="./src/resources/print-mail/return-envelopes/orders.ts">ReturnEnvelopeOrder</a></code>
+
+Methods:
+
+- <code title="post /print-mail/v1/return_envelopes/{id}/orders">client.printMail.returnEnvelopes.orders.<a href="./src/resources/print-mail/return-envelopes/orders.ts">create</a>(id, { ...params }) -> ReturnEnvelopeOrder</code>
+- <code title="get /print-mail/v1/return_envelopes/{id}/orders/{orderID}">client.printMail.returnEnvelopes.orders.<a href="./src/resources/print-mail/return-envelopes/orders.ts">retrieve</a>(orderID, { ...params }) -> ReturnEnvelopeOrder</code>
+- <code title="get /print-mail/v1/return_envelopes/{id}/orders">client.printMail.returnEnvelopes.orders.<a href="./src/resources/print-mail/return-envelopes/orders.ts">list</a>(id, { ...params }) -> ReturnEnvelopeOrdersSkipLimit</code>
+- <code title="delete /print-mail/v1/return_envelopes/{id}/orders/{orderID}">client.printMail.returnEnvelopes.orders.<a href="./src/resources/print-mail/return-envelopes/orders.ts">cancel</a>(orderID, { ...params }) -> ReturnEnvelopeOrder</code>
+- <code title="post /print-mail/v1/return_envelopes/{id}/orders/{orderID}/fills">client.printMail.returnEnvelopes.orders.<a href="./src/resources/print-mail/return-envelopes/orders.ts">fill</a>(orderID, { ...params }) -> ReturnEnvelopeOrder</code>
 
 ## Campaigns
 

@@ -7,6 +7,9 @@ import { PagePromise, SkipLimit, type SkipLimitParams } from '../../core/paginat
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ *  Create and manage box orders.
+ */
 export class Boxes extends APIResource {
   /**
    * This endpoint allows you to create a box containing up to 100 cheques. A Box is

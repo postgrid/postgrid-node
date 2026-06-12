@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import PostGrid from 'postgrid-node';
+import PostGrid, { toFile } from 'postgrid-node';
 
 const client = new PostGrid({
   addressVerificationAPIKey: 'My Address Verification API Key',
@@ -8,49 +8,10 @@ const client = new PostGrid({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource contacts', () => {
-  // Mock server tests are disabled
-  test.skip('create: only required params', async () => {
-    const responsePromise = client.printMail.contacts.create({
-      addressLine1: 'addressLine1',
-      countryCode: 'countryCode',
-      firstName: 'firstName',
-    });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
-  test.skip('create: required and optional params', async () => {
-    const response = await client.printMail.contacts.create({
-      addressLine1: 'addressLine1',
-      countryCode: 'countryCode',
-      firstName: 'firstName',
-      addressLine2: 'addressLine2',
-      city: 'city',
-      companyName: 'companyName',
-      description: 'description',
-      email: 'email',
-      forceVerifiedStatus: true,
-      jobTitle: 'jobTitle',
-      lastName: 'lastName',
-      metadata: { foo: 'bar' },
-      phoneNumber: 'phoneNumber',
-      postalOrZip: 'postalOrZip',
-      provinceOrState: 'provinceOrState',
-      secret: true,
-      skipVerification: true,
-    });
-  });
-
+describe('resource bulkVerification', () => {
   // Mock server tests are disabled
   test.skip('retrieve', async () => {
-    const responsePromise = client.printMail.contacts.retrieve('id');
+    const responsePromise = client.bulkVerification.retrieve('id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -62,7 +23,7 @@ describe('resource contacts', () => {
 
   // Mock server tests are disabled
   test.skip('list', async () => {
-    const responsePromise = client.printMail.contacts.list();
+    const responsePromise = client.bulkVerification.list();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -76,20 +37,17 @@ describe('resource contacts', () => {
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.printMail.contacts.list(
-        {
-          limit: 0,
-          search: 'search',
-          skip: 0,
-        },
-        { path: '/_stainless_unknown_path' },
-      ),
+      client.bulkVerification.list({ limit: 0, skip: 0 }, { path: '/_stainless_unknown_path' }),
     ).rejects.toThrow(PostGrid.NotFoundError);
   });
 
   // Mock server tests are disabled
-  test.skip('delete', async () => {
-    const responsePromise = client.printMail.contacts.delete('id');
+  test.skip('upload: only required params', async () => {
+    const responsePromise = client.bulkVerification.upload({
+      file: await toFile(Buffer.from('Example data'), 'README.md'),
+      mappings: { line1: 'line1' },
+      name: 'name',
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -97,5 +55,30 @@ describe('resource contacts', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('upload: required and optional params', async () => {
+    const response = await client.bulkVerification.upload({
+      file: await toFile(Buffer.from('Example data'), 'README.md'),
+      mappings: {
+        line1: 'line1',
+        city: 'city',
+        country: 'country',
+        firstName: 'firstName',
+        fullName: 'fullName',
+        lastName: 'lastName',
+        line2: 'line2',
+        postalOrZip: 'postalOrZip',
+        provinceOrState: 'provinceOrState',
+      },
+      name: 'name',
+      defaultCountry: 'defaultCountry',
+      runCCOA: true,
+      runNCOA: true,
+      useGeocode: true,
+      useIntlVerification: true,
+      useProperCase: true,
+    });
   });
 });

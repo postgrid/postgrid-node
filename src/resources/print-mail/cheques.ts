@@ -7,6 +7,9 @@ import { PagePromise, SkipLimit, type SkipLimitParams } from '../../core/paginat
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ *  Create and manage cheque orders.
+ */
 export class Cheques extends APIResource {
   /**
    * Create a cheque.
@@ -15,7 +18,9 @@ export class Cheques extends APIResource {
    *
    * If you would like to create a digitalOnly cheque, the digitalOnly object with
    * the watermark will need to be passed in. Feature is available on request, e-mail
-   * support@postgrid.com for access.
+   * support@postgrid.com for access. Digital-only cheques are not sent out — they
+   * are created with a `cancelled` status and a cancellation reason of
+   * `digital_only`.
    *
    * Example request body:
    *
@@ -320,11 +325,28 @@ export interface Cheque {
   imbZIPCode?: string;
 
   /**
+   * The raw HTML content for a letter attached to the cheque, if any. You can supply
+   * _either_ this, `letterTemplate`, or `letterPDF`, but not more than one.
+   */
+  letterHTML?: string;
+
+  /**
+   * A Template ID for the letter attached to the cheque, if any.
+   */
+  letterTemplate?: string;
+
+  /**
+   * A signed URL pointing to the original PDF of the letter attached to the cheque,
+   * if any.
+   */
+  letterUploadedPDF?: string;
+
+  /**
    * An optional logo URL for the cheque. This will be placed next to the recipient
    * address at the top left corner of the cheque. This needs to be a public link to
    * an image file (e.g. a PNG or JPEG file).
    */
-  logoURL?: string;
+  logo?: string;
 
   /**
    * The memo of the cheque.
@@ -355,6 +377,12 @@ export interface Cheque {
    * ensuring that every cheque has a unique number.
    */
   number?: number;
+
+  /**
+   * The return envelope (ID) sent out with the cheque, if any. Note that you must
+   * first order return envelopes using the Return Envelopes API.
+   */
+  returnEnvelope?: string;
 
   /**
    * The tracking number of this order. Populated after an express/certified order
@@ -408,6 +436,27 @@ export interface DigitalOnly {
    * Text to be displayed as a watermark on the digital cheque.
    */
   watermark: string;
+
+  /**
+   * The payee of the digital cheque. Supplying `payee.name` lets you create a
+   * digital-only cheque without a `to` contact — when it is provided, the top-level
+   * `to` field may be omitted.
+   */
+  payee?: DigitalOnly.Payee;
+}
+
+export namespace DigitalOnly {
+  /**
+   * The payee of the digital cheque. Supplying `payee.name` lets you create a
+   * digital-only cheque without a `to` contact — when it is provided, the top-level
+   * `to` field may be omitted.
+   */
+  export interface Payee {
+    /**
+     * The name of the payee.
+     */
+    name: string;
+  }
 }
 
 export interface ChequeRetrieveURLResponse {
@@ -477,11 +526,34 @@ export interface ChequeCreateParams {
   envelope?: 'standard' | (string & {});
 
   /**
+   * The raw HTML content for a letter attached to the cheque, if any. You can supply
+   * _either_ this, `letterTemplate`, or `letterPDF`, but not more than one.
+   */
+  letterHTML?: string;
+
+  /**
+   * A URL pointing to a PDF for the letter attached to the cheque, or the PDF file
+   * itself when uploaded via a multipart form request. You can supply _either_ this,
+   * `letterHTML`, or `letterTemplate`, but not more than one.
+   */
+  letterPDF?: string;
+
+  /**
+   * Settings for a letter attached to a cheque.
+   */
+  letterSettings?: ChequeCreateParams.LetterSettings;
+
+  /**
+   * A Template ID for the letter attached to the cheque, if any.
+   */
+  letterTemplate?: string;
+
+  /**
    * An optional logo URL for the cheque. This will be placed next to the recipient
    * address at the top left corner of the cheque. This needs to be a public link to
    * an image file (e.g. a PNG or JPEG file).
    */
-  logoURL?: string;
+  logo?: string;
 
   /**
    * The mailing class of this order. If not provided, automatically set to
@@ -555,6 +627,12 @@ export interface ChequeCreateParams {
   redirectTo?: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
   /**
+   * The return envelope (ID) sent out with the cheque, if any. Note that you must
+   * first order return envelopes using the Return Envelopes API.
+   */
+  returnEnvelope?: string;
+
+  /**
    * This order will transition from `ready` to `printing` on the day after this
    * date. You can use this parameter to schedule orders for a future date.
    */
@@ -564,6 +642,19 @@ export interface ChequeCreateParams {
    * Enum representing the supported cheque sizes.
    */
   size?: ChequeSize;
+}
+
+export namespace ChequeCreateParams {
+  /**
+   * Settings for a letter attached to a cheque.
+   */
+  export interface LetterSettings {
+    /**
+     * Enum representing where a letter attached to a cheque is placed relative to the
+     * cheque page.
+     */
+    placement?: 'before_cheque' | 'after_cheque';
+  }
 }
 
 export interface ChequeListParams extends SkipLimitParams {
