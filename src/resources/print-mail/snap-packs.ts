@@ -4,7 +4,10 @@ import { APIResource } from '../../core/resource';
 import * as ContactsAPI from './contacts';
 import { APIPromise } from '../../core/api-promise';
 import { PagePromise, SkipLimit, type SkipLimitParams } from '../../core/pagination';
+import { type Uploadable } from '../../core/uploads';
+import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
+import { maybeMultipartFormRequestOptions } from '../../internal/uploads';
 import { path } from '../../internal/utils/path';
 
 /**
@@ -23,7 +26,10 @@ export class SnapPacks extends APIResource {
    *
    * - HTML content for the inside and outside of the snap pack
    * - Template IDs for the inside and outside of the snap pack
-   * - A URL or file upload for a two-page PDF that matches the snap pack layout
+   * - A URL for a two-page PDF that matches the snap pack layout Create a snap pack
+   *   via a multipart/form-data request. Accepts the same fields as the JSON create
+   *   body (nested objects are bracket-encoded form fields, e.g. `to[firstName]`);
+   *   use this content type to upload the PDF file directly.
    *
    * @example
    * ```ts
@@ -36,8 +42,22 @@ export class SnapPacks extends APIResource {
    * });
    * ```
    */
-  create(body: SnapPackCreateParams, options?: RequestOptions): APIPromise<SnapPackCreateResponse> {
-    return this._client.post('/print-mail/v1/snap_packs', { body, ...options });
+  create(params: SnapPackCreateParams, options?: RequestOptions): APIPromise<SnapPackCreateResponse> {
+    const { 'idempotency-key': idempotencyKey, ...body } = params;
+    return this._client.post(
+      '/print-mail/v1/snap_packs',
+      maybeMultipartFormRequestOptions(
+        {
+          body,
+          ...options,
+          headers: buildHeaders([
+            { ...(idempotencyKey != null ? { 'idempotency-key': idempotencyKey } : undefined) },
+            options?.headers,
+          ]),
+        },
+        this._client,
+      ),
+    );
   }
 
   /**
@@ -50,7 +70,7 @@ export class SnapPacks extends APIResource {
    * );
    * ```
    */
-  retrieve(id: string, options?: RequestOptions): APIPromise<SnapPackRetrieveResponse> {
+  retrieve(id: string, options?: RequestOptions): APIPromise<SnapPack> {
     return this._client.get(path`/print-mail/v1/snap_packs/${id}`, options);
   }
 
@@ -60,7 +80,7 @@ export class SnapPacks extends APIResource {
    * @example
    * ```ts
    * // Automatically fetches more pages as needed.
-   * for await (const snapPackListResponse of client.printMail.snapPacks.list()) {
+   * for await (const snapPack of client.printMail.snapPacks.list()) {
    *   // ...
    * }
    * ```
@@ -68,11 +88,8 @@ export class SnapPacks extends APIResource {
   list(
     query: SnapPackListParams | null | undefined = {},
     options?: RequestOptions,
-  ): PagePromise<SnapPackListResponsesSkipLimit, SnapPackListResponse> {
-    return this._client.getAPIList('/print-mail/v1/snap_packs', SkipLimit<SnapPackListResponse>, {
-      query,
-      ...options,
-    });
+  ): PagePromise<SnapPacksSkipLimit, SnapPack> {
+    return this._client.getAPIList('/print-mail/v1/snap_packs', SkipLimit<SnapPack>, { query, ...options });
   }
 
   /**
@@ -86,7 +103,7 @@ export class SnapPacks extends APIResource {
    * );
    * ```
    */
-  delete(id: string, options?: RequestOptions): APIPromise<SnapPackDeleteResponse> {
+  delete(id: string, options?: RequestOptions): APIPromise<SnapPack> {
     return this._client.delete(path`/print-mail/v1/snap_packs/${id}`, options);
   }
 
@@ -100,11 +117,11 @@ export class SnapPacks extends APIResource {
    *
    * @example
    * ```ts
-   * const response =
+   * const snapPack =
    *   await client.printMail.snapPacks.progressions('id');
    * ```
    */
-  progressions(id: string, options?: RequestOptions): APIPromise<SnapPackProgressionsResponse> {
+  progressions(id: string, options?: RequestOptions): APIPromise<SnapPack> {
     return this._client.post(path`/print-mail/v1/snap_packs/${id}/progressions`, options);
   }
 
@@ -127,9 +144,9 @@ export class SnapPacks extends APIResource {
   }
 }
 
-export type SnapPackListResponsesSkipLimit = SkipLimit<SnapPackListResponse>;
+export type SnapPacksSkipLimit = SkipLimit<SnapPack>;
 
-export interface SnapPackCreateResponse {
+export interface SnapPack {
   /**
    * A unique ID prefixed with snap*pack*
    */
@@ -219,7 +236,7 @@ export interface SnapPackCreateResponse {
    * The cancellation details of this order. Populated if the order has been
    * cancelled.
    */
-  cancellation?: SnapPackCreateResponse.Cancellation;
+  cancellation?: SnapPack.Cancellation;
 
   /**
    * An optional string describing this resource. Will be visible in the API and the
@@ -307,7 +324,7 @@ export interface SnapPackCreateResponse {
   url?: string;
 }
 
-export namespace SnapPackCreateResponse {
+export namespace SnapPack {
   /**
    * The cancellation details of this order. Populated if the order has been
    * cancelled.
@@ -330,809 +347,7 @@ export namespace SnapPackCreateResponse {
   }
 }
 
-export interface SnapPackRetrieveResponse {
-  /**
-   * A unique ID prefixed with snap*pack*
-   */
-  id: string;
-
-  /**
-   * The UTC time at which this resource was created.
-   */
-  createdAt: string;
-
-  /**
-   * The contact information of the sender.
-   */
-  from: ContactsAPI.Contact;
-
-  /**
-   * `true` if this is a live mode resource else `false`.
-   */
-  live: boolean;
-
-  /**
-   * The mailing class of this order. This determines the speed and cost of delivery.
-   * See `OrderMailingClass` for more details.
-   */
-  mailingClass:
-    | 'first_class'
-    | 'standard_class'
-    | 'express'
-    | 'certified'
-    | 'certified_return_receipt'
-    | 'registered'
-    | 'usps_first_class'
-    | 'usps_standard_class'
-    | 'usps_eddm'
-    | 'usps_express_2_day'
-    | 'usps_express_3_day'
-    | 'usps_first_class_certified'
-    | 'usps_first_class_certified_return_receipt'
-    | 'usps_first_class_registered'
-    | 'usps_express_3_day_signature_confirmation'
-    | 'usps_express_3_day_certified'
-    | 'usps_express_3_day_certified_return_receipt'
-    | 'ca_post_lettermail'
-    | 'ca_post_personalized'
-    | 'ca_post_neighbourhood_mail'
-    | 'ups_express_overnight'
-    | 'ups_express_2_day'
-    | 'ups_express_3_day'
-    | 'royal_mail_first_class'
-    | 'royal_mail_second_class'
-    | 'au_post_second_class';
-
-  /**
-   * Always `snap_pack`.
-   */
-  object: 'snap_pack';
-
-  /**
-   * This order will transition from `ready` to `printing` on the day after this
-   * date. For example, if this is a date on Tuesday, the order will transition to
-   * `printing` on Wednesday at midnight eastern time.
-   */
-  sendDate: string;
-
-  /**
-   * Enum representing the supported snap pack sizes.
-   */
-  size: '8.5x11_bifold_v';
-
-  /**
-   * See `OrderStatus` for more details on the status of this order.
-   */
-  status: 'ready' | 'printing' | 'processed_for_delivery' | 'completed' | 'cancelled';
-
-  /**
-   * The recipient of this order. This will be provided even if you delete the
-   * underlying contact.
-   */
-  to: ContactsAPI.Contact;
-
-  /**
-   * The UTC time at which this resource was last updated.
-   */
-  updatedAt: string;
-
-  /**
-   * The cancellation details of this order. Populated if the order has been
-   * cancelled.
-   */
-  cancellation?: SnapPackRetrieveResponse.Cancellation;
-
-  /**
-   * An optional string describing this resource. Will be visible in the API and the
-   * dashboard.
-   */
-  description?: string;
-
-  /**
-   * The last date that the IMB status was updated. See `imbStatus` for more details.
-   */
-  imbDate?: string;
-
-  /**
-   * The Intelligent Mail Barcode (IMB) status of this order. Only populated for
-   * US-printed and US-destined orders. This is the most detailed way to track
-   * non-express/certified orders.
-   */
-  imbStatus?: 'entered_mail_stream' | 'out_for_delivery' | 'returned_to_sender';
-
-  /**
-   * The most recent ZIP code of the USPS facility that the order has been processed
-   * through. Only populated when an `imbStatus` is present.
-   */
-  imbZIPCode?: string;
-
-  /**
-   * The HTML content for the inside of the snap pack, when provided instead of a
-   * template or PDF.
-   */
-  insideHTML?: string;
-
-  /**
-   * The template ID for the inside of the snap pack, when provided instead of HTML
-   * or PDF.
-   */
-  insideTemplate?: string;
-
-  /**
-   * These will be merged with the variables in the template or HTML you create this
-   * order with. The keys in this object should match the variable names in the
-   * template _exactly_ as they are case-sensitive. Note that these _do not_ apply to
-   * PDFs uploaded with the order.
-   */
-  mergeVariables?: { [key: string]: unknown };
-
-  /**
-   * See the section on Metadata.
-   */
-  metadata?: { [key: string]: unknown };
-
-  /**
-   * The HTML content for the outside of the snap pack, when provided instead of a
-   * template or PDF.
-   */
-  outsideHTML?: string;
-
-  /**
-   * The template ID for the outside of the snap pack, when provided instead of HTML
-   * or PDF.
-   */
-  outsideTemplate?: string;
-
-  /**
-   * The tracking number of this order. Populated after an express/certified order
-   * has been processed for delivery.
-   */
-  trackingNumber?: string;
-
-  /**
-   * A signed URL to the uploaded PDF provided at creation time, if a PDF was
-   * supplied.
-   */
-  uploadedPDF?: string;
-
-  /**
-   * PostGrid renders a PDF preview for all orders. This should be inspected to
-   * ensure that the order is correct before it is sent out because it shows what
-   * will be printed and mailed to the recipient. Once the PDF preview is generated,
-   * this field will be returned by all `GET` endpoints which produce this order.
-   *
-   * This URL is a signed link to the PDF preview. It will expire after a short
-   * period of time. If you need to access this URL after it has expired, you can
-   * regenerate it by calling the `GET` endpoint again.
-   */
-  url?: string;
-}
-
-export namespace SnapPackRetrieveResponse {
-  /**
-   * The cancellation details of this order. Populated if the order has been
-   * cancelled.
-   */
-  export interface Cancellation {
-    /**
-     * The reason for the cancellation.
-     */
-    reason: 'user_initiated' | 'invalid_content' | 'invalid_order_mailing_class';
-
-    /**
-     * The user ID who cancelled the order.
-     */
-    cancelledByUser?: string;
-
-    /**
-     * An optional note provided by the user who cancelled the order.
-     */
-    note?: string;
-  }
-}
-
-export interface SnapPackListResponse {
-  /**
-   * A unique ID prefixed with snap*pack*
-   */
-  id: string;
-
-  /**
-   * The UTC time at which this resource was created.
-   */
-  createdAt: string;
-
-  /**
-   * The contact information of the sender.
-   */
-  from: ContactsAPI.Contact;
-
-  /**
-   * `true` if this is a live mode resource else `false`.
-   */
-  live: boolean;
-
-  /**
-   * The mailing class of this order. This determines the speed and cost of delivery.
-   * See `OrderMailingClass` for more details.
-   */
-  mailingClass:
-    | 'first_class'
-    | 'standard_class'
-    | 'express'
-    | 'certified'
-    | 'certified_return_receipt'
-    | 'registered'
-    | 'usps_first_class'
-    | 'usps_standard_class'
-    | 'usps_eddm'
-    | 'usps_express_2_day'
-    | 'usps_express_3_day'
-    | 'usps_first_class_certified'
-    | 'usps_first_class_certified_return_receipt'
-    | 'usps_first_class_registered'
-    | 'usps_express_3_day_signature_confirmation'
-    | 'usps_express_3_day_certified'
-    | 'usps_express_3_day_certified_return_receipt'
-    | 'ca_post_lettermail'
-    | 'ca_post_personalized'
-    | 'ca_post_neighbourhood_mail'
-    | 'ups_express_overnight'
-    | 'ups_express_2_day'
-    | 'ups_express_3_day'
-    | 'royal_mail_first_class'
-    | 'royal_mail_second_class'
-    | 'au_post_second_class';
-
-  /**
-   * Always `snap_pack`.
-   */
-  object: 'snap_pack';
-
-  /**
-   * This order will transition from `ready` to `printing` on the day after this
-   * date. For example, if this is a date on Tuesday, the order will transition to
-   * `printing` on Wednesday at midnight eastern time.
-   */
-  sendDate: string;
-
-  /**
-   * Enum representing the supported snap pack sizes.
-   */
-  size: '8.5x11_bifold_v';
-
-  /**
-   * See `OrderStatus` for more details on the status of this order.
-   */
-  status: 'ready' | 'printing' | 'processed_for_delivery' | 'completed' | 'cancelled';
-
-  /**
-   * The recipient of this order. This will be provided even if you delete the
-   * underlying contact.
-   */
-  to: ContactsAPI.Contact;
-
-  /**
-   * The UTC time at which this resource was last updated.
-   */
-  updatedAt: string;
-
-  /**
-   * The cancellation details of this order. Populated if the order has been
-   * cancelled.
-   */
-  cancellation?: SnapPackListResponse.Cancellation;
-
-  /**
-   * An optional string describing this resource. Will be visible in the API and the
-   * dashboard.
-   */
-  description?: string;
-
-  /**
-   * The last date that the IMB status was updated. See `imbStatus` for more details.
-   */
-  imbDate?: string;
-
-  /**
-   * The Intelligent Mail Barcode (IMB) status of this order. Only populated for
-   * US-printed and US-destined orders. This is the most detailed way to track
-   * non-express/certified orders.
-   */
-  imbStatus?: 'entered_mail_stream' | 'out_for_delivery' | 'returned_to_sender';
-
-  /**
-   * The most recent ZIP code of the USPS facility that the order has been processed
-   * through. Only populated when an `imbStatus` is present.
-   */
-  imbZIPCode?: string;
-
-  /**
-   * The HTML content for the inside of the snap pack, when provided instead of a
-   * template or PDF.
-   */
-  insideHTML?: string;
-
-  /**
-   * The template ID for the inside of the snap pack, when provided instead of HTML
-   * or PDF.
-   */
-  insideTemplate?: string;
-
-  /**
-   * These will be merged with the variables in the template or HTML you create this
-   * order with. The keys in this object should match the variable names in the
-   * template _exactly_ as they are case-sensitive. Note that these _do not_ apply to
-   * PDFs uploaded with the order.
-   */
-  mergeVariables?: { [key: string]: unknown };
-
-  /**
-   * See the section on Metadata.
-   */
-  metadata?: { [key: string]: unknown };
-
-  /**
-   * The HTML content for the outside of the snap pack, when provided instead of a
-   * template or PDF.
-   */
-  outsideHTML?: string;
-
-  /**
-   * The template ID for the outside of the snap pack, when provided instead of HTML
-   * or PDF.
-   */
-  outsideTemplate?: string;
-
-  /**
-   * The tracking number of this order. Populated after an express/certified order
-   * has been processed for delivery.
-   */
-  trackingNumber?: string;
-
-  /**
-   * A signed URL to the uploaded PDF provided at creation time, if a PDF was
-   * supplied.
-   */
-  uploadedPDF?: string;
-
-  /**
-   * PostGrid renders a PDF preview for all orders. This should be inspected to
-   * ensure that the order is correct before it is sent out because it shows what
-   * will be printed and mailed to the recipient. Once the PDF preview is generated,
-   * this field will be returned by all `GET` endpoints which produce this order.
-   *
-   * This URL is a signed link to the PDF preview. It will expire after a short
-   * period of time. If you need to access this URL after it has expired, you can
-   * regenerate it by calling the `GET` endpoint again.
-   */
-  url?: string;
-}
-
-export namespace SnapPackListResponse {
-  /**
-   * The cancellation details of this order. Populated if the order has been
-   * cancelled.
-   */
-  export interface Cancellation {
-    /**
-     * The reason for the cancellation.
-     */
-    reason: 'user_initiated' | 'invalid_content' | 'invalid_order_mailing_class';
-
-    /**
-     * The user ID who cancelled the order.
-     */
-    cancelledByUser?: string;
-
-    /**
-     * An optional note provided by the user who cancelled the order.
-     */
-    note?: string;
-  }
-}
-
-export interface SnapPackDeleteResponse {
-  /**
-   * A unique ID prefixed with snap*pack*
-   */
-  id: string;
-
-  /**
-   * The UTC time at which this resource was created.
-   */
-  createdAt: string;
-
-  /**
-   * The contact information of the sender.
-   */
-  from: ContactsAPI.Contact;
-
-  /**
-   * `true` if this is a live mode resource else `false`.
-   */
-  live: boolean;
-
-  /**
-   * The mailing class of this order. This determines the speed and cost of delivery.
-   * See `OrderMailingClass` for more details.
-   */
-  mailingClass:
-    | 'first_class'
-    | 'standard_class'
-    | 'express'
-    | 'certified'
-    | 'certified_return_receipt'
-    | 'registered'
-    | 'usps_first_class'
-    | 'usps_standard_class'
-    | 'usps_eddm'
-    | 'usps_express_2_day'
-    | 'usps_express_3_day'
-    | 'usps_first_class_certified'
-    | 'usps_first_class_certified_return_receipt'
-    | 'usps_first_class_registered'
-    | 'usps_express_3_day_signature_confirmation'
-    | 'usps_express_3_day_certified'
-    | 'usps_express_3_day_certified_return_receipt'
-    | 'ca_post_lettermail'
-    | 'ca_post_personalized'
-    | 'ca_post_neighbourhood_mail'
-    | 'ups_express_overnight'
-    | 'ups_express_2_day'
-    | 'ups_express_3_day'
-    | 'royal_mail_first_class'
-    | 'royal_mail_second_class'
-    | 'au_post_second_class';
-
-  /**
-   * Always `snap_pack`.
-   */
-  object: 'snap_pack';
-
-  /**
-   * This order will transition from `ready` to `printing` on the day after this
-   * date. For example, if this is a date on Tuesday, the order will transition to
-   * `printing` on Wednesday at midnight eastern time.
-   */
-  sendDate: string;
-
-  /**
-   * Enum representing the supported snap pack sizes.
-   */
-  size: '8.5x11_bifold_v';
-
-  /**
-   * See `OrderStatus` for more details on the status of this order.
-   */
-  status: 'ready' | 'printing' | 'processed_for_delivery' | 'completed' | 'cancelled';
-
-  /**
-   * The recipient of this order. This will be provided even if you delete the
-   * underlying contact.
-   */
-  to: ContactsAPI.Contact;
-
-  /**
-   * The UTC time at which this resource was last updated.
-   */
-  updatedAt: string;
-
-  /**
-   * The cancellation details of this order. Populated if the order has been
-   * cancelled.
-   */
-  cancellation?: SnapPackDeleteResponse.Cancellation;
-
-  /**
-   * An optional string describing this resource. Will be visible in the API and the
-   * dashboard.
-   */
-  description?: string;
-
-  /**
-   * The last date that the IMB status was updated. See `imbStatus` for more details.
-   */
-  imbDate?: string;
-
-  /**
-   * The Intelligent Mail Barcode (IMB) status of this order. Only populated for
-   * US-printed and US-destined orders. This is the most detailed way to track
-   * non-express/certified orders.
-   */
-  imbStatus?: 'entered_mail_stream' | 'out_for_delivery' | 'returned_to_sender';
-
-  /**
-   * The most recent ZIP code of the USPS facility that the order has been processed
-   * through. Only populated when an `imbStatus` is present.
-   */
-  imbZIPCode?: string;
-
-  /**
-   * The HTML content for the inside of the snap pack, when provided instead of a
-   * template or PDF.
-   */
-  insideHTML?: string;
-
-  /**
-   * The template ID for the inside of the snap pack, when provided instead of HTML
-   * or PDF.
-   */
-  insideTemplate?: string;
-
-  /**
-   * These will be merged with the variables in the template or HTML you create this
-   * order with. The keys in this object should match the variable names in the
-   * template _exactly_ as they are case-sensitive. Note that these _do not_ apply to
-   * PDFs uploaded with the order.
-   */
-  mergeVariables?: { [key: string]: unknown };
-
-  /**
-   * See the section on Metadata.
-   */
-  metadata?: { [key: string]: unknown };
-
-  /**
-   * The HTML content for the outside of the snap pack, when provided instead of a
-   * template or PDF.
-   */
-  outsideHTML?: string;
-
-  /**
-   * The template ID for the outside of the snap pack, when provided instead of HTML
-   * or PDF.
-   */
-  outsideTemplate?: string;
-
-  /**
-   * The tracking number of this order. Populated after an express/certified order
-   * has been processed for delivery.
-   */
-  trackingNumber?: string;
-
-  /**
-   * A signed URL to the uploaded PDF provided at creation time, if a PDF was
-   * supplied.
-   */
-  uploadedPDF?: string;
-
-  /**
-   * PostGrid renders a PDF preview for all orders. This should be inspected to
-   * ensure that the order is correct before it is sent out because it shows what
-   * will be printed and mailed to the recipient. Once the PDF preview is generated,
-   * this field will be returned by all `GET` endpoints which produce this order.
-   *
-   * This URL is a signed link to the PDF preview. It will expire after a short
-   * period of time. If you need to access this URL after it has expired, you can
-   * regenerate it by calling the `GET` endpoint again.
-   */
-  url?: string;
-}
-
-export namespace SnapPackDeleteResponse {
-  /**
-   * The cancellation details of this order. Populated if the order has been
-   * cancelled.
-   */
-  export interface Cancellation {
-    /**
-     * The reason for the cancellation.
-     */
-    reason: 'user_initiated' | 'invalid_content' | 'invalid_order_mailing_class';
-
-    /**
-     * The user ID who cancelled the order.
-     */
-    cancelledByUser?: string;
-
-    /**
-     * An optional note provided by the user who cancelled the order.
-     */
-    note?: string;
-  }
-}
-
-export interface SnapPackProgressionsResponse {
-  /**
-   * A unique ID prefixed with snap*pack*
-   */
-  id: string;
-
-  /**
-   * The UTC time at which this resource was created.
-   */
-  createdAt: string;
-
-  /**
-   * The contact information of the sender.
-   */
-  from: ContactsAPI.Contact;
-
-  /**
-   * `true` if this is a live mode resource else `false`.
-   */
-  live: boolean;
-
-  /**
-   * The mailing class of this order. This determines the speed and cost of delivery.
-   * See `OrderMailingClass` for more details.
-   */
-  mailingClass:
-    | 'first_class'
-    | 'standard_class'
-    | 'express'
-    | 'certified'
-    | 'certified_return_receipt'
-    | 'registered'
-    | 'usps_first_class'
-    | 'usps_standard_class'
-    | 'usps_eddm'
-    | 'usps_express_2_day'
-    | 'usps_express_3_day'
-    | 'usps_first_class_certified'
-    | 'usps_first_class_certified_return_receipt'
-    | 'usps_first_class_registered'
-    | 'usps_express_3_day_signature_confirmation'
-    | 'usps_express_3_day_certified'
-    | 'usps_express_3_day_certified_return_receipt'
-    | 'ca_post_lettermail'
-    | 'ca_post_personalized'
-    | 'ca_post_neighbourhood_mail'
-    | 'ups_express_overnight'
-    | 'ups_express_2_day'
-    | 'ups_express_3_day'
-    | 'royal_mail_first_class'
-    | 'royal_mail_second_class'
-    | 'au_post_second_class';
-
-  /**
-   * Always `snap_pack`.
-   */
-  object: 'snap_pack';
-
-  /**
-   * This order will transition from `ready` to `printing` on the day after this
-   * date. For example, if this is a date on Tuesday, the order will transition to
-   * `printing` on Wednesday at midnight eastern time.
-   */
-  sendDate: string;
-
-  /**
-   * Enum representing the supported snap pack sizes.
-   */
-  size: '8.5x11_bifold_v';
-
-  /**
-   * See `OrderStatus` for more details on the status of this order.
-   */
-  status: 'ready' | 'printing' | 'processed_for_delivery' | 'completed' | 'cancelled';
-
-  /**
-   * The recipient of this order. This will be provided even if you delete the
-   * underlying contact.
-   */
-  to: ContactsAPI.Contact;
-
-  /**
-   * The UTC time at which this resource was last updated.
-   */
-  updatedAt: string;
-
-  /**
-   * The cancellation details of this order. Populated if the order has been
-   * cancelled.
-   */
-  cancellation?: SnapPackProgressionsResponse.Cancellation;
-
-  /**
-   * An optional string describing this resource. Will be visible in the API and the
-   * dashboard.
-   */
-  description?: string;
-
-  /**
-   * The last date that the IMB status was updated. See `imbStatus` for more details.
-   */
-  imbDate?: string;
-
-  /**
-   * The Intelligent Mail Barcode (IMB) status of this order. Only populated for
-   * US-printed and US-destined orders. This is the most detailed way to track
-   * non-express/certified orders.
-   */
-  imbStatus?: 'entered_mail_stream' | 'out_for_delivery' | 'returned_to_sender';
-
-  /**
-   * The most recent ZIP code of the USPS facility that the order has been processed
-   * through. Only populated when an `imbStatus` is present.
-   */
-  imbZIPCode?: string;
-
-  /**
-   * The HTML content for the inside of the snap pack, when provided instead of a
-   * template or PDF.
-   */
-  insideHTML?: string;
-
-  /**
-   * The template ID for the inside of the snap pack, when provided instead of HTML
-   * or PDF.
-   */
-  insideTemplate?: string;
-
-  /**
-   * These will be merged with the variables in the template or HTML you create this
-   * order with. The keys in this object should match the variable names in the
-   * template _exactly_ as they are case-sensitive. Note that these _do not_ apply to
-   * PDFs uploaded with the order.
-   */
-  mergeVariables?: { [key: string]: unknown };
-
-  /**
-   * See the section on Metadata.
-   */
-  metadata?: { [key: string]: unknown };
-
-  /**
-   * The HTML content for the outside of the snap pack, when provided instead of a
-   * template or PDF.
-   */
-  outsideHTML?: string;
-
-  /**
-   * The template ID for the outside of the snap pack, when provided instead of HTML
-   * or PDF.
-   */
-  outsideTemplate?: string;
-
-  /**
-   * The tracking number of this order. Populated after an express/certified order
-   * has been processed for delivery.
-   */
-  trackingNumber?: string;
-
-  /**
-   * A signed URL to the uploaded PDF provided at creation time, if a PDF was
-   * supplied.
-   */
-  uploadedPDF?: string;
-
-  /**
-   * PostGrid renders a PDF preview for all orders. This should be inspected to
-   * ensure that the order is correct before it is sent out because it shows what
-   * will be printed and mailed to the recipient. Once the PDF preview is generated,
-   * this field will be returned by all `GET` endpoints which produce this order.
-   *
-   * This URL is a signed link to the PDF preview. It will expire after a short
-   * period of time. If you need to access this URL after it has expired, you can
-   * regenerate it by calling the `GET` endpoint again.
-   */
-  url?: string;
-}
-
-export namespace SnapPackProgressionsResponse {
-  /**
-   * The cancellation details of this order. Populated if the order has been
-   * cancelled.
-   */
-  export interface Cancellation {
-    /**
-     * The reason for the cancellation.
-     */
-    reason: 'user_initiated' | 'invalid_content' | 'invalid_order_mailing_class';
-
-    /**
-     * The user ID who cancelled the order.
-     */
-    cancelledByUser?: string;
-
-    /**
-     * An optional note provided by the user who cancelled the order.
-     */
-    note?: string;
-  }
-}
+export type SnapPackCreateResponse = SnapPack | SnapPack;
 
 export interface SnapPackRetrieveCapabilitiesResponse {
   mailingClasses: Array<
@@ -1175,45 +390,45 @@ export type SnapPackCreateParams =
 export declare namespace SnapPackCreateParams {
   export interface SnapPackCreateWithHTML {
     /**
-     * The contact information of the sender. You can pass contact information inline
-     * here just like you can for the `to` contact.
+     * Body param: The contact information of the sender. You can pass contact
+     * information inline here just like you can for the `to` contact.
      */
     from: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
     /**
-     * The HTML content for the inside of the snap pack. You can supply _either_ this
-     * or `insideTemplate` but not both.
+     * Body param: The HTML content for the inside of the snap pack. You can supply
+     * _either_ this or `insideTemplate` but not both.
      */
     insideHTML: string;
 
     /**
-     * The HTML content for the outside of the snap pack. You can supply _either_ this
-     * or `outsideTemplate` but not both.
+     * Body param: The HTML content for the outside of the snap pack. You can supply
+     * _either_ this or `outsideTemplate` but not both.
      */
     outsideHTML: string;
 
     /**
-     * Enum representing the supported snap pack sizes.
+     * Body param: Enum representing the supported snap pack sizes.
      */
     size: '8.5x11_bifold_v';
 
     /**
-     * The recipient of this order. You can either supply the contact information
-     * inline here or provide a contact ID. PostGrid will automatically deduplicate
-     * contacts regardless of whether you provide the information inline here or call
-     * the contact creation endpoint.
+     * Body param: The recipient of this order. You can either supply the contact
+     * information inline here or provide a contact ID. PostGrid will automatically
+     * deduplicate contacts regardless of whether you provide the information inline
+     * here or call the contact creation endpoint.
      */
     to: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
     /**
-     * An optional string describing this resource. Will be visible in the API and the
-     * dashboard.
+     * Body param: An optional string describing this resource. Will be visible in the
+     * API and the dashboard.
      */
     description?: string;
 
     /**
-     * The mailing class of this order. If not provided, automatically set to
-     * `first_class`.
+     * Body param: The mailing class of this order. If not provided, automatically set
+     * to `first_class`.
      */
     mailingClass?:
       | 'first_class'
@@ -1244,66 +459,72 @@ export declare namespace SnapPackCreateParams {
       | 'au_post_second_class';
 
     /**
-     * These will be merged with the variables in the template or HTML you create this
-     * order with. The keys in this object should match the variable names in the
-     * template _exactly_ as they are case-sensitive. Note that these _do not_ apply to
-     * PDFs uploaded with the order.
+     * Body param: These will be merged with the variables in the template or HTML you
+     * create this order with. The keys in this object should match the variable names
+     * in the template _exactly_ as they are case-sensitive. Note that these _do not_
+     * apply to PDFs uploaded with the order.
      */
     mergeVariables?: { [key: string]: unknown };
 
     /**
-     * See the section on Metadata.
+     * Body param: See the section on Metadata.
      */
     metadata?: { [key: string]: unknown };
 
     /**
-     * This order will transition from `ready` to `printing` on the day after this
-     * date. You can use this parameter to schedule orders for a future date.
+     * Body param: This order will transition from `ready` to `printing` on the day
+     * after this date. You can use this parameter to schedule orders for a future
+     * date.
      */
     sendDate?: string;
+
+    /**
+     * Header param
+     */
+    'idempotency-key'?: string;
   }
 
   export interface SnapPackCreateWithTemplate {
     /**
-     * The contact information of the sender. You can pass contact information inline
-     * here just like you can for the `to` contact.
+     * Body param: The contact information of the sender. You can pass contact
+     * information inline here just like you can for the `to` contact.
      */
     from: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
     /**
-     * The template ID for the inside of the snap pack. You can supply _either_ this or
-     * `insideHTML` but not both.
+     * Body param: The template ID for the inside of the snap pack. You can supply
+     * _either_ this or `insideHTML` but not both.
      */
     insideTemplate: string;
 
     /**
-     * The template ID for the outside of the snap pack. You can supply _either_ this
-     * or `outsideHTML` but not both.
+     * Body param: The template ID for the outside of the snap pack. You can supply
+     * _either_ this or `outsideHTML` but not both.
      */
     outsideTemplate: string;
 
     /**
-     * Enum representing the supported snap pack sizes.
+     * Body param: Enum representing the supported snap pack sizes.
      */
     size: '8.5x11_bifold_v';
 
     /**
-     * The recipient of this order. You can either supply the contact information
-     * inline here or provide a contact ID. PostGrid will automatically deduplicate
-     * contacts regardless of whether you provide the information inline here or call
-     * the contact creation endpoint.
+     * Body param: The recipient of this order. You can either supply the contact
+     * information inline here or provide a contact ID. PostGrid will automatically
+     * deduplicate contacts regardless of whether you provide the information inline
+     * here or call the contact creation endpoint.
      */
     to: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
     /**
-     * An optional string describing this resource. Will be visible in the API and the
-     * dashboard.
+     * Body param: An optional string describing this resource. Will be visible in the
+     * API and the dashboard.
      */
     description?: string;
 
     /**
-     * The mailing class of this order. If not provided, automatically set to
-     * `first_class`.
+     * Body param: The mailing class of this order. If not provided, automatically set
+     * to `first_class`.
      */
     mailingClass?:
       | 'first_class'
@@ -1334,60 +555,66 @@ export declare namespace SnapPackCreateParams {
       | 'au_post_second_class';
 
     /**
-     * These will be merged with the variables in the template or HTML you create this
-     * order with. The keys in this object should match the variable names in the
-     * template _exactly_ as they are case-sensitive. Note that these _do not_ apply to
-     * PDFs uploaded with the order.
+     * Body param: These will be merged with the variables in the template or HTML you
+     * create this order with. The keys in this object should match the variable names
+     * in the template _exactly_ as they are case-sensitive. Note that these _do not_
+     * apply to PDFs uploaded with the order.
      */
     mergeVariables?: { [key: string]: unknown };
 
     /**
-     * See the section on Metadata.
+     * Body param: See the section on Metadata.
      */
     metadata?: { [key: string]: unknown };
 
     /**
-     * This order will transition from `ready` to `printing` on the day after this
-     * date. You can use this parameter to schedule orders for a future date.
+     * Body param: This order will transition from `ready` to `printing` on the day
+     * after this date. You can use this parameter to schedule orders for a future
+     * date.
      */
     sendDate?: string;
+
+    /**
+     * Header param
+     */
+    'idempotency-key'?: string;
   }
 
   export interface SnapPackCreateWithPdf {
     /**
-     * The contact information of the sender. You can pass contact information inline
-     * here just like you can for the `to` contact.
+     * Body param: The contact information of the sender. You can pass contact
+     * information inline here just like you can for the `to` contact.
      */
     from: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
     /**
-     * A URL or a multipart-uploaded two-page PDF (first page is the outside, second
-     * page is the inside) that matches the selected snap pack size.
+     * Body param: A URL or a multipart-uploaded two-page PDF (first page is the
+     * outside, second page is the inside) that matches the selected snap pack size.
      */
-    pdf: string;
+    pdf: string | Uploadable;
 
     /**
-     * Enum representing the supported snap pack sizes.
+     * Body param: Enum representing the supported snap pack sizes.
      */
     size: '8.5x11_bifold_v';
 
     /**
-     * The recipient of this order. You can either supply the contact information
-     * inline here or provide a contact ID. PostGrid will automatically deduplicate
-     * contacts regardless of whether you provide the information inline here or call
-     * the contact creation endpoint.
+     * Body param: The recipient of this order. You can either supply the contact
+     * information inline here or provide a contact ID. PostGrid will automatically
+     * deduplicate contacts regardless of whether you provide the information inline
+     * here or call the contact creation endpoint.
      */
     to: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
     /**
-     * An optional string describing this resource. Will be visible in the API and the
-     * dashboard.
+     * Body param: An optional string describing this resource. Will be visible in the
+     * API and the dashboard.
      */
     description?: string;
 
     /**
-     * The mailing class of this order. If not provided, automatically set to
-     * `first_class`.
+     * Body param: The mailing class of this order. If not provided, automatically set
+     * to `first_class`.
      */
     mailingClass?:
       | 'first_class'
@@ -1418,23 +645,29 @@ export declare namespace SnapPackCreateParams {
       | 'au_post_second_class';
 
     /**
-     * These will be merged with the variables in the template or HTML you create this
-     * order with. The keys in this object should match the variable names in the
-     * template _exactly_ as they are case-sensitive. Note that these _do not_ apply to
-     * PDFs uploaded with the order.
+     * Body param: These will be merged with the variables in the template or HTML you
+     * create this order with. The keys in this object should match the variable names
+     * in the template _exactly_ as they are case-sensitive. Note that these _do not_
+     * apply to PDFs uploaded with the order.
      */
     mergeVariables?: { [key: string]: unknown };
 
     /**
-     * See the section on Metadata.
+     * Body param: See the section on Metadata.
      */
     metadata?: { [key: string]: unknown };
 
     /**
-     * This order will transition from `ready` to `printing` on the day after this
-     * date. You can use this parameter to schedule orders for a future date.
+     * Body param: This order will transition from `ready` to `printing` on the day
+     * after this date. You can use this parameter to schedule orders for a future
+     * date.
      */
     sendDate?: string;
+
+    /**
+     * Header param
+     */
+    'idempotency-key'?: string;
   }
 }
 
@@ -1470,13 +703,10 @@ export interface SnapPackRetrieveCapabilitiesParams {
 
 export declare namespace SnapPacks {
   export {
+    type SnapPack as SnapPack,
     type SnapPackCreateResponse as SnapPackCreateResponse,
-    type SnapPackRetrieveResponse as SnapPackRetrieveResponse,
-    type SnapPackListResponse as SnapPackListResponse,
-    type SnapPackDeleteResponse as SnapPackDeleteResponse,
-    type SnapPackProgressionsResponse as SnapPackProgressionsResponse,
     type SnapPackRetrieveCapabilitiesResponse as SnapPackRetrieveCapabilitiesResponse,
-    type SnapPackListResponsesSkipLimit as SnapPackListResponsesSkipLimit,
+    type SnapPacksSkipLimit as SnapPacksSkipLimit,
     type SnapPackCreateParams as SnapPackCreateParams,
     type SnapPackListParams as SnapPackListParams,
     type SnapPackRetrieveCapabilitiesParams as SnapPackRetrieveCapabilitiesParams,

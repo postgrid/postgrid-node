@@ -52,6 +52,7 @@ describe('resource postcards', () => {
         phoneNumber: 'phoneNumber',
         postalOrZip: 'postalOrZip',
         provinceOrState: 'provinceOrState',
+        secret: true,
         skipVerification: true,
       },
       description: 'description',
@@ -71,13 +72,15 @@ describe('resource postcards', () => {
         phoneNumber: 'phoneNumber',
         postalOrZip: 'postalOrZip',
         provinceOrState: 'provinceOrState',
+        secret: true,
         skipVerification: true,
       },
       mailingClass: 'first_class',
       mergeVariables: { foo: 'bar' },
       metadata: { foo: 'bar' },
-      paper: 'premium_paper_L6fw2k_N_j',
+      paper: 'standard',
       sendDate: '2019-12-27T18:11:19.117Z',
+      'idempotency-key': 'idempotency-key',
     });
   });
 

@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.7.0 (2026-06-12)
+
+Full Changelog: [v0.6.1...v0.7.0](https://github.com/postgrid/postgrid-node/compare/v0.6.1...v0.7.0)
+
+### Features
+
+* **api:** update api with events and webhook capabilities ([76f555a](https://github.com/postgrid/postgrid-node/commit/76f555ade3f03eae1fbf31e8972b5761c77c8223))
+* New endpoints, fixed and aligned schemas ([763499e](https://github.com/postgrid/postgrid-node/commit/763499e0c794e44eb5ff4372e76fefed195eefef))
+* PE-6131 HOTFIX: Fix idempotency key header for create endpoints ([086b129](https://github.com/postgrid/postgrid-node/commit/086b129ea75f1c609397dfb5ef57abd09a71771a))
+* Update available premium paper IDs ([d21b5de](https://github.com/postgrid/postgrid-node/commit/d21b5def4f3c93fc7fa6e7c1955e727ea8f0a795))
+
+
+### Bug Fixes
+
+* **typescript:** upgrade tsc-multi so that it works with Node 26 ([0e7287b](https://github.com/postgrid/postgrid-node/commit/0e7287bebc5f0eeea9be3c2aa222df39fa585de1))
+
+
+### Chores
+
+* **tests:** remove redundant File import ([608fd6b](https://github.com/postgrid/postgrid-node/commit/608fd6b49fd48ab782be29541184ba9aa5197516))
+
 ## 0.6.1 (2026-05-14)
 
 Full Changelog: [v0.6.0...v0.6.1](https://github.com/postgrid/postgrid-node/compare/v0.6.0...v0.6.1)

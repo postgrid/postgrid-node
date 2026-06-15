@@ -23,6 +23,15 @@ export {
   type AddressVerificationVerifyParams,
 } from './address-verification';
 export {
+  BulkVerification,
+  type AddverList,
+  type BulkVerificationRetrieveResponse,
+  type BulkVerificationListResponse,
+  type BulkVerificationUploadResponse,
+  type BulkVerificationListParams,
+  type BulkVerificationUploadParams,
+} from './bulk-verification';
+export {
   IntlAddressVerification,
   type IntlAddressVerificationAutocompleteResponse,
   type IntlAddressVerificationBatchVerificationResponse,

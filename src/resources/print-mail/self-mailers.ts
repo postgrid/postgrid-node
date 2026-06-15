@@ -4,18 +4,26 @@ import { APIResource } from '../../core/resource';
 import * as ContactsAPI from './contacts';
 import { APIPromise } from '../../core/api-promise';
 import { PagePromise, SkipLimit, type SkipLimitParams } from '../../core/pagination';
+import { type Uploadable } from '../../core/uploads';
+import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
+import { maybeMultipartFormRequestOptions } from '../../internal/uploads';
 import { path } from '../../internal/utils/path';
 
+/**
+ *  Create and manage self mailers.
+ */
 export class SelfMailers extends APIResource {
   /**
    * Create a self-mailer. Note that you can supply one of the following:
    *
    * - HTML content for the inside and outside of the self-mailer
    * - A template ID for the inside and outside of the self-mailer
-   * - A URL or file for a 2 page PDF where the first page is the outside of the
-   *   self-mailer and the second page is the inside
-   * - Upload the aforementioned PDF file via a multipart form upload request
+   * - A URL for a 2 page PDF where the first page is the outside of the self-mailer
+   *   and the second page is the inside Create a self-mailer via a
+   *   multipart/form-data request. Accepts the same fields as the JSON create body
+   *   (nested objects are bracket-encoded form fields, e.g. `to[firstName]`); use
+   *   this content type to upload the PDF file directly.
    *
    * @example
    * ```ts
@@ -29,8 +37,22 @@ export class SelfMailers extends APIResource {
    *   });
    * ```
    */
-  create(body: SelfMailerCreateParams, options?: RequestOptions): APIPromise<SelfMailer> {
-    return this._client.post('/print-mail/v1/self_mailers', { body, ...options });
+  create(params: SelfMailerCreateParams, options?: RequestOptions): APIPromise<SelfMailerCreateResponse> {
+    const { 'idempotency-key': idempotencyKey, ...body } = params;
+    return this._client.post(
+      '/print-mail/v1/self_mailers',
+      maybeMultipartFormRequestOptions(
+        {
+          body,
+          ...options,
+          headers: buildHeaders([
+            { ...(idempotencyKey != null ? { 'idempotency-key': idempotencyKey } : undefined) },
+            options?.headers,
+          ]),
+        },
+        this._client,
+      ),
+    );
   }
 
   /**
@@ -290,6 +312,8 @@ export namespace SelfMailer {
   }
 }
 
+export type SelfMailerCreateResponse = SelfMailer | SelfMailer;
+
 export interface SelfMailerRetrieveURLResponse {
   /**
    * A unique ID prefixed with self*mailer*
@@ -314,45 +338,45 @@ export type SelfMailerCreateParams =
 export declare namespace SelfMailerCreateParams {
   export interface SelfMailerCreateWithHTML {
     /**
-     * The contact information of the sender. You can pass contact information inline
-     * here just like you can for the `to`.
+     * Body param: The contact information of the sender. You can pass contact
+     * information inline here just like you can for the `to`.
      */
     from: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
     /**
-     * The HTML content for the inside of the self-mailer. You can supply _either_ this
-     * or `insideTemplate` but not both.
+     * Body param: The HTML content for the inside of the self-mailer. You can supply
+     * _either_ this or `insideTemplate` but not both.
      */
     insideHTML: string;
 
     /**
-     * The HTML content for the outside of the self-mailer. You can supply _either_
-     * this or `outsideTemplate` but not both.
+     * Body param: The HTML content for the outside of the self-mailer. You can supply
+     * _either_ this or `outsideTemplate` but not both.
      */
     outsideHTML: string;
 
     /**
-     * Enum representing the supported self-mailer sizes.
+     * Body param: Enum representing the supported self-mailer sizes.
      */
     size: '8.5x11_bifold' | '8.5x11_trifold' | '9.5x16_trifold';
 
     /**
-     * The recipient of this order. You can either supply the contact information
-     * inline here or provide a contact ID. PostGrid will automatically deduplicate
-     * contacts regardless of whether you provide the information inline here or call
-     * the contact creation endpoint.
+     * Body param: The recipient of this order. You can either supply the contact
+     * information inline here or provide a contact ID. PostGrid will automatically
+     * deduplicate contacts regardless of whether you provide the information inline
+     * here or call the contact creation endpoint.
      */
     to: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
     /**
-     * An optional string describing this resource. Will be visible in the API and the
-     * dashboard.
+     * Body param: An optional string describing this resource. Will be visible in the
+     * API and the dashboard.
      */
     description?: string;
 
     /**
-     * The mailing class of this order. If not provided, automatically set to
-     * `first_class`.
+     * Body param: The mailing class of this order. If not provided, automatically set
+     * to `first_class`.
      */
     mailingClass?:
       | 'first_class'
@@ -383,75 +407,163 @@ export declare namespace SelfMailerCreateParams {
       | 'au_post_second_class';
 
     /**
-     * These will be merged with the variables in the template or HTML you create this
-     * order with. The keys in this object should match the variable names in the
-     * template _exactly_ as they are case-sensitive. Note that these _do not_ apply to
-     * PDFs uploaded with the order.
+     * Body param: These will be merged with the variables in the template or HTML you
+     * create this order with. The keys in this object should match the variable names
+     * in the template _exactly_ as they are case-sensitive. Note that these _do not_
+     * apply to PDFs uploaded with the order.
      */
     mergeVariables?: { [key: string]: unknown };
 
     /**
-     * See the section on Metadata.
+     * Body param: See the section on Metadata.
      */
     metadata?: { [key: string]: unknown };
 
     /**
-     * This order will transition from `ready` to `printing` on the day after this
-     * date. You can use this parameter to schedule orders for a future date.
+     * Body param: This order will transition from `ready` to `printing` on the day
+     * after this date. You can use this parameter to schedule orders for a future
+     * date.
      */
     sendDate?: string;
+
+    /**
+     * Header param
+     */
+    'idempotency-key'?: string;
   }
 
   export interface SelfMailerCreateWithTemplate {
     /**
-     * The template ID for the inside of the self-mailer. You can supply _either_ this
-     * or `insideHTML` but not both.
-     */
-    insideTemplate: string;
-
-    /**
-     * The template ID for the outside of the self-mailer. You can supply _either_ this
-     * or `outsideHTML` but not both.
-     */
-    outsideTemplate: string;
-  }
-
-  export interface SelfMailerCreateWithPdfurl {
-    /**
-     * The contact information of the sender. You can pass contact information inline
-     * here just like you can for the `to`.
+     * Body param: The contact information of the sender. You can pass contact
+     * information inline here just like you can for the `to`.
      */
     from: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
     /**
-     * A URL pointing to a 2 page PDF file. The first page is the inside of the
-     * self-mailer and the second page is the outside (where the address will be
+     * Body param: The template ID for the inside of the self-mailer. You can supply
+     * _either_ this or `insideHTML` but not both.
+     */
+    insideTemplate: string;
+
+    /**
+     * Body param: The template ID for the outside of the self-mailer. You can supply
+     * _either_ this or `outsideHTML` but not both.
+     */
+    outsideTemplate: string;
+
+    /**
+     * Body param: Enum representing the supported self-mailer sizes.
+     */
+    size: '8.5x11_bifold' | '8.5x11_trifold' | '9.5x16_trifold';
+
+    /**
+     * Body param: The recipient of this order. You can either supply the contact
+     * information inline here or provide a contact ID. PostGrid will automatically
+     * deduplicate contacts regardless of whether you provide the information inline
+     * here or call the contact creation endpoint.
+     */
+    to: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
+
+    /**
+     * Body param: An optional string describing this resource. Will be visible in the
+     * API and the dashboard.
+     */
+    description?: string;
+
+    /**
+     * Body param: The mailing class of this order. If not provided, automatically set
+     * to `first_class`.
+     */
+    mailingClass?:
+      | 'first_class'
+      | 'standard_class'
+      | 'express'
+      | 'certified'
+      | 'certified_return_receipt'
+      | 'registered'
+      | 'usps_first_class'
+      | 'usps_standard_class'
+      | 'usps_eddm'
+      | 'usps_express_2_day'
+      | 'usps_express_3_day'
+      | 'usps_first_class_certified'
+      | 'usps_first_class_certified_return_receipt'
+      | 'usps_first_class_registered'
+      | 'usps_express_3_day_signature_confirmation'
+      | 'usps_express_3_day_certified'
+      | 'usps_express_3_day_certified_return_receipt'
+      | 'ca_post_lettermail'
+      | 'ca_post_personalized'
+      | 'ca_post_neighbourhood_mail'
+      | 'ups_express_overnight'
+      | 'ups_express_2_day'
+      | 'ups_express_3_day'
+      | 'royal_mail_first_class'
+      | 'royal_mail_second_class'
+      | 'au_post_second_class';
+
+    /**
+     * Body param: These will be merged with the variables in the template or HTML you
+     * create this order with. The keys in this object should match the variable names
+     * in the template _exactly_ as they are case-sensitive. Note that these _do not_
+     * apply to PDFs uploaded with the order.
+     */
+    mergeVariables?: { [key: string]: unknown };
+
+    /**
+     * Body param: See the section on Metadata.
+     */
+    metadata?: { [key: string]: unknown };
+
+    /**
+     * Body param: This order will transition from `ready` to `printing` on the day
+     * after this date. You can use this parameter to schedule orders for a future
+     * date.
+     */
+    sendDate?: string;
+
+    /**
+     * Header param
+     */
+    'idempotency-key'?: string;
+  }
+
+  export interface SelfMailerCreateWithPdfurl {
+    /**
+     * Body param: The contact information of the sender. You can pass contact
+     * information inline here just like you can for the `to`.
+     */
+    from: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
+
+    /**
+     * Body param: A URL pointing to a 2 page PDF file. The first page is the inside of
+     * the self-mailer and the second page is the outside (where the address will be
      * stamped on).
      */
     pdf: string;
 
     /**
-     * Enum representing the supported self-mailer sizes.
+     * Body param: Enum representing the supported self-mailer sizes.
      */
     size: '8.5x11_bifold' | '8.5x11_trifold' | '9.5x16_trifold';
 
     /**
-     * The recipient of this order. You can either supply the contact information
-     * inline here or provide a contact ID. PostGrid will automatically deduplicate
-     * contacts regardless of whether you provide the information inline here or call
-     * the contact creation endpoint.
+     * Body param: The recipient of this order. You can either supply the contact
+     * information inline here or provide a contact ID. PostGrid will automatically
+     * deduplicate contacts regardless of whether you provide the information inline
+     * here or call the contact creation endpoint.
      */
     to: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
     /**
-     * An optional string describing this resource. Will be visible in the API and the
-     * dashboard.
+     * Body param: An optional string describing this resource. Will be visible in the
+     * API and the dashboard.
      */
     description?: string;
 
     /**
-     * The mailing class of this order. If not provided, automatically set to
-     * `first_class`.
+     * Body param: The mailing class of this order. If not provided, automatically set
+     * to `first_class`.
      */
     mailingClass?:
       | 'first_class'
@@ -482,60 +594,67 @@ export declare namespace SelfMailerCreateParams {
       | 'au_post_second_class';
 
     /**
-     * These will be merged with the variables in the template or HTML you create this
-     * order with. The keys in this object should match the variable names in the
-     * template _exactly_ as they are case-sensitive. Note that these _do not_ apply to
-     * PDFs uploaded with the order.
+     * Body param: These will be merged with the variables in the template or HTML you
+     * create this order with. The keys in this object should match the variable names
+     * in the template _exactly_ as they are case-sensitive. Note that these _do not_
+     * apply to PDFs uploaded with the order.
      */
     mergeVariables?: { [key: string]: unknown };
 
     /**
-     * See the section on Metadata.
+     * Body param: See the section on Metadata.
      */
     metadata?: { [key: string]: unknown };
 
     /**
-     * This order will transition from `ready` to `printing` on the day after this
-     * date. You can use this parameter to schedule orders for a future date.
+     * Body param: This order will transition from `ready` to `printing` on the day
+     * after this date. You can use this parameter to schedule orders for a future
+     * date.
      */
     sendDate?: string;
+
+    /**
+     * Header param
+     */
+    'idempotency-key'?: string;
   }
 
   export interface SelfMailerCreateWithPdfFile {
     /**
-     * The contact information of the sender. You can pass contact information inline
-     * here just like you can for the `to`.
+     * Body param: The contact information of the sender. You can pass contact
+     * information inline here just like you can for the `to`.
      */
     from: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
     /**
-     * A 2 page PDF file. The first page is the inside of the self-mailer and the
-     * second page is the outside (where the address will be stamped on).
+     * Body param: Represents a raw file upload. Sending the actual file requires a
+     * `multipart/form-data` request; in `application/json` request bodies, supply a
+     * URL instead.
      */
-    pdf: string;
+    pdf: Uploadable;
 
     /**
-     * Enum representing the supported self-mailer sizes.
+     * Body param: Enum representing the supported self-mailer sizes.
      */
     size: '8.5x11_bifold' | '8.5x11_trifold' | '9.5x16_trifold';
 
     /**
-     * The recipient of this order. You can either supply the contact information
-     * inline here or provide a contact ID. PostGrid will automatically deduplicate
-     * contacts regardless of whether you provide the information inline here or call
-     * the contact creation endpoint.
+     * Body param: The recipient of this order. You can either supply the contact
+     * information inline here or provide a contact ID. PostGrid will automatically
+     * deduplicate contacts regardless of whether you provide the information inline
+     * here or call the contact creation endpoint.
      */
     to: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
     /**
-     * An optional string describing this resource. Will be visible in the API and the
-     * dashboard.
+     * Body param: An optional string describing this resource. Will be visible in the
+     * API and the dashboard.
      */
     description?: string;
 
     /**
-     * The mailing class of this order. If not provided, automatically set to
-     * `first_class`.
+     * Body param: The mailing class of this order. If not provided, automatically set
+     * to `first_class`.
      */
     mailingClass?:
       | 'first_class'
@@ -566,23 +685,29 @@ export declare namespace SelfMailerCreateParams {
       | 'au_post_second_class';
 
     /**
-     * These will be merged with the variables in the template or HTML you create this
-     * order with. The keys in this object should match the variable names in the
-     * template _exactly_ as they are case-sensitive. Note that these _do not_ apply to
-     * PDFs uploaded with the order.
+     * Body param: These will be merged with the variables in the template or HTML you
+     * create this order with. The keys in this object should match the variable names
+     * in the template _exactly_ as they are case-sensitive. Note that these _do not_
+     * apply to PDFs uploaded with the order.
      */
     mergeVariables?: { [key: string]: unknown };
 
     /**
-     * See the section on Metadata.
+     * Body param: See the section on Metadata.
      */
     metadata?: { [key: string]: unknown };
 
     /**
-     * This order will transition from `ready` to `printing` on the day after this
-     * date. You can use this parameter to schedule orders for a future date.
+     * Body param: This order will transition from `ready` to `printing` on the day
+     * after this date. You can use this parameter to schedule orders for a future
+     * date.
      */
     sendDate?: string;
+
+    /**
+     * Header param
+     */
+    'idempotency-key'?: string;
   }
 }
 
@@ -600,6 +725,7 @@ export interface SelfMailerListParams extends SkipLimitParams {
 export declare namespace SelfMailers {
   export {
     type SelfMailer as SelfMailer,
+    type SelfMailerCreateResponse as SelfMailerCreateResponse,
     type SelfMailerRetrieveURLResponse as SelfMailerRetrieveURLResponse,
     type SelfMailersSkipLimit as SelfMailersSkipLimit,
     type SelfMailerCreateParams as SelfMailerCreateParams,

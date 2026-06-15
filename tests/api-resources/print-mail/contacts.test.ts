@@ -43,6 +43,7 @@ describe('resource contacts', () => {
       phoneNumber: 'phoneNumber',
       postalOrZip: 'postalOrZip',
       provinceOrState: 'provinceOrState',
+      secret: true,
       skipVerification: true,
     });
   });

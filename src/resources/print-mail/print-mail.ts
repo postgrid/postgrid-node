@@ -58,6 +58,8 @@ import {
   Contacts,
   ContactsSkipLimit,
 } from './contacts';
+import * as EventsAPI from './events';
+import { Event, EventListParams, Events, EventsSkipLimit } from './events';
 import * as LettersAPI from './letters';
 import {
   AddressPlacement,
@@ -65,6 +67,7 @@ import {
   Letter,
   LetterCancelParams,
   LetterCreateParams,
+  LetterCreateResponse,
   LetterListParams,
   LetterRetrieveURLResponse,
   LetterSize,
@@ -101,6 +104,7 @@ import {
   Postcard,
   PostcardCancelParams,
   PostcardCreateParams,
+  PostcardCreateResponse,
   PostcardListParams,
   PostcardRetrieveURLResponse,
   Postcards,
@@ -110,6 +114,7 @@ import * as SelfMailersAPI from './self-mailers';
 import {
   SelfMailer,
   SelfMailerCreateParams,
+  SelfMailerCreateResponse,
   SelfMailerListParams,
   SelfMailerRetrieveURLResponse,
   SelfMailers,
@@ -117,17 +122,14 @@ import {
 } from './self-mailers';
 import * as SnapPacksAPI from './snap-packs';
 import {
+  SnapPack,
   SnapPackCreateParams,
   SnapPackCreateResponse,
-  SnapPackDeleteResponse,
   SnapPackListParams,
-  SnapPackListResponse,
-  SnapPackListResponsesSkipLimit,
-  SnapPackProgressionsResponse,
   SnapPackRetrieveCapabilitiesParams,
   SnapPackRetrieveCapabilitiesResponse,
-  SnapPackRetrieveResponse,
   SnapPacks,
+  SnapPacksSkipLimit,
 } from './snap-packs';
 import * as SubOrganizationsAPI from './sub-organizations';
 import {
@@ -177,6 +179,19 @@ import {
   TrackerUpdateResponse,
   Trackers,
 } from './trackers';
+import * as WebhooksAPI from './webhooks';
+import {
+  Webhook,
+  WebhookCreateParams,
+  WebhookDeleteResponse,
+  WebhookInvocation,
+  WebhookInvocationsSkipLimit,
+  WebhookListInvocationsParams,
+  WebhookListParams,
+  WebhookUpdateParams,
+  Webhooks,
+  WebhooksSkipLimit,
+} from './webhooks';
 import * as ReportsAPI from './reports/reports';
 import {
   DeletedResponse,
@@ -188,6 +203,14 @@ import {
   Reports,
   ReportsSkipLimit,
 } from './reports/reports';
+import * as ReturnEnvelopesAPI from './return-envelopes/return-envelopes';
+import {
+  ReturnEnvelope,
+  ReturnEnvelopeCreateParams,
+  ReturnEnvelopeListParams,
+  ReturnEnvelopes,
+  ReturnEnvelopesSkipLimit,
+} from './return-envelopes/return-envelopes';
 import * as TargetedListBuildsAPI from './targeted-list-builds/targeted-list-builds';
 import {
   TargetedListBuildConfirmResponse,
@@ -218,11 +241,14 @@ export class PrintMail extends APIResource {
   contacts: ContactsAPI.Contacts = new ContactsAPI.Contacts(this._client);
   templates: TemplatesAPI.Templates = new TemplatesAPI.Templates(this._client);
   trackers: TrackersAPI.Trackers = new TrackersAPI.Trackers(this._client);
+  webhooks: WebhooksAPI.Webhooks = new WebhooksAPI.Webhooks(this._client);
+  events: EventsAPI.Events = new EventsAPI.Events(this._client);
   letters: LettersAPI.Letters = new LettersAPI.Letters(this._client);
   postcards: PostcardsAPI.Postcards = new PostcardsAPI.Postcards(this._client);
   bankAccounts: BankAccountsAPI.BankAccounts = new BankAccountsAPI.BankAccounts(this._client);
   cheques: ChequesAPI.Cheques = new ChequesAPI.Cheques(this._client);
   selfMailers: SelfMailersAPI.SelfMailers = new SelfMailersAPI.SelfMailers(this._client);
+  returnEnvelopes: ReturnEnvelopesAPI.ReturnEnvelopes = new ReturnEnvelopesAPI.ReturnEnvelopes(this._client);
   campaigns: CampaignsAPI.Campaigns = new CampaignsAPI.Campaigns(this._client);
   mailingListImports: MailingListImportsAPI.MailingListImports = new MailingListImportsAPI.MailingListImports(
     this._client,
@@ -247,11 +273,14 @@ export class PrintMail extends APIResource {
 PrintMail.Contacts = Contacts;
 PrintMail.Templates = Templates;
 PrintMail.Trackers = Trackers;
+PrintMail.Webhooks = Webhooks;
+PrintMail.Events = Events;
 PrintMail.Letters = Letters;
 PrintMail.Postcards = Postcards;
 PrintMail.BankAccounts = BankAccounts;
 PrintMail.Cheques = Cheques;
 PrintMail.SelfMailers = SelfMailers;
+PrintMail.ReturnEnvelopes = ReturnEnvelopes;
 PrintMail.Campaigns = Campaigns;
 PrintMail.MailingListImports = MailingListImports;
 PrintMail.MailingLists = MailingLists;
@@ -303,12 +332,33 @@ export declare namespace PrintMail {
   };
 
   export {
+    Webhooks as Webhooks,
+    type Webhook as Webhook,
+    type WebhookInvocation as WebhookInvocation,
+    type WebhookDeleteResponse as WebhookDeleteResponse,
+    type WebhooksSkipLimit as WebhooksSkipLimit,
+    type WebhookInvocationsSkipLimit as WebhookInvocationsSkipLimit,
+    type WebhookCreateParams as WebhookCreateParams,
+    type WebhookUpdateParams as WebhookUpdateParams,
+    type WebhookListParams as WebhookListParams,
+    type WebhookListInvocationsParams as WebhookListInvocationsParams,
+  };
+
+  export {
+    Events as Events,
+    type Event as Event,
+    type EventsSkipLimit as EventsSkipLimit,
+    type EventListParams as EventListParams,
+  };
+
+  export {
     Letters as Letters,
     type AddressPlacement as AddressPlacement,
     type AttachedPdf as AttachedPdf,
     type Letter as Letter,
     type LetterSize as LetterSize,
     type PlasticCard as PlasticCard,
+    type LetterCreateResponse as LetterCreateResponse,
     type LetterRetrieveURLResponse as LetterRetrieveURLResponse,
     type LettersSkipLimit as LettersSkipLimit,
     type LetterCreateParams as LetterCreateParams,
@@ -319,6 +369,7 @@ export declare namespace PrintMail {
   export {
     Postcards as Postcards,
     type Postcard as Postcard,
+    type PostcardCreateResponse as PostcardCreateResponse,
     type PostcardRetrieveURLResponse as PostcardRetrieveURLResponse,
     type PostcardsSkipLimit as PostcardsSkipLimit,
     type PostcardCreateParams as PostcardCreateParams,
@@ -351,10 +402,19 @@ export declare namespace PrintMail {
   export {
     SelfMailers as SelfMailers,
     type SelfMailer as SelfMailer,
+    type SelfMailerCreateResponse as SelfMailerCreateResponse,
     type SelfMailerRetrieveURLResponse as SelfMailerRetrieveURLResponse,
     type SelfMailersSkipLimit as SelfMailersSkipLimit,
     type SelfMailerCreateParams as SelfMailerCreateParams,
     type SelfMailerListParams as SelfMailerListParams,
+  };
+
+  export {
+    ReturnEnvelopes as ReturnEnvelopes,
+    type ReturnEnvelope as ReturnEnvelope,
+    type ReturnEnvelopesSkipLimit as ReturnEnvelopesSkipLimit,
+    type ReturnEnvelopeCreateParams as ReturnEnvelopeCreateParams,
+    type ReturnEnvelopeListParams as ReturnEnvelopeListParams,
   };
 
   export {
@@ -429,13 +489,10 @@ export declare namespace PrintMail {
 
   export {
     SnapPacks as SnapPacks,
+    type SnapPack as SnapPack,
     type SnapPackCreateResponse as SnapPackCreateResponse,
-    type SnapPackRetrieveResponse as SnapPackRetrieveResponse,
-    type SnapPackListResponse as SnapPackListResponse,
-    type SnapPackDeleteResponse as SnapPackDeleteResponse,
-    type SnapPackProgressionsResponse as SnapPackProgressionsResponse,
     type SnapPackRetrieveCapabilitiesResponse as SnapPackRetrieveCapabilitiesResponse,
-    type SnapPackListResponsesSkipLimit as SnapPackListResponsesSkipLimit,
+    type SnapPacksSkipLimit as SnapPacksSkipLimit,
     type SnapPackCreateParams as SnapPackCreateParams,
     type SnapPackListParams as SnapPackListParams,
     type SnapPackRetrieveCapabilitiesParams as SnapPackRetrieveCapabilitiesParams,

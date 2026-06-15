@@ -52,6 +52,7 @@ export {
   type ContactListParams,
   type ContactsSkipLimit,
 } from './contacts';
+export { Events, type Event, type EventListParams, type EventsSkipLimit } from './events';
 export {
   Letters,
   type AddressPlacement,
@@ -59,6 +60,7 @@ export {
   type Letter,
   type LetterSize,
   type PlasticCard,
+  type LetterCreateResponse,
   type LetterRetrieveURLResponse,
   type LetterCreateParams,
   type LetterListParams,
@@ -90,6 +92,7 @@ export {
 export {
   Postcards,
   type Postcard,
+  type PostcardCreateResponse,
   type PostcardRetrieveURLResponse,
   type PostcardCreateParams,
   type PostcardListParams,
@@ -108,8 +111,16 @@ export {
   type ReportsSkipLimit,
 } from './reports/index';
 export {
+  ReturnEnvelopes,
+  type ReturnEnvelope,
+  type ReturnEnvelopeCreateParams,
+  type ReturnEnvelopeListParams,
+  type ReturnEnvelopesSkipLimit,
+} from './return-envelopes/index';
+export {
   SelfMailers,
   type SelfMailer,
+  type SelfMailerCreateResponse,
   type SelfMailerRetrieveURLResponse,
   type SelfMailerCreateParams,
   type SelfMailerListParams,
@@ -117,16 +128,13 @@ export {
 } from './self-mailers';
 export {
   SnapPacks,
+  type SnapPack,
   type SnapPackCreateResponse,
-  type SnapPackRetrieveResponse,
-  type SnapPackListResponse,
-  type SnapPackDeleteResponse,
-  type SnapPackProgressionsResponse,
   type SnapPackRetrieveCapabilitiesResponse,
   type SnapPackCreateParams,
   type SnapPackListParams,
   type SnapPackRetrieveCapabilitiesParams,
-  type SnapPackListResponsesSkipLimit,
+  type SnapPacksSkipLimit,
 } from './snap-packs';
 export {
   SubOrganizations,
@@ -195,3 +203,15 @@ export {
   type VirtualMailboxListParams,
   type VirtualMailboxListResponsesSkipLimit,
 } from './virtual-mailboxes/index';
+export {
+  Webhooks,
+  type Webhook,
+  type WebhookInvocation,
+  type WebhookDeleteResponse,
+  type WebhookCreateParams,
+  type WebhookUpdateParams,
+  type WebhookListParams,
+  type WebhookListInvocationsParams,
+  type WebhooksSkipLimit,
+  type WebhookInvocationsSkipLimit,
+} from './webhooks';

@@ -52,6 +52,7 @@ describe('resource letters', () => {
         phoneNumber: 'phoneNumber',
         postalOrZip: 'postalOrZip',
         provinceOrState: 'provinceOrState',
+        secret: true,
         skipVerification: true,
       },
       html: 'html',
@@ -71,6 +72,7 @@ describe('resource letters', () => {
         phoneNumber: 'phoneNumber',
         postalOrZip: 'postalOrZip',
         provinceOrState: 'provinceOrState',
+        secret: true,
         skipVerification: true,
       },
       addressPlacement: 'top_first_page',
@@ -82,6 +84,7 @@ describe('resource letters', () => {
       mailingClass: 'first_class',
       mergeVariables: { foo: 'bar' },
       metadata: { foo: 'bar' },
+      paper: 'standard',
       perforatedPage: 1,
       plasticCard: {
         size: 'standard',
@@ -101,6 +104,7 @@ describe('resource letters', () => {
       returnEnvelope: 'returnEnvelope',
       sendDate: '2019-12-27T18:11:19.117Z',
       size: 'us_letter',
+      'idempotency-key': 'idempotency-key',
     });
   });
 

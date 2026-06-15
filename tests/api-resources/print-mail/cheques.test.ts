@@ -35,9 +35,16 @@ describe('resource cheques', () => {
       to: 'contact_123',
       currencyCode: 'USD',
       description: 'description',
-      digitalOnly: { watermark: 'watermark' },
+      digitalOnly: {
+        watermark: 'watermark',
+        payee: { name: 'name' },
+      },
       envelope: 'standard',
-      logoURL: 'https://example.com',
+      letterHTML: 'letterHTML',
+      letterPDF: 'https://example.com',
+      letterSettings: { placement: 'before_cheque' },
+      letterTemplate: 'letterTemplate',
+      logo: 'https://example.com',
       mailingClass: 'first_class',
       memo: 'memo',
       mergeVariables: { foo: 'bar' },
@@ -60,10 +67,13 @@ describe('resource cheques', () => {
         phoneNumber: 'phoneNumber',
         postalOrZip: 'postalOrZip',
         provinceOrState: 'provinceOrState',
+        secret: true,
         skipVerification: true,
       },
+      returnEnvelope: 'returnEnvelope',
       sendDate: '2019-12-27T18:11:19.117Z',
       size: 'us_letter',
+      'idempotency-key': 'idempotency-key',
     });
   });
 

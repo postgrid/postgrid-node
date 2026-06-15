@@ -6,6 +6,24 @@ import { PagePromise, SkipLimit, type SkipLimitParams } from '../../core/paginat
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ *  Manage contacts that you can mail to. Test mode addresses will always have a
+ *  `verified` status. In live mode, they may be `verified`, `corrected`, or
+ *  `failed`. Addresses that fail to be corrected are likely undeliverable, but
+ *  you can still send to them if you want to.
+ *
+ *  For test mode contacts, you have the ability to assert the `addressStatus` of
+ *  the contact by passing specific values to the `description` field. To receive
+ *  an `addressStatus` of `failed`, the description of the contact should be a
+ *  string with the exact value `test failed`. For an `addressStatus` value of
+ *  `corrected`, the description of the contact should be a string with the exact
+ *  value `test corrected`.
+ *
+ *  Our address correction engine will often be able to fix missing postal/ZIP
+ *  codes, city names, and also append ZIP+4. It is SERP (Canada Post) and CASS
+ *  (USPS) certified, so you can rest assured that if an address is verified, we
+ *  can deliver to it.
+ */
 export class Contacts extends APIResource {
   /**
    * Creates a contact. This will also verify the contact's address **if you create
@@ -201,6 +219,13 @@ export interface Contact {
   provinceOrState?: string;
 
   /**
+   * If `true`, the contact's details are hidden from the dashboard and API responses
+   * apart from the final print. The contact ID can then be used as a token for
+   * sending mail without giving access to the underlying data.
+   */
+  secret?: boolean;
+
+  /**
    * If `true`, PostGrid will skip running this contact's address through our address
    * verification system.
    */
@@ -285,6 +310,13 @@ export interface ContactCreateWithCompanyName {
   provinceOrState?: string;
 
   /**
+   * If `true`, the contact's details are hidden from the dashboard and API responses
+   * apart from the final print. The contact ID can then be used as a token for
+   * sending mail without giving access to the underlying data.
+   */
+  secret?: boolean;
+
+  /**
    * If `true`, PostGrid will skip running this contact's address through our address
    * verification system.
    */
@@ -365,6 +397,13 @@ export interface ContactCreateWithFirstName {
    * Province or state of the contact's address.
    */
   provinceOrState?: string;
+
+  /**
+   * If `true`, the contact's details are hidden from the dashboard and API responses
+   * apart from the final print. The contact ID can then be used as a token for
+   * sending mail without giving access to the underlying data.
+   */
+  secret?: boolean;
 
   /**
    * If `true`, PostGrid will skip running this contact's address through our address
@@ -468,6 +507,13 @@ export declare namespace ContactCreateParams {
     provinceOrState?: string;
 
     /**
+     * If `true`, the contact's details are hidden from the dashboard and API responses
+     * apart from the final print. The contact ID can then be used as a token for
+     * sending mail without giving access to the underlying data.
+     */
+    secret?: boolean;
+
+    /**
      * If `true`, PostGrid will skip running this contact's address through our address
      * verification system.
      */
@@ -548,6 +594,13 @@ export declare namespace ContactCreateParams {
      * Province or state of the contact's address.
      */
     provinceOrState?: string;
+
+    /**
+     * If `true`, the contact's details are hidden from the dashboard and API responses
+     * apart from the final print. The contact ID can then be used as a token for
+     * sending mail without giving access to the underlying data.
+     */
+    secret?: boolean;
 
     /**
      * If `true`, PostGrid will skip running this contact's address through our address

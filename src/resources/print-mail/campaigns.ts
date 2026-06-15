@@ -5,8 +5,10 @@ import * as ChequesAPI from './cheques';
 import * as LettersAPI from './letters';
 import { APIPromise } from '../../core/api-promise';
 import { PagePromise, SkipLimit, type SkipLimitParams } from '../../core/pagination';
+import { type Uploadable } from '../../core/uploads';
 import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
+import { maybeMultipartFormRequestOptions } from '../../internal/uploads';
 import { path } from '../../internal/utils/path';
 
 /**
@@ -33,14 +35,20 @@ export class Campaigns extends APIResource {
    */
   create(params: CampaignCreateParams, options?: RequestOptions): APIPromise<Campaign> {
     const { 'idempotency-key': idempotencyKey, ...body } = params;
-    return this._client.post('/print-mail/v1/campaigns', {
-      body,
-      ...options,
-      headers: buildHeaders([
-        { ...(idempotencyKey != null ? { 'idempotency-key': idempotencyKey } : undefined) },
-        options?.headers,
-      ]),
-    });
+    return this._client.post(
+      '/print-mail/v1/campaigns',
+      maybeMultipartFormRequestOptions(
+        {
+          body,
+          ...options,
+          headers: buildHeaders([
+            { ...(idempotencyKey != null ? { 'idempotency-key': idempotencyKey } : undefined) },
+            options?.headers,
+          ]),
+        },
+        this._client,
+      ),
+    );
   }
 
   /**
@@ -470,6 +478,16 @@ export namespace Campaign {
     metadata?: { [key: string]: string };
 
     /**
+     * Premium paper selection ("standard" or a premium paper ID). If omitted, org
+     * default is used when configured; otherwise "standard".
+     */
+    paper?:
+      | 'standard'
+      | 'premium_paper_letter_standard_white_70lb'
+      | 'premium_paper_letter_standard_white_80lb'
+      | (string & {});
+
+    /**
      * Which page number should be perforated (if any).
      */
     perforatedPage?: 1;
@@ -557,10 +575,16 @@ export namespace Campaign {
     metadata?: { [key: string]: string };
 
     /**
-     * Premium paper identifier. Use "standard" for regular stock or a premium*paper*\*
-     * ID.
+     * Premium paper selection ("standard" or a premium paper ID). If omitted, org
+     * default is used when configured; otherwise "standard".
      */
-    paper?: string;
+    paper?:
+      | 'standard'
+      | 'premium_paper_heavy_1_glossy'
+      | 'premium_paper_postcard_uv_glossy_ss'
+      | 'premium_paper_postcard_uv_glossy_ss_120lb'
+      | 'premium_paper_postcard_satin_ds'
+      | (string & {});
 
     /**
      * Enum representing the supported postcard sizes.
@@ -820,7 +844,7 @@ export namespace CampaignCreateParams {
     /**
      * PDF file for an optional attached letter. Cannot be used with `letterTemplate`.
      */
-    letterPDF?: string;
+    letterPDF?: string | Uploadable;
 
     /**
      * Settings for the attached letter (e.g., color printing).
@@ -994,9 +1018,19 @@ export namespace CampaignCreateParams {
     metadata?: { [key: string]: string };
 
     /**
+     * Premium paper selection ("standard" or a premium paper ID). If omitted, org
+     * default is used when configured; otherwise "standard".
+     */
+    paper?:
+      | 'standard'
+      | 'premium_paper_letter_standard_white_70lb'
+      | 'premium_paper_letter_standard_white_80lb'
+      | (string & {});
+
+    /**
      * A PDF file or URL for the letter content. Cannot be used with `template`.
      */
-    pdf?: string;
+    pdf?: string | Uploadable;
 
     /**
      * Which page number should be perforated (if any).
@@ -1081,16 +1115,22 @@ export namespace CampaignCreateParams {
     metadata?: { [key: string]: string };
 
     /**
-     * Premium paper identifier. Use "standard" for regular stock or a premium*paper*\*
-     * ID.
+     * Premium paper selection ("standard" or a premium paper ID). If omitted, org
+     * default is used when configured; otherwise "standard".
      */
-    paper?: string;
+    paper?:
+      | 'standard'
+      | 'premium_paper_heavy_1_glossy'
+      | 'premium_paper_postcard_uv_glossy_ss'
+      | 'premium_paper_postcard_uv_glossy_ss_120lb'
+      | 'premium_paper_postcard_satin_ds'
+      | (string & {});
 
     /**
      * A 2-page PDF file for the postcard content (front and back). Cannot be used with
      * `frontTemplate`/`backTemplate`.
      */
-    pdf?: string;
+    pdf?: string | Uploadable;
 
     /**
      * Enum representing the supported postcard sizes.
@@ -1163,7 +1203,7 @@ export namespace CampaignCreateParams {
      * A 2-page PDF file for the self-mailer content. Cannot be used with
      * `insideTemplate`/`outsideTemplate`.
      */
-    pdf?: string;
+    pdf?: string | Uploadable;
 
     /**
      * Enum representing the supported self-mailer sizes.
@@ -1236,7 +1276,7 @@ export namespace CampaignCreateParams {
      * A 2-page PDF file for the snap pack content. Cannot be used with
      * `insideTemplate`/`outsideTemplate`.
      */
-    pdf?: string;
+    pdf?: string | Uploadable;
 
     /**
      * Enum representing the supported snap pack sizes.
@@ -1328,7 +1368,7 @@ export namespace CampaignUpdateParams {
     /**
      * PDF file for an optional attached letter. Cannot be used with `letterTemplate`.
      */
-    letterPDF?: string;
+    letterPDF?: string | Uploadable;
 
     /**
      * Settings for the attached letter (e.g., color printing).
@@ -1502,9 +1542,19 @@ export namespace CampaignUpdateParams {
     metadata?: { [key: string]: string };
 
     /**
+     * Premium paper selection ("standard" or a premium paper ID). If omitted, org
+     * default is used when configured; otherwise "standard".
+     */
+    paper?:
+      | 'standard'
+      | 'premium_paper_letter_standard_white_70lb'
+      | 'premium_paper_letter_standard_white_80lb'
+      | (string & {});
+
+    /**
      * A PDF file or URL for the letter content. Cannot be used with `template`.
      */
-    pdf?: string;
+    pdf?: string | Uploadable;
 
     /**
      * Which page number should be perforated (if any).
@@ -1589,16 +1639,22 @@ export namespace CampaignUpdateParams {
     metadata?: { [key: string]: string };
 
     /**
-     * Premium paper identifier. Use "standard" for regular stock or a premium*paper*\*
-     * ID.
+     * Premium paper selection ("standard" or a premium paper ID). If omitted, org
+     * default is used when configured; otherwise "standard".
      */
-    paper?: string;
+    paper?:
+      | 'standard'
+      | 'premium_paper_heavy_1_glossy'
+      | 'premium_paper_postcard_uv_glossy_ss'
+      | 'premium_paper_postcard_uv_glossy_ss_120lb'
+      | 'premium_paper_postcard_satin_ds'
+      | (string & {});
 
     /**
      * A 2-page PDF file for the postcard content (front and back). Cannot be used with
      * `frontTemplate`/`backTemplate`.
      */
-    pdf?: string;
+    pdf?: string | Uploadable;
 
     /**
      * Enum representing the supported postcard sizes.
@@ -1671,7 +1727,7 @@ export namespace CampaignUpdateParams {
      * A 2-page PDF file for the self-mailer content. Cannot be used with
      * `insideTemplate`/`outsideTemplate`.
      */
-    pdf?: string;
+    pdf?: string | Uploadable;
 
     /**
      * Enum representing the supported self-mailer sizes.
@@ -1744,7 +1800,7 @@ export namespace CampaignUpdateParams {
      * A 2-page PDF file for the snap pack content. Cannot be used with
      * `insideTemplate`/`outsideTemplate`.
      */
-    pdf?: string;
+    pdf?: string | Uploadable;
 
     /**
      * Enum representing the supported snap pack sizes.

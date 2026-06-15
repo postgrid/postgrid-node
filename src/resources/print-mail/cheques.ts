@@ -4,9 +4,15 @@ import { APIResource } from '../../core/resource';
 import * as ContactsAPI from './contacts';
 import { APIPromise } from '../../core/api-promise';
 import { PagePromise, SkipLimit, type SkipLimitParams } from '../../core/pagination';
+import { type Uploadable } from '../../core/uploads';
+import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
+import { maybeMultipartFormRequestOptions } from '../../internal/uploads';
 import { path } from '../../internal/utils/path';
 
+/**
+ *  Create and manage cheque orders.
+ */
 export class Cheques extends APIResource {
   /**
    * Create a cheque.
@@ -15,7 +21,9 @@ export class Cheques extends APIResource {
    *
    * If you would like to create a digitalOnly cheque, the digitalOnly object with
    * the watermark will need to be passed in. Feature is available on request, e-mail
-   * support@postgrid.com for access.
+   * support@postgrid.com for access. Digital-only cheques are not sent out — they
+   * are created with a `cancelled` status and a cancellation reason of
+   * `digital_only`.
    *
    * Example request body:
    *
@@ -46,8 +54,22 @@ export class Cheques extends APIResource {
    * });
    * ```
    */
-  create(body: ChequeCreateParams, options?: RequestOptions): APIPromise<Cheque> {
-    return this._client.post('/print-mail/v1/cheques', { body, ...options });
+  create(params: ChequeCreateParams, options?: RequestOptions): APIPromise<Cheque> {
+    const { 'idempotency-key': idempotencyKey, ...body } = params;
+    return this._client.post(
+      '/print-mail/v1/cheques',
+      maybeMultipartFormRequestOptions(
+        {
+          body,
+          ...options,
+          headers: buildHeaders([
+            { ...(idempotencyKey != null ? { 'idempotency-key': idempotencyKey } : undefined) },
+            options?.headers,
+          ]),
+        },
+        this._client,
+      ),
+    );
   }
 
   /**
@@ -320,11 +342,28 @@ export interface Cheque {
   imbZIPCode?: string;
 
   /**
+   * The raw HTML content for a letter attached to the cheque, if any. You can supply
+   * _either_ this, `letterTemplate`, or `letterPDF`, but not more than one.
+   */
+  letterHTML?: string;
+
+  /**
+   * A Template ID for the letter attached to the cheque, if any.
+   */
+  letterTemplate?: string;
+
+  /**
+   * A signed URL pointing to the original PDF of the letter attached to the cheque,
+   * if any.
+   */
+  letterUploadedPDF?: string;
+
+  /**
    * An optional logo URL for the cheque. This will be placed next to the recipient
    * address at the top left corner of the cheque. This needs to be a public link to
    * an image file (e.g. a PNG or JPEG file).
    */
-  logoURL?: string;
+  logo?: string;
 
   /**
    * The memo of the cheque.
@@ -355,6 +394,12 @@ export interface Cheque {
    * ensuring that every cheque has a unique number.
    */
   number?: number;
+
+  /**
+   * The return envelope (ID) sent out with the cheque, if any. Note that you must
+   * first order return envelopes using the Return Envelopes API.
+   */
+  returnEnvelope?: string;
 
   /**
    * The tracking number of this order. Populated after an express/certified order
@@ -408,6 +453,27 @@ export interface DigitalOnly {
    * Text to be displayed as a watermark on the digital cheque.
    */
   watermark: string;
+
+  /**
+   * The payee of the digital cheque. Supplying `payee.name` lets you create a
+   * digital-only cheque without a `to` contact — when it is provided, the top-level
+   * `to` field may be omitted.
+   */
+  payee?: DigitalOnly.Payee;
+}
+
+export namespace DigitalOnly {
+  /**
+   * The payee of the digital cheque. Supplying `payee.name` lets you create a
+   * digital-only cheque without a `to` contact — when it is provided, the top-level
+   * `to` field may be omitted.
+   */
+  export interface Payee {
+    /**
+     * The name of the payee.
+     */
+    name: string;
+  }
 }
 
 export interface ChequeRetrieveURLResponse {
@@ -427,65 +493,89 @@ export interface ChequeRetrieveURLResponse {
 
 export interface ChequeCreateParams {
   /**
-   * The amount of the cheque in cents.
+   * Body param: The amount of the cheque in cents.
    */
   amount: number;
 
   /**
-   * The bank account (ID) associated with the cheque.
+   * Body param: The bank account (ID) associated with the cheque.
    */
   bankAccount: string;
 
   /**
-   * The contact information of the sender. You can pass contact information inline
-   * here just like you can for the `to`.
+   * Body param: The contact information of the sender. You can pass contact
+   * information inline here just like you can for the `to`.
    */
   from: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
   /**
-   * The recipient of this order. You can either supply the contact information
-   * inline here or provide a contact ID. PostGrid will automatically deduplicate
-   * contacts regardless of whether you provide the information inline here or call
-   * the contact creation endpoint.
+   * Body param: The recipient of this order. You can either supply the contact
+   * information inline here or provide a contact ID. PostGrid will automatically
+   * deduplicate contacts regardless of whether you provide the information inline
+   * here or call the contact creation endpoint.
    */
   to: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
   /**
-   * The currency code of the cheque. This will be set to the default currency of the
-   * bank account (`USD` for US bank accounts and `CAD` for Canadian bank accounts)
-   * if not provided. You can set this value to `USD` if you want to draw USD from a
-   * Canadian bank account or vice versa.
+   * Body param: The currency code of the cheque. This will be set to the default
+   * currency of the bank account (`USD` for US bank accounts and `CAD` for Canadian
+   * bank accounts) if not provided. You can set this value to `USD` if you want to
+   * draw USD from a Canadian bank account or vice versa.
    */
   currencyCode?: 'USD' | 'CAD';
 
   /**
-   * An optional string describing this resource. Will be visible in the API and the
-   * dashboard.
+   * Body param: An optional string describing this resource. Will be visible in the
+   * API and the dashboard.
    */
   description?: string;
 
   /**
-   * The digitalOnly object contains data for digital-only cheques. A watermark must
-   * be provided.
+   * Body param: The digitalOnly object contains data for digital-only cheques. A
+   * watermark must be provided.
    */
   digitalOnly?: DigitalOnly;
 
   /**
-   * The envelope of the cheque. If a custom envelope ID is not specified, defaults
-   * to `standard`.
+   * Body param: The envelope of the cheque. If a custom envelope ID is not
+   * specified, defaults to `standard`.
    */
   envelope?: 'standard' | (string & {});
 
   /**
-   * An optional logo URL for the cheque. This will be placed next to the recipient
-   * address at the top left corner of the cheque. This needs to be a public link to
-   * an image file (e.g. a PNG or JPEG file).
+   * Body param: The raw HTML content for a letter attached to the cheque, if any.
+   * You can supply _either_ this, `letterTemplate`, or `letterPDF`, but not more
+   * than one.
    */
-  logoURL?: string;
+  letterHTML?: string;
 
   /**
-   * The mailing class of this order. If not provided, automatically set to
-   * `first_class`.
+   * Body param: A URL pointing to a PDF for the letter attached to the cheque, or
+   * the PDF file itself when uploaded via a multipart form request. You can supply
+   * _either_ this, `letterHTML`, or `letterTemplate`, but not more than one.
+   */
+  letterPDF?: string | Uploadable;
+
+  /**
+   * Body param: Settings for a letter attached to a cheque.
+   */
+  letterSettings?: ChequeCreateParams.LetterSettings;
+
+  /**
+   * Body param: A Template ID for the letter attached to the cheque, if any.
+   */
+  letterTemplate?: string;
+
+  /**
+   * Body param: An optional logo URL for the cheque. This will be placed next to the
+   * recipient address at the top left corner of the cheque. This needs to be a
+   * public link to an image file (e.g. a PNG or JPEG file).
+   */
+  logo?: string;
+
+  /**
+   * Body param: The mailing class of this order. If not provided, automatically set
+   * to `first_class`.
    */
   mailingClass?:
     | 'first_class'
@@ -516,54 +606,79 @@ export interface ChequeCreateParams {
     | 'au_post_second_class';
 
   /**
-   * The memo of the cheque.
+   * Body param: The memo of the cheque.
    */
   memo?: string;
 
   /**
-   * These will be merged with the variables in the template or HTML you create this
-   * order with. The keys in this object should match the variable names in the
-   * template _exactly_ as they are case-sensitive. Note that these _do not_ apply to
-   * PDFs uploaded with the order.
+   * Body param: These will be merged with the variables in the template or HTML you
+   * create this order with. The keys in this object should match the variable names
+   * in the template _exactly_ as they are case-sensitive. Note that these _do not_
+   * apply to PDFs uploaded with the order.
    */
   mergeVariables?: { [key: string]: unknown };
 
   /**
-   * The message of the cheque.
+   * Body param: The message of the cheque.
    */
   message?: string;
 
   /**
-   * See the section on Metadata.
+   * Body param: See the section on Metadata.
    */
   metadata?: { [key: string]: unknown };
 
   /**
-   * The number of the cheque. If you don't provide this, it will automatically be
-   * set to an incrementing number starting from 1 across your entire account,
-   * ensuring that every cheque has a unique number.
+   * Body param: The number of the cheque. If you don't provide this, it will
+   * automatically be set to an incrementing number starting from 1 across your
+   * entire account, ensuring that every cheque has a unique number.
    */
   number?: number;
 
   /**
-   * Providing this inserts a blank page at the start of the cheque with the
-   * recipient you provide here. This leaves the cheque that follows intact, which
-   * means you can use this to intercept at cheque at the redirected address and then
-   * mail it forward to the final recipient yourself. One use case for this is
-   * signing cheques at your office before mailing them out yourself.
+   * Body param: Providing this inserts a blank page at the start of the cheque with
+   * the recipient you provide here. This leaves the cheque that follows intact,
+   * which means you can use this to intercept at cheque at the redirected address
+   * and then mail it forward to the final recipient yourself. One use case for this
+   * is signing cheques at your office before mailing them out yourself.
    */
   redirectTo?: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
   /**
-   * This order will transition from `ready` to `printing` on the day after this
-   * date. You can use this parameter to schedule orders for a future date.
+   * Body param: The return envelope (ID) sent out with the cheque, if any. Note that
+   * you must first order return envelopes using the Return Envelopes API.
+   */
+  returnEnvelope?: string;
+
+  /**
+   * Body param: This order will transition from `ready` to `printing` on the day
+   * after this date. You can use this parameter to schedule orders for a future
+   * date.
    */
   sendDate?: string;
 
   /**
-   * Enum representing the supported cheque sizes.
+   * Body param: Enum representing the supported cheque sizes.
    */
   size?: ChequeSize;
+
+  /**
+   * Header param
+   */
+  'idempotency-key'?: string;
+}
+
+export namespace ChequeCreateParams {
+  /**
+   * Settings for a letter attached to a cheque.
+   */
+  export interface LetterSettings {
+    /**
+     * Enum representing where a letter attached to a cheque is placed relative to the
+     * cheque page.
+     */
+    placement?: 'before_cheque' | 'after_cheque';
+  }
 }
 
 export interface ChequeListParams extends SkipLimitParams {
