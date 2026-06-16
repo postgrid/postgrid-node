@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.7.1 (2026-06-16)
+
+Full Changelog: [v0.7.0...v0.7.1](https://github.com/postgrid/postgrid-node/compare/v0.7.0...v0.7.1)
+
+### Bug Fixes
+
+* **client:** send content-type header for requests with an omitted optional body ([d45eb9a](https://github.com/postgrid/postgrid-node/commit/d45eb9a7acbcbc382f6d6a19a88e7085b841f054))
+
 ## 0.7.0 (2026-06-12)
 
 Full Changelog: [v0.6.1...v0.7.0](https://github.com/postgrid/postgrid-node/compare/v0.6.1...v0.7.0)
