@@ -181,6 +181,9 @@ export interface Webhook {
     | 'campaign.created'
     | 'campaign.updated'
     | 'virtual_mailbox_item.created'
+    | 'postal_statement.created'
+    | 'document.created'
+    | 'document.updated'
   >;
 
   /**
@@ -272,7 +275,10 @@ export interface WebhookInvocation {
     | 'tracker.visited'
     | 'campaign.created'
     | 'campaign.updated'
-    | 'virtual_mailbox_item.created';
+    | 'virtual_mailbox_item.created'
+    | 'postal_statement.created'
+    | 'document.created'
+    | 'document.updated';
 
   /**
    * The UTC time at which this invocation was last updated.
@@ -328,6 +334,9 @@ export interface WebhookCreateParams {
     | 'campaign.created'
     | 'campaign.updated'
     | 'virtual_mailbox_item.created'
+    | 'postal_statement.created'
+    | 'document.created'
+    | 'document.updated'
   >;
 
   /**
@@ -391,6 +400,9 @@ export interface WebhookUpdateParams {
     | 'campaign.created'
     | 'campaign.updated'
     | 'virtual_mailbox_item.created'
+    | 'postal_statement.created'
+    | 'document.created'
+    | 'document.updated'
   >;
 
   /**

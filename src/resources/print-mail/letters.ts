@@ -530,8 +530,15 @@ export type LetterCreateParams =
 export declare namespace LetterCreateParams {
   export interface LetterCreateWithHTML {
     /**
-     * Body param: The contact information of the sender. You can pass contact
-     * information inline here just like you can for the `to`.
+     * Body param: A contact provided in one of two ways:
+     *
+     * - an **inline contact body** with the same fields you would use to create a
+     *   contact (there is no need to create the contact first), or
+     * - the **ID of an existing contact** (e.g. `contact_123`).
+     *
+     * You never send the full stored contact object (with `id`, `object`,
+     * `addressStatus`, `createdAt`, etc.) here — that shape is only ever returned in
+     * responses.
      */
     from: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
@@ -542,10 +549,15 @@ export declare namespace LetterCreateParams {
     html: string;
 
     /**
-     * Body param: The recipient of this order. You can either supply the contact
-     * information inline here or provide a contact ID. PostGrid will automatically
-     * deduplicate contacts regardless of whether you provide the information inline
-     * here or call the contact creation endpoint.
+     * Body param: A contact provided in one of two ways:
+     *
+     * - an **inline contact body** with the same fields you would use to create a
+     *   contact (there is no need to create the contact first), or
+     * - the **ID of an existing contact** (e.g. `contact_123`).
+     *
+     * You never send the full stored contact object (with `id`, `object`,
+     * `addressStatus`, `createdAt`, etc.) here — that shape is only ever returned in
+     * responses.
      */
     to: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
@@ -680,8 +692,15 @@ export declare namespace LetterCreateParams {
 
   export interface LetterCreateWithTemplate {
     /**
-     * Body param: The contact information of the sender. You can pass contact
-     * information inline here just like you can for the `to`.
+     * Body param: A contact provided in one of two ways:
+     *
+     * - an **inline contact body** with the same fields you would use to create a
+     *   contact (there is no need to create the contact first), or
+     * - the **ID of an existing contact** (e.g. `contact_123`).
+     *
+     * You never send the full stored contact object (with `id`, `object`,
+     * `addressStatus`, `createdAt`, etc.) here — that shape is only ever returned in
+     * responses.
      */
     from: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
@@ -692,10 +711,15 @@ export declare namespace LetterCreateParams {
     template: string;
 
     /**
-     * Body param: The recipient of this order. You can either supply the contact
-     * information inline here or provide a contact ID. PostGrid will automatically
-     * deduplicate contacts regardless of whether you provide the information inline
-     * here or call the contact creation endpoint.
+     * Body param: A contact provided in one of two ways:
+     *
+     * - an **inline contact body** with the same fields you would use to create a
+     *   contact (there is no need to create the contact first), or
+     * - the **ID of an existing contact** (e.g. `contact_123`).
+     *
+     * You never send the full stored contact object (with `id`, `object`,
+     * `addressStatus`, `createdAt`, etc.) here — that shape is only ever returned in
+     * responses.
      */
     to: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
@@ -830,8 +854,15 @@ export declare namespace LetterCreateParams {
 
   export interface LetterCreateWithPdf {
     /**
-     * Body param: The contact information of the sender. You can pass contact
-     * information inline here just like you can for the `to`.
+     * Body param: A contact provided in one of two ways:
+     *
+     * - an **inline contact body** with the same fields you would use to create a
+     *   contact (there is no need to create the contact first), or
+     * - the **ID of an existing contact** (e.g. `contact_123`).
+     *
+     * You never send the full stored contact object (with `id`, `object`,
+     * `addressStatus`, `createdAt`, etc.) here — that shape is only ever returned in
+     * responses.
      */
     from: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
@@ -841,10 +872,15 @@ export declare namespace LetterCreateParams {
     pdf: string | Uploadable;
 
     /**
-     * Body param: The recipient of this order. You can either supply the contact
-     * information inline here or provide a contact ID. PostGrid will automatically
-     * deduplicate contacts regardless of whether you provide the information inline
-     * here or call the contact creation endpoint.
+     * Body param: A contact provided in one of two ways:
+     *
+     * - an **inline contact body** with the same fields you would use to create a
+     *   contact (there is no need to create the contact first), or
+     * - the **ID of an existing contact** (e.g. `contact_123`).
+     *
+     * You never send the full stored contact object (with `id`, `object`,
+     * `addressStatus`, `createdAt`, etc.) here — that shape is only ever returned in
+     * responses.
      */
     to: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 

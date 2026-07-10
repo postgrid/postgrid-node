@@ -13,7 +13,6 @@ describe('resource contacts', () => {
   test.skip('create: only required params', async () => {
     const responsePromise = client.printMail.contacts.create({
       addressLine1: 'addressLine1',
-      countryCode: 'countryCode',
       firstName: 'firstName',
     });
     const rawResponse = await responsePromise.asResponse();
@@ -29,11 +28,11 @@ describe('resource contacts', () => {
   test.skip('create: required and optional params', async () => {
     const response = await client.printMail.contacts.create({
       addressLine1: 'addressLine1',
-      countryCode: 'countryCode',
       firstName: 'firstName',
       addressLine2: 'addressLine2',
       city: 'city',
       companyName: 'companyName',
+      countryCode: 'countryCode',
       description: 'description',
       email: 'email',
       forceVerifiedStatus: true,
