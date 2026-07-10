@@ -15,11 +15,7 @@ describe('resource postcards', () => {
       backHTML: 'backHTML',
       frontHTML: 'frontHTML',
       size: '6x4',
-      to: {
-        addressLine1: 'addressLine1',
-        countryCode: 'countryCode',
-        firstName: 'firstName',
-      },
+      to: { addressLine1: 'addressLine1', firstName: 'firstName' },
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -38,11 +34,11 @@ describe('resource postcards', () => {
       size: '6x4',
       to: {
         addressLine1: 'addressLine1',
-        countryCode: 'countryCode',
         firstName: 'firstName',
         addressLine2: 'addressLine2',
         city: 'city',
         companyName: 'companyName',
+        countryCode: 'countryCode',
         description: 'description',
         email: 'email',
         forceVerifiedStatus: true,
@@ -58,11 +54,11 @@ describe('resource postcards', () => {
       description: 'description',
       from: {
         addressLine1: 'addressLine1',
-        countryCode: 'countryCode',
         firstName: 'firstName',
         addressLine2: 'addressLine2',
         city: 'city',
         companyName: 'companyName',
+        countryCode: 'countryCode',
         description: 'description',
         email: 'email',
         forceVerifiedStatus: true,

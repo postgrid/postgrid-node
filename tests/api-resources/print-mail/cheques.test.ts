@@ -53,11 +53,11 @@ describe('resource cheques', () => {
       number: 123456,
       redirectTo: {
         addressLine1: 'addressLine1',
-        countryCode: 'countryCode',
         firstName: 'firstName',
         addressLine2: 'addressLine2',
         city: 'city',
         companyName: 'companyName',
+        countryCode: 'countryCode',
         description: 'description',
         email: 'email',
         forceVerifiedStatus: true,

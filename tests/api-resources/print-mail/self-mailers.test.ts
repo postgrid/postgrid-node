@@ -12,19 +12,11 @@ describe('resource selfMailers', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.printMail.selfMailers.create({
-      from: {
-        addressLine1: 'addressLine1',
-        countryCode: 'countryCode',
-        firstName: 'firstName',
-      },
+      from: { addressLine1: 'addressLine1', firstName: 'firstName' },
       insideHTML: 'insideHTML',
       outsideHTML: 'outsideHTML',
       size: '8.5x11_bifold',
-      to: {
-        addressLine1: 'addressLine1',
-        countryCode: 'countryCode',
-        firstName: 'firstName',
-      },
+      to: { addressLine1: 'addressLine1', firstName: 'firstName' },
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -40,11 +32,11 @@ describe('resource selfMailers', () => {
     const response = await client.printMail.selfMailers.create({
       from: {
         addressLine1: 'addressLine1',
-        countryCode: 'countryCode',
         firstName: 'firstName',
         addressLine2: 'addressLine2',
         city: 'city',
         companyName: 'companyName',
+        countryCode: 'countryCode',
         description: 'description',
         email: 'email',
         forceVerifiedStatus: true,
@@ -62,11 +54,11 @@ describe('resource selfMailers', () => {
       size: '8.5x11_bifold',
       to: {
         addressLine1: 'addressLine1',
-        countryCode: 'countryCode',
         firstName: 'firstName',
         addressLine2: 'addressLine2',
         city: 'city',
         companyName: 'companyName',
+        countryCode: 'countryCode',
         description: 'description',
         email: 'email',
         forceVerifiedStatus: true,

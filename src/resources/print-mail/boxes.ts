@@ -1187,16 +1187,28 @@ export interface BoxCreateParams {
   cheques: Array<BoxCreateParams.Cheque>;
 
   /**
-   * The 'from' (sender) of the entire box. Accepts inline ContactCreate or a
-   * contactID.
+   * A contact provided in one of two ways:
+   *
+   * - an **inline contact body** with the same fields you would use to create a
+   *   contact (there is no need to create the contact first), or
+   * - the **ID of an existing contact** (e.g. `contact_123`).
+   *
+   * You never send the full stored contact object (with `id`, `object`,
+   * `addressStatus`, `createdAt`, etc.) here — that shape is only ever returned in
+   * responses.
    */
   from: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
   /**
-   * The recipient of this order. You can either supply the contact information
-   * inline here or provide a contact ID. PostGrid will automatically deduplicate
-   * contacts regardless of whether you provide the information inline here or call
-   * the contact creation endpoint.
+   * A contact provided in one of two ways:
+   *
+   * - an **inline contact body** with the same fields you would use to create a
+   *   contact (there is no need to create the contact first), or
+   * - the **ID of an existing contact** (e.g. `contact_123`).
+   *
+   * You never send the full stored contact object (with `id`, `object`,
+   * `addressStatus`, `createdAt`, etc.) here — that shape is only ever returned in
+   * responses.
    */
   to: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
@@ -1270,6 +1282,17 @@ export namespace BoxCreateParams {
      */
     bankAccount: string;
 
+    /**
+     * A contact provided in one of two ways:
+     *
+     * - an **inline contact body** with the same fields you would use to create a
+     *   contact (there is no need to create the contact first), or
+     * - the **ID of an existing contact** (e.g. `contact_123`).
+     *
+     * You never send the full stored contact object (with `id`, `object`,
+     * `addressStatus`, `createdAt`, etc.) here — that shape is only ever returned in
+     * responses.
+     */
     from: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
     /**
@@ -1277,6 +1300,17 @@ export namespace BoxCreateParams {
      */
     number: number;
 
+    /**
+     * A contact provided in one of two ways:
+     *
+     * - an **inline contact body** with the same fields you would use to create a
+     *   contact (there is no need to create the contact first), or
+     * - the **ID of an existing contact** (e.g. `contact_123`).
+     *
+     * You never send the full stored contact object (with `id`, `object`,
+     * `addressStatus`, `createdAt`, etc.) here — that shape is only ever returned in
+     * responses.
+     */
     to: ContactsAPI.ContactCreateWithFirstName | ContactsAPI.ContactCreateWithCompanyName | string;
 
     /**

@@ -75,7 +75,10 @@ export interface Event {
     | 'tracker.visited'
     | 'campaign.created'
     | 'campaign.updated'
-    | 'virtual_mailbox_item.created';
+    | 'virtual_mailbox_item.created'
+    | 'postal_statement.created'
+    | 'document.created'
+    | 'document.updated';
 
   /**
    * The data of the resource associated with this event.
@@ -112,6 +115,9 @@ export interface EventListParams extends SkipLimitParams {
     | 'campaign.created'
     | 'campaign.updated'
     | 'virtual_mailbox_item.created'
+    | 'postal_statement.created'
+    | 'document.created'
+    | 'document.updated'
   >;
 }
 
