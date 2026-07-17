@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.8.0 (2026-07-17)
+
+Full Changelog: [v0.7.1...v0.8.0](https://github.com/postgrid/postgrid-node/compare/v0.7.1...v0.8.0)
+
+### Features
+
+* Make Contact requirements for mailers clearer - can pass in ID or contact inline ([3c63870](https://github.com/postgrid/postgrid-node/commit/3c6387095be9fed8c7c4f81435d7a87425e463bf))
+* **stlc:** configurable CI runner and private-production-repo support in workflow templates ([9b18c25](https://github.com/postgrid/postgrid-node/commit/9b18c255c58982e3497b089eb1523811ee770b6e))
+
+
+### Bug Fixes
+
+* **ci:** bump @arethetypeswrong/cli to ^0.18.0 and run CI workflows on Node 24 ([227dd60](https://github.com/postgrid/postgrid-node/commit/227dd606c4615af665badbfcb6c70c9cf5cf632d))
+
 ## 0.7.1 (2026-06-16)
 
 Full Changelog: [v0.7.0...v0.7.1](https://github.com/postgrid/postgrid-node/compare/v0.7.0...v0.7.1)
