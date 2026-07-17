@@ -12,17 +12,9 @@ describe('resource letters', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.printMail.letters.create({
-      from: {
-        addressLine1: 'addressLine1',
-        countryCode: 'countryCode',
-        firstName: 'firstName',
-      },
+      from: { addressLine1: 'addressLine1', firstName: 'firstName' },
       html: 'html',
-      to: {
-        addressLine1: 'addressLine1',
-        countryCode: 'countryCode',
-        firstName: 'firstName',
-      },
+      to: { addressLine1: 'addressLine1', firstName: 'firstName' },
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -38,11 +30,11 @@ describe('resource letters', () => {
     const response = await client.printMail.letters.create({
       from: {
         addressLine1: 'addressLine1',
-        countryCode: 'countryCode',
         firstName: 'firstName',
         addressLine2: 'addressLine2',
         city: 'city',
         companyName: 'companyName',
+        countryCode: 'countryCode',
         description: 'description',
         email: 'email',
         forceVerifiedStatus: true,
@@ -58,11 +50,11 @@ describe('resource letters', () => {
       html: 'html',
       to: {
         addressLine1: 'addressLine1',
-        countryCode: 'countryCode',
         firstName: 'firstName',
         addressLine2: 'addressLine2',
         city: 'city',
         companyName: 'companyName',
+        countryCode: 'countryCode',
         description: 'description',
         email: 'email',
         forceVerifiedStatus: true,

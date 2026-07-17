@@ -26,7 +26,6 @@ const client = new PostGrid({
 
 const contact = await client.printMail.contacts.create({
   addressLine1: 'addressLine1',
-  countryCode: 'countryCode',
   firstName: 'firstName',
 });
 

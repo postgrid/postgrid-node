@@ -44,9 +44,9 @@ export class Contacts extends APIResource {
    * ```ts
    * const contact = await client.printMail.contacts.create({
    *   addressLine1: '90 Canal St Suite 600, Boston MA 90210',
-   *   countryCode: 'US',
    *   firstName: 'Kevin',
    *   companyName: 'PostGrid',
+   *   countryCode: 'US',
    * });
    * ```
    */
@@ -243,11 +243,6 @@ export interface ContactCreateWithCompanyName {
   companyName: string;
 
   /**
-   * The ISO 3611-1 country code of the contact's address.
-   */
-  countryCode: string;
-
-  /**
    * Second line of the contact's address, if applicable.
    */
   addressLine2?: string;
@@ -256,6 +251,12 @@ export interface ContactCreateWithCompanyName {
    * The city of the contact's address.
    */
   city?: string;
+
+  /**
+   * The ISO 3611-1 country code of the contact's address. If omitted, your
+   * organization's default country code is used.
+   */
+  countryCode?: string;
 
   /**
    * An optional string describing this resource. Will be visible in the API and the
@@ -329,11 +330,6 @@ export interface ContactCreateWithFirstName {
    */
   addressLine1: string;
 
-  /**
-   * The ISO 3611-1 country code of the contact's address.
-   */
-  countryCode: string;
-
   firstName: string;
 
   /**
@@ -350,6 +346,12 @@ export interface ContactCreateWithFirstName {
    * Company name of the contact.
    */
   companyName?: string;
+
+  /**
+   * The ISO 3611-1 country code of the contact's address. If omitted, your
+   * organization's default country code is used.
+   */
+  countryCode?: string;
 
   /**
    * An optional string describing this resource. Will be visible in the API and the
@@ -437,11 +439,6 @@ export declare namespace ContactCreateParams {
      */
     addressLine1: string;
 
-    /**
-     * The ISO 3611-1 country code of the contact's address.
-     */
-    countryCode: string;
-
     firstName: string;
 
     /**
@@ -458,6 +455,12 @@ export declare namespace ContactCreateParams {
      * Company name of the contact.
      */
     companyName?: string;
+
+    /**
+     * The ISO 3611-1 country code of the contact's address. If omitted, your
+     * organization's default country code is used.
+     */
+    countryCode?: string;
 
     /**
      * An optional string describing this resource. Will be visible in the API and the
@@ -529,11 +532,6 @@ export declare namespace ContactCreateParams {
     companyName: string;
 
     /**
-     * The ISO 3611-1 country code of the contact's address.
-     */
-    countryCode: string;
-
-    /**
      * Second line of the contact's address, if applicable.
      */
     addressLine2?: string;
@@ -542,6 +540,12 @@ export declare namespace ContactCreateParams {
      * The city of the contact's address.
      */
     city?: string;
+
+    /**
+     * The ISO 3611-1 country code of the contact's address. If omitted, your
+     * organization's default country code is used.
+     */
+    countryCode?: string;
 
     /**
      * An optional string describing this resource. Will be visible in the API and the
